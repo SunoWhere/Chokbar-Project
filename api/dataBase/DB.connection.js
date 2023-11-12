@@ -1,9 +1,9 @@
-const { Sequelize } = require('sequelize');
+const {Sequelize} = require('sequelize');
 
 const sequelize = new Sequelize('ezcon', 'root', 'toor', {
-    dialect:'postgres',
-    host:'localhost',
-    port:'5433'
+    dialect: 'postgres',
+    host: 'localhost',
+    port: '5433'
 })
 
 sequelize.authenticate().then(() => {
