@@ -1,0 +1,1 @@
+sequelize-auto -h localhost -d ezcon -u root -x toor -p 5433 --dialect postgres -o "./database/models"
