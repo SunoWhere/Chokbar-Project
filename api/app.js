@@ -5,7 +5,6 @@ const usersRoutes = require("./routes/users.router")
 const providersRoutes = require("./routes/providers.router")
 const standsRoutes = require("./routes/stands.router")
 const eventsRoutes = require("./routes/events.router")
-const adminRoutes = require("./routes/admin.router")
 dotenv.config()
 
 const port = process.env.PORT
