@@ -10,10 +10,10 @@ export default {
     props: {
             
         },
-    }
-components: {
+  components: {
 
-}   
+  },
+}
 
 </script>
 
