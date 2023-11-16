@@ -1,14 +1,35 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
+    <NavBar></NavBar>
+  
+    <Footer></Footer> 
     <router-view/>
   </div>
 </template>
 
+<script>
+
+import NavBar from '@/components/NavBar.vue'
+import Footer from '@/components/Footer.vue'
+
+export default {
+  name: 'HomeView',
+  components: {
+    NavBar,
+    Footer
+  }
+}
+
+</script>
+
 <style>
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
