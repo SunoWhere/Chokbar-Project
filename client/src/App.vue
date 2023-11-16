@@ -1,9 +1,8 @@
 <template>
   <div id="app">
     <NavBar></NavBar>
-  
+
     <Footer></Footer> 
-    <router-view/>
   </div>
 </template>
 
@@ -33,15 +32,19 @@ export default {
   --c-ancient-green: #6D9777;
 
   /* Buttons */
-  --c-grey-button: #1E1E1E;
+  --c-dark-grey: #1E1E1E;
 
   /* Background colors */
-  --c-black-background: #0C0F0B;
+  --c-background: #0C0F0B;
+  --c-component-background: #D9D9D9;
 
   /* Crud colors */
   --c-crud-bleu: #006EF0;
   --c-crud-rouge: #D20000;
   --c-crud-vert: #00BF6F;
+
+  /* Others */
+  --c-accent-color: #C4A14A;
 }
 
 * {
