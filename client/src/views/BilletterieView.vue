@@ -149,6 +149,11 @@ export default {
   name: 'BilletterieView',
   components: {
   },
+  metaInfo() {
+    return {
+      title: 'Billetterie'
+    }
+  }
 }
 
 </script>

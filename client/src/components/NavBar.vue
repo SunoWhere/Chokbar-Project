@@ -1,8 +1,121 @@
 <template>
-  <div>
-    <p>test</p>
-  </div>
+  <nav>
+    <img src="../assets/logo.png" alt="Logo EZCon">
+    <ul class="nav-list">
+      <li><button class="nav-item underline-animation" @click="$router.push('/')">Accueil</button></li>
+      <li><button class="nav-item underline-animation">Map</button></li>
+      <li><button class="nav-item underline-animation" @click="$router.push('/Billetterie')">Billetterie</button></li>
+      <li id="dropdown">
+        <button class="nav-item dropdown">A Propos</button>
+        <ul class="dropdown-list">
+          <li><button class="dropdown-item underline-animation">La EZCon</button></li>
+          <li><button class="dropdown-item underline-animation">A Découvrir</button></li>
+        </ul>
+      </li>
+    </ul>
+    <ul class="nav-list">
+      <li><button class="nav-item underline-animation"><font-awesome-icon icon="fa-solid fa-user" /> Se Connecter</button></li>
+      <li><button class="nav-item underline-animation"><font-awesome-icon icon="fa-solid fa-cart-shopping" /> Panier</button></li>
+      <li><button class="nav-item underline-animation">FR</button></li>
+    </ul>
+  </nav>
 </template>
+
+<style scoped>
+nav {
+  height: 80px;
+  background-color: var(--c-asparagus);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+img {
+  height: 80%;
+  width: auto;
+  margin: 0 10px;
+  margin-left: 15px;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+}
+
+.nav-list:last-child {
+  margin-right: 15px;
+}
+
+.nav-item {
+  display: inline-block;
+  position: relative;
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  margin: 0 10px;
+  padding: 3px 0;
+}
+
+.underline-animation::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.underline-animation:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-list {
+  list-style: none;
+  /*display: none;*/
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  background-color: var(--c-ancient-green);
+  min-width: 160px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  padding: 10px 5px;
+  z-index: 1;
+  transition: all 0.2s ease;
+}
+
+#dropdown:hover .dropdown-list {
+  /*display: block;*/
+  opacity: 1;
+  visibility: visible;
+}
+
+.dropdown-item {
+  display: inline-block;
+  position: relative;
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  margin: 0 10px;
+  padding: 3px 0;
+}
+
+</style>
   
 <script>
 
@@ -17,7 +130,3 @@ export default {
 }
 
 </script>
-
-<style>
-
-</style>

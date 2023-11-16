@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <NavBar></NavBar>
-     <router-view></router-view>
+    <router-view></router-view>
     <Footer></Footer>
   </div>
 </template>
@@ -51,6 +51,10 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  background-color: var(--c-background);
 }
 
 #app {
