@@ -1,3 +1,17 @@
+<script>
+
+export default {
+  name: 'NavBar',
+  props: {
+
+  },
+  components: {
+
+  },
+}
+
+</script>
+
 <template>
   <nav>
     <img src="../assets/logo.png" alt="Logo EZCon">
@@ -30,7 +44,6 @@ nav {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-
 }
 
 img {
@@ -42,6 +55,7 @@ img {
 .nav-list {
   list-style: none;
   display: flex;
+  align-items: center;
 }
 
 .nav-list:last-child {
@@ -62,7 +76,18 @@ img {
 
 .nav-btn {
   border: none;
-  background-color: ;
+  border-radius: 10px;
+  background-color: var(--c-dark-grey);
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  margin-right: 10px;
+  padding: 13px 20px;
+  transition: background-color 0.15s ease
+}
+
+.nav-btn:hover {
+  background-color: var(--c-dark-grey-hover);
 }
 
 .underline-animation::after {
@@ -95,6 +120,7 @@ img {
   position: absolute;
   background-color: var(--c-ancient-green);
   min-width: 160px;
+  border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   padding: 10px 5px;
   z-index: 1;
@@ -119,17 +145,3 @@ img {
 }
 
 </style>
-  
-<script>
-
-export default {
-  name: 'NavBar',
-  props: {
-
-      },
-  components: {
-
-  },
-}
-
-</script>

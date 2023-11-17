@@ -1,13 +1,4 @@
-<template>
-  <div id="app">
-    <NavBar></NavBar>
-    <router-view></router-view>
-    <Footer></Footer>
-  </div>
-</template>
-
 <script>
-
 import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'
 
@@ -21,6 +12,14 @@ export default {
 
 </script>
 
+<template>
+  <div id="app">
+    <NavBar></NavBar>
+    <router-view></router-view>
+    <Footer></Footer>
+  </div>
+</template>
+
 <style>
 
 :root {
@@ -32,7 +31,8 @@ export default {
   --c-ancient-green: #6D9777;
 
   /* Buttons */
-  --c-dark-grey: rgb(30, 30, 30, 0.8);
+  --c-dark-grey: rgba(32, 31, 31, 0.8);
+  --c-dark-grey-hover: rgba(47, 47, 47, 0.8);
 
   /* Background colors */
   --c-background: #0C0F0B;

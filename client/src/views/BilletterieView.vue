@@ -1,3 +1,17 @@
+<script>
+export default {
+  name: 'BilletterieView',
+  components: {
+  },
+  metaInfo() {
+    return {
+      title: 'Billetterie'
+    }
+  }
+}
+
+</script>
+
 <template>
   <section id="pricing-table">
     <div class="price-box-container">
@@ -144,24 +158,7 @@
   </section>
 </template>
 
-<script>
-export default {
-  name: 'BilletterieView',
-  components: {
-  },
-  metaInfo() {
-    return {
-      title: 'Billetterie'
-    }
-  }
-}
-
-</script>
-
-
 <style>
-
-
 a{
   text-decoration: none;
 }

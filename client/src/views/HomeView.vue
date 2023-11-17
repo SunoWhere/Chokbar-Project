@@ -1,10 +1,3 @@
-<template>
-  <div class="home">
-    <Banderole/>
-    HOME
-  </div>
-</template>
-
 <script>
 import Banderole from '@/components/Banderole.vue';
 
@@ -20,6 +13,13 @@ export default {
   }
 }
 </script>
+
+<template>
+  <div class="home">
+    <Banderole/>
+    HOME
+  </div>
+</template>
 
 <style>
 .home {

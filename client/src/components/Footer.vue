@@ -1,3 +1,16 @@
+<script>
+export default {
+  name: 'FooterSection',
+  props: {
+
+  },
+  components: {
+
+  },
+}
+
+</script>
+
 <template>
     <div class="footer">
         <div class="table">
@@ -92,20 +105,6 @@
         </div>
     </div>
 </template>
-  
-<script>
-
-export default {
-    name: 'FooterSection',
-    props: {
-
-    },
-    components: {
-
-    },
-}
-
-</script>
 
 <style scoped>
 
