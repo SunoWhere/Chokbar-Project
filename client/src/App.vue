@@ -32,7 +32,7 @@ export default {
   --c-ancient-green: #6D9777;
 
   /* Buttons */
-  --c-dark-grey: #1E1E1E;
+  --c-dark-grey: rgb(30, 30, 30, 0.8);
 
   /* Background colors */
   --c-background: #0C0F0B;

@@ -1,14 +1,17 @@
 <template>
   <div class="home">
+    <Banderole/>
     HOME
   </div>
 </template>
 
 <script>
+import Banderole from '@/components/Banderole.vue';
 
 export default {
   name: 'HomeView',
   components: {
+    Banderole
   },
   metaInfo() {
     return {

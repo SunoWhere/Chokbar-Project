@@ -14,6 +14,7 @@
       </li>
     </ul>
     <ul class="nav-list">
+      <li><button class="nav-btn">Dashboard</button></li>
       <li><button class="nav-item underline-animation"><font-awesome-icon icon="fa-solid fa-user" /> Se Connecter</button></li>
       <li><button class="nav-item underline-animation"><font-awesome-icon icon="fa-solid fa-cart-shopping" /> Panier</button></li>
       <li><button class="nav-item underline-animation">FR</button></li>
@@ -35,8 +36,7 @@ nav {
 img {
   height: 80%;
   width: auto;
-  margin: 0 10px;
-  margin-left: 15px;
+  margin: 0 10px 0 15px;
 }
 
 .nav-list {
@@ -58,6 +58,11 @@ img {
   cursor: pointer;
   margin: 0 10px;
   padding: 3px 0;
+}
+
+.nav-btn {
+  border: none;
+  background-color: ;
 }
 
 .underline-animation::after {
@@ -85,7 +90,6 @@ img {
 
 .dropdown-list {
   list-style: none;
-  /*display: none;*/
   opacity: 0;
   visibility: hidden;
   position: absolute;
@@ -98,7 +102,6 @@ img {
 }
 
 #dropdown:hover .dropdown-list {
-  /*display: block;*/
   opacity: 1;
   visibility: visible;
 }
@@ -120,10 +123,10 @@ img {
 <script>
 
 export default {
-    name: 'NavBar',
-    props: {
-            
-        },
+  name: 'NavBar',
+  props: {
+
+      },
   components: {
 
   },
