@@ -1,3 +1,17 @@
+<script>
+
+export default {
+  name: 'NavBar',
+  props: {
+
+  },
+  components: {
+
+  },
+}
+
+</script>
+
 <template>
   <nav>
     <img src="../assets/logo.png" alt="Logo EZCon">
@@ -14,6 +28,7 @@
       </li>
     </ul>
     <ul class="nav-list">
+      <li><button class="nav-btn">Dashboard</button></li>
       <li><button class="nav-item underline-animation"><font-awesome-icon icon="fa-solid fa-user" /> Se Connecter</button></li>
       <li><button class="nav-item underline-animation"><font-awesome-icon icon="fa-solid fa-cart-shopping" /> Panier</button></li>
       <li><button class="nav-item underline-animation">FR</button></li>
@@ -29,19 +44,18 @@ nav {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-
 }
 
 img {
   height: 80%;
   width: auto;
-  margin: 0 10px;
-  margin-left: 15px;
+  margin: 0 10px 0 15px;
 }
 
 .nav-list {
   list-style: none;
   display: flex;
+  align-items: center;
 }
 
 .nav-list:last-child {
@@ -58,6 +72,22 @@ img {
   cursor: pointer;
   margin: 0 10px;
   padding: 3px 0;
+}
+
+.nav-btn {
+  border: none;
+  border-radius: 10px;
+  background-color: var(--c-dark-grey);
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  margin-right: 10px;
+  padding: 13px 20px;
+  transition: background-color 0.15s ease
+}
+
+.nav-btn:hover {
+  background-color: var(--c-dark-grey-hover);
 }
 
 .underline-animation::after {
@@ -85,12 +115,12 @@ img {
 
 .dropdown-list {
   list-style: none;
-  /*display: none;*/
   opacity: 0;
   visibility: hidden;
   position: absolute;
   background-color: var(--c-ancient-green);
   min-width: 160px;
+  border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   padding: 10px 5px;
   z-index: 1;
@@ -98,7 +128,6 @@ img {
 }
 
 #dropdown:hover .dropdown-list {
-  /*display: block;*/
   opacity: 1;
   visibility: visible;
 }
@@ -116,17 +145,3 @@ img {
 }
 
 </style>
-  
-<script>
-
-export default {
-    name: 'NavBar',
-    props: {
-            
-        },
-  components: {
-
-  },
-}
-
-</script>
