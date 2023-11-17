@@ -17,49 +17,75 @@ export default {
         <div class="ezcon">
           <h4 class="title">EzCon</h4>
           <h5 class="footer-slogan">LE SALON FRANÇAIS DU JEU VIDEO</h5>
-          <p class="footer-presentation">But I must explain to you how all this mistaken idea of denouncing
-            pleasure and praising pain was born and I will give you a complete
-            account of the system, and expound the actual teachings of the grea
-            t explorer of the truth, the master-builder of human happiness. No
-            one rejects, dislikes, or avoids pleasure itself, because it is ple
-            asure, but because those who do not know how to pursue pleasure rat
-            ionally encounter consequences that are extremely painful. Nor again
+          <p id="fpr-1" class="footer-presentation">
+            La Paris Games Week est le plus grand salon français
+            de jeu vidéo, organisée par Comexposium, pour le compte
+            du S.E.LL. (Syndicat des Editeurs de Logiciels de Loisirs).
+          </p>
+          <p class="footer-presentation">
+            La Paris Games Week célèbre la pop-culture sous toutes ses
+            formes. Constructeurs, éditeurs, studios et accessoiristes
+            se réunissent pour présenter les nouveautés de fin d'année,
+            les jeux 2023 en avant-première, les innovations technologiq
+            ues, et les compétitions Esports.
           </p>
         </div>
 
         <div class="infos-pratiques">
-          <h4 class="title">INFOS PRATIQUES </h4>
-          <div class="button-container">
-            <div class="button">ceci est un lien</div>
-          </div>
+          <h4 class="title">INFORMATIONS </h4>
 
-          <div class="button-container">
-            <div class="button">ceci est un lien</div>
-          </div>
+          <div class="button">Dates, Horaires, Accès</div>
+          <div class="button">Billetterie</div>
+          <div class="button">Tarifs</div>
+          <div class="button">Questions fréquentes</div>
+        </div>
 
-          <div class="button-container">
-            <div class="button">ceci est un lien</div>
-          </div>
+        <div class="activities">
+          <h4 class="title">ACTIVITIES</h4>
 
-          <div class="button-container">
-            <div class="button">ceci est un lien</div>
-          </div>
+          <div class="button">Cosplay</div>
+          <div class="button">Esport</div>
         </div>
 
         <div class="apropos">
           <h4 class="title">À PROPOS</h4>
+
+          <div class="button">Mentions légales & GCU</div>
+          <div class="button">Politique de confidentalité</div>
+          <div class="button">Cookies</div>
         </div>
 
-        <div class="nous contacter">
-          <h4>NOUS CONTACTER</h4>
+        <div class="nous-contacter">
+          <h4 class="title">NOUS CONTACTER</h4>
+          <div class="mail-box">
+            <div class="mail-icon">
+              <font-awesome-icon icon="fa-solid fa-envelope" />
+            </div>
+            <div class="button mail-ref">
+              <a href="mailto:ezcon.exposition.com">ezcon.exposition.com</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="logo-reseaux">
+        <div class="fb">
+          <font-awesome-icon id="fb" class="logo" icon="fa-brands fa-facebook" />
+        </div>
+        <div class="x">
+          <font-awesome-icon id="x" class="logo" icon="fa-brands fa-square-x-twitter" />
+        </div>
+        <div class="tiktok">
+          <font-awesome-icon id="tiktok" class="logo" icon="fa-brands fa-tiktok" />
+        </div>
+        <div class="tiktok">
+          <font-awesome-icon id="instagram" class="logo" icon="fa-brands fa-instagram" />
         </div>
       </div>
 
       <div class="tfoot-container">
           <div class="tfoot">
-              <h4>EZCon @ 2023 | 20 au 25 MAI 2023 | ANDELNAN SALLE D'EXPOSITION</h4>
-          </div>
-          <div class="logos">
+              <h4>EZCon @ 2023 | Du 20 au 25 MAI 2023 | ANDELNAN SALLE D'EXPOSITION</h4>
           </div>
       </div>
     </div>
@@ -76,21 +102,18 @@ export default {
   justify-content: center;
   flex-direction: column;
 
-  --table-space: 40px;
-
   --columns-width: 25%;
   --last-column-width: 100%;
 
-  --footer-padding: 10%;
-  --logos-margin: 20%;
+  --footer-padding-left: 14%;
+  --footer-padding-right: 13%;
   --tfoot-container-height: 40px;
 
-  font-size: clamp(1.3rem, 1.1vw, 2.3rem);
+  font-size: clamp(0.5rem, 1.1vw, 1rem);
 }
 
 .main-container {
-  padding: 30px var(--footer-padding);
-
+  padding: 4vw var(--footer-padding-right) 0 var(--footer-padding-left);
   display: flex;
   justify-content: space-between;
   flex-direction: row;
@@ -110,6 +133,7 @@ export default {
 
 .footer-presentation {
   text-align: justify;
+  color: var(--c-component-background)
 }
 
 .infos-pratiques {
@@ -118,13 +142,14 @@ export default {
 }
 
 .tfoot-container {
-    width: 100%;
-    height: var(--tfoot-container-height);
-    background-color: var(--c-background);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: row;
+  font-size: clamp(0.1rem, 0.7vw, 1rem);
+  width: 100%;
+  height: var(--tfoot-container-height);
+  background-color: var(--c-background);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
 }
 
 .tfoot {
@@ -132,30 +157,13 @@ export default {
     text-align: left;
     margin-top: 20px;
     margin-bottom: 20px;
-    margin-left: var(--footer-padding);
-}
-
-.logos {
-    width: auto;
-    margin-right: var(--logos-margin);
-}
-
-.logo{
-    width: 3em;
-    height: 3em;
-    cursor: pointer;
-    margin-right: 1.5em;
-}
-
-.button-container {
-  margin: 10% 0px;
-  display: flex;
-  justify-content: flex-start;
+    margin-left: var(--footer-padding-left);
 }
 
 .button {
+  margin-bottom: 7%;
   text-align: left;
-  font-size: clamp(1rem, 1.1vw, 2rem);
+  font-size: clamp(0.5rem, 1.1vw, 1rem);
   background-color: transparent;
   color: white;
   border: none;
@@ -164,7 +172,57 @@ export default {
 }
 
 .button:hover {
-  color: #006EF0;
+  color: var(--c-black-olive);
+}
+
+.mail-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.mail-ref a {
+  color: white;
+  transition: color 0.1s ease-in-out;
+}
+
+.mail-ref a:hover {
+  color: var(--c-black-olive);
+}
+
+.mail-icon {
+  margin-right: 6px;
+}
+
+.logo-reseaux {
+  height: 4vw;
+  margin-right: var(--footer-padding-right);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: right;
+}
+
+#fpr-1 {
+  margin-bottom: 10%;
+}
+
+.logo {
+  --logos-height: 2.5rem;
+  height: var(--logos-height);
+  cursor: pointer;
+  margin: 0px 10px;
+  transition: transform 0.3s ease-in-out;
+  color: var(--c-dark-grey);
+}
+
+.logo:hover {
+  transform: scale(1.2);
+}
+
+#tiktok {
+  height: calc(var(--logos-height) - 0.3rem);
 }
 
 </style>
