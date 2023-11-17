@@ -57,6 +57,16 @@ body {
   background-color: var(--c-background);
 }
 
+::-moz-selection {
+  color: var(--c-dark-grey);
+  background: var(--c-light-green);
+}
+
+::selection {
+  color: var(--c-dark-grey);
+  background: var(--c-light-green);
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
 }
