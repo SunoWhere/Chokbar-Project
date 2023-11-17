@@ -169,10 +169,6 @@ export default {
 a{
   text-decoration: none;
 }
-::selection{
-  background-color: #fed000;
-  color: #242424;
-}
 #pricing-table{
   display: flex;
   justify-content: center;
