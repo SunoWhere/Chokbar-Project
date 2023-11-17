@@ -1,95 +1,54 @@
 <template>
     <div class="footer">
-        <div class="table">
-            <table id="first-table">
-                <thead>
-                    <tr>
-                        <th class="first-column">
-                            <h3>EZCon</h3>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <h4>LE SALON FRANÇAIS DU JEU VIDEO</h4>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed 
-                                do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                                Ut enim ad minim veniam, quis nost
-                            </p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+      <div class="main-container">
+        <div class="ezcon">
+          <h4 class="title">EzCon</h4>
+          <h5 class="footer-slogan">LE SALON FRANÇAIS DU JEU VIDEO</h5>
+          <p class="footer-presentation">But I must explain to you how all this mistaken idea of denouncing
+            pleasure and praising pain was born and I will give you a complete
+            account of the system, and expound the actual teachings of the grea
+            t explorer of the truth, the master-builder of human happiness. No
+            one rejects, dislikes, or avoids pleasure itself, because it is ple
+            asure, but because those who do not know how to pursue pleasure rat
+            ionally encounter consequences that are extremely painful. Nor again
+          </p>
+        </div>
 
-            <table id="scnd-table">
-                <thead>
-                    <tr>
-                        <th class="scnd-column">
-                            <h3>Infos pratiques</h3>
-                        </th>
-                        <th class="thrd-column">
-                            <h3>À propos</h3>
-                        </th>
-                        <th class="fourth-column">
-                            <h3>Nos réseaux</h3>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <button>ceci est un lien</button>
-                        </td>
-                        <td>
-                            <button>ceci est un lien</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button>ceci est un lien</button>
-                        </td>
-                        <td>
-                            <button>ceci est un lien</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button>ceci est un lien</button>
-                        </td>
-                        <td>
-                            <button>ceci est un lien</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button>ceci est un lien</button>
-                        </td>
-                        <td>
-                            <button>ceci est un lien</button>
-                        </td>
-                        <td>
-                            <img id="x" class="logo" src="../assets/reseaux-sociaux/X.png" alt="X logo"/>
-                            <img id="insta" class="logo" src="../assets/reseaux-sociaux/Insta.png" alt="Instagram logo"/>
-                            <img id="fb" class="logo" src="../assets/reseaux-sociaux/Fb.png" alt="Facebook logo"/>
-                            <img id="tiktok" class="logo" src="../assets/reseaux-sociaux/Tiktok.png" alt="Tiktok logo"/>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="infos-pratiques">
+          <h4 class="title">INFOS PRATIQUES </h4>
+          <div class="button-container">
+            <div class="button">ceci est un lien</div>
+          </div>
+
+          <div class="button-container">
+            <div class="button">ceci est un lien</div>
+          </div>
+
+          <div class="button-container">
+            <div class="button">ceci est un lien</div>
+          </div>
+
+          <div class="button-container">
+            <div class="button">ceci est un lien</div>
+          </div>
         </div>
-        <div class="tfoot-container">
-            <div class="tfoot">
-                <h4>EZCon @ 2023 | 20 au 25 MAI 2023 | ANDELNAN SALLE D'EXPOSITION</h4>
-            </div>
-            <div class="logos">
-            </div>
+
+        <div class="apropos">
+          <h4 class="title">À PROPOS</h4>
         </div>
+
+        <div class="nous contacter">
+          <h4>NOUS CONTACTER</h4>
+        </div>
+      </div>
+
+      <div class="tfoot-container">
+          <div class="tfoot">
+              <h4>EZCon @ 2023 | 20 au 25 MAI 2023 | ANDELNAN SALLE D'EXPOSITION</h4>
+          </div>
+          <div class="logos">
+          </div>
+      </div>
     </div>
 </template>
   
@@ -110,70 +69,53 @@ export default {
 <style scoped>
 
 .footer {
-    background-color: var(--c-asparagus);
-    color: white;
-    height: auto;
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+  background-color: var(--c-asparagus);
+  color: white;
+  height: auto;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 
-    --table-space: 40px;
+  --table-space: 40px;
 
-    --columns-width: 25%;
-    --last-column-width: 100%;
+  --columns-width: 25%;
+  --last-column-width: 100%;
 
-    --footer-margin: 10%;
-    --logos-margin: 20%;
-    --tfoot-container-height: 40px;
+  --footer-padding: 10%;
+  --logos-margin: 20%;
+  --tfoot-container-height: 40px;
+
+  font-size: clamp(1.3rem, 1.1vw, 2.3rem);
 }
 
-.table {
-    margin-left: var(--footer-margin);
-    margin-top: var(--table-space);
-    margin-bottom: var(--table-space);
-    display: flex;
-    flex-direction: row;
+.main-container {
+  padding: 30px var(--footer-padding);
+
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
 }
 
-#first-table {
-    width: 30%;
-    text-align: left;
-    margin-right: 5%;
+.ezcon {
+  width: var(--columns-width);
 }
 
-table {
-    width: 100%;
-    height: 90%;
-    padding-right: var(--footer-margin);
-    border-collapse: collapse;
+.title {
+  margin-bottom: 1.5em;
 }
 
-.scnd-column, .thrd-column {
-    width: var(--columns-width);
-    text-align: left;
+.footer-slogan {
+  margin-bottom: 1.5em;
 }
 
-.fourth-column {
-    width: var(--last-column-width);
-    text-align: left;
+.footer-presentation {
+  text-align: justify;
 }
 
-tbody button {
-    font-size: 1rem;
-}
-
-tbody td {
-    height: 40px;
-    text-align: justify;
-    padding-right: 3em;
-}
-
-tbody button {
-    background-color: transparent;
-    color: white;
-    border: none;
-    cursor: pointer;
+.infos-pratiques {
+  display: flex;
+  flex-direction: column;
 }
 
 .tfoot-container {
@@ -191,7 +133,7 @@ tbody button {
     text-align: left;
     margin-top: 20px;
     margin-bottom: 20px;
-    margin-left: var(--footer-margin);
+    margin-left: var(--footer-padding);
 }
 
 .logos {
@@ -204,6 +146,26 @@ tbody button {
     height: 3em;
     cursor: pointer;
     margin-right: 1.5em;
+}
+
+.button-container {
+  margin: 10% 0px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.button {
+  text-align: left;
+  font-size: clamp(1rem, 1.1vw, 2rem);
+  background-color: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: color 0.1s ease-in-out;
+}
+
+.button:hover {
+  color: #006EF0;
 }
 
 </style>
