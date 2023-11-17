@@ -212,8 +212,8 @@ export default {
   --logos-height: 2.5rem;
   height: var(--logos-height);
   cursor: pointer;
-  margin: 0px 10px;
-  transition: transform 0.3s ease-in-out;
+  margin: 0 10px;
+  transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
   color: var(--c-dark-grey);
 }
 
@@ -221,8 +221,20 @@ export default {
   transform: scale(1.2);
 }
 
-#tiktok {
-  height: calc(var(--logos-height) - 0.3rem);
+#fb:hover {
+  color: #006EF0;
+}
+
+#instagram:hover {
+  color: #4728d4;
+}
+
+#x:hover {
+  color: #070707;
+}
+
+#tiktok:hover {
+  color: #D20000;
 }
 
 </style>
