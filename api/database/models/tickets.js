@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('tickets', {
     id_ticket: {
+      autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
@@ -15,12 +16,12 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(256),
       allowNull: true
     },
-    id_ticket_day: {
+    id_ticket_type: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'ticket_days',
-        key: 'id_ticket_day'
+        model: 'ticket_types',
+        key: 'id_ticket_type'
       }
     },
     id_user: {

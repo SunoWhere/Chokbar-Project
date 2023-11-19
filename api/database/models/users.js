@@ -15,6 +15,14 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(256),
       allowNull: true
     },
+    first_name: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    last__name: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
     role: {
       type: DataTypes.INTEGER,
       allowNull: true

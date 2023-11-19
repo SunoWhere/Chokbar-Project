@@ -1,31 +1,31 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('entries', {
-    id_entry: {
+  return sequelize.define('ticket_types', {
+    id_ticket_type: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    id_user: {
-      type: DataTypes.UUID,
-      allowNull: false,
-      references: {
-        model: 'users',
-        key: 'uuid_user'
-      }
+    name: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    price: {
+      type: DataTypes.DECIMAL,
+      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'entries',
+    tableName: 'ticket_types',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "entries_pkey",
+        name: "ticket_types_pkey",
         unique: true,
         fields: [
-          { name: "id_entry" },
+          { name: "id_ticket_type" },
         ]
       },
     ]

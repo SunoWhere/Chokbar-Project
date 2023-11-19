@@ -1,27 +1,22 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('order_types', {
-    id_order_type: {
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
+  return sequelize.define('languages', {
+    name: {
+      type: DataTypes.STRING(10),
       allowNull: false,
       primaryKey: true
-    },
-    name: {
-      type: DataTypes.STRING(50),
-      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'order_types',
+    tableName: 'languages',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "order_types_pkey",
+        name: "languages_pkey",
         unique: true,
         fields: [
-          { name: "id_order_type" },
+          { name: "name" },
         ]
       },
     ]

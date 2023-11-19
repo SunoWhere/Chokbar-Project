@@ -1,23 +1,23 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('equipment_renting', {
-    id_equipment_rent: {
+  return sequelize.define('descriptions', {
+    id_description: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    quantity: {
+    desciption: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    id_provider: {
       type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    rent_date: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    return_date: {
-      type: DataTypes.DATE,
-      allowNull: true
+      allowNull: false,
+      references: {
+        model: 'providers',
+        key: 'id_provider'
+      }
     },
     id_stand: {
       type: DataTypes.INTEGER,
@@ -27,25 +27,33 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id_stand'
       }
     },
-    id_equipment: {
+    id_event: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'equipments',
-        key: 'id_equipment'
+        model: 'events',
+        key: 'id_event'
+      }
+    },
+    name: {
+      type: DataTypes.STRING(10),
+      allowNull: false,
+      references: {
+        model: 'languages',
+        key: 'name'
       }
     }
   }, {
     sequelize,
-    tableName: 'equipment_renting',
+    tableName: 'descriptions',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "equipment_renting_pkey",
+        name: "descriptions_pkey",
         unique: true,
         fields: [
-          { name: "id_equipment_rent" },
+          { name: "id_description" },
         ]
       },
     ]
