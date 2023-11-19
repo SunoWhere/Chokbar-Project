@@ -1,33 +1,69 @@
-DROP TABLE IF EXISTS events_rating, entries_rating, register_for, cart_lines, items, starring_stands, starring_events, products, events, equipment_renting, equipments, orders, tickets, stands, guests, locations, equipment_types, entries, order_types, ticket_days, stand_types, guest_categories, providers, location_sizes, product_types, users;
+DROP TABLE IF EXISTS events_images,
+    providers_images,
+    stands_images,
+    guests_images,
+    products_images,
+    equipments_images,
+    events_rating,
+    entries_rating,
+    register_for,
+    cart_lines,
+    items,
+    starring_stands,
+    starring_events,
+    descriptions,
+    products,
+    events,
+    equipment_renting,
+    equipments,
+    orders,
+    tickets,
+    stands,
+    guests,
+    locations,
+    images,
+    languages,
+    equipment_types,
+    entries,
+    order_types,
+    ticket_types,
+    stand_types,
+    guest_categories,
+    providers,
+    location_sizes,
+    product_types,
+    users;
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE users
 (
-    uuid_user uuid DEFAULT uuid_generate_v4(),
-    email     VARCHAR(256),
-    password  VARCHAR(256),
-    role      INT,
+    uuid_user  uuid DEFAULT uuid_generate_v4(),
+    email      VARCHAR(256),
+    password   VARCHAR(256),
+    first_name VARCHAR(50),
+    last__name VARCHAR(50),
+    role       INT,
     PRIMARY KEY (uuid_user)
 );
 
 CREATE TABLE product_types
 (
-    id_product_type INT,
+    id_product_type SERIAL,
     name            VARCHAR(50),
     PRIMARY KEY (id_product_type)
 );
 
 CREATE TABLE location_sizes
 (
-    id_location_size INT,
+    id_location_size SERIAL,
     name             VARCHAR(50),
     PRIMARY KEY (id_location_size)
 );
 
 CREATE TABLE providers
 (
-    id_provider INT,
+    id_provider SERIAL,
     name        VARCHAR(100),
     id_user     uuid NOT NULL,
     PRIMARY KEY (id_provider),
@@ -37,36 +73,36 @@ CREATE TABLE providers
 
 CREATE TABLE guest_categories
 (
-    id_guest_category INT,
+    id_guest_category SERIAL,
     name              VARCHAR(50),
     PRIMARY KEY (id_guest_category)
 );
 
 CREATE TABLE stand_types
 (
-    id_stand_type INT,
+    id_stand_type SERIAL,
     name          VARCHAR(50),
     PRIMARY KEY (id_stand_type)
 );
 
-CREATE TABLE ticket_days
+CREATE TABLE ticket_types
 (
-    id_ticket_day INT,
-    name          VARCHAR(50),
-    price         DECIMAL(4, 2),
-    PRIMARY KEY (id_ticket_day)
+    id_ticket_type SERIAL,
+    name           VARCHAR(50),
+    price          DECIMAL(4, 2),
+    PRIMARY KEY (id_ticket_type)
 );
 
 CREATE TABLE order_types
 (
-    id_order_type INT,
+    id_order_type SERIAL,
     name          VARCHAR(50),
     PRIMARY KEY (id_order_type)
 );
 
 CREATE TABLE entries
 (
-    id_entry INT,
+    id_entry SERIAL,
     id_user  uuid NOT NULL,
     PRIMARY KEY (id_entry),
     FOREIGN KEY (id_user) REFERENCES users (uuid_user)
@@ -74,14 +110,26 @@ CREATE TABLE entries
 
 CREATE TABLE equipment_types
 (
-    id_equipment_type INT,
+    id_equipment_type SERIAL,
     name              VARCHAR(50),
     PRIMARY KEY (id_equipment_type)
 );
 
+CREATE TABLE images
+(
+    image VARCHAR(50),
+    PRIMARY KEY (image)
+);
+
+CREATE TABLE languages
+(
+    name VARCHAR(10),
+    PRIMARY KEY (name)
+);
+
 CREATE TABLE locations
 (
-    id_location      INT,
+    id_location      SERIAL,
     code             VARCHAR(3),
     id_location_size INT NOT NULL,
     PRIMARY KEY (id_location),
@@ -90,7 +138,7 @@ CREATE TABLE locations
 
 CREATE TABLE guests
 (
-    id_guest          INT,
+    id_guest          SERIAL,
     name              VARCHAR(100),
     id_guest_category INT NOT NULL,
     PRIMARY KEY (id_guest),
@@ -99,7 +147,7 @@ CREATE TABLE guests
 
 CREATE TABLE stands
 (
-    id_stand      INT,
+    id_stand      SERIAL,
     id_location   INT NOT NULL,
     id_provider   INT NOT NULL,
     id_stand_type INT NOT NULL,
@@ -112,20 +160,20 @@ CREATE TABLE stands
 
 CREATE TABLE tickets
 (
-    id_ticket     INT,
-    hash          VARCHAR(256) NOT NULL,
-    email         VARCHAR(256),
-    id_ticket_day INT          NOT NULL,
-    id_user       uuid         NOT NULL,
+    id_ticket      SERIAL,
+    hash           VARCHAR(256) NOT NULL,
+    email          VARCHAR(256),
+    id_ticket_type INT          NOT NULL,
+    id_user        uuid         NOT NULL,
     PRIMARY KEY (id_ticket),
     UNIQUE (hash),
-    FOREIGN KEY (id_ticket_day) REFERENCES ticket_days (id_ticket_day),
+    FOREIGN KEY (id_ticket_type) REFERENCES ticket_types (id_ticket_type),
     FOREIGN KEY (id_user) REFERENCES users (uuid_user)
 );
 
 CREATE TABLE orders
 (
-    id_order      INT,
+    id_order      SERIAL,
     hash          VARCHAR(256),
     id_order_type INT  NOT NULL,
     id_user       uuid NOT NULL,
@@ -137,7 +185,7 @@ CREATE TABLE orders
 
 CREATE TABLE equipments
 (
-    id_equipment      INT,
+    id_equipment      SERIAL,
     total_quantity    INT,
     name              VARCHAR(50),
     id_equipment_type INT NOT NULL,
@@ -147,7 +195,7 @@ CREATE TABLE equipments
 
 CREATE TABLE equipment_renting
 (
-    id_equipment_rent INT,
+    id_equipment_rent SERIAL,
     quantity          INT,
     rent_date         TIMESTAMP WITH TIME ZONE,
     return_date       TIMESTAMP WITH TIME ZONE,
@@ -160,7 +208,7 @@ CREATE TABLE equipment_renting
 
 CREATE TABLE events
 (
-    id_event       INT,
+    id_event       SERIAL,
     name           VARCHAR(50),
     max_capacity   INT,
     starting_time  TIMESTAMP WITH TIME ZONE,
@@ -172,7 +220,7 @@ CREATE TABLE events
 
 CREATE TABLE products
 (
-    id_product      INT,
+    id_product      SERIAL,
     name            VARCHAR(50),
     price           DECIMAL(6, 2),
     quantity        INT,
@@ -181,6 +229,21 @@ CREATE TABLE products
     PRIMARY KEY (id_product),
     FOREIGN KEY (id_stand) REFERENCES stands (id_stand),
     FOREIGN KEY (id_product_type) REFERENCES product_types (id_product_type)
+);
+
+CREATE TABLE descriptions
+(
+    id_description SERIAL,
+    desciption     TEXT,
+    id_provider    INT         NOT NULL,
+    id_stand       INT         NOT NULL,
+    id_event       INT         NOT NULL,
+    name           VARCHAR(10) NOT NULL,
+    PRIMARY KEY (id_description),
+    FOREIGN KEY (id_provider) REFERENCES providers (id_provider),
+    FOREIGN KEY (id_stand) REFERENCES stands (id_stand),
+    FOREIGN KEY (id_event) REFERENCES events (id_event),
+    FOREIGN KEY (name) REFERENCES languages (name)
 );
 
 CREATE TABLE starring_events
@@ -248,4 +311,58 @@ CREATE TABLE events_rating
     PRIMARY KEY (id_user, id_event),
     FOREIGN KEY (id_user) REFERENCES users (uuid_user),
     FOREIGN KEY (id_event) REFERENCES events (id_event)
+);
+
+CREATE TABLE events_images
+(
+    id_event INT,
+    image    VARCHAR(50),
+    PRIMARY KEY (id_event, image),
+    FOREIGN KEY (id_event) REFERENCES events (id_event),
+    FOREIGN KEY (image) REFERENCES images (image)
+);
+
+CREATE TABLE providers_images
+(
+    id_provider INT,
+    image       VARCHAR(50),
+    PRIMARY KEY (id_provider, image),
+    FOREIGN KEY (id_provider) REFERENCES providers (id_provider),
+    FOREIGN KEY (image) REFERENCES images (image)
+);
+
+CREATE TABLE stands_images
+(
+    id_stand INT,
+    image    VARCHAR(50),
+    PRIMARY KEY (id_stand, image),
+    FOREIGN KEY (id_stand) REFERENCES stands (id_stand),
+    FOREIGN KEY (image) REFERENCES images (image)
+);
+
+CREATE TABLE guests_images
+(
+    id_guest INT,
+    image    VARCHAR(50),
+    PRIMARY KEY (id_guest, image),
+    FOREIGN KEY (id_guest) REFERENCES guests (id_guest),
+    FOREIGN KEY (image) REFERENCES images (image)
+);
+
+CREATE TABLE products_images
+(
+    id_product INT,
+    image      VARCHAR(50),
+    PRIMARY KEY (id_product, image),
+    FOREIGN KEY (id_product) REFERENCES products (id_product),
+    FOREIGN KEY (image) REFERENCES images (image)
+);
+
+CREATE TABLE Equipments_images
+(
+    id_equipment INT,
+    image        VARCHAR(50),
+    PRIMARY KEY (id_equipment, image),
+    FOREIGN KEY (id_equipment) REFERENCES equipments (id_equipment),
+    FOREIGN KEY (image) REFERENCES images (image)
 );
