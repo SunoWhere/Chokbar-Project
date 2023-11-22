@@ -38,7 +38,7 @@ export default {
     </ul>
     <ul class="nav-list">
       <li v-if="parseInt(selectedRole) !== 0" ><button class="nav-btn">Dashboard</button></li>
-      <li><button class="nav-item underline-animation"><font-awesome-icon icon="fa-solid fa-user" /> Se Connecter</button></li>
+      <li><button class="nav-item underline-animation" @click="$router.push('/Login')"><font-awesome-icon icon="fa-solid fa-user" /> Se Connecter</button></li>
       <li><button class="nav-item underline-animation"><font-awesome-icon icon="fa-solid fa-cart-shopping" /> Panier</button></li>
       <li><button class="nav-item underline-animation">FR</button></li>
     </ul>
@@ -76,7 +76,7 @@ img {
   position: relative;
   border: none;
   background-color: transparent;
-  color: white;
+  color: var(--c-text);
   font-size: 18px;
   cursor: pointer;
   margin: 0 10px;
@@ -87,7 +87,7 @@ img {
   border: none;
   border-radius: 10px;
   background-color: var(--c-dark-grey);
-  color: white;
+  color: var(--c-text);
   font-size: 18px;
   cursor: pointer;
   margin-right: 10px;
@@ -146,7 +146,7 @@ img {
   position: relative;
   border: none;
   background-color: transparent;
-  color: white;
+  color: var(--c-text);
   font-size: 18px;
   cursor: pointer;
   margin: 0 10px;
@@ -157,7 +157,7 @@ img {
   border: solid 1px black;
   border-radius: 8px;
   background-color: var(--c-asparagus);
-  color: white;
+  color: var(--c-text);
   font-size: 18px;
 }
 

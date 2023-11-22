@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import BilletterieView from '@/views/BilletterieView.vue';
 import DashboardView from "@/views/DashboardView.vue";
+import LoginView from '@/views/LoginView.vue';
 
 Vue.use(VueRouter)
 
@@ -19,9 +20,14 @@ const routes = [
   },
   {
     path: '/Dashboard',
-    name: 'Sashboard',
+    name: 'Dashboard',
     component: DashboardView
   },
+  {
+    path: '/Login',
+    name: 'Login',
+    component: LoginView
+  }
 ]
 
 const router = new VueRouter({
