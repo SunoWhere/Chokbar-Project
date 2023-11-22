@@ -45,6 +45,9 @@ export default {
 
   /* Others */
   --c-accent-color: #C4A14A;
+
+  /* Texts */
+  --c-text: white;
 }
 
 * {
