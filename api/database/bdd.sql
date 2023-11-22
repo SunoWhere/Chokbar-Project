@@ -32,19 +32,29 @@ DROP TABLE IF EXISTS events_images,
     providers,
     location_sizes,
     product_types,
-    users;
+    users,
+    roles;
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+CREATE TABLE roles
+(
+    id_role SERIAL,
+    name    VARCHAR(50),
+    PRIMARY KEY (id_role)
+);
+
 
 CREATE TABLE users
 (
     uuid_user  uuid DEFAULT uuid_generate_v4(),
-    email      VARCHAR(256),
-    password   VARCHAR(256),
+    email      VARCHAR(100) UNIQUE,
+    password   VARCHAR(64),
     first_name VARCHAR(50),
-    last__name VARCHAR(50),
-    role       INT,
-    PRIMARY KEY (uuid_user)
+    last_name  VARCHAR(50),
+    id_role    INT NOT NULL,
+    PRIMARY KEY (uuid_user),
+    FOREIGN KEY (id_role) REFERENCES roles (id_role)
 );
 
 CREATE TABLE product_types
@@ -366,3 +376,6 @@ CREATE TABLE Equipments_images
     FOREIGN KEY (id_equipment) REFERENCES equipments (id_equipment),
     FOREIGN KEY (image) REFERENCES images (image)
 );
+
+
+INSERT INTO roles(name) VALUES ('user'), ('provider'), ('admin');

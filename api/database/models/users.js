@@ -8,24 +8,29 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     email: {
-      type: DataTypes.STRING(256),
-      allowNull: true
+      type: DataTypes.STRING(100),
+      allowNull: true,
+      unique: "users_email_key"
     },
     password: {
-      type: DataTypes.STRING(256),
+      type: DataTypes.STRING(64),
       allowNull: true
     },
     first_name: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    last__name: {
+    last_name: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    role: {
+    id_role: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: false,
+      references: {
+        model: 'roles',
+        key: 'id_role'
+      }
     }
   }, {
     sequelize,
@@ -33,6 +38,13 @@ module.exports = function(sequelize, DataTypes) {
     schema: 'public',
     timestamps: false,
     indexes: [
+      {
+        name: "users_email_key",
+        unique: true,
+        fields: [
+          { name: "email" },
+        ]
+      },
       {
         name: "users_pkey",
         unique: true,

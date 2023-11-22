@@ -26,6 +26,7 @@ var _products_images = require("./products_images");
 var _providers = require("./providers");
 var _providers_images = require("./providers_images");
 var _register_for = require("./register_for");
+var _roles = require("./roles");
 var _stand_types = require("./stand_types");
 var _stands = require("./stands");
 var _stands_images = require("./stands_images");
@@ -63,6 +64,7 @@ function initModels(sequelize) {
   var providers = _providers(sequelize, DataTypes);
   var providers_images = _providers_images(sequelize, DataTypes);
   var register_for = _register_for(sequelize, DataTypes);
+  var roles = _roles(sequelize, DataTypes);
   var stand_types = _stand_types(sequelize, DataTypes);
   var stands = _stands(sequelize, DataTypes);
   var stands_images = _stands_images(sequelize, DataTypes);
@@ -164,6 +166,8 @@ function initModels(sequelize) {
   providers.hasMany(providers_images, { as: "providers_images", foreignKey: "id_provider"});
   stands.belongsTo(providers, { as: "id_provider_provider", foreignKey: "id_provider"});
   providers.hasMany(stands, { as: "stands", foreignKey: "id_provider"});
+  users.belongsTo(roles, { as: "id_role_role", foreignKey: "id_role"});
+  roles.hasMany(users, { as: "users", foreignKey: "id_role"});
   stands.belongsTo(stand_types, { as: "id_stand_type_stand_type", foreignKey: "id_stand_type"});
   stand_types.hasMany(stands, { as: "stands", foreignKey: "id_stand_type"});
   descriptions.belongsTo(stands, { as: "id_stand_stand", foreignKey: "id_stand"});
@@ -221,6 +225,7 @@ function initModels(sequelize) {
     providers,
     providers_images,
     register_for,
+    roles,
     stand_types,
     stands,
     stands_images,

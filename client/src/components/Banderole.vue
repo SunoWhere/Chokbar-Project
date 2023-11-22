@@ -14,7 +14,7 @@ export default {
       <h2>20 - 25 Mai 2024</h2>
     </div>
     <div class="shop-btn">
-      <button>Billetterie</button>
+      <button @click="$router.push('/Billetterie')">Billetterie</button>
     </div>
   </div>
 </template>

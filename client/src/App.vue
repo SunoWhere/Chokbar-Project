@@ -33,6 +33,8 @@ export default {
   /* Buttons */
   --c-dark-grey: rgba(32, 31, 31, 0.8);
   --c-dark-grey-hover: rgba(47, 47, 47, 0.8);
+  --c-btn-green: #00BF6F;
+  --c-btn-green-hover: #009b5a;
 
   /* Background colors */
   --c-background: #0C0F0B;
