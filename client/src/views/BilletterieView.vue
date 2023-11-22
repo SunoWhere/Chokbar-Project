@@ -239,6 +239,7 @@ section{
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  max-height: fit-content;
 }
 
 .box-top-section{
@@ -287,12 +288,12 @@ section{
 }
 .plan-name strong{
   color:#19181e;
-  font-size: 1.5rem;
+  font-size: 24px;
   margin: 5px 0px;
 }
 .plan-name span{
   color: #2b2a31;
-  font-size: 0.8rem;
+  font-size: 12.8px;
 }
 
 .price-section{
@@ -303,11 +304,11 @@ section{
   margin: 5px;
 }
 .price strong{
-  font-size: 4rem;
+  font-size: 64px;
   color: #19181e;
 }
 .price span{
-  font-size: 2rem;
+  font-size: 32px;
   padding: 0px;
   margin: 0px;
   color: #292929;
@@ -349,19 +350,19 @@ section{
   display: flex;
   color: var(--c-crud-vert);
   margin-right: 7px;
-  font-size: 0.9rem;
+  font-size: 14.4px;
 }
 
 .cross-icon{
   display: flex;
   color: var(--c-crud-rouge);
   margin-right: 7px;
-  font-size: 0.9rem;
+  font-size: 14.4px;
 }
 
 .features-box span{
   color: #242424;
-  font-size: 0.8rem;
+  font-size: 12.8px;
 }
 .features-box:hover{
   background-color: #f6f6f7;
@@ -390,7 +391,7 @@ section{
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 0.9rem;
+  font-size: 14.4px;
   border-radius: 20px;
   padding: 10px 25px;
   color: #ffffff;
