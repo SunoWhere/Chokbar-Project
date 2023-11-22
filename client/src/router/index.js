@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import BilletterieView from '../views/BilletterieView.vue';
+import HomeView from '@/views/HomeView.vue'
+import BilletterieView from '@/views/BilletterieView.vue';
+import DashboardView from "@/views/DashboardView.vue";
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,11 @@ const routes = [
     path: '/Billetterie',
     name: 'Billetterie',
     component: BilletterieView
+  },
+  {
+    path: '/Dashboard',
+    name: 'Sashboard',
+    component: DashboardView
   },
 ]
 
