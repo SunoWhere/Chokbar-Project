@@ -27,7 +27,12 @@ const routes = [
     path: '/Login',
     name: 'Login',
     component: LoginView
-  }
+  },
+    {
+    path: '/Billetterie/checkout',
+    name: 'Checkout',
+    component: CheckoutView
+    }
 ]
 
 const router = new VueRouter({
