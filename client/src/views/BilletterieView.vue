@@ -246,6 +246,7 @@ section{
   justify-content: center;
   margin-top: 30px;
   flex-wrap: wrap;
+  height: auto;
 }
 
 .price-box{
