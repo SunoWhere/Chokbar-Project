@@ -37,7 +37,7 @@ export default {
       </li>
     </ul>
     <ul class="nav-list">
-      <li v-if="parseInt(selectedRole) !== 0" ><button class="nav-btn">Dashboard</button></li>
+      <li v-if="parseInt(selectedRole) !== 0" ><button class="nav-btn" @click="$router.push('/Dashboard')">Dashboard</button></li>
       <li><button class="nav-item underline-animation" @click="$router.push('/Login')"><font-awesome-icon icon="fa-solid fa-user" /> Se Connecter</button></li>
       <li><button class="nav-item underline-animation"><font-awesome-icon icon="fa-solid fa-cart-shopping" /> Panier</button></li>
       <li><button class="nav-item underline-animation">FR</button></li>

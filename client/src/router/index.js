@@ -4,6 +4,7 @@ import HomeView from '@/views/HomeView.vue'
 import BilletterieView from '@/views/BilletterieView.vue';
 import DashboardView from "@/views/DashboardView.vue";
 import LoginView from '@/views/LoginView.vue';
+import RegisterView from '@/views/RegisterView.vue';
 import CheckoutView from '@/views/CheckoutView.vue';
 
 Vue.use(VueRouter)
@@ -29,11 +30,16 @@ const routes = [
     name: 'Login',
     component: LoginView
   },
-    {
-    path: '/Billetterie/checkout',
-    name: 'Checkout',
-    component: CheckoutView
-    }
+  {
+    path: '/Register',
+    name: 'Register',
+    component: RegisterView
+  },
+  {
+  path: '/Billetterie/checkout',
+  name: 'Checkout',
+  component: CheckoutView
+  }
 ]
 
 const router = new VueRouter({

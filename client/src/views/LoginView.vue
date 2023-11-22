@@ -39,7 +39,7 @@
 
         <button type="submit">Login</button>
 
-        <a id="no-account" href="/register">Don't have an account? Register now!</a>
+        <a id="no-account" @click="$router.push('/Register')">Vous n'avez pas de compte ? S'inscrire maintenant !</a>
       </form>
     </div>
   </div>
