@@ -3,10 +3,11 @@ const usersController = require("../controllers/users.controller")
 const usersMiddleware = require("../middlewares/users.middleware")
 var router = express.Router()
 
-router.get("/")
-router.get("/:uuid")
+router.get("/", usersController.getUsers)
+router.get("/login", usersController.verifyLogin)
+router.get("/:uuid", usersController.getUserByID)
 
-router.post("/")
+router.post("/", usersMiddleware.validateUserInput, usersController.saveUser)
 
 router.put("/:uuid")
 

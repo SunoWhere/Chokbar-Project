@@ -15,7 +15,6 @@ app.use("/users", usersRoutes)
 app.use("/providers", providersRoutes)
 app.use("/stands", standsRoutes)
 app.use("/events", eventsRoutes)
-app.use("/admin", adminRoutes)
 
 
 // app.post("/login", ...)
