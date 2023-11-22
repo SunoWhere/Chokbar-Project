@@ -4,6 +4,7 @@ import HomeView from '@/views/HomeView.vue'
 import BilletterieView from '@/views/BilletterieView.vue';
 import DashboardView from "@/views/DashboardView.vue";
 import LoginView from '@/views/LoginView.vue';
+import CheckoutView from '@/views/CheckoutView.vue';
 
 Vue.use(VueRouter)
 
