@@ -2,12 +2,14 @@
 
 export default {
   name: 'NavBar',
-  props: {
-
-  },
-  components: {
-
-  },
+  data: () => ({
+    selectedRole: "0",
+  }),
+  methods: {
+    updateSelectedRole() {
+      this.$store.dispatch('setSelectedRole', this.selectedRole);
+    }
+  }
 }
 
 </script>
@@ -20,15 +22,22 @@ export default {
       <li><button class="nav-item underline-animation">Map</button></li>
       <li><button class="nav-item underline-animation" @click="$router.push('/Billetterie')">Billetterie</button></li>
       <li id="dropdown">
-        <button class="nav-item dropdown">A Propos</button>
+        <button class="nav-item dropdown">A Propos <font-awesome-icon icon="fa-solid fa-chevron-down" /></button>
         <ul class="dropdown-list">
           <li><button class="dropdown-item underline-animation">La EZCon</button></li>
           <li><button class="dropdown-item underline-animation">A Découvrir</button></li>
         </ul>
       </li>
+      <li>
+        <select v-model="selectedRole" @change="updateSelectedRole" name="role" id="role-selector">
+          <option value="0">user</option>
+          <option value="1">prestataire</option>
+          <option value="2">admin</option>
+        </select>
+      </li>
     </ul>
     <ul class="nav-list">
-      <li><button class="nav-btn">Dashboard</button></li>
+      <li v-if="parseInt(selectedRole) !== 0" ><button class="nav-btn">Dashboard</button></li>
       <li><button class="nav-item underline-animation"><font-awesome-icon icon="fa-solid fa-user" /> Se Connecter</button></li>
       <li><button class="nav-item underline-animation"><font-awesome-icon icon="fa-solid fa-cart-shopping" /> Panier</button></li>
       <li><button class="nav-item underline-animation">FR</button></li>
@@ -142,6 +151,14 @@ img {
   cursor: pointer;
   margin: 0 10px;
   padding: 3px 0;
+}
+
+#role-selector {
+  border: solid 1px black;
+  border-radius: 8px;
+  background-color: var(--c-asparagus);
+  color: white;
+  font-size: 18px;
 }
 
 </style>

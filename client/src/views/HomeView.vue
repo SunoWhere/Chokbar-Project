@@ -4,7 +4,12 @@ import Banderole from '@/components/Banderole.vue';
 export default {
   name: 'HomeView',
   components: {
-    Banderole
+    Banderole,
+  },
+  computed: {
+    selectedRole() {
+      return this.$store.state.selectedRole;
+    }
   },
   metaInfo() {
     return {
@@ -18,6 +23,7 @@ export default {
   <div class="home">
     <Banderole/>
     HOME
+    {{ selectedRole }}
   </div>
 </template>
 

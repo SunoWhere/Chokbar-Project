@@ -18,16 +18,19 @@ export default {
           <h4 class="title">EzCon</h4>
           <h5 class="footer-slogan">LE SALON FRANÇAIS DU JEU VIDEO</h5>
           <p id="fpr-1" class="footer-presentation">
-            La Paris Games Week est le plus grand salon français
-            de jeu vidéo, organisée par Comexposium, pour le compte
-            du S.E.LL. (Syndicat des Editeurs de Logiciels de Loisirs).
+            At vero eos et accusamus et iusto odio dignissimos ducimus qui
+            blanditiis praesentium voluptatum deleniti atque corrupti quos
+            dolores et quas molestias excepturi sint occaecati cupiditate
+            non provident, similique sunt in culpa qui officia deserunt
           </p>
           <p class="footer-presentation">
-            La Paris Games Week célèbre la pop-culture sous toutes ses
-            formes. Constructeurs, éditeurs, studios et accessoiristes
-            se réunissent pour présenter les nouveautés de fin d'année,
-            les jeux 2023 en avant-première, les innovations technologiq
-            ues, et les compétitions Esports.
+            At vero eos et accusamus et iusto odio dignissimos ducimus
+            qui blanditiis praesentium voluptatum deleniti atque corrupti
+            quos dolores et quas molestias excepturi sint occaecati cupiditate
+            non provident, similique sunt in culpa qui officia deserunt mollitia
+            animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis
+            est et expedita distinctio. Nam libero tempore, cum soluta nobis est
+            eligendi optio cumque nihil impedit quo minu
           </p>
         </div>
 
