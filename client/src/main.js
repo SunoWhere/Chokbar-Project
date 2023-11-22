@@ -9,14 +9,13 @@ Vue.use(VueMeta);
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-import {faUser, faCartShopping, faEnvelope} from '@fortawesome/free-solid-svg-icons'
-import {faFacebook, faInstagram, faSquareXTwitter, faTiktok} from "@fortawesome/free-brands-svg-icons"; // Solid Icons
+import {faUser, faCartShopping, faEnvelope, faChevronDown} from '@fortawesome/free-solid-svg-icons' // Solid Icons
 // import { regular } from '@fortawesome/free-regular-svg-icons' // Regular Icons
-// import { brands } from '@fortawesome/free-brands-svg-icons' // Brands Icons
+import {faFacebook, faInstagram, faSquareXTwitter, faTiktok} from "@fortawesome/free-brands-svg-icons"; // Brands Icons
 
-library.add(faUser, faCartShopping, faEnvelope, faFacebook, faSquareXTwitter, faTiktok, faInstagram); // Solid Icons
+library.add(faUser, faCartShopping, faEnvelope, faChevronDown); // Solid Icons
 library.add(); // Regular Icons
-library.add(); // Brands Icons
+library.add(faFacebook, faSquareXTwitter, faTiktok, faInstagram); // Brands Icons
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 

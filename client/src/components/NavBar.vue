@@ -20,7 +20,7 @@ export default {
       <li><button class="nav-item underline-animation">Map</button></li>
       <li><button class="nav-item underline-animation" @click="$router.push('/Billetterie')">Billetterie</button></li>
       <li id="dropdown">
-        <button class="nav-item dropdown">A Propos</button>
+        <button class="nav-item dropdown">A Propos <font-awesome-icon icon="fa-solid fa-chevron-down" /></button>
         <ul class="dropdown-list">
           <li><button class="dropdown-item underline-animation">La EZCon</button></li>
           <li><button class="dropdown-item underline-animation">A Découvrir</button></li>
