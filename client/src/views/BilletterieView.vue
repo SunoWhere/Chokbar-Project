@@ -233,6 +233,14 @@ section{
   height: calc(100vh - 80px);
 }
 
+#pricing-table{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 .box-top-section{
   display: flex;
   justify-content: center;
