@@ -106,7 +106,7 @@ export default {
             <div class="check-icon">
               <font-awesome-icon icon="fa-solid fa-check" />
             </div>
-            <span>Événement</span>
+            <span>Événements</span>
           </div>
           <div class="features-box">
             <div class="check-icon">
@@ -253,9 +253,9 @@ section{
 .price-box-container{
   display: flex;
   justify-content: center;
-  margin-top: 30px;
+  align-items: center;
   flex-wrap: wrap;
-  height: auto;
+  height: 855px;
 }
 
 .price-box{
