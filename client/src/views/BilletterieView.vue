@@ -27,7 +27,7 @@ export default {
               <span>€</span>
             </strong>
           </div>
-          <a href="#" class="Choose-plan-btn">Réserver</a>
+          <a class="Choose-plan-btn" @click="$router.push('/Billetterie/checkout')">Réserver</a>
         </div>
         <div class="box-features-section">
           <div class="box-features-title">
@@ -96,7 +96,7 @@ export default {
               <span>€</span>
             </strong>
           </div>
-          <a href="#" class="Choose-plan-btn">Réserver </a>
+          <a class="Choose-plan-btn" @click="$router.push('/Billetterie/checkout')">Réserver </a>
         </div>
         <div class="box-features-section">
           <div class="box-features-title">
@@ -162,7 +162,7 @@ export default {
               <span>€</span>
             </strong>
           </div>
-          <a href="#" class="Choose-plan-btn">Réserver<i class="fas fa-chevron-right"></i></a>
+          <a class="Choose-plan-btn"  @click="$router.push('/Billetterie/checkout')">Réserver</a>
         </div>
         <div class="box-features-section">
           <div class="box-features-title">
@@ -379,6 +379,7 @@ section{
   background-color: var(--c-asparagus);
   padding: 10px;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .top-bar{
