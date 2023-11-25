@@ -1,13 +1,16 @@
 <template>
-  <div>
+  <div id="links-contener">
     <router-link v-for="link in links" :key="link.route" :to="link.route">
-      {{ link.label }}
+      <div class="link">
+        {{ link.label }}
+      </div>
     </router-link>
   </div>
 </template>
 
 <script>
 export default {
+  name: 'SideBar',
   props: {
     userType: {
       type: String,
@@ -16,22 +19,21 @@ export default {
   },
   computed: {
     links() {
-      // Définissez les liens en fonction du type d'utilisateur
-      if (this.userType === 'admin') {
+      console.log(this.userType);
+      if (this.userType === '2') {
         return [
           { label: 'User', route: '/admin/user' },
           { label: 'Intervenants', route: '/admin/intervenants' },
           { label: 'Produits', route: '/admin/produits' },
           { label: 'Calendrier', route: '/admin/calendrier' }
         ];
-      } else if (this.userType === 'intervenant') {
+      } else if (this.userType === '1') {
         return [
-          { label: 'User', route: '/intervenant/user' },
           { label: 'Produits', route: '/intervenant/produits' },
-          { label: 'Calendrier', route: '/intervenant/calendrier' }
+          { label: 'Stands', route: '/intervenant/stands' },
+          { label: 'Events', route: '/intervenant/events'},
         ];
       } else {
-        // Gérez d'autres types d'utilisateurs si nécessaire
         return [];
       }
     }
@@ -40,5 +42,26 @@ export default {
 </script>
 
 <style>
-/* Ajoutez vos styles ici */
+
+#links-contener {
+  background-color: var(--c-black-olive);
+  width: 15%;
+  height: 100%;
+  padding-left: 3%;
+  padding-top: 3%;
+  display: flex;
+  flex-direction: column;
+}
+
+.link:hover {
+  color: var(--c-asparagus);
+}
+
+.link {
+  text-decoration: none;
+  color: var(--c-text);
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
 </style>

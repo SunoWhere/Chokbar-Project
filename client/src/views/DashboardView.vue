@@ -1,32 +1,45 @@
-<script setup>
-import SideBar from '@/components/Sidebar.vue';
-import NavBar from "@/components/NavBar.vue";
+<script>
+import SideBar from '@/components/SideBar.vue';
+import DashboardContentAdmin from '@/components/DashboardContentAdmin.vue';
 
 export default {
   name: 'DashboardView',
   components: {
-    SideBar
+    SideBar,
+    DashboardContentAdmin
   },
   metaInfo() {
     return {
       title: 'Dashboard'
     }
-  }
+  },
+  computed: {
+    selectedRole() {
+      return this.$store.state.selectedRole;
+    }
+  },
 }
 </script>
 
 <template>
-  <div>
-    <NavBar/>
-    <div class="dashboard-container">
-      <SideBar />
-      <DashboardContent />
+  <div class="dashboard-container">
+    <SideBar :user-type="selectedRole"/>
+    <div id="dc" v-if="selectedRole === '2'">
+      <DashboardContentAdmin/>
     </div>
   </div>
 </template>
 
-<style scoped>
+<style>
 
+.dashboard-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
 
+#dc {
+  width: 100%;
+}
 
 </style>

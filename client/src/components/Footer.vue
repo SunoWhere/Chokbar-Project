@@ -98,7 +98,7 @@ export default {
 
 .footer {
   background-color: var(--c-asparagus);
-  color: white;
+  color: var(--c-text);
   height: auto;
   display: flex;
   justify-content: center;
@@ -167,7 +167,7 @@ export default {
   text-align: left;
   font-size: clamp(0.5rem, 1.1vw, 1rem);
   background-color: transparent;
-  color: white;
+  color: var(--c-text);
   border: none;
   cursor: pointer;
   transition: color 0.1s ease-in-out;
@@ -184,7 +184,7 @@ export default {
 }
 
 .mail-ref a {
-  color: white;
+  color: var(--c-text);
   transition: color 0.1s ease-in-out;
 }
 

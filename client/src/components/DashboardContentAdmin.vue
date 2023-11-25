@@ -1,0 +1,104 @@
+<template>
+  <div id="dashboard-content-container">
+    <div id="cards">
+      <InfosCard :number="2500" :text="'Total Users'" data-type="user"/>
+      <InfosCard :number="60" :text="'Total Intervenants'" data-type="user"/>
+      <InfosCard :number="1645" :text="'Total Products'" data-type="product"/>
+    </div>
+    <div id="charts">
+      <div id="first-chart">
+        <Bar :data="data" :options="options" />
+      </div>
+      <div id="second-chart">
+        <PieChart/>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import PieChart from '@/components/PieChart.vue';
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+} from 'chart.js'
+import { Bar } from 'vue-chartjs'
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
+
+import InfosCard from "@/components/InfosDashboardCard.vue";
+
+export default {
+  name: 'DashboardContent',
+  components: {
+    Bar,
+    PieChart,
+    InfosCard
+  },
+  data() {
+    return {
+      data: {
+        labels: ['January', 'February', 'March'],
+        datasets: [{ data: [40, 20, 12] }]
+      },
+      options: {
+        responsive: true
+      }
+    }
+  },
+};
+
+
+
+</script>
+
+<style>
+
+#dashboard-content-container {
+  width: auto;
+  padding: 3% 3%;
+  display: flex;
+  flex-direction: column;
+}
+
+#charts {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  width: 100%;
+}
+
+#first-chart {
+  width: 40%;
+  background-color: var(--c-component-background);
+  border-radius: 18px;
+}
+
+#second-chart {
+  width: 40%;
+  background-color: var(--c-component-background);
+  border-radius: 18px;
+}
+
+#cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+@media (max-width:1112px) {
+
+  #cards {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+</style>
