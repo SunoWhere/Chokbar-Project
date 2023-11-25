@@ -78,6 +78,7 @@ export default {
   height: 30px;
   font-size: 16px;
   line-height: 30px;
+  border-bottom: solid rgba(0, 0, 0, 0.20) 1px;
 }
 
 .payment-method{
