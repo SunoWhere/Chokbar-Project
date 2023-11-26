@@ -51,7 +51,7 @@ exports.verifyLogin = async (email, password) => {
         } else throw new Error("Invalid email or login")
     } catch (err) {
         console.log(err)
-        throw new Error("uncaught internal error")
+        throw err
     }
 }
 
@@ -70,7 +70,7 @@ exports.saveUser = async (email, password, first_name, last_name) => {
         if (err.name === "SequelizeUniqueConstraintError")
             throw new Error("Account with this email already exist")
 
-        throw new Error("uncaught internal error")
+        throw err
     }
 }
 
@@ -78,11 +78,11 @@ exports.getUsers = async () => {
     try {
         const data = await UserModel.findAll()
         if (data.length === 0)
-            throw new Error("no user found")
+            throw new Error("No user found")
         return data
     } catch (err) {
         console.log(err)
-        throw new Error("uncaught internal error")
+        throw err
     }
 }
 
@@ -94,10 +94,10 @@ exports.getUserByID = async (uuid) => {
             }
         })
         if (user.length === 0)
-            throw new Error("no user found")
+            throw new Error("No user found")
         else return user
     } catch (err) {
         console.log(err)
-        throw new Error("uncaught internal error")
+        throw err
     }
 }
