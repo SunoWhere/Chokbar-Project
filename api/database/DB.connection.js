@@ -1,9 +1,13 @@
 const {Sequelize} = require('sequelize');
+const dotenv = require("dotenv")
+dotenv.config()
 
-const sequelize = new Sequelize('ezcon', 'root', 'toor', {
+const {DB_USER, DB_PWD, DB_PORT} = process.env
+
+const sequelize = new Sequelize('ezcon', DB_USER, DB_PWD, {
     dialect: 'postgres',
     host: 'localhost',
-    port: '5433'
+    port: DB_PORT
 })
 
 const DB_models = require("./models/init-models").initModels(sequelize)
