@@ -3,7 +3,7 @@ const providersController = require("../controllers/providers.controller")
 const providersMiddleware = require("../middlewares/providers.middleware")
 var router = express.Router()
 
-router.get("/")
+router.get("/", providersController.getProviders)
 router.get("/:id")
 
 router.post("/")
