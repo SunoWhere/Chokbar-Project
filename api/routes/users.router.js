@@ -4,13 +4,13 @@ const usersMiddleware = require("../middlewares/users.middleware")
 var router = express.Router()
 
 router.get("/", usersController.getUsers)
-router.get("/login", usersController.verifyLogin)
-router.get("/:uuid", usersController.getUserByID)
+router.get("/login", usersMiddleware.validateLoginInput, usersController.verifyLogin)
+router.get("/:uuid", usersMiddleware.validateUuid, usersController.getUserByID)
 
 router.post("/", usersMiddleware.validateUserInput, usersController.saveUser)
 
-router.put("/:uuid")
+router.put("/:uuid", usersMiddleware.validateUuid, usersMiddleware.validateUserInput, usersController.updateUserById)
 
-router.delete("/:uuid")
+router.delete("/:uuid", usersMiddleware.validateUuid, usersController.deleteUserById)
 
 module.exports = router

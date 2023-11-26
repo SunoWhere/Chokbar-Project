@@ -2,22 +2,58 @@ const validator = require("validator")
 
 exports.validateUserInput = (req, res, next) => {
     const {first_name, last_name, email, password} = req.body
-    if (!first_name || !last_name || !email || !password) {
-        return res.status(400).send("Fields invalid")
-    }
-    if (!validator.isLength(first_name, {max: 50}) || !validator.isAlpha(first_name, 'fr-FR', {ignore: ''})) {
+    if (!validateFirstName(first_name))
         return res.status(400).send("Invalid format for first_name")
-    }
-    if (!validator.isLength(last_name, {max: 50}) || !validator.isAlpha(last_name, 'fr-FR', {ignore: ''})) {
+    if (!validateLastName(last_name))
         return res.status(400).send("Invalid format for last_name")
-    }
-    const email_format = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-    if (!validator.isLength(email, {max: 50}) || !email_format.test(email)) {
+    if (!validateEmail(email))
         return res.status(400).send("Invalid format for email")
-    }
-    if (!/^[a-f0-9]{64}$/gi.test(password)) {
+    if (!validatePassword(password))
         return res.status(400).send("Invalid format for password")
-    }
-    // FIXME : gérer un maximum d'EDGE CASE
     next()
+}
+
+exports.validateLoginInput = (req, res, next) => {
+    const {email, password} = req.body
+    if (!validateEmail(email))
+        return res.status(400).send("Invalid format for email")
+    if (!validatePassword(password))
+        return res.status(400).send("Invalid format for password")
+    next()
+}
+
+exports.validateUuid = (req, res, next) => {
+    const {uuid} = req.params
+    if (!validateUuid(uuid))
+        return res.status(400).send("Invalid format for uuid")
+    next()
+}
+
+const validateEmail = (email) => {
+    const email_format = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    if (!email) return false
+    return validator.isLength(email, {max: 50})
+        && email_format.test(email)
+}
+const validatePassword = (password) => {
+    const password_format = /^[a-f0-9]{64}$/gi
+    if (!password) return false
+    return password_format.test(password)
+}
+const validateFirstName = (first_name) => {
+    if (!first_name) return false
+    return validator.isLength(first_name, {max: 50})
+        && validator.isAlpha(first_name, 'fr-FR', {ignore: ''})
+}
+
+const validateLastName = (last_name) => {
+    if (!last_name) return false
+    return validator.isLength(last_name, {max: 50})
+        && validator.isAlpha(last_name, 'fr-FR', {ignore: ''})
+}
+
+const validateUuid = (uuid) => {
+    const uuid_format = /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i
+    if (!uuid) return false
+    return uuid_format.test(uuid)
 }

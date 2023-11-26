@@ -1,69 +1,103 @@
 const {v4: uuid4} = require("uuid")
 const UserModel = require("../database/DB.connection").DB_models.users
 
-exports.verifyLogin = async (body) => {
-    await UserModel.findAll({
-        where: {
-            email: body.email,
-            password: body.password
-        }
-    }).then(data => {
+exports.deleteUserById = async (uuid) => {
+    try {
+        const res = await UserModel.destroy({
+            where: {
+                uuid_user: uuid
+            }
+        })
+        console.log(res)
+        if (res === 0)
+            throw new Error("User not found")
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+};
+exports.updateUserById = async (uuid, email, password, first_name, last_name) => {
+    try {
+        const res = await UserModel.update({
+            email: email,
+            password: password,
+            first_name: first_name,
+            last_name: last_name,
+        }, {
+            where: {
+                uuid_user: uuid
+            }
+        })
+
+        if (res[0] === 0)
+            throw new Error("User not found")
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+}
+
+exports.verifyLogin = async (email, password) => {
+    try {
+        const data = await UserModel.findAll({
+            where: {
+                email: email,
+                password: password
+            }
+        })
         if (data.length !== 0) {
             // console.log(data[0].dataValues.uuid_user)
             return data[0].dataValues.uuid_user
         } else throw new Error("Invalid email or login")
-    }).catch(err => {
-        throw err
-    })
+    } catch (err) {
+        console.log(err)
+        throw new Error("uncaught internal error")
+    }
 }
 
+exports.saveUser = async (email, password, first_name, last_name) => {
+    try {
+        await UserModel.create({
+            email: email,
+            password: password,
+            first_name: first_name,
+            last_name: last_name,
+            id_role: 1
+        })
+    } catch (err) {
+        console.log(err)
 
-exports.userExist = async (email) => {
-    UserModel.findAll({
-        where: {
-            email: email
-        }
-    }).then(data => {
-        console.log("------------------")
-        console.log(data)
-        console.log("------------------")
-        return data.length !== 0;
-    }).catch(error => {
-        throw error
-    })
-}
-// FIXME Quand il y a une erreur du coté de Sequelize, le serveur s'arrête???
-exports.saveUser = async (body) => {
-    await UserModel.create({
-        email: body.email,
-        password: body.password,
-        first_name: body.first_name,
-        last_name: body.last_name,
-        id_role: 1
-    }).then(data => {
-        return data
-    }).catch(err => {
-        throw err
-    })
+        if (err.name === "SequelizeUniqueConstraintError")
+            throw new Error("Account with this email already exist")
+
+        throw new Error("uncaught internal error")
+    }
 }
 
 exports.getUsers = async () => {
-    UserModel.findAll().then(data => {
+    try {
+        const data = await UserModel.findAll()
+        if (data.length === 0)
+            throw new Error("no user found")
         return data
-    }).catch(error => {
-        throw error
-    })
+    } catch (err) {
+        console.log(err)
+        throw new Error("uncaught internal error")
+    }
 }
 
 exports.getUserByID = async (uuid) => {
-
-    UserModel.findAll({
-        where: {
-            uuid_user: uuid
-        }
-    }).then(data => {
-        return data
-    }).catch(error => {
-        throw error
-    })
+    try {
+        const user = await UserModel.findAll({
+            where: {
+                uuid_user: uuid
+            }
+        })
+        if (user.length === 0)
+            throw new Error("no user found")
+        else return user
+    } catch (err) {
+        console.log(err)
+        throw new Error("uncaught internal error")
+    }
 }

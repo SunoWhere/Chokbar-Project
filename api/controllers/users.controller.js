@@ -1,37 +1,73 @@
 const usersServices = require("../services/users.services")
 
+exports.deleteUserById = async (req, res) => {
+    try {
+        await usersServices.deleteUserById(
+            req.params.uuid
+        )
+        return res.status(200).send("User deleted successfully")
+    } catch (err) {
+        return res.status(500).send(err.message)
+    }
+};
+exports.updateUserById = async (req, res) => {
+    try {
+        await usersServices.updateUserById(
+            req.params.uuid,
+            req.body.email,
+            req.body.password,
+            req.body.first_name,
+            req.body.last_name
+        )
+        return res.status(200).send("User updated successfully")
+    } catch (err) {
+        return res.status(500).send(err.message)
+    }
+}
 exports.verifyLogin = async (req, res) => {
-    await usersServices.verifyLogin(req.body).then(uuid => {
-        console.log(uuid)
-        // FIXME uuid récupérer undefined ?????????????
+    try {
+        const uuid = await usersServices.verifyLogin(
+            req.body.email,
+            req.body.password
+        )
         return res.status(200).send(uuid)
-    }).catch(err => {
-        return res.status(500).send(err)
-    })
+    } catch (err) {
+        return res.status(500).send(err.message)
+    }
 }
 
 exports.saveUser = async (req, res) => {
     try {
-        let newUser = await usersServices.saveUser(req.body)
+        await usersServices.saveUser(
+            req.body.email,
+            req.body.password,
+            req.body.first_name,
+            req.body.last_name
+        )
         return res.status(200).send("New user saved successfully.")
-    } catch (error) {
-        return res.status(500).send("Internal error")
+    } catch (err) {
+        return res.status(500).send(err.message)
     }
 }
 
+// TODO : vraiment utile ?
 exports.getUsers = async (req, res) => {
-    let data = await usersServices.getUsers().then(data => {
-        return res.status(200).send(data)
-    }).catch(error => {
-        return res.status(500).send("Internal error")
-    })
+    try {
+        const users = await usersServices.getUsers()
+        return res.status(200).send(users)
+    } catch (err) {
+        return res.status(500).send(err.message)
+    }
+
 }
 
 exports.getUserByID = async (req, res) => {
-    const uuid = req.params.uuid
-    let data = await usersServices.getUserByID(uuid).then(data => {
-        return res.status(200).send(data)
-    }).catch(error => {
-        return res.status(500).send("Internal error")
-    })
+    try {
+        const user = await usersServices.getUserByID(
+            req.params.uuid
+        )
+        return res.status(200).send(user)
+    } catch (err) {
+        return res.status(500).send(err.message)
+    }
 }
