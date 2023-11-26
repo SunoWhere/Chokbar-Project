@@ -192,8 +192,8 @@ function initModels(sequelize) {
   users.hasMany(events_rating, { as: "events_ratings", foreignKey: "id_user"});
   orders.belongsTo(users, { as: "id_user_user", foreignKey: "id_user"});
   users.hasMany(orders, { as: "orders", foreignKey: "id_user"});
-  providers.belongsTo(users, { as: "id_user_user", foreignKey: "id_user"});
-  users.hasOne(providers, { as: "provider", foreignKey: "id_user"});
+  providers.belongsTo(users, { as: "uuid_user_user", foreignKey: "uuid_user"});
+  users.hasOne(providers, { as: "provider", foreignKey: "uuid_user"});
   tickets.belongsTo(users, { as: "id_user_user", foreignKey: "id_user"});
   users.hasMany(tickets, { as: "tickets", foreignKey: "id_user"});
 

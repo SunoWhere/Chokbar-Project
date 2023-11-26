@@ -75,10 +75,10 @@ CREATE TABLE providers
 (
     id_provider SERIAL,
     name        VARCHAR(100),
-    id_user     uuid NOT NULL,
+    uuid_user   uuid NOT NULL,
     PRIMARY KEY (id_provider),
-    UNIQUE (id_user),
-    FOREIGN KEY (id_user) REFERENCES users (uuid_user)
+    UNIQUE (uuid_user),
+    FOREIGN KEY (uuid_user) REFERENCES users (uuid_user)
 );
 
 CREATE TABLE guest_categories
@@ -378,4 +378,26 @@ CREATE TABLE Equipments_images
 );
 
 
-INSERT INTO roles(name) VALUES ('user'), ('provider'), ('admin');
+INSERT INTO roles(name)
+VALUES ('user'),
+       ('provider'),
+       ('admin');
+
+INSERT INTO users(email, password, first_name, last_name, id_role)
+VALUES ('admin@ezcon.fr', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin', 'admin', 3),
+       ('provider@ezcon.fr', '5c4c1964340aca5b65393bbe9d3249cdd71be26665b3320ad694f034f2743283', 'provider', 'provider',
+        2),
+       ('user@ezcon.fr', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'user', 'user', 1);
+
+INSERT INTO providers (name, uuid_user)
+SELECT 'provider', uuid_user
+FROM users
+WHERE email = 'provider@ezcon.fr';
+
+INSERT INTO images (image)
+values ('MSI_LOGO.png');
+
+INSERT INTO providers_images (image, id_provider)
+SELECT 'MSI_LOGO.png', id_provider
+FROM providers
+WHERE name like 'provider';

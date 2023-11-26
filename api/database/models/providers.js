@@ -11,14 +11,14 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(100),
       allowNull: true
     },
-    id_user: {
+    uuid_user: {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
         model: 'users',
         key: 'uuid_user'
       },
-      unique: "providers_id_user_key"
+      unique: "providers_uuid_user_key"
     }
   }, {
     sequelize,
@@ -27,17 +27,17 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false,
     indexes: [
       {
-        name: "providers_id_user_key",
-        unique: true,
-        fields: [
-          { name: "id_user" },
-        ]
-      },
-      {
         name: "providers_pkey",
         unique: true,
         fields: [
           { name: "id_provider" },
+        ]
+      },
+      {
+        name: "providers_uuid_user_key",
+        unique: true,
+        fields: [
+          { name: "uuid_user" },
         ]
       },
     ]
