@@ -24,13 +24,13 @@ export default {
 
 :root {
 
-  --primary: rgba(32, 31, 31, 0.8);
-  --secondary: #22092C;
+  --primary: #201F1FCC;
+  --secondary: #3a0f4c;
   --scnd1: #872341;
   --scnd2: #BE3144;
   --scnd3: #F05941;
 
-  --background: #0C0F0B;
+  --background: #0c0b0f;
   --component-background: #D9D9D9;
 
   /* Crud colors */
@@ -42,6 +42,9 @@ export default {
 
   /* Others */
   --accent-color: #C4A14A;
+
+  /* Buttons */
+  --secondary-hover: #501568;
 
   /* Texts */
   --white: white;
@@ -58,11 +61,13 @@ body {
 }
 
 ::-moz-selection {
-  color: var(--primary);
+  background-color: var(--scnd2);
+  border-radius: 8px;
 }
 
 ::selection {
-  color: var(--primary);
+  background-color: var(--scnd2);
+  border-radius: 8px;
 }
 
 #app {
