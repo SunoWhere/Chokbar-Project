@@ -23,33 +23,28 @@ export default {
 <style>
 
 :root {
-  /* Green variations */
-  --c-light-green: #9CFC97;
-  --c-asparagus: #6BA368;
-  --c-dark-moss-green: #515B3A;
-  --c-black-olive: #353D2F;
-  --c-ancient-green: #6D9777;
 
-  /* Buttons */
-  --c-dark-grey: rgba(32, 31, 31, 0.8);
-  --c-dark-grey-hover: rgba(47, 47, 47, 0.8);
-  --c-btn-green: #00BF6F;
-  --c-btn-green-hover: #009b5a;
+  --primary: rgba(32, 31, 31, 0.8);
+  --secondary: #22092C;
+  --scnd1: #872341;
+  --scnd2: #BE3144;
+  --scnd3: #F05941;
 
-  /* Background colors */
-  --c-background: #0C0F0B;
-  --c-component-background: #D9D9D9;
+  --background: #0C0F0B;
+  --component-background: #D9D9D9;
 
   /* Crud colors */
-  --c-crud-bleu: #006EF0;
-  --c-crud-rouge: #D20000;
-  --c-crud-vert: #00BF6F;
+  --crud-bleu: #006EF0;
+  --crud-rouge: #D20000;
+  --crud-vert: #00BF6F;
+  --btn-green: #00BF6F;
+  --btn-green-hover: #009b5a;
 
   /* Others */
-  --c-accent-color: #C4A14A;
+  --accent-color: #C4A14A;
 
   /* Texts */
-  --c-text: white;
+  --white: white;
 }
 
 * {
@@ -59,17 +54,15 @@ export default {
 }
 
 body {
-  background-color: var(--c-background);
+  background-color: var(--background);
 }
 
 ::-moz-selection {
-  color: var(--c-dark-grey);
-  background: var(--c-light-green);
+  color: var(--primary);
 }
 
 ::selection {
-  color: var(--c-dark-grey);
-  background: var(--c-light-green);
+  color: var(--primary);
 }
 
 #app {

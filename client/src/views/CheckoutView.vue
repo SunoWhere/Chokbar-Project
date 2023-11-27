@@ -36,7 +36,7 @@ export default {
 <style scoped>
 
 .checkout{
-  color: var(--c-text);
+  color: var(--white);
   height: calc(100vh - 80px);
 }
 
@@ -47,7 +47,7 @@ export default {
   height: 240px;
   top:0;left:0;right:0;bottom:0;
   margin: auto;
-  background: var(--c-component-background);
+  background: var(--component-background);
   border-radius: 12px;
   box-shadow: 0px 4px 13px rgba(0,0,0,.2), 0px 3px 3px rgba(0,0,0,.3);
 }
@@ -61,7 +61,7 @@ export default {
   height: 110px;
   text-align: right;
   padding: 30px;
-  background: var(--c-asparagus)
+  background: var(--scnd1)
 }
 
 .shopping-icon{

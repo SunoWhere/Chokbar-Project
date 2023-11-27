@@ -59,7 +59,7 @@
 .login-form {
   width: 440px;
   padding: 20px;
-  background-color: var(--c-text);
+  background-color: var(--white);
   border-radius: 5px;
   box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
 }
@@ -104,8 +104,8 @@ input[type="password"] {
 
 button {
   padding: 10px 20px;
-  background-color: var(--c-btn-green);
-  color: var(--c-text);
+  background-color: var(--btn-green);
+  color: var(--white);
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -113,7 +113,7 @@ button {
 }
 
 button:hover {
-  background-color: var(--c-btn-green-hover);
+  background-color: var(--btn-green-hover);
 }
 
 #no-account {

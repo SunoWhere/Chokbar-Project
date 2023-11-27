@@ -16,21 +16,16 @@ export default {
       <div class="main-container">
         <div class="ezcon">
           <h4 class="title">EzCon</h4>
-          <h5 class="footer-slogan">LE SALON FRANÇAIS DU JEU VIDEO</h5>
+          <h5 class="footer-slogan">LE SALON BELFORTAIN DU JEU VIDEO</h5>
           <p id="fpr-1" class="footer-presentation">
-            At vero eos et accusamus et iusto odio dignissimos ducimus qui
-            blanditiis praesentium voluptatum deleniti atque corrupti quos
-            dolores et quas molestias excepturi sint occaecati cupiditate
-            non provident, similique sunt in culpa qui officia deserunt
+            EzCon est le rendez-vous incontournable des passionnés de jeux vidéo du territoire de Belfort.
+            Venez découvrir les dernières nouveautés, rencontrer des experts de l'industrie
+            et plongez-vous dans l'univers fascinant du gaming.
           </p>
           <p class="footer-presentation">
-            At vero eos et accusamus et iusto odio dignissimos ducimus
-            qui blanditiis praesentium voluptatum deleniti atque corrupti
-            quos dolores et quas molestias excepturi sint occaecati cupiditate
-            non provident, similique sunt in culpa qui officia deserunt mollitia
-            animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis
-            est et expedita distinctio. Nam libero tempore, cum soluta nobis est
-            eligendi optio cumque nihil impedit quo minu
+            Rejoignez-nous pour une expérience unique! Explorez des mondes virtuels,
+            défiez vos amis, et vivez des moments inoubliables. EzCon, c'est bien plus
+            qu'un salon, c'est une célébration de la culture vidéoludique.
           </p>
         </div>
 
@@ -97,8 +92,8 @@ export default {
 <style scoped>
 
 .footer {
-  background-color: var(--c-asparagus);
-  color: var(--c-text);
+  background-color: var(--primary);
+  color: var(--white);
   height: auto;
   display: flex;
   justify-content: center;
@@ -135,7 +130,7 @@ export default {
 
 .footer-presentation {
   text-align: justify;
-  color: var(--c-component-background)
+  color: var(--component-background)
 }
 
 .infos-pratiques {
@@ -147,7 +142,7 @@ export default {
   font-size: clamp(0.1rem, 0.7vw, 1rem);
   width: 100%;
   height: var(--tfoot-container-height);
-  background-color: var(--c-background);
+  background-color: var(--background);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -167,14 +162,14 @@ export default {
   text-align: left;
   font-size: clamp(0.5rem, 1.1vw, 1rem);
   background-color: transparent;
-  color: var(--c-text);
+  color: var(--white);
   border: none;
   cursor: pointer;
   transition: color 0.1s ease-in-out;
 }
 
 .button:hover {
-  color: var(--c-black-olive);
+  color: var(--scnd2);
 }
 
 .mail-box {
@@ -184,12 +179,12 @@ export default {
 }
 
 .mail-ref a {
-  color: var(--c-text);
+  color: var(--white);
   transition: color 0.1s ease-in-out;
 }
 
 .mail-ref a:hover {
-  color: var(--c-black-olive);
+  color: var(--scnd1);
 }
 
 .mail-icon {
@@ -216,7 +211,7 @@ export default {
   cursor: pointer;
   margin: 0 10px;
   transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
-  color: var(--c-dark-grey);
+  color: var(--white);
 }
 
 .logo:hover {

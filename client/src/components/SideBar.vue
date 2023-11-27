@@ -44,7 +44,7 @@ export default {
 <style>
 
 #links-contener {
-  background-color: var(--c-black-olive);
+  background-color: var(--secondary);
   width: 15%;
   height: 100%;
   padding-left: 3%;
@@ -54,12 +54,12 @@ export default {
 }
 
 .link:hover {
-  color: var(--c-asparagus);
+  color: var(--scnd1);
 }
 
 .link {
   text-decoration: none;
-  color: var(--c-text);
+  color: var(--white);
   margin-bottom: 10px;
   font-size: 1.2rem;
 }
