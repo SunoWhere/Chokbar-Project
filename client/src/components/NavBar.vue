@@ -19,7 +19,7 @@ export default {
     <img src="../assets/logo.png" alt="Logo EZCon">
     <ul class="nav-list">
       <li><button class="nav-item underline-animation" @click="$router.push('/')">Accueil</button></li>
-      <li><button class="nav-item underline-animation">Map</button></li>
+      <li><button class="nav-item underline-animation" @click="$router.push('/Map')">Map</button></li>
       <li><button class="nav-item underline-animation" @click="$router.push('/Billetterie')">Billetterie</button></li>
       <li id="dropdown">
         <button class="nav-item dropdown">A Propos <font-awesome-icon icon="fa-solid fa-chevron-down" /></button>

@@ -6,6 +6,7 @@ import DashboardView from "@/views/DashboardView.vue";
 import LoginView from '@/views/LoginView.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import CheckoutView from '@/views/CheckoutView.vue';
+import InteractiveMapView from "@/views/InteractiveMapView.vue";
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,11 @@ const routes = [
   path: '/Billetterie/checkout',
   name: 'Checkout',
   component: CheckoutView
+  },
+  {
+    path: '/Map',
+    name: 'Map',
+    component: InteractiveMapView
   }
 ]
 
