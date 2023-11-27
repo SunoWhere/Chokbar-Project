@@ -39,14 +39,14 @@ export default {
 
 <style>
 #card-container {
-  background-color: var(--scnd1);
+  background-color: var(--scnd2);
   width: 25%;
   height: 7%;
   margin-bottom: 40px;
   border-radius: 18px;
 
   padding: 1.5em 1em;
-  box-shadow: 0 0 30px var(--white);
+  box-shadow: 0 0 30px var(--scnd1);
 }
 
 @media (max-width:1112px) {

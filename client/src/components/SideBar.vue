@@ -44,7 +44,7 @@ export default {
 <style>
 
 #links-contener {
-  background-color: var(--secondary);
+  background-color: var(--primary);
   width: 15%;
   height: 100%;
   padding-left: 3%;
