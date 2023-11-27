@@ -117,10 +117,16 @@ button:hover {
 }
 
 #no-account {
+  cursor: pointer;
   width: fit-content;
   margin-top: 10px;
   font-size: 14px;
   text-decoration: none;
   color: #333;
+  transition: color 0.15s ease;
+}
+
+#no-account:hover {
+  color: #222;
 }
 </style>
