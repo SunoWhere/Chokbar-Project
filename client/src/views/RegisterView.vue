@@ -24,13 +24,16 @@ export default {
   <div class="register">
     <div class="register-form">
       <h2>Register</h2>
-      <form id="register-form" action="/register" method="POST">
+      <form id="register-form" action="/users/" method="POST">
 
         <label for="email">Email</label>
         <input type="email" id="email" name="email" required>
 
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" required>
+        <label for="first_name">First Name</label>
+        <input type="text" id="first_name" name="first_name" required>
+
+        <label for="last_name">Last Name</label>
+        <input type="text" id="last_name" name="last_name" required>
 
         <label for="password">Password</label>
         <input type="password" id="password" name="password" required>
@@ -98,6 +101,10 @@ input[type="password"] {
 .show-password {
   margin-top: -5px;
   margin-bottom: 10px;
+}
+
+.show-password input {
+  margin-right: 3px;
 }
 
 button {
