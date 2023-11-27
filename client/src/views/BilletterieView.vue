@@ -255,7 +255,7 @@ section{
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  height: 855px;
+  height: calc(100vh - 80px);
 }
 
 .price-box{
