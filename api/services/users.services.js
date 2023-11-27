@@ -8,7 +8,6 @@ exports.deleteUserById = async (uuid) => {
                 uuid_user: uuid
             }
         })
-        console.log(res)
         if (res === 0)
             throw new Error("User not found")
     } catch (err) {
