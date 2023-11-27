@@ -33,10 +33,11 @@ export default {
 
 </template>
 
-<style>
+<style scoped>
 
 .checkout{
   color: var(--c-text);
+  height: calc(100vh - 80px);
 }
 
 .checkout-loading{
@@ -44,7 +45,6 @@ export default {
   text-align: center;
   width: 400px;
   height: 240px;
-  position: absolute;
   top:0;left:0;right:0;bottom:0;
   margin: auto;
   background: var(--c-component-background);
