@@ -275,7 +275,7 @@ section{
   border-top-right-radius: 17px;
   border-bottom: none;
   position: relative;
-  background: var(--c-component-background)
+  background: var(--component-background)
 }
 
 .plan-name{
@@ -334,7 +334,7 @@ section{
   border-top: 1px solid #c7c7c7;
   border-bottom-left-radius: 17px;
   border-bottom-right-radius: 17px;
-  background: var(--c-component-background);
+  background: var(--component-background);
 }
 .features-box{
   width: 100%;
@@ -347,14 +347,14 @@ section{
 
 .check-icon{
   display: flex;
-  color: var(--c-crud-vert);
+  color: var(--crud-vert);
   margin-right: 7px;
   font-size: 14.4px;
 }
 
 .cross-icon{
   display: flex;
-  color: var(--c-crud-rouge);
+  color: var(--crud-rouge);
   margin-right: 7px;
   font-size: 14.4px;
 }
@@ -375,7 +375,7 @@ section{
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  background-color: var(--c-asparagus);
+  background-color: var(--scnd1);
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
@@ -395,25 +395,25 @@ section{
   border-radius: 20px;
   padding: 10px 25px;
   color: #ffffff;
-  background-color: var(--c-accent-color);
+  background-color: var(--accent-color);
   box-shadow: 2px 2px 30px rgba(175, 74, 74, 0);
 
 }
 
 .popular .Choose-plan-btn{
-  background-color: var(--c-accent-color);
+  background-color: var(--accent-color);
   color: #ffffff;
 }
 .popular .box-features-section{
-  border-left: 3px solid var(--c-accent-color);
-  border-right: 3px solid var(--c-accent-color);
-  border-bottom: 3px solid var(--c-accent-color);
+  border-left: 3px solid var(--accent-color);
+  border-right: 3px solid var(--accent-color);
+  border-bottom: 3px solid var(--accent-color);
 }
 
 .popular .box-top-section{
-  border-top: 3px solid var(--c-accent-color);
-  border-left: 3px solid var(--c-accent-color);
-  border-right: 3px solid var(--c-accent-color);
+  border-top: 3px solid var(--accent-color);
+  border-left: 3px solid var(--accent-color);
+  border-right: 3px solid var(--accent-color);
 }
 .price-box:hover .box-top-section,
 .price-box:hover .box-features-section{

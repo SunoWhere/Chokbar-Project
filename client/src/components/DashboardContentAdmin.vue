@@ -75,13 +75,13 @@ export default {
 
 #first-chart {
   width: 40%;
-  background-color: var(--c-component-background);
+  background-color: var(--component-background);
   border-radius: 18px;
 }
 
 #second-chart {
   width: 40%;
-  background-color: var(--c-component-background);
+  background-color: var(--component-background);
   border-radius: 18px;
 }
 

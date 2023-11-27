@@ -64,7 +64,7 @@ export default {
 .register-form {
   width: 440px;
   padding: 20px;
-  background-color: var(--c-text);
+  background-color: var(--white);
   border-radius: 5px;
   box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
 }
@@ -109,7 +109,7 @@ input[type="password"] {
 
 button {
   padding: 10px 20px;
-  background-color: var(--c-btn-green);
+  background-color: var(--btn-green);
   color: white;
   border: none;
   border-radius: 4px;
@@ -118,7 +118,7 @@ button {
 }
 
 button:hover {
-  background-color: var(--c-btn-green-hover);
+  background-color: var(--btn-green-hover);
 }
 
 #yes-account {

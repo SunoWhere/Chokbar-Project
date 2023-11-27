@@ -48,7 +48,7 @@ export default {
 <style scoped>
 nav {
   height: 80px;
-  background-color: var(--c-asparagus);
+  background-color: var(--primary);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -76,7 +76,7 @@ img {
   position: relative;
   border: none;
   background-color: transparent;
-  color: var(--c-text);
+  color: var(--white);
   font-size: 18px;
   cursor: pointer;
   margin: 0 10px;
@@ -86,8 +86,8 @@ img {
 .nav-btn {
   border: none;
   border-radius: 10px;
-  background-color: var(--c-dark-grey);
-  color: var(--c-text);
+  background-color: var(--primary);
+  color: var(--white);
   font-size: 18px;
   cursor: pointer;
   margin-right: 10px;
@@ -96,7 +96,7 @@ img {
 }
 
 .nav-btn:hover {
-  background-color: var(--c-dark-grey-hover);
+  background-color: var(--secondary);
 }
 
 .underline-animation::after {
@@ -127,7 +127,7 @@ img {
   opacity: 0;
   visibility: hidden;
   position: absolute;
-  background-color: var(--c-ancient-green);
+  background-color: var(--white);
   min-width: 160px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -146,7 +146,7 @@ img {
   position: relative;
   border: none;
   background-color: transparent;
-  color: var(--c-text);
+  color: var(--primary);
   font-size: 18px;
   cursor: pointer;
   margin: 0 10px;
@@ -156,8 +156,8 @@ img {
 #role-selector {
   border: solid 1px black;
   border-radius: 8px;
-  background-color: var(--c-asparagus);
-  color: var(--c-text);
+  background-color: var(--primary);
+  color: var(--white);
   font-size: 18px;
 }
 
