@@ -1,8 +1,10 @@
 <script>
+import Banderole from '@/components/Banderole.vue';
 
 export default {
   name: 'HomeView',
   components: {
+    Banderole,
   },
   computed: {
     selectedRole() {
@@ -19,6 +21,7 @@ export default {
 
 <template>
   <div class="home">
+    <Banderole/>
     HOME
     {{ selectedRole }}
   </div>

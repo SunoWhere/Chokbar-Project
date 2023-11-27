@@ -230,6 +230,7 @@ section{
   display: flex;
   align-items: center;
   justify-content: center;
+  height: calc(100vh - 80px);
 }
 
 #pricing-table{
@@ -306,7 +307,6 @@ section{
   font-size: 64px;
   color: #19181e;
 }
-
 .price span{
   font-size: 32px;
   padding: 0px;
@@ -341,6 +341,7 @@ section{
   display: flex;
   border-radius: 20px;
   padding: 10px 20px;
+  cursor: pointer;
   position: relative;
 
 }
