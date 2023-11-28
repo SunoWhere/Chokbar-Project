@@ -1,6 +1,5 @@
 var DataTypes = require("sequelize").DataTypes;
 var _cart_lines = require("./cart_lines");
-var _descriptions = require("./descriptions");
 var _entries = require("./entries");
 var _entries_rating = require("./entries_rating");
 var _equipment_renting = require("./equipment_renting");
@@ -15,10 +14,8 @@ var _guests = require("./guests");
 var _guests_images = require("./guests_images");
 var _images = require("./images");
 var _items = require("./items");
-var _languages = require("./languages");
 var _location_sizes = require("./location_sizes");
 var _locations = require("./locations");
-var _names = require("./names");
 var _order_types = require("./order_types");
 var _orders = require("./orders");
 var _product_types = require("./product_types");
@@ -39,7 +36,6 @@ var _users = require("./users");
 
 function initModels(sequelize) {
   var cart_lines = _cart_lines(sequelize, DataTypes);
-  var descriptions = _descriptions(sequelize, DataTypes);
   var entries = _entries(sequelize, DataTypes);
   var entries_rating = _entries_rating(sequelize, DataTypes);
   var equipment_renting = _equipment_renting(sequelize, DataTypes);
@@ -54,10 +50,8 @@ function initModels(sequelize) {
   var guests_images = _guests_images(sequelize, DataTypes);
   var images = _images(sequelize, DataTypes);
   var items = _items(sequelize, DataTypes);
-  var languages = _languages(sequelize, DataTypes);
   var location_sizes = _location_sizes(sequelize, DataTypes);
   var locations = _locations(sequelize, DataTypes);
-  var names = _names(sequelize, DataTypes);
   var order_types = _order_types(sequelize, DataTypes);
   var orders = _orders(sequelize, DataTypes);
   var product_types = _product_types(sequelize, DataTypes);
@@ -112,8 +106,6 @@ function initModels(sequelize) {
   equipments.hasMany(equipment_renting, { as: "equipment_rentings", foreignKey: "id_equipment"});
   equipments_images.belongsTo(equipments, { as: "id_equipment_equipment", foreignKey: "id_equipment"});
   equipments.hasMany(equipments_images, { as: "equipments_images", foreignKey: "id_equipment"});
-  descriptions.belongsTo(events, { as: "id_event_event", foreignKey: "id_event"});
-  events.hasMany(descriptions, { as: "descriptions", foreignKey: "id_event"});
   events_images.belongsTo(events, { as: "id_event_event", foreignKey: "id_event"});
   events.hasMany(events_images, { as: "events_images", foreignKey: "id_event"});
   events_rating.belongsTo(events, { as: "id_event_event", foreignKey: "id_event"});
@@ -142,10 +134,6 @@ function initModels(sequelize) {
   images.hasMany(providers_images, { as: "providers_images", foreignKey: "image"});
   stands_images.belongsTo(images, { as: "image_image", foreignKey: "image"});
   images.hasMany(stands_images, { as: "stands_images", foreignKey: "image"});
-  descriptions.belongsTo(languages, { as: "language_name_language", foreignKey: "language_name"});
-  languages.hasMany(descriptions, { as: "descriptions", foreignKey: "language_name"});
-  names.belongsTo(languages, { as: "language_name_language", foreignKey: "language_name"});
-  languages.hasMany(names, { as: "names", foreignKey: "language_name"});
   locations.belongsTo(location_sizes, { as: "id_location_size_location_size", foreignKey: "id_location_size"});
   location_sizes.hasMany(locations, { as: "locations", foreignKey: "id_location_size"});
   events.belongsTo(locations, { as: "id_location_location", foreignKey: "id_location"});
@@ -162,12 +150,8 @@ function initModels(sequelize) {
   products.hasMany(cart_lines, { as: "cart_lines", foreignKey: "id_product"});
   items.belongsTo(products, { as: "id_product_product", foreignKey: "id_product"});
   products.hasMany(items, { as: "items", foreignKey: "id_product"});
-  names.belongsTo(products, { as: "id_product_product", foreignKey: "id_product"});
-  products.hasMany(names, { as: "names", foreignKey: "id_product"});
   products_images.belongsTo(products, { as: "id_product_product", foreignKey: "id_product"});
   products.hasMany(products_images, { as: "products_images", foreignKey: "id_product"});
-  descriptions.belongsTo(providers, { as: "id_provider_provider", foreignKey: "id_provider"});
-  providers.hasMany(descriptions, { as: "descriptions", foreignKey: "id_provider"});
   providers_images.belongsTo(providers, { as: "id_provider_provider", foreignKey: "id_provider"});
   providers.hasMany(providers_images, { as: "providers_images", foreignKey: "id_provider"});
   stands.belongsTo(providers, { as: "id_provider_provider", foreignKey: "id_provider"});
@@ -176,8 +160,6 @@ function initModels(sequelize) {
   roles.hasMany(users, { as: "users", foreignKey: "id_role"});
   stands.belongsTo(stand_types, { as: "id_stand_type_stand_type", foreignKey: "id_stand_type"});
   stand_types.hasMany(stands, { as: "stands", foreignKey: "id_stand_type"});
-  descriptions.belongsTo(stands, { as: "id_stand_stand", foreignKey: "id_stand"});
-  stands.hasMany(descriptions, { as: "descriptions", foreignKey: "id_stand"});
   equipment_renting.belongsTo(stands, { as: "id_stand_stand", foreignKey: "id_stand"});
   stands.hasMany(equipment_renting, { as: "equipment_rentings", foreignKey: "id_stand"});
   products.belongsTo(stands, { as: "id_stand_stand", foreignKey: "id_stand"});
@@ -205,7 +187,6 @@ function initModels(sequelize) {
 
   return {
     cart_lines,
-    descriptions,
     entries,
     entries_rating,
     equipment_renting,
@@ -220,10 +201,8 @@ function initModels(sequelize) {
     guests_images,
     images,
     items,
-    languages,
     location_sizes,
     locations,
-    names,
     order_types,
     orders,
     product_types,

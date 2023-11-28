@@ -19,6 +19,14 @@ module.exports = function(sequelize, DataTypes) {
         key: 'uuid_user'
       },
       unique: "providers_uuid_user_key"
+    },
+    description_en: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    description_fr: {
+      type: DataTypes.TEXT,
+      allowNull: false
     }
   }, {
     sequelize,
