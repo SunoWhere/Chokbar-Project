@@ -36,6 +36,5 @@ export default {
 }
 
 .tooltip-content {
-  /* Style your tooltip content as needed */
 }
 </style>

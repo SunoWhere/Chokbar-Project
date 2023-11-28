@@ -86,8 +86,8 @@ img {
 .nav-btn {
   border: none;
   border-radius: 10px;
-  background-color: var(--secondary);
-  box-shadow: 0 0 15px var(--secondary);
+  background-color: var(--scnd2);
+  box-shadow: 0 0 15px var(--scnd2);
   color: var(--white);
   font-size: 18px;
   cursor: pointer;
@@ -97,8 +97,8 @@ img {
 }
 
 .nav-btn:hover {
-  background-color: var(--secondary-hover);
-  box-shadow: 0 0 15px var(--secondary-hover);
+  background-color: var(--scnd3);
+  box-shadow: 0 0 15px var(--scnd3);
 }
 
 .underline-animation::after {
