@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('languages', {
-    name: {
+    language_name: {
       type: DataTypes.STRING(10),
       allowNull: false,
       primaryKey: true
@@ -16,7 +16,7 @@ module.exports = function(sequelize, DataTypes) {
         name: "languages_pkey",
         unique: true,
         fields: [
-          { name: "name" },
+          { name: "language_name" },
         ]
       },
     ]

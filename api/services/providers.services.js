@@ -1,6 +1,12 @@
 const ProvidersModel = require("../database/DB.connection").DB_models.providers
 const ProvidersImagesModel = require("../database/DB.connection").DB_models.providers_images
+const DescriptionsModel = require("../database/DB.connection").DB_models.descriptions
+const StandsModel = require("../database/DB.connection").DB_models.stands
+const ProductsModel = require("../database/DB.connection").DB_models.products
+const ProductsImagesModel = require("../database/DB.connection").DB_models.products_images
+const UsersModel = require("../database/DB.connection").DB_models.users
 
+// TODO : s'assurer qu'avec des delete les ligne de la table products_images se supprime avec
 exports.deleteProviderById = async (id) => {
     try {
         const res = await ProvidersModel.destroy({
@@ -45,16 +51,20 @@ exports.saveProvider = async (name, uuid_user) => {
 exports.getProviderById = async (id) => {
     try {
         const data = await ProvidersModel.findAll({
-            include: {
-                model: ProvidersImagesModel,
-                as: 'providers_images'
-            },
+            include: [{
+                model: ProvidersImagesModel, as: 'providers_images'
+            }, {
+                model: DescriptionsModel, as: "descriptions"
+            }, {
+                model: StandsModel, as: "stands"
+            }, {
+                model: UsersModel, as: "uuid_user_user"
+            }],
             where: {
                 id_provider: id
             }
         })
-        if (data.length === 0)
-            throw new Error("No provider found")
+        if (data.length === 0) throw new Error("No provider found")
         return data
     } catch (err) {
         console.log(err)
@@ -64,10 +74,15 @@ exports.getProviderById = async (id) => {
 exports.getProviders = async () => {
     try {
         const data = await ProvidersModel.findAll({
-            include: {
-                model: ProvidersImagesModel,
-                as: 'providers_images'
-            }
+            include: [{
+                model: ProvidersImagesModel, as: 'providers_images'
+            }, {
+                model: DescriptionsModel, as: "descriptions"
+            }, {
+                model: StandsModel, as: "stands"
+            }, {
+                model: UsersModel, as: "uuid_user_user"
+            }]
         })
         if (data.length === 0)
             throw new Error("No provider found")

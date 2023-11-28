@@ -18,6 +18,7 @@ var _items = require("./items");
 var _languages = require("./languages");
 var _location_sizes = require("./location_sizes");
 var _locations = require("./locations");
+var _names = require("./names");
 var _order_types = require("./order_types");
 var _orders = require("./orders");
 var _product_types = require("./product_types");
@@ -56,6 +57,7 @@ function initModels(sequelize) {
   var languages = _languages(sequelize, DataTypes);
   var location_sizes = _location_sizes(sequelize, DataTypes);
   var locations = _locations(sequelize, DataTypes);
+  var names = _names(sequelize, DataTypes);
   var order_types = _order_types(sequelize, DataTypes);
   var orders = _orders(sequelize, DataTypes);
   var product_types = _product_types(sequelize, DataTypes);
@@ -140,8 +142,10 @@ function initModels(sequelize) {
   images.hasMany(providers_images, { as: "providers_images", foreignKey: "image"});
   stands_images.belongsTo(images, { as: "image_image", foreignKey: "image"});
   images.hasMany(stands_images, { as: "stands_images", foreignKey: "image"});
-  descriptions.belongsTo(languages, { as: "name_language", foreignKey: "name"});
-  languages.hasMany(descriptions, { as: "descriptions", foreignKey: "name"});
+  descriptions.belongsTo(languages, { as: "language_name_language", foreignKey: "language_name"});
+  languages.hasMany(descriptions, { as: "descriptions", foreignKey: "language_name"});
+  names.belongsTo(languages, { as: "language_name_language", foreignKey: "language_name"});
+  languages.hasMany(names, { as: "names", foreignKey: "language_name"});
   locations.belongsTo(location_sizes, { as: "id_location_size_location_size", foreignKey: "id_location_size"});
   location_sizes.hasMany(locations, { as: "locations", foreignKey: "id_location_size"});
   events.belongsTo(locations, { as: "id_location_location", foreignKey: "id_location"});
@@ -158,6 +162,8 @@ function initModels(sequelize) {
   products.hasMany(cart_lines, { as: "cart_lines", foreignKey: "id_product"});
   items.belongsTo(products, { as: "id_product_product", foreignKey: "id_product"});
   products.hasMany(items, { as: "items", foreignKey: "id_product"});
+  names.belongsTo(products, { as: "id_product_product", foreignKey: "id_product"});
+  products.hasMany(names, { as: "names", foreignKey: "id_product"});
   products_images.belongsTo(products, { as: "id_product_product", foreignKey: "id_product"});
   products.hasMany(products_images, { as: "products_images", foreignKey: "id_product"});
   descriptions.belongsTo(providers, { as: "id_provider_provider", foreignKey: "id_provider"});
@@ -217,6 +223,7 @@ function initModels(sequelize) {
     languages,
     location_sizes,
     locations,
+    names,
     order_types,
     orders,
     product_types,
