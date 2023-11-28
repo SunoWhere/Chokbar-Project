@@ -95,7 +95,7 @@ export default {
 #title-h1 h1 {
   font-size: 1.3em;
   overflow: hidden;
-  line-height: 0.8;
+  margin-bottom: -15px;
 }
 
 #title h2 {
