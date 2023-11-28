@@ -13,9 +13,11 @@ exports.deleteProviderById = async (req, res) => {
 exports.updateProviderById = async (req, res) => {
     try {
         await providersServices.updateProviderById(
-            req.body.id,
+            req.params.id,
             req.body.name,
-            req.body.uuid_user
+            req.body.uuid_user,
+            req.body.description_fr,
+            req.body.description_en
         )
         return res.status(200).send("User updated successfully")
     } catch (err) {
@@ -26,7 +28,9 @@ exports.saveProvider = async (req, res) => {
     try {
         return res.status(200).send(await providersServices.saveProvider(
             req.body.name,
-            req.body.uuid_user
+            req.body.uuid_user,
+            req.body.description_fr,
+            req.body.description_en
         ))
     } catch (err) {
         return res.status(500).send(err.message)
