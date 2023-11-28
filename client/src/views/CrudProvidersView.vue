@@ -1,6 +1,7 @@
 <script>
 import SideBar from "@/components/SideBar.vue";
 
+
 export default {
   name: 'CrudProvidersView',
   components: {
@@ -20,22 +21,23 @@ export default {
 </script>
 
 <template>
-  <section>
-    <SideBar :user-type="this.selectedRole"/>
-    <div v-if="this.selectedRole === '1'">
-      <div id="crud-providers-container">
-
-      </div>
+  <div class="dashboard-container">
+    <SideBar :user-type="selectedRole"/>
+    <div id="dc" v-if="selectedRole === '2'">
     </div>
-  </section>
+  </div>
 </template>
 
-<style scoped>
+<style >
 
-#crud-providers-container {
+.dashboard-container {
   height: 100vh;
   display: flex;
   flex-direction: row;
+}
+
+#dc {
+  width: 100%;
 }
 
 </style>
