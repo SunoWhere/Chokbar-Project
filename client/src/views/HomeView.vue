@@ -33,7 +33,8 @@ export default {
         <div id="pt-content">
           <h3 class="content-subtitle" id="first-sub-title">EZCon 2024</h3>
           <h4 class="content-subtitle" id="scnd-sub-title">La convergence ludique à Belfort !</h4>
-          <p class="content-p">Des compétitions de gaming acharnées aux expériences
+          <p class="content-p">
+            Des compétitions de gaming acharnées aux expériences
             en réalité virtuelle captivantes, en passant par les démonstrations des
             derniers jeux des développeurs locaux, notre événement vous plonge
             entièrement dans un univers dynamique et passionnant. Parcourez les

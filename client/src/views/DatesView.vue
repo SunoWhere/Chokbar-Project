@@ -6,7 +6,9 @@ export default {
 
 <template>
   <div id="date-global-container">
-    <h1>Dates, horaires, Accès</h1>
+    <div id="dates-title">
+      <h1>Dates, horaires, Accès</h1>
+    </div>
     <h2>
       Découvrez les informations pratiques relatives aux dates,
       moyens d'accès & horaires au salon Paris Games Week. Consultez
@@ -21,6 +23,17 @@ export default {
 #date-global-container {
   color: var(--white);
   height: 100vh;
+  width: 100%;
+}
+
+#date-global-container h1 {
+  color: var(--scnd2);
+}
+
+#dates-title {
+  margin-top: 3%;
+  margin-bottom: 3%;
+  text-align: center;
   width: 100%;
 }
 

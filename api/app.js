@@ -11,10 +11,10 @@ const port = process.env.PORT
 const app = express()
 
 app.use(express.json())
-app.use("/users", usersRoutes)
-app.use("/providers", providersRoutes)
-app.use("/stands", standsRoutes)
-app.use("/events", eventsRoutes)
+app.use("/api/users", usersRoutes)
+app.use("/api/providers", providersRoutes)
+app.use("/api/stands", standsRoutes)
+app.use("/api/events", eventsRoutes)
 
 
 // app.post("/login", ...)

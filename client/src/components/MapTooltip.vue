@@ -1,27 +1,26 @@
 <script>
 export default {
   props: {
-    booth: {
-      type: Object,
+    boothId: {
+      type: String,
       required: true
-    },
-    top: {
-      type: Number,
-      required: true
-    },
-    left: {
-      type: Number,
-      required: true
+    }
+  },
+  methods: {
+    closeTooltip() {
+      window.location.reload();
     }
   }
 }
 </script>
 
 <template>
-  <div class="tooltip" :style="{ top: `${top}px`, left: `${left}px` }">
+  <div class="tooltip">
+    <button id="close-btn" @click="closeTooltip"><font-awesome-icon icon="fa-solid fa-x" /></button>
     <div class="tooltip-content">
-      <p>Name: RAHHHHHHHHHHHHHHHHH</p>
-      <p>Category: IUHSDFGYSTQDGUYSDQFGUSYDHFG</p>
+      <p id="booth-id">{{ boothId }}</p>
+      <p>Prestataire: M. Ambert</p>
+      <p>Catégorie: Stand</p>
     </div>
   </div>
 </template>
@@ -29,12 +28,38 @@ export default {
 <style scoped>
 .tooltip {
   position: absolute;
-  background-color: lime;
-  border: 1px solid #ccc;
+  align-self: center;
+  border: 1px solid var(--background);
+  background-color: var(--background);
   padding: 10px;
   z-index: 9999;
+  height: 30%;
+  width: 20%;
+  border-radius: 17px;
+  box-shadow: 0 0 30px var(--background);
 }
 
 .tooltip-content {
+  margin: 8px;
+  color: var(--white);
+  font-size: 1.2em;
+}
+
+#booth-id {
+  text-align: center;
+  color: var(--white);
+  font-size: 1.3em;
+  margin-bottom: 5px;
+}
+
+#close-btn {
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  right: 10px;
+  top: 5px;
+  color: var(--white);
+  font-size: 1.5em;
+  cursor: pointer;
 }
 </style>

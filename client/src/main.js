@@ -16,12 +16,13 @@ import {
   faCheck,
   faXmark,
   faChevronDown,
-  faP
+  faP,
+  faX
 } from '@fortawesome/free-solid-svg-icons'; // Solid Icons
 import {faFacebook, faInstagram, faSquareXTwitter, faTiktok} from "@fortawesome/free-brands-svg-icons"; // Brand Icons
 // import { regular } from '@fortawesome/free-regular-svg-icons' // Regular Icons
 
-library.add(faUser, faCartShopping, faEnvelope, faCheck, faXmark, faChevronDown, faUser, faP); // Solid Icons
+library.add(faUser, faCartShopping, faEnvelope, faCheck, faXmark, faChevronDown, faUser, faP, faX); // Solid Icons
 library.add(); // Regular Icons
 library.add(faFacebook, faSquareXTwitter, faTiktok, faInstagram); // Brands Icons
 
