@@ -8,6 +8,8 @@ import RegisterView from '@/views/RegisterView.vue';
 import CheckoutView from '@/views/CheckoutView.vue';
 import InteractiveMapView from "@/views/InteractiveMapView.vue";
 import CrudProvidersView from "@/views/CrudProvidersView.vue";
+import AproposView from "@/views/AproposView.vue";
+import DatesView from "@/views/DatesView.vue";
 
 Vue.use(VueRouter)
 
@@ -51,7 +53,17 @@ const routes = [
     path: '/Map',
     name: 'Map',
     component: InteractiveMapView
-  }
+  },
+  {
+    path: '/Infos/Ezcon',
+    name: 'AproposView',
+    component: AproposView
+  },
+  {
+    path: '/Infos/Dates',
+    name: 'DateView',
+    component: DatesView
+  },
 ]
 
 const router = new VueRouter({

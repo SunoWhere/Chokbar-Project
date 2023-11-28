@@ -24,7 +24,8 @@ export default {
       <li id="dropdown">
         <button class="nav-item dropdown">A Propos <font-awesome-icon icon="fa-solid fa-chevron-down" /></button>
         <ul class="dropdown-list">
-          <li><button class="dropdown-item underline-animation">La EZCon</button></li>
+          <li><button class="dropdown-item underline-animation" @click="$router.push('/Infos/Ezcon')">La EZCon</button></li>
+          <li><button class="dropdown-item underline-animation" @click="$router.push('/Infos/Dates')">Dates, Horaires, Accès</button></li>
           <li><button class="dropdown-item underline-animation">A Découvrir</button></li>
         </ul>
       </li>
