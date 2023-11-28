@@ -134,7 +134,7 @@ img {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   padding: 10px 5px;
-  z-index: 1;
+  z-index: 999;
   transition: all 0.2s ease;
 }
 
