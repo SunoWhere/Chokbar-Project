@@ -14,8 +14,8 @@ router.delete("/:id",standsMiddleware.validateId, standsController.deleteStandBy
 
 // TODO products CRUD
 
-router.get("/:id/products/")
-router.get("/:id/products/:id_product")
+router.get("/:id/products/", standsMiddleware.validateId, standsController.getProductsByStandId)
+router.get("/:id/products/:id_product",standsMiddleware.validateId, standsMiddleware.validateProductId, standsController.getProductsByIdByStandId)
 
 router.post("/:id/products/")
 router.put("/:id/products/:id_product")

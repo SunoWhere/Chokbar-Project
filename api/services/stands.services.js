@@ -6,6 +6,41 @@ const ProvidersModel = require("../database/DB.connection").DB_models.providers
 const LocationsModel = require("../database/DB.connection").DB_models.locations
 const LocationSizesModel = require("../database/DB.connection").DB_models.location_sizes
 
+exports.getProductsByStandId = async (id) => {
+    try {
+        const res = await ProductsModel.findAll({
+            where:{
+                id_stand:id
+            },
+            include:[{
+                model
+            }]
+        })
+        if (res.length === 0)
+            throw new Error("No product found")
+        return res
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+}
+exports.getProductsByIdByStandId = async (id, id_product) => {
+    try {
+        const res = await ProductsModel.findAll({
+            where:{
+                id_stand:id,
+                id_product:id_product
+            }
+        })
+        if (res.length === 0)
+            throw new Error("No product found")
+        return res
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+}
+
 // FIXME : corriger l'enregistrement des noms, depuis la mise a jours de la bdd
 exports.updateStandById = async (id, id_location, id_provider, id_stand_type, name, description_en, description_fr) => {
     try {
