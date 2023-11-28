@@ -7,6 +7,7 @@ import LoginView from '@/views/LoginView.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import CheckoutView from '@/views/CheckoutView.vue';
 import InteractiveMapView from "@/views/InteractiveMapView.vue";
+import CrudProvidersView from "@/views/CrudProvidersView.vue";
 
 Vue.use(VueRouter)
 
@@ -25,6 +26,11 @@ const routes = [
     path: '/Dashboard',
     name: 'Dashboard',
     component: DashboardView
+  },
+  {
+    path: '/Admin/Intervnants',
+    name: 'CrudProviders',
+    component: CrudProvidersView
   },
   {
     path: '/Login',
