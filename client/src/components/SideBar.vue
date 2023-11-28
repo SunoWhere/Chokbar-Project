@@ -54,7 +54,7 @@ export default {
 }
 
 .link:hover {
-  color: var(--scnd1);
+  color: var(--scnd3);
 }
 
 .link {
