@@ -22,8 +22,8 @@ export default {
       console.log(this.userType);
       if (this.userType === '2') {
         return [
-          { label: 'User', route: '/admin/user' },
-          { label: 'Intervenants', route: '/admin/intervenants' },
+          { label: 'User', route:  '/admin/user' },
+          { label: 'Intervenants', route: '/Admin/Intervenants' },
           { label: 'Produits', route: '/admin/produits' },
           { label: 'Calendrier', route: '/admin/calendrier' }
         ];

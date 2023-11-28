@@ -30,7 +30,7 @@ const routes = [
     component: DashboardView
   },
   {
-    path: '/Admin/Intervnants',
+    path: '/Admin/Intervenants',
     name: 'CrudProviders',
     component: CrudProvidersView
   },
