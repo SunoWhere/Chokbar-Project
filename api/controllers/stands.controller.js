@@ -7,7 +7,9 @@ exports.updateStandById = async (req, res) => {
             req.body.id_location,
             req.body.id_provider,
             req.body.id_stand_type,
-            req.body.name
+            req.body.name,
+            req.body.description_en,
+            req.body.description_fr
         )
         return res.status(200).send("Stands updated successfully")
     } catch (err) {
@@ -30,7 +32,9 @@ exports.saveStand = async (req, res) => {
             req.body.id_location,
             req.body.id_provider,
             req.body.id_stand_type,
-            req.body.name
+            req.body.name,
+            req.body.description_en,
+            req.body.description_fr
         )
         return res.status(200).send("New stand saved successfully.")
     } catch (err) {
