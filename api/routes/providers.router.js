@@ -12,14 +12,16 @@ router.put("/:id", providersMiddleware.validateId, providersMiddleware.validateP
 
 router.delete("/:id", providersMiddleware.validateId, providersController.deleteProviderById)
 
-// TODO : rajouter les routes pour gérer les produits et article
-router.get("/:id/")
-router.get("/:id/products/")
-router.get("/:id/products/:id_product")
+// TODO ajouter les routes pour les images
 
-router.post("/:id/products/")
-router.put("/:id/products/:id_product")
+// TODO : ajouter les routes pour les descriptions
+router.get("/:id/descriptions/")
+router.get("/:id/descriptions/:language")
 
-router.delete("/:id/products/:id_product")
+router.post("/:id/descriptions/:language")
+
+router.put("/:id/descriptions/:language")
+
+router.delete("/:id/descriptions/:language")
 
 module.exports = router

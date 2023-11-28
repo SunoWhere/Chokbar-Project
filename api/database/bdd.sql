@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS events_images,
     starring_stands,
     starring_events,
     descriptions,
+    names,
     products,
     events,
     equipment_renting,
@@ -35,7 +36,8 @@ DROP TABLE IF EXISTS events_images,
     users,
     roles;
 
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE
+    EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE roles
 (
@@ -133,8 +135,8 @@ CREATE TABLE images
 
 CREATE TABLE languages
 (
-    name VARCHAR(10),
-    PRIMARY KEY (name)
+    language_name VARCHAR(10),
+    PRIMARY KEY (language_name)
 );
 
 CREATE TABLE locations
@@ -161,6 +163,7 @@ CREATE TABLE stands
     id_location   INT NOT NULL,
     id_provider   INT NOT NULL,
     id_stand_type INT NOT NULL,
+    name          VARCHAR(100),
     PRIMARY KEY (id_stand),
     UNIQUE (id_location),
     FOREIGN KEY (id_location) REFERENCES locations (id_location),
@@ -231,7 +234,6 @@ CREATE TABLE events
 CREATE TABLE products
 (
     id_product      SERIAL,
-    name            VARCHAR(50),
     price           DECIMAL(6, 2),
     quantity        INT,
     id_stand        INT NOT NULL,
@@ -241,19 +243,31 @@ CREATE TABLE products
     FOREIGN KEY (id_product_type) REFERENCES product_types (id_product_type)
 );
 
+CREATE TABLE names(
+   id_name SERIAL,
+   name TEXT,
+   language_name VARCHAR(10) NOT NULL,
+   id_product INT NOT NULL,
+   PRIMARY KEY(id_name),
+   FOREIGN KEY(language_name) REFERENCES languages(language_name),
+   FOREIGN KEY(id_product) REFERENCES products(id_product)
+);
+
+
+
 CREATE TABLE descriptions
 (
     id_description SERIAL,
-    desciption     TEXT,
+    description    TEXT        NOT NULL,
     id_provider    INT         NOT NULL,
     id_stand       INT         NOT NULL,
     id_event       INT         NOT NULL,
-    name           VARCHAR(10) NOT NULL,
+    language_name  VARCHAR(10) NOT NULL,
     PRIMARY KEY (id_description),
     FOREIGN KEY (id_provider) REFERENCES providers (id_provider),
     FOREIGN KEY (id_stand) REFERENCES stands (id_stand),
     FOREIGN KEY (id_event) REFERENCES events (id_event),
-    FOREIGN KEY (name) REFERENCES languages (name)
+    FOREIGN KEY (language_name) REFERENCES languages (language_name)
 );
 
 CREATE TABLE starring_events
@@ -395,9 +409,9 @@ FROM users
 WHERE email = 'provider@ezcon.fr';
 
 INSERT INTO images (image)
-values ('MSI_LOGO.png');
+VALUES ('MSI_LOGO.png');
 
 INSERT INTO providers_images (image, id_provider)
 SELECT 'MSI_LOGO.png', id_provider
 FROM providers
-WHERE name like 'provider';
+WHERE name LIKE 'provider';

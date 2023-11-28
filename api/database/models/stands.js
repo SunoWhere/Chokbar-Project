@@ -31,6 +31,10 @@ module.exports = function(sequelize, DataTypes) {
         model: 'stand_types',
         key: 'id_stand_type'
       }
+    },
+    name: {
+      type: DataTypes.STRING(100),
+      allowNull: true
     }
   }, {
     sequelize,

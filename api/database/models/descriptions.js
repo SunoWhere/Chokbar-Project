@@ -7,9 +7,9 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    desciption: {
+    description: {
       type: DataTypes.TEXT,
-      allowNull: true
+      allowNull: false
     },
     id_provider: {
       type: DataTypes.INTEGER,
@@ -35,12 +35,12 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id_event'
       }
     },
-    name: {
+    language_name: {
       type: DataTypes.STRING(10),
       allowNull: false,
       references: {
         model: 'languages',
-        key: 'name'
+        key: 'language_name'
       }
     }
   }, {
