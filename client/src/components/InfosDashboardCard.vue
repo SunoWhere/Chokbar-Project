@@ -47,6 +47,7 @@ export default {
 
   padding: 1.5em 1em;
   box-shadow: 0 0 30px var(--scnd1);
+  color: white;
 }
 
 @media (max-width:1112px) {
