@@ -86,17 +86,19 @@ img {
 .nav-btn {
   border: none;
   border-radius: 10px;
-  background-color: var(--primary);
+  background-color: var(--secondary);
+  box-shadow: 0 0 15px var(--secondary);
   color: var(--white);
   font-size: 18px;
   cursor: pointer;
   margin-right: 10px;
   padding: 13px 20px;
-  transition: background-color 0.15s ease
+  transition: all 0.15s ease
 }
 
 .nav-btn:hover {
-  background-color: var(--secondary);
+  background-color: var(--secondary-hover);
+  box-shadow: 0 0 15px var(--secondary-hover);
 }
 
 .underline-animation::after {
@@ -127,12 +129,12 @@ img {
   opacity: 0;
   visibility: hidden;
   position: absolute;
-  background-color: var(--white);
+  background-color: var(--scnd1);
   min-width: 160px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   padding: 10px 5px;
-  z-index: 1;
+  z-index: 999;
   transition: all 0.2s ease;
 }
 
@@ -146,7 +148,7 @@ img {
   position: relative;
   border: none;
   background-color: transparent;
-  color: var(--primary);
+  color: var(--white);
   font-size: 18px;
   cursor: pointer;
   margin: 0 10px;

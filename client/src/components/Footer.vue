@@ -141,7 +141,7 @@ export default {
 .tfoot-container {
   font-size: clamp(0.1rem, 0.7vw, 1rem);
   width: 100%;
-  height: var(--tfoot-container-height);
+  height: auto;
   background-color: var(--background);
   display: flex;
   justify-content: space-between;
