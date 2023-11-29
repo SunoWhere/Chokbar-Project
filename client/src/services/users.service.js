@@ -1,4 +1,3 @@
-
 import Axios from 'axios';
 
 Axios.defaults.baseURL = 'http://localhost:8081';
@@ -7,17 +6,12 @@ let login = async (credentials) => {
     try {
         console.log(credentials.email);
         console.log(credentials.password);
-        const response = await Axios.post('/api/users/login', {
-            params: {
-                email: credentials.email,
-                password: credentials.password
-            }
+        return await Axios.post('/api/users/login', {
+            email: credentials.email,
+            password: credentials.password
         });
-
-        return response.data;
     } catch (error) {
-        console.error(error);
-        throw error;
+        throw new Error(error.response.data);
     }
 };
 
