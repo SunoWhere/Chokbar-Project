@@ -1,4 +1,6 @@
 <script>
+  import { usersService } from '@/services';
+
   export default {
     name: 'LoginView',
     metaInfo() {
@@ -6,7 +8,25 @@
         title: 'Login'
       }
     },
+    data() {
+      return {
+        user: {
+          email: '',
+          password: ''
+        }
+      }
+    },
     methods: {
+      login() {
+        usersService.login(this.user)
+          .then(res => {
+            usersService.saveUuid(res.data)
+            this.$router.push('/Dashboard')
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      },
       toggleShowPassword() {
         const passwordInput = document.getElementById("password");
 
@@ -17,6 +37,7 @@
         }
       }
     }
+
   }
 </script>
 
@@ -24,13 +45,13 @@
   <div class="login">
     <div class="login-form">
       <h2>Login</h2>
-      <form action="/users/login" method="GET">
+      <form action="/users/login" method="GET" @submit.prevent="login">
 
         <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email" v-model="user.email" placeholder="Email" required>
 
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" id="password" name="password" v-model="user.password" placeholder="Password" required>
 
         <p class="show-password">
           <input type="checkbox" id="show-password" @click="toggleShowPassword">
