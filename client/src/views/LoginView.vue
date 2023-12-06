@@ -20,8 +20,9 @@
       login() {
         usersService.login(this.user)
           .then(res => {
-            usersService.saveUuid(res.data)
-            this.$router.push('/Dashboard')
+            usersService.saveUuid(res.data);
+            this.$router.push('/Dashboard');
+            this.$router.go();
           })
           .catch(error => {
             console.log(error);

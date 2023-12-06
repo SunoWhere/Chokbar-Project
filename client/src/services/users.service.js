@@ -23,8 +23,13 @@ let saveUuid = (uuid) => {
     localStorage.setItem('uuid', uuid);
 }
 
+let removeUuid = () => {
+    localStorage.removeItem('uuid');
+}
+
 export const usersService = {
     login,
     getUuid,
-    saveUuid
+    saveUuid,
+    removeUuid,
 }

@@ -1,14 +1,25 @@
 <script>
+import { usersService } from '@/services';
 
 export default {
   name: 'NavBar',
   data: () => ({
-    selectedRole: "0",
   }),
   methods: {
-    updateSelectedRole() {
-      this.$store.dispatch('setSelectedRole', this.selectedRole);
-    }
+    isConnected() {
+      console.log(usersService.getUuid() !== null);
+      return usersService.getUuid() !== null;
+    },
+    logout() {
+      if(this.isConnected()) {
+        usersService.removeUuid();
+        this.$router.push('/');
+        this.$router.go();
+      }
+    },
+  },
+  mounted() {
+    this.isConnected();
   }
 }
 
@@ -29,17 +40,19 @@ export default {
           <li><button class="dropdown-item underline-animation">A Découvrir</button></li>
         </ul>
       </li>
-      <li>
-        <select v-model="selectedRole" @change="updateSelectedRole" name="role" id="role-selector">
-          <option value="0">user</option>
-          <option value="1">prestataire</option>
-          <option value="2">admin</option>
-        </select>
-      </li>
     </ul>
     <ul class="nav-list">
-      <li v-if="parseInt(selectedRole) !== 0" ><button class="nav-btn" @click="$router.push('/Dashboard')">Dashboard</button></li>
-      <li><button class="nav-item underline-animation" @click="$router.push('/Login')"><font-awesome-icon icon="fa-solid fa-user" /> Se Connecter</button></li>
+      <li v-if="isConnected()" ><button class="nav-btn" @click="$router.push('/Dashboard')">Dashboard</button></li>
+      <li v-if="!isConnected()">
+        <button class="nav-item underline-animation" @click="$router.push('/Login')">
+          <font-awesome-icon icon="fa-solid fa-user" /> Se Connecter
+        </button>
+      </li>
+      <li v-if="isConnected()">
+        <button class="nav-item underline-animation" @click="logout()">
+          <font-awesome-icon icon="fa-solid fa-user" /> Se Déconnecter
+        </button>
+      </li>
       <li><button class="nav-item underline-animation"><font-awesome-icon icon="fa-solid fa-cart-shopping" /> Panier</button></li>
       <li><button class="nav-item underline-animation">FR</button></li>
     </ul>
