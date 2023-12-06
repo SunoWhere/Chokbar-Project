@@ -24,7 +24,7 @@ export default {
         <div id="title-h1">
           <h1>EZCon</h1>
         </div>
-        <h2>LA conférence belfortaine du jeu vidéo !</h2>
+        <h2>LA conférence terrifortaine du jeu vidéo !</h2>
         <div class="button-home" @click="$router.push('/Billetterie')">Billetterie</div>
       </div>
     </div>
