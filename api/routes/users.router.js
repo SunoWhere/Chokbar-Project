@@ -5,6 +5,7 @@ var router = express.Router()
 
 router.get("/", usersController.getUsers)
 router.post("/login", usersMiddleware.validateLoginInput, usersController.verifyLogin)
+router.get("/role/:uuid", usersMiddleware.validateUuid, usersController.getUserRole)
 router.get("/:uuid", usersMiddleware.validateUuid, usersController.getUserByID)
 
 router.post("/", usersMiddleware.validateUserInput, usersController.saveUser)

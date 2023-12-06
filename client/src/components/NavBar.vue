@@ -13,6 +13,7 @@ export default {
     logout() {
       if(this.isConnected()) {
         usersService.removeUuid();
+        usersService.removeRole();
         this.$router.push('/');
         this.$router.go();
       }
@@ -167,14 +168,6 @@ img {
   cursor: pointer;
   margin: 0 10px;
   padding: 3px 0;
-}
-
-#role-selector {
-  border: solid 1px black;
-  border-radius: 8px;
-  background-color: var(--primary);
-  color: var(--white);
-  font-size: 18px;
 }
 
 </style>

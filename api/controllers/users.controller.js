@@ -71,3 +71,20 @@ exports.getUserByID = async (req, res) => {
         return res.status(500).send(err.message)
     }
 }
+
+exports.getUserRole = async (req, res) => {
+    try {
+        const role = await usersServices.getRoleByID(
+            req.params.uuid
+        )
+        let role_name;
+        if(role === 3) {
+            role_name = 'admin';
+        } else if (role === 2) {
+            role_name = 'provider';
+        } else role_name = 'user';
+        return res.status(200).send(role_name)
+    } catch (err) {
+        return res.status(500).send(err.message)
+    }
+}

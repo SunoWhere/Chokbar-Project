@@ -100,3 +100,20 @@ exports.getUserByID = async (uuid) => {
         throw err
     }
 }
+
+exports.getRoleByID = async (uuid) => {
+    try {
+        const user = await UserModel.findOne({
+            where: {
+                uuid_user: uuid
+            }
+        });
+        if (!user) {
+            throw new Error("No user found");
+        }
+        return user.id_role;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+};

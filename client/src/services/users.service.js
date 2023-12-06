@@ -4,8 +4,6 @@ Axios.defaults.baseURL = 'http://localhost:8081';
 
 let login = async (credentials) => {
     try {
-        console.log(credentials.email);
-        console.log(credentials.password);
         return await Axios.post('/api/users/login', {
             email: credentials.email,
             password: credentials.password
@@ -17,6 +15,26 @@ let login = async (credentials) => {
 
 let getUuid = () => {
     return localStorage.getItem('uuid');
+}
+
+let reciveRole = async () => {
+    try {
+        return await Axios.get('/api/users/role/' + getUuid());
+    } catch (error) {
+        throw new Error(error.response.data);
+    }
+}
+
+let saveRole = (role) => {
+    localStorage.setItem('role', role);
+};
+
+let getRole = () => {
+    return localStorage.getItem('role');
+}
+
+let removeRole = () => {
+    localStorage.removeItem('role');
 }
 
 let saveUuid = (uuid) => {
@@ -32,4 +50,8 @@ export const usersService = {
     getUuid,
     saveUuid,
     removeUuid,
+    saveRole,
+    reciveRole,
+    getRole,
+    removeRole
 }

@@ -13,7 +13,8 @@
         user: {
           email: '',
           password: ''
-        }
+        },
+        loginError: null
       }
     },
     methods: {
@@ -21,11 +22,21 @@
         usersService.login(this.user)
           .then(res => {
             usersService.saveUuid(res.data);
+
+            usersService.reciveRole()
+              .then(res => {
+                usersService.saveRole(res.data);
+              })
+              .catch(error => {
+                console.log(error);
+              })
+
             this.$router.push('/Dashboard');
             this.$router.go();
           })
           .catch(error => {
             console.log(error);
+            this.loginError = "Identifiants incorrects";
           });
       },
       toggleShowPassword() {
@@ -38,7 +49,6 @@
         }
       }
     }
-
   }
 </script>
 
@@ -46,6 +56,9 @@
   <div class="login">
     <div class="login-form">
       <h2>Login</h2>
+      <div v-if="loginError" id="error-message">
+        <p class="error-message">{{ loginError }}</p>
+      </div>
       <form action="/users/login" method="GET" @submit.prevent="login">
 
         <label for="email">Email</label>
@@ -68,6 +81,18 @@
 </template>
 
 <style scoped>
+
+#error-message {
+  color: var(--white);
+  height: 30px;
+  width: auto;
+  border-radius: 7px;
+  background-color: var(--crud-rouge);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
 
 .login {
   margin: 0 auto;

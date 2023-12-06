@@ -9,25 +9,20 @@
 </template>
 
 <script>
+import {usersService} from "@/services";
+
 export default {
   name: 'SideBar',
-  props: {
-    userType: {
-      type: String,
-      required: true
-    }
-  },
   computed: {
     links() {
-      console.log(this.userType);
-      if (this.userType === '2') {
+      if (usersService.getRole().toLowerCase() === 'admin') {
         return [
           { label: 'User', route:  '/admin/user' },
           { label: 'Intervenants', route: '/Admin/Intervenants' },
           { label: 'Produits', route: '/admin/produits' },
           { label: 'Calendrier', route: '/admin/calendrier' }
         ];
-      } else if (this.userType === '1') {
+      } else if (usersService.getRole().toLowerCase() === 'provider') {
         return [
           { label: 'Produits', route: '/intervenant/produits' },
           { label: 'Stands', route: '/intervenant/stands' },
