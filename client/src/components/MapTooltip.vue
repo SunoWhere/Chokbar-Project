@@ -8,7 +8,7 @@ export default {
   },
   methods: {
     closeTooltip() {
-      window.location.reload();
+      this.$store.state.isMapTooltipOpen = false;
     }
   }
 }
@@ -16,7 +16,11 @@ export default {
 
 <template>
   <div class="tooltip">
-    <button id="close-btn" @click="closeTooltip"><font-awesome-icon icon="fa-solid fa-x" /></button>
+    <div class="close-container" @click="closeTooltip">
+      <div class="leftright"></div>
+      <div class="rightleft"></div>
+    </div>
+<!--    <button id="close-btn" @click="closeTooltip"><font-awesome-icon icon="fa-solid fa-x"/></button>-->
     <div class="tooltip-content">
       <p id="booth-id">{{ boothId }}</p>
       <p>Prestataire: M. Ambert</p>
@@ -50,6 +54,45 @@ export default {
   color: var(--white);
   font-size: 1.3em;
   margin-bottom: 5px;
+}
+
+.close-container {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  margin: auto;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  top: 5px;
+  right: 5px;
+}
+
+.leftright {
+  height: 4px;
+  width: 35px;
+  position: absolute;
+  background-color: var(--scnd2);
+  border-radius: 2px;
+  transform: rotate(45deg);
+  transition: all .3s ease-in;
+}
+
+.rightleft {
+  height: 4px;
+  width: 35px;
+  position: absolute;
+  background-color: var(--scnd3);
+  border-radius: 2px;
+  transform: rotate(-45deg);
+  transition: all .3s ease-in;
+}
+
+.close-container:hover .leftright {
+  transform: rotate(-45deg);
+}
+.close-container:hover .rightleft {
+  transform: rotate(45deg);
 }
 
 #close-btn {

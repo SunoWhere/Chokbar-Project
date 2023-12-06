@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     selectedRole: "0",
+    isMapTooltipOpen: false,
   },
   getters: {
   },
