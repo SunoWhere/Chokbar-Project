@@ -8,13 +8,12 @@ export default {
   data() {
     return {
       selectedBoothId: null,
-      isTooltipOpen: false,
     }
   },
   methods: {
     openTooltip(e) {
       this.selectedBoothId = e.target.id;
-      this.isTooltipOpen = true;
+      this.$store.state.isMapTooltipOpen = true;
     }
   }
 }
@@ -24,8 +23,8 @@ export default {
   <div class="container">
     <div class="map-container">
       <svg class="map" width="100%" height="100%" viewBox="0 0 2236 1578" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:square;stroke-miterlimit:1.5;">
-        <g transform="matrix(1,0,0,1,-783.554,-346.752)">
-          <path d="M814.076,377.274L814.076,1302.49L1427.67,1893.6L2988.97,1893.6L2988.97,377.274L814.076,377.274Z" style="fill:none;stroke-width:33.86px;"/>
+        <g id="map-bg" transform="matrix(1,0,0,1,-783.554,-346.752)">
+          <path d="M814.076,377.274L814.076,1302.49L1427.67,1893.6L2988.97,1893.6L2988.97,377.274L814.076,377.274Z" style="fill:none; stroke-width:33.86px;"/>
           <g transform="matrix(1.27907,0,0,1,-53.1968,0)">
               <rect id="A02" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
           </g>
@@ -115,7 +114,7 @@ export default {
           </g>
         </g>
       </svg>
-      <MapTooltip v-if="isTooltipOpen" :booth-id="selectedBoothId" />
+      <MapTooltip v-if="this.$store.state.isMapTooltipOpen" :booth-id="selectedBoothId" />
     </div>
 <!--    <div class="planning-container">-->
 
@@ -147,13 +146,13 @@ export default {
 }
 
 .map path {
-  stroke: black;
+  stroke: black ;
 }
 
 .map rect {
   fill: rgb(235,235,235);
   stroke: black;
-  stroke-width: 13.07px;
+  stroke-width: 13px;
 }
 
 .map rect:hover {
