@@ -31,8 +31,14 @@
                 console.log(error);
               })
 
-            this.$router.push('/Dashboard');
-            this.$router.go();
+            this.$store.commit('setConnected', {
+              value: true,
+              callback: () => {
+                setTimeout(() => {
+                  this.$router.push('/Dashboard');
+                }, 0);
+              },
+            });
           })
           .catch(error => {
             console.log(error);

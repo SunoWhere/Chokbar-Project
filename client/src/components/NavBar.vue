@@ -1,27 +1,28 @@
 <script>
-import { usersService } from '@/services';
+import {usersService} from '@/services';
 
 export default {
   name: 'NavBar',
-  data: () => ({
-  }),
   methods: {
-    isConnected() {
-      console.log(usersService.getUuid() !== null);
-      return usersService.getUuid() !== null;
-    },
     logout() {
-      if(this.isConnected()) {
+      if (this.isConnected()) {
+        this.$store.commit('setConnected', false);
+
         usersService.removeUuid();
         usersService.removeRole();
-        this.$router.push('/');
-        this.$router.go();
+
+        if (this.$route.path !== '/') {
+          this.$router.push('/');
+        }
       }
     },
+    isConnected() {
+      return this.$store.state.isConnected;
+    },
+    role() {
+      return usersService.getRole() !== null;
+    }
   },
-  mounted() {
-    this.isConnected();
-  }
 }
 
 </script>
@@ -30,20 +31,48 @@ export default {
   <nav>
     <img src="../assets/logo.png" alt="Logo EZCon">
     <ul class="nav-list">
-      <li><button class="nav-item underline-animation" @click="$router.push('/')">Accueil</button></li>
-      <li><button class="nav-item underline-animation" @click="$router.push('/Map')">Map</button></li>
-      <li><button class="nav-item underline-animation" @click="$router.push('/Billetterie')">Billetterie</button></li>
+      <li>
+        <button class="nav-item underline-animation">
+          <router-link class="router-link" to="/">Accueil</router-link>
+        </button>
+      </li>
+      <li>
+        <button class="nav-item underline-animation" @click="$router.push('/Map')">
+          Map
+        </button>
+      </li>
+      <li>
+        <button class="nav-item underline-animation" @click="$router.push('/Billetterie')">
+          Billetterie
+        </button>
+      </li>
       <li id="dropdown">
         <button class="nav-item dropdown">A Propos <font-awesome-icon icon="fa-solid fa-chevron-down" /></button>
         <ul class="dropdown-list">
-          <li><button class="dropdown-item underline-animation" @click="$router.push('/Infos/Ezcon')">La EZCon</button></li>
-          <li><button class="dropdown-item underline-animation" @click="$router.push('/Infos/Dates')">Dates, Horaires, Accès</button></li>
-          <li><button class="dropdown-item underline-animation">A Découvrir</button></li>
+          <li>
+            <button class="dropdown-item underline-animation" @click="$router.push('/Infos/Ezcon')">
+              La EZCon
+            </button>
+          </li>
+          <li>
+            <button class="dropdown-item underline-animation" @click="$router.push('/Infos/Dates')">
+              Dates, Horaires, Accès
+            </button>
+          </li>
+          <li>
+            <button class="dropdown-item underline-animation">
+              A Découvrir
+            </button>
+          </li>
         </ul>
       </li>
     </ul>
     <ul class="nav-list">
-      <li v-if="isConnected()" ><button class="nav-btn" @click="$router.push('/Dashboard')">Dashboard</button></li>
+      <li v-if="isConnected()">
+        <button class="nav-btn">
+          <router-link class="router-link" to="/Dashboard">Dashboard</router-link>
+        </button>
+      </li>
       <li v-if="!isConnected()">
         <button class="nav-item underline-animation" @click="$router.push('/Login')">
           <font-awesome-icon icon="fa-solid fa-user" /> Se Connecter
@@ -68,6 +97,10 @@ nav {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+
+.router-link {
+  color: var(--white);
 }
 
 img {

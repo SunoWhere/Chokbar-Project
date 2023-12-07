@@ -1,24 +1,27 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import {usersService} from "@/services";
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    selectedRole: "0",
     isMapTooltipOpen: false,
+    isConnected: usersService.getUuid() != null,
   },
   getters: {
+    
   },
   mutations: {
-    updateSelectedRole(state, value) {
-      state.selectedRole = value;
-    }
+    setConnected(state, { value, callback }) {
+      state.isConnected = value;
+      if (callback && typeof callback === 'function') {
+        callback();
+      }
+    },
   },
   actions: {
-    setSelectedRole({ commit }, value) {
-      commit('updateSelectedRole', value);
-    }
+
   },
   modules: {
   }

@@ -13,24 +13,30 @@ import {usersService} from "@/services";
 
 export default {
   name: 'SideBar',
+  methods: {
+    getRole() {
+      const role = usersService.getRole();
+      return role ? role.toLowerCase() : '';
+    }
+  },
   computed: {
     links() {
-      if (usersService.getRole().toLowerCase() === 'admin') {
+      if (this.getRole().toLowerCase() === 'admin') {
         return [
           { label: 'User', route:  '/admin/user' },
           { label: 'Intervenants', route: '/Admin/Intervenants' },
           { label: 'Produits', route: '/admin/produits' },
           { label: 'Calendrier', route: '/admin/calendrier' }
         ];
-      } else if (usersService.getRole().toLowerCase() === 'provider') {
+      }
+      if (this.getRole().toLowerCase() === 'provider') {
         return [
           { label: 'Produits', route: '/intervenant/produits' },
           { label: 'Stands', route: '/intervenant/stands' },
           { label: 'Events', route: '/intervenant/events'},
         ];
-      } else {
-        return [];
       }
+      return [];
     }
   }
 };

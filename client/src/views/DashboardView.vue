@@ -16,10 +16,12 @@ export default {
   },
   computed: {
     isConnected() {
-      return usersService.getUuid() !== null;
+      console.log(this.$store.state.isConnected);
+      return this.$store.state.isConnected;
     },
     getRole() {
-      return usersService.getRole();
+      const role = usersService.getRole();
+      return role ? role.toLowerCase() : '';
     }
   },
 }
