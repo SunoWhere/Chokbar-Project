@@ -8,16 +8,17 @@ export default new Vuex.Store({
   state: {
     isMapTooltipOpen: false,
     isConnected: usersService.getUuid() != null,
+    role: usersService.getRole(),
   },
   getters: {
     
   },
   mutations: {
-    setConnected(state, { value, callback }) {
+    setConnected(state, value) {
       state.isConnected = value;
-      if (callback && typeof callback === 'function') {
-        callback();
-      }
+    },
+    setRole(state, value) {
+      state.role = value;
     },
   },
   actions: {

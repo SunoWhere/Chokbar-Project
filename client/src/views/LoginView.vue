@@ -26,20 +26,14 @@
             usersService.reciveRole()
               .then(res => {
                 usersService.saveRole(res.data);
+                this.$store.commit('setRole', res.data);
               })
               .catch(error => {
                 console.log(error);
               })
-
-            this.$store.commit('setConnected', {
-              value: true,
-              callback: () => {
-                setTimeout(() => {
-                  this.$router.push('/Dashboard');
-                }, 0);
-              },
-            });
-          })
+              this.$store.commit('setConnected', true);
+              this.$router.push('/Dashboard');
+            })
           .catch(error => {
             console.log(error);
             this.loginError = "Identifiants incorrects";

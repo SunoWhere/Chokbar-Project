@@ -9,19 +9,17 @@
 </template>
 
 <script>
-import {usersService} from "@/services";
 
 export default {
   name: 'SideBar',
   methods: {
     getRole() {
-      const role = usersService.getRole();
-      return role ? role.toLowerCase() : '';
+      return this.$store.state.role;
     }
   },
   computed: {
     links() {
-      if (this.getRole().toLowerCase() === 'admin') {
+      if (this.getRole() === 'admin') {
         return [
           { label: 'User', route:  '/admin/user' },
           { label: 'Intervenants', route: '/Admin/Intervenants' },
@@ -29,7 +27,7 @@ export default {
           { label: 'Calendrier', route: '/admin/calendrier' }
         ];
       }
-      if (this.getRole().toLowerCase() === 'provider') {
+      if (this.getRole() === 'provider') {
         return [
           { label: 'Produits', route: '/intervenant/produits' },
           { label: 'Stands', route: '/intervenant/stands' },

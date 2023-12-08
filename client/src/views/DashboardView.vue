@@ -1,7 +1,6 @@
 <script>
 import SideBar from '@/components/SideBar.vue';
 import DashboardContentAdmin from '@/components/DashboardContentAdmin.vue';
-import {usersService} from "@/services";
 
 export default {
   name: 'DashboardView',
@@ -16,12 +15,10 @@ export default {
   },
   computed: {
     isConnected() {
-      console.log(this.$store.state.isConnected);
       return this.$store.state.isConnected;
     },
     getRole() {
-      const role = usersService.getRole();
-      return role ? role.toLowerCase() : '';
+      return this.$store.state.role;
     }
   },
 }
@@ -30,7 +27,7 @@ export default {
 <template>
   <div class="dashboard-container">
     <SideBar/>
-    <div id="dc" v-if="isConnected && getRole.toLowerCase() === 'admin'">
+    <div id="dc" v-if="isConnected && getRole === 'admin'">
       <DashboardContentAdmin/>
     </div>
   </div>
