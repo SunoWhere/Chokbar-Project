@@ -1,10 +1,12 @@
 <script>
 import SideBar from "@/components/SideBar.vue";
+import CrudAdminProviders from "@/components/CrudAdminProviders.vue";
 
 
 export default {
   name: 'CrudProvidersView',
   components: {
+    CrudAdminProviders,
     SideBar
   },
   metaInfo() {
@@ -13,8 +15,11 @@ export default {
     }
   },
   computed: {
-    selectedRole() {
-      return this.$store.state.selectedRole;
+    isConnected() {
+      return this.$store.state.isConnected;
+    },
+    getRole() {
+      return this.$store.state.role;
     }
   },
 }
@@ -22,8 +27,9 @@ export default {
 
 <template>
   <div class="dashboard-container">
-    <SideBar :user-type="selectedRole"/>
-    <div id="dc" v-if="selectedRole === '2'">
+    <SideBar/>
+    <div id="dc" v-if="isConnected && getRole === 'admin'">
+      <CrudAdminProviders/>
     </div>
   </div>
 </template>
