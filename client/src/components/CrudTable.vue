@@ -69,7 +69,7 @@ tr:nth-child(even){
 td{
   text-align: center;
   padding: 5px;
-  border-left: 1px solid var(--background);
+  //border-left: 1px solid var(--component-background);
 }
 
 td:nth-child(1) {
