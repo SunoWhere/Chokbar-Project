@@ -20,7 +20,6 @@ export default {
       <div class="leftright"></div>
       <div class="rightleft"></div>
     </div>
-<!--    <button id="close-btn" @click="closeTooltip"><font-awesome-icon icon="fa-solid fa-x"/></button>-->
     <div class="tooltip-content">
       <p id="booth-id">{{ boothId }}</p>
       <p>Prestataire: M. Ambert</p>
@@ -93,16 +92,5 @@ export default {
 }
 .close-container:hover .rightleft {
   transform: rotate(45deg);
-}
-
-#close-btn {
-  position: absolute;
-  background-color: transparent;
-  border: none;
-  right: 10px;
-  top: 5px;
-  color: var(--white);
-  font-size: 1.5em;
-  cursor: pointer;
 }
 </style>

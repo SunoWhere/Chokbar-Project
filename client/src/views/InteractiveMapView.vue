@@ -15,6 +15,11 @@ export default {
       this.selectedBoothId = e.target.id;
       this.$store.state.isMapTooltipOpen = true;
     }
+  },
+  computed: {
+    generateTimes() {
+      return [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
+    }
   }
 }
 </script>
@@ -116,9 +121,12 @@ export default {
       </svg>
       <MapTooltip v-if="this.$store.state.isMapTooltipOpen" :booth-id="selectedBoothId" />
     </div>
-<!--    <div class="planning-container">-->
-
-<!--    </div>-->
+    <div class="planning-container">
+      <ul class="timetable">
+        <li class="table-head">Evénements</li>
+        <li class="table-event" v-for="(time, index) in generateTimes" :key="index"><span class="event-name">Gaming</span><span class="event-time">{{ time }}h</span></li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -153,15 +161,53 @@ export default {
   fill: rgb(235,235,235);
   stroke: black;
   stroke-width: 13px;
+  transition: fill 0.15s ease;
 }
 
 .map rect:hover {
   cursor: pointer;
-  fill: chartreuse;
+  fill: var(--scnd3);
 }
+
+
+
 
 .planning-container {
   width: 40%;
-  background-color: rgba(255, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+.timetable {
+  width: 60%;
+  background-color: white;
+  border-radius: 17px;
+  text-decoration: none;
+  list-style: none;
+}
+
+.table-head {
+  font-size: 1.5em;
+  background-color: #ddd;
+  padding: 5px;
+  margin: 5px;
+  border-top-left-radius: 13px;
+  border-top-right-radius: 13px;
+}
+
+.table-event {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px;
+  margin: 5px;
+  border-radius: 13px;
+  transition: background-color 0.3s ease;
+}
+
+.table-event:hover {
+  background-color: var(--component-background);
+  cursor: pointer;
+}
+
 </style>
