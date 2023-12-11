@@ -1,29 +1,19 @@
 <script>
 import SideBar from "@/components/SideBar.vue";
 import CrudTable from "@/components/CrudTable.vue";
+import {usersService} from "@/services";
 
 
 export default {
   name: 'CrudProvidersView',
   data () {
     return {
-      tableColumns: ["Nom", "Prenom"],
-      users: [
-        {
-          name: "Tom",
-          Prenom: "SIOUAN"
-        },
-        {
-          name: "Lucas",
-          Prenom: "Da Silveira"
-        },
-        {
-          name: "Mathys",
-          Prenom: "NOURRY"
-        },
-      ],
-
+      tableColumns: ["Nom", "Prenom", "Rôle"],
+      users: []
     }
+  },
+  created() {
+    this.allUsers();
   },
   components: {
     CrudTable,
@@ -34,13 +24,35 @@ export default {
       title: 'CrudUsers'
     }
   },
+  methods: {
+    async allUsers() {
+      try {
+        const res = await usersService.getAllUser();
+        this.users = res.data.map(user => [user.first_name, user.last_name, this.getRoleLabel(user.id_role)]);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    getRoleLabel(idRole) {
+      switch (idRole) {
+        case 1:
+          return 'Client';
+        case 2:
+          return 'Provider';
+        case 3:
+          return 'Admin';
+        default:
+          return '';
+      }
+    },
+  },
   computed: {
     isConnected() {
       return this.$store.state.isConnected;
     },
     getRole() {
       return this.$store.state.role;
-    }
+    },
   },
 }
 </script>

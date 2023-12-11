@@ -25,6 +25,14 @@ let reciveRole = async () => {
     }
 }
 
+let getAllUser = async () => {
+    try {
+        return await Axios.get('/api/users/');
+    } catch (error) {
+        throw new Error(error.response.data);
+    }
+}
+
 let saveRole = (role) => {
     localStorage.setItem('role', role);
 };
@@ -53,5 +61,6 @@ export const usersService = {
     saveRole,
     reciveRole,
     getRole,
-    removeRole
+    removeRole,
+    getAllUser
 }
