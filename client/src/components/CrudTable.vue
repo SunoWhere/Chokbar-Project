@@ -69,13 +69,16 @@ tr:nth-child(even){
 td{
   text-align: center;
   padding: 5px;
-  border-left: 1px solid var(--background);
+  //border-left: 1px solid var(--component-background);
+}
+
+td:nth-child(1) {
+  border: none;
 }
 
 thead{
   background-color: var(--primary);
   color: var(--white);
-
 }
 
 .container{
@@ -86,6 +89,8 @@ thead{
   transform: translate(-35%, -50%);
   background-color:white;
   border-radius: 10px;
+  max-height: 50%;
+  overflow-y: scroll;
 }
 
 .container-table{
