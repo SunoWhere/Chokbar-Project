@@ -69,9 +69,11 @@ export default {
     </ul>
     <ul class="nav-list">
       <li v-if="isConnected()">
-        <button class="nav-btn">
-          <router-link class="router-link" to="/Dashboard">Dashboard</router-link>
-        </button>
+        <router-link class="router-link" to="/Dashboard">
+          <button class="nav-btn">
+            Dashboard
+          </button>
+        </router-link>
       </li>
       <li v-if="!isConnected()">
         <button class="nav-item underline-animation" @click="$router.push('/Login')">
