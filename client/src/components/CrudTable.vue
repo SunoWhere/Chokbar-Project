@@ -72,6 +72,10 @@ td{
   border-left: 1px solid var(--background);
 }
 
+td:nth-child(1) {
+  border: none;
+}
+
 thead{
   background-color: var(--primary);
   color: var(--white);
