@@ -131,7 +131,7 @@ export default {
             </div>
           </div>
         </div>
-        <div class="img" id="vr-img"></div>
+        <div class="img" id="vr-img-2"></div>
       </div>
     </div>
   </div>
@@ -198,7 +198,7 @@ export default {
   background-image: url('../assets/figurine.JPG');
 }
 
-#vr-img {
+#vr-img-2 {
   background-image: url('../assets/map.png');
 }
 
