@@ -79,6 +79,7 @@ td:nth-child(1) {
 thead{
   background-color: var(--primary);
   color: var(--white);
+  height: 30px;
 }
 
 .container{
@@ -91,21 +92,24 @@ thead{
   border-radius: 10px;
   max-height: 50%;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .container-table{
   border-radius: 5px;
+
 }
 
 
 .add-button{
-  margin-left: calc(51% - 100px);
+  margin-left: calc(100% - 550px) ;
   width: fit-content;
   background-color: var(--crud-vert);
   border: none;
   color: white;
   padding: 5px 5px;
   margin-top: 10px;
+  margin-bottom: 10px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
