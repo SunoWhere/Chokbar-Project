@@ -136,4 +136,16 @@ thead{
   cursor: pointer;
 }
 
+.add-button:hover{
+  background-color: var(--btn-green-hover);
+}
+
+.edit-button:hover{
+  background-color: var(--btn-green-hover);
+}
+
+.delete-button:hover{
+  background-color: var(--scnd2);
+}
+
 </style>
