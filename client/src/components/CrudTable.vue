@@ -1,5 +1,25 @@
-<script setup>
+<script>
 
+export default {
+  name: 'CrudTable',
+  props: {
+    columnNames: {
+      type: Array,
+      required: true,
+      validator: function (value) {
+        return value.every(item => typeof item === 'string');
+      }
+    },
+    items: {
+      type: Array,
+      required: true,
+    }
+  },
+  components: {
+
+  },
+
+};
 </script>
 
 <template>
@@ -7,60 +27,22 @@
     <div class="container-table">
       <table>
         <thead>
-        <tr>
-          <th>Prénom</th>
-          <th>Nom</th>
-          <th>Mail</th>
-          <th>Action</th>
-          <th></th>
-        </tr>
+          <tr>
+            <th v-for="columnName in columnNames" :key="columnName">{{ columnName }}</th>
+            <th>Actions</th>
+          </tr>
         </thead>
         <tfoot></tfoot>
         <tbody>
-        <tr>
-          <td>lorem1</td>
-          <td>lorem2</td>
-          <td>lorem3</td>
-          <td>
-            <form>
-              <button class="edit-button">Editer<i class=""></i></button>
-              <button class="delete-button">Supprimer<i class=""></i></button>
-            </form>
-          </td>
-        </tr>
-        <tr>
-          <td>lorem1</td>
-          <td>lorem2</td>
-          <td>lorem3</td>
-          <td>
-            <form>
-              <button class="edit-button">Editer<i class=""></i></button>
-              <button class="delete-button">Supprimer<i class=""></i></button>
-            </form>
-          </td>
-        </tr>
-        <tr>
-          <td>lorem1</td>
-          <td>lorem2</td>
-          <td>lorem3</td>
-          <td>
-            <form>
-              <button class="edit-button">Editer<i class=""></i></button>
-              <button class="delete-button">Supprimer<i class=""></i></button>
-            </form>
-          </td>
-        </tr>
-        <tr>
-          <td>lorem1</td>
-          <td>lorem2</td>
-          <td>lorem3</td>
-          <td>
-            <form>
-              <button class="edit-button">Editer<i class=""></i></button>
-              <button class="delete-button">Supprimer<i class=""></i></button>
-            </form>
-          </td>
-        </tr>
+          <tr v-for="(item, index) in items" :key="index">
+            <td v-for="(value, columnIndex) in item" :key="columnIndex">{{ value }}</td>
+            <td>
+              <form>
+                <button class="edit-button">Editer<i class=""></i></button>
+                <button class="delete-button">Supprimer<i class=""></i></button>
+              </form>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>

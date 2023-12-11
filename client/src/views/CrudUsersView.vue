@@ -1,40 +1,37 @@
 <script>
 import SideBar from "@/components/SideBar.vue";
-import CrudAdminProviders from "@/components/CrudTable.vue";
+import CrudTable from "@/components/CrudTable.vue";
 
 
 export default {
   name: 'CrudProvidersView',
   data () {
     return {
-      tableColumns: ["Nom", "Prenom", "Entreprise"],
-      providers: [
+      tableColumns: ["Nom", "Prenom"],
+      users: [
         {
-          name: "Jean",
-          Prenom: "lasalle",
-          Entreprise: "Asus",
+          name: "Tom",
+          Prenom: "SIOUAN"
         },
         {
-          name: "Marc",
-          Prenom: "Dupond",
-          Entreprise: "MSI",
+          name: "Lucas",
+          Prenom: "Da Silveira"
         },
         {
-          name: "Murielle",
-          Prenom: "Ducoin",
-          Entreprise: "Eva",
+          name: "Mathys",
+          Prenom: "NOURRY"
         },
       ],
 
     }
   },
   components: {
-    CrudAdminProviders,
+    CrudTable,
     SideBar
   },
   metaInfo() {
     return {
-      title: 'CrudProviders'
+      title: 'CrudUsers'
     }
   },
   computed: {
@@ -52,7 +49,7 @@ export default {
   <div class="dashboard-container">
     <SideBar/>
     <div id="dc" v-if="isConnected && getRole === 'admin'">
-      <CrudAdminProviders :column-names="tableColumns" :items="providers"/>
+      <CrudTable :column-names="tableColumns" :items="users"/>
     </div>
   </div>
 </template>

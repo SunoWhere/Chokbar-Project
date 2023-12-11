@@ -10,6 +10,7 @@ import InteractiveMapView from "@/views/InteractiveMapView.vue";
 import CrudProvidersView from "@/views/CrudProvidersView.vue";
 import AproposView from "@/views/AproposView.vue";
 import DatesView from "@/views/DatesView.vue";
+import CrudUsersView from "@/views/CrudUsersView.vue";
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/Admin/Intervenants',
     name: 'CrudProviders',
     component: CrudProvidersView
+  },
+  {
+    path: '/Admin/User',
+    name: 'CrudUsers',
+    component: CrudUsersView
   },
   {
     path: '/Login',
