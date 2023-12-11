@@ -79,7 +79,6 @@ td:nth-child(1) {
 thead{
   background-color: var(--primary);
   color: var(--white);
-
 }
 
 .container{
@@ -90,6 +89,8 @@ thead{
   transform: translate(-35%, -50%);
   background-color:white;
   border-radius: 10px;
+  max-height: 50%;
+  overflow-y: scroll;
 }
 
 .container-table{
