@@ -8,10 +8,11 @@ export default new Vuex.Store({
   state: {
     isMapTooltipOpen: false,
     isConnected: usersService.getUuid() != null,
+    showAddUserPopup: false,
     role: usersService.getRole(),
   },
   getters: {
-    
+
   },
   mutations: {
     setConnected(state, value) {
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     },
     setRole(state, value) {
       state.role = value;
+    },
+    setShowAddUserPopup(state, value) {
+      state.showAddUserPopup = value;
     },
   },
   actions: {

@@ -2,6 +2,9 @@
 
 export default {
   name: 'CrudTable',
+  components: {
+
+  },
   props: {
     columnNames: {
       type: Array,
@@ -15,10 +18,20 @@ export default {
       required: true,
     }
   },
-  components: {
-
+  computed: {
+    showPopup() {
+      return this.$store.state.showAddUserPopup;
+    }
   },
-
+  methods: {
+    openPopup() {
+      console.log("crud table: " + this.showPopup)
+      this.$store.commit("setShowAddUserPopup", true);
+    },
+    closePopup() {
+      this.$store.commit("setShowAddUserPopup", false);
+    },
+  }
 };
 </script>
 
@@ -46,7 +59,9 @@ export default {
         </tbody>
       </table>
     </div>
-    <button class="add-button">Ajouter<i class=""></i></button>
+    <div id="add-btn">
+      <button class="add-button" @click="openPopup">Ajouter<i class=""></i></button>
+    </div>
   </div>
 </template>
 
@@ -93,16 +108,16 @@ thead{
   max-height: 50%;
   overflow-y: scroll;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .container-table{
   border-radius: 5px;
-
 }
 
 
 .add-button{
-  margin-left: calc(100% - 550px) ;
   width: fit-content;
   background-color: var(--crud-vert);
   border: none;
@@ -116,6 +131,12 @@ thead{
   font-size: 16px;
   border-radius: 8px;
   cursor: pointer;
+}
+
+#add-btn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .delete-button{

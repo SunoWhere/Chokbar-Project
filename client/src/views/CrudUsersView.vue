@@ -2,6 +2,7 @@
 import SideBar from "@/components/SideBar.vue";
 import CrudTable from "@/components/CrudTable.vue";
 import {usersService} from "@/services";
+import AddPopup from "@/components/AddPopup.vue";
 
 
 export default {
@@ -16,6 +17,7 @@ export default {
     this.allUsers();
   },
   components: {
+    AddPopup,
     CrudTable,
     SideBar
   },
@@ -63,6 +65,7 @@ export default {
     <div id="dc" v-if="isConnected && getRole === 'admin'">
       <CrudTable :column-names="tableColumns" :items="users"/>
     </div>
+    <AddPopup/>
   </div>
 </template>
 
