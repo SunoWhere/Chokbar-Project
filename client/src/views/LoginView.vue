@@ -14,12 +14,20 @@
           email: '',
           password: ''
         },
+        hashedUser: {
+          email: '',
+          password: ''
+        },
         loginError: null
       }
     },
     methods: {
       login() {
-        usersService.login(this.user)
+        console.log(this.user)
+        this.hashedUser.email = this.user.email;
+        this.hashedUser.password = usersService.hashPassword(this.user.password);
+        console.log(this.hashedUser)
+        usersService.login(this.hashedUser)
           .then(res => {
             usersService.saveUuid(res.data);
 

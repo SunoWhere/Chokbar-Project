@@ -1,4 +1,5 @@
 import Axios from 'axios';
+const crypto = require('crypto');
 
 Axios.defaults.baseURL = 'http://localhost:8081';
 
@@ -53,6 +54,12 @@ let removeUuid = () => {
     localStorage.removeItem('uuid');
 }
 
+let hashPassword = (password) => {
+    const hash = crypto.createHash('sha256');
+    hash.update(password);
+    return hash.digest('hex'); // return hashed password
+}
+
 export const usersService = {
     login,
     getUuid,
@@ -62,5 +69,6 @@ export const usersService = {
     reciveRole,
     getRole,
     removeRole,
-    getAllUser
+    getAllUser,
+    hashPassword
 }
