@@ -95,6 +95,8 @@ export default {
       }
     },
     submitForm() {
+      //FIXME: Quand on ajoute un nouvel utilisateur on doit refresh la page pour le voir dans la liste
+      //FIXME: (comment faire pour ne pas avoir à le faire ???)
       if (this.addUser.password === this.addUser.confirmPassword) {
         usersService.adduser(this.addUser)
             .then(res => {

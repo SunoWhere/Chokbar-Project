@@ -4,6 +4,7 @@ import CrudTable from "@/components/CrudTable.vue";
 import {usersService} from "@/services";
 import AddPopup from "@/components/AddPopup.vue";
 
+//FIXME: Doit-on voir tous les utilisateurs (admin et providers inclut) ou seulements les users
 
 export default {
   name: 'CrudProvidersView',
