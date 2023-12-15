@@ -8,17 +8,29 @@
           <div class="rightleft"></div>
         </div>
       </div>
+      <div class="content-sub-title">
+        <h2>{{typeTitle}}</h2>
+        <div v-if="message" id="error-message">
+          <p class="error-message">{{ message }}</p>
+        </div>
+      </div>
       <div class="content">
-        <form action="/users/login" method="GET">
+        <form action="/users/" method="POST" @submit.prevent="submitForm">
           <div class="form-main-content">
+            <label for="firstname">Firstname</label>
+            <input type="text" id="firstname" name="firstname" placeholder="Firstname" v-model="addUser.first_name" required>
+
+            <label for="lastname">Lastname</label>
+            <input type="text" id="lastname" name="lastname" placeholder="Lastname" v-model="addUser.last_name" required>
+
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Email" required>
+            <input type="email" id="email" name="email" placeholder="Email" v-model="addUser.email" required>
 
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Password" required>
+            <input type="password" id="password" name="password" placeholder="Password" v-model="addUser.password" required>
 
-            <label for="role">Rôle</label>
-            <input type="text" id="role" name="role" placeholder="Rôle" required>
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" v-model="addUser.confirmPassword" required>
 
             <p class="show-password">
               <input type="checkbox" id="show-password" @click="toggleShowPassword">
@@ -36,7 +48,28 @@
 </template>
 
 <script>
+import {usersService} from "@/services";
+
 export default {
+  data() {
+    return {
+      addUser: {
+        first_name: '',
+        last_name: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+      },
+      passwordMatch: false,
+      message: null
+    }
+  },
+  props: {
+    typeTitle: {
+      type: String,
+      required: true
+    }
+  },
   computed: {
     showPopup() {
       return this.$store.state.showAddUserPopup;
@@ -48,11 +81,33 @@ export default {
     },
     toggleShowPassword() {
       const passwordInput = document.getElementById("password");
+      const cpasswordInput = document.getElementById("confirm-password");
 
       if(passwordInput.type === "password") {
         passwordInput.type = "text";
       } else {
         passwordInput.type = "password";
+      }
+      if(cpasswordInput.type === "password") {
+        cpasswordInput.type = "text";
+      } else {
+        cpasswordInput.type = "password";
+      }
+    },
+    submitForm() {
+      if (this.addUser.password === this.addUser.confirmPassword) {
+        usersService.adduser(this.addUser)
+            .then(res => {
+              this.message = res.data;
+              this.closePopup();
+            })
+            .catch(err => {
+              console.error(err);
+              this.message = err ? err : "Erreur lors de l'ajout.";
+            });
+      }
+      else {
+        this.message = "Passwords dosn't matchs.";
       }
     },
   },
@@ -67,8 +122,8 @@ export default {
   border: 1px solid var(--background);
   background-color: var(--white);
   z-index: 999;
-  height: 400px;
-  width: 350px;
+  height: 600px;
+  width: 400px;
   top: 50%;
   left: 50%;
   transform: translate(-20%, -50%);
@@ -103,6 +158,12 @@ export default {
   padding: 0 15px;
   display: flex;
   margin: 20px 0;
+}
+
+.content-sub-title {
+  width: 100%;
+  text-align: center;
+  padding-top: 10px;
 }
 
 .close-container {
@@ -205,4 +266,17 @@ button:hover {
 .submit-btn button {
   width: 100%;
 }
+
+#error-message {
+  color: var(--white);
+  height: 30px;
+  width: auto;
+  border-radius: 7px;
+  background-color: var(--crud-rouge);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 10px 20px 10px;
+}
+
 </style>

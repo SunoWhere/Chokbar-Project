@@ -65,7 +65,7 @@ export default {
     <div id="dc" v-if="isConnected && getRole === 'admin'">
       <CrudTable :column-names="tableColumns" :items="users"/>
     </div>
-    <AddPopup/>
+    <AddPopup :typeTitle="'Users'" />
   </div>
 </template>
 

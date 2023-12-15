@@ -26,6 +26,19 @@ let reciveRole = async () => {
     }
 }
 
+let adduser = async (credentials) => {
+    try {
+        return await Axios.post('/api/users/', {
+            email: credentials.email,
+            password: hashPassword(credentials.password),
+            first_name: credentials.first_name,
+            last_name: credentials.last_name
+        });
+    } catch (error) {
+        throw new Error(error.response.data);
+    }
+}
+
 let getAllUser = async () => {
     try {
         return await Axios.get('/api/users/');
@@ -70,5 +83,6 @@ export const usersService = {
     getRole,
     removeRole,
     getAllUser,
-    hashPassword
+    hashPassword,
+    adduser
 }
