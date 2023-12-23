@@ -11,8 +11,6 @@ DROP TABLE IF EXISTS events_images,
     items,
     starring_stands,
     starring_events,
-    descriptions,
-    names,
     products,
     events,
     equipment_renting,
@@ -23,7 +21,6 @@ DROP TABLE IF EXISTS events_images,
     guests,
     locations,
     images,
-    languages,
     equipment_types,
     entries,
     order_types,
@@ -75,9 +72,11 @@ CREATE TABLE location_sizes
 
 CREATE TABLE providers
 (
-    id_provider SERIAL,
-    name        VARCHAR(100),
-    uuid_user   uuid NOT NULL,
+    id_provider    SERIAL,
+    name           VARCHAR(100),
+    uuid_user      uuid NOT NULL,
+    description_en TEXT NOT NULL,
+    description_fr TEXT NOT NULL,
     PRIMARY KEY (id_provider),
     UNIQUE (uuid_user),
     FOREIGN KEY (uuid_user) REFERENCES users (uuid_user)
@@ -133,12 +132,6 @@ CREATE TABLE images
     PRIMARY KEY (image)
 );
 
-CREATE TABLE languages
-(
-    language_name VARCHAR(10),
-    PRIMARY KEY (language_name)
-);
-
 CREATE TABLE locations
 (
     id_location      SERIAL,
@@ -159,11 +152,13 @@ CREATE TABLE guests
 
 CREATE TABLE stands
 (
-    id_stand      SERIAL,
-    id_location   INT NOT NULL,
-    id_provider   INT NOT NULL,
-    id_stand_type INT NOT NULL,
-    name          VARCHAR(100),
+    id_stand       SERIAL,
+    id_location    INT          NOT NULL,
+    id_provider    INT          NOT NULL,
+    id_stand_type  INT          NOT NULL,
+    name           VARCHAR(100) NOT NULL,
+    description_en TEXT         NOT NULL,
+    description_fr TEXT         NOT NULL,
     PRIMARY KEY (id_stand),
     UNIQUE (id_location),
     FOREIGN KEY (id_location) REFERENCES locations (id_location),
@@ -200,8 +195,9 @@ CREATE TABLE equipments
 (
     id_equipment      SERIAL,
     total_quantity    INT,
-    name              VARCHAR(50),
-    id_equipment_type INT NOT NULL,
+    name_en           VARCHAR(50) NOT NULL,
+    name_fr           VARCHAR(50) NOT NULL,
+    id_equipment_type INT         NOT NULL,
     PRIMARY KEY (id_equipment),
     FOREIGN KEY (id_equipment_type) REFERENCES equipment_types (id_equipment_type)
 );
@@ -226,7 +222,9 @@ CREATE TABLE events
     max_capacity   INT,
     starting_time  TIMESTAMP WITH TIME ZONE,
     finishing_time TIMESTAMP WITH TIME ZONE,
-    id_location    INT NOT NULL,
+    description_en TEXT NOT NULL,
+    description_fr TEXT NOT NULL,
+    id_location    INT  NOT NULL,
     PRIMARY KEY (id_event),
     FOREIGN KEY (id_location) REFERENCES locations (id_location)
 );
@@ -236,38 +234,15 @@ CREATE TABLE products
     id_product      SERIAL,
     price           DECIMAL(6, 2),
     quantity        INT,
-    id_stand        INT NOT NULL,
-    id_product_type INT NOT NULL,
+    id_stand        INT         NOT NULL,
+    id_product_type INT         NOT NULL,
+    description_en  TEXT        NOT NULL,
+    description_fr  TEXT        NOT NULL,
+    name_en         VARCHAR(50) NOT NULL,
+    name_fr         VARCHAR(50) NOT NULL,
     PRIMARY KEY (id_product),
     FOREIGN KEY (id_stand) REFERENCES stands (id_stand),
     FOREIGN KEY (id_product_type) REFERENCES product_types (id_product_type)
-);
-
-CREATE TABLE names(
-   id_name SERIAL,
-   name TEXT,
-   language_name VARCHAR(10) NOT NULL,
-   id_product INT NOT NULL,
-   PRIMARY KEY(id_name),
-   FOREIGN KEY(language_name) REFERENCES languages(language_name),
-   FOREIGN KEY(id_product) REFERENCES products(id_product)
-);
-
-
-
-CREATE TABLE descriptions
-(
-    id_description SERIAL,
-    description    TEXT        NOT NULL,
-    id_provider    INT         NOT NULL,
-    id_stand       INT         NOT NULL,
-    id_event       INT         NOT NULL,
-    language_name  VARCHAR(10) NOT NULL,
-    PRIMARY KEY (id_description),
-    FOREIGN KEY (id_provider) REFERENCES providers (id_provider),
-    FOREIGN KEY (id_stand) REFERENCES stands (id_stand),
-    FOREIGN KEY (id_event) REFERENCES events (id_event),
-    FOREIGN KEY (language_name) REFERENCES languages (language_name)
 );
 
 CREATE TABLE starring_events
@@ -399,14 +374,14 @@ VALUES ('user'),
 
 INSERT INTO users(email, password, first_name, last_name, id_role)
 VALUES ('admin@ezcon.fr', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin', 'admin', 3),
-       ('provider@ezcon.fr', '5c4c1964340aca5b65393bbe9d3249cdd71be26665b3320ad694f034f2743283', 'provider', 'provider',
+       ('MSI@ezcon.fr', '5c4c1964340aca5b65393bbe9d3249cdd71be26665b3320ad694f034f2743283', 'MSI', 'MSI',
         2),
        ('user@ezcon.fr', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'user', 'user', 1);
 
-INSERT INTO providers (name, uuid_user)
-SELECT 'provider', uuid_user
+INSERT INTO providers (name, uuid_user, description_en, description_fr)
+SELECT 'MSI', uuid_user, 'MSI description in English', 'Description MSI en français'
 FROM users
-WHERE email = 'provider@ezcon.fr';
+WHERE email = 'MSI@ezcon.fr';
 
 INSERT INTO images (image)
 VALUES ('MSI_LOGO.png');

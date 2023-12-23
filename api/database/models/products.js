@@ -30,6 +30,22 @@ module.exports = function(sequelize, DataTypes) {
         model: 'product_types',
         key: 'id_product_type'
       }
+    },
+    description_en: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    description_fr: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    name_en: {
+      type: DataTypes.STRING(50),
+      allowNull: false
+    },
+    name_fr: {
+      type: DataTypes.STRING(50),
+      allowNull: false
     }
   }, {
     sequelize,

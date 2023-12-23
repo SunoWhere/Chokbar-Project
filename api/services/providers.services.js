@@ -1,10 +1,13 @@
 const ProvidersModel = require("../database/DB.connection").DB_models.providers
 const ProvidersImagesModel = require("../database/DB.connection").DB_models.providers_images
-const DescriptionsModel = require("../database/DB.connection").DB_models.descriptions
 const StandsModel = require("../database/DB.connection").DB_models.stands
 const ProductsModel = require("../database/DB.connection").DB_models.products
 const ProductsImagesModel = require("../database/DB.connection").DB_models.products_images
 const UsersModel = require("../database/DB.connection").DB_models.users
+/*
+TODO : vérifier que les models de la BDD corresponde
+ */
+
 
 // TODO : s'assurer qu'avec des delete les ligne de la table products_images se supprime avec
 exports.deleteProviderById = async (id) => {
@@ -21,11 +24,13 @@ exports.deleteProviderById = async (id) => {
         throw err
     }
 }
-exports.updateProviderById = async (id, name, uuid_user) => {
+exports.updateProviderById = async (id, name, uuid_user, description_en, description_fr) => {
     try {
         await ProvidersModel.update({
             name: name,
-            uuid_user: uuid_user
+            uuid_user: uuid_user,
+            description_fr: description_fr,
+            description_en: description_en
         }, {
             where: {
                 id_provider: id
@@ -36,11 +41,13 @@ exports.updateProviderById = async (id, name, uuid_user) => {
         throw err
     }
 }
-exports.saveProvider = async (name, uuid_user) => {
+exports.saveProvider = async (name, uuid_user, description_en, description_fr) => {
     try {
         await ProvidersModel.create({
             name: name,
-            uuid_user: uuid_user
+            uuid_user: uuid_user,
+            description_fr: description_fr,
+            description_en: description_en
         })
     } catch (err) {
         console.log(err)
@@ -53,8 +60,6 @@ exports.getProviderById = async (id) => {
         const data = await ProvidersModel.findAll({
             include: [{
                 model: ProvidersImagesModel, as: 'providers_images'
-            }, {
-                model: DescriptionsModel, as: "descriptions"
             }, {
                 model: StandsModel, as: "stands"
             }, {
@@ -76,8 +81,6 @@ exports.getProviders = async () => {
         const data = await ProvidersModel.findAll({
             include: [{
                 model: ProvidersImagesModel, as: 'providers_images'
-            }, {
-                model: DescriptionsModel, as: "descriptions"
             }, {
                 model: StandsModel, as: "stands"
             }, {

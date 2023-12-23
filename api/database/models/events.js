@@ -23,6 +23,14 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: true
     },
+    description_en: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    description_fr: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
     id_location: {
       type: DataTypes.INTEGER,
       allowNull: false,
