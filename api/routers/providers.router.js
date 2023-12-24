@@ -12,6 +12,6 @@ router.put("/:id", providersMiddleware.validateId, providersMiddleware.validateP
 
 router.delete("/:id", providersMiddleware.validateId, providersController.deleteProviderById)
 
-// TODO ajouter les routes pour les images
+// TODO ajouter les routers pour les images
 
 module.exports = router

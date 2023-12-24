@@ -12,7 +12,7 @@ router.put("/:id")
 
 router.delete("/:id")
 
-// TODO : ajouter les routes pour les descriptions
+// TODO : ajouter les routers pour les descriptions
 router.get("/:id/descriptions/")
 router.get("/:id/descriptions/:language")
 
@@ -22,6 +22,6 @@ router.put("/:id/descriptions/:language")
 
 router.delete("/:id/descriptions/:language")
 
-// TODO ajouter les routes pour les images
+// TODO ajouter les routers pour les images
 
 module.exports = router

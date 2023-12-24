@@ -22,6 +22,6 @@ router.put("/:id/products/:id_product")
 
 router.delete("/:id/products/:id_product")
 
-// TODO ajouter les routes pour les images
+// TODO ajouter les routers pour les images
 
 module.exports = router
