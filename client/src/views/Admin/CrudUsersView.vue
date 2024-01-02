@@ -5,6 +5,7 @@ import {usersService} from "@/services";
 import AddPopup from "@/components/Admin/AddUserPopup.vue";
 
 //FIXME: Doit-on voir tous les utilisateurs (admin et providers inclut) ou seulements les users
+//TODO: Faire en sorte que quand on veuille supprimer un utilisateur une popup de validation apparaisse
 
 export default {
   name: 'CrudProvidersView',
@@ -20,7 +21,7 @@ export default {
     this.$store.watch(
         () => this.$store.getters.getUserList,
         userList => {
-          this.users = userList.map(user => [user.first_name, user.last_name, this.getRoleLabel(user.id_role)]);
+          this.users = userList.map(user => [user.uuid_user, user.first_name, user.last_name, this.getRoleLabel(user.id_role)]);
         }
     );
   },
@@ -38,7 +39,7 @@ export default {
     async allUsers() {
       try {
         const res = await usersService.getAllUser();
-        this.users = res.data.map(user => [user.first_name, user.last_name, this.getRoleLabel(user.id_role)]);
+        this.users = res.data.map(user => [user.uuid_user, user.first_name, user.last_name, this.getRoleLabel(user.id_role)]);
       } catch (error) {
         console.log(error);
       }

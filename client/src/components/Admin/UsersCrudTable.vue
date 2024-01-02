@@ -1,5 +1,7 @@
 <script>
 
+import {usersService} from "@/services";
+
 export default {
   name: 'CrudTable',
   components: {
@@ -21,7 +23,13 @@ export default {
   computed: {
     showPopup() {
       return this.$store.state.showAddUserPopup;
-    }
+    },
+    filteredItems() {
+      return this.items.map(item => ({
+        visibleColumns: item.slice(1),
+        uuid_user: item[0],
+      }));
+    },
   },
   methods: {
     openPopup() {
@@ -30,6 +38,15 @@ export default {
     },
     closePopup() {
       this.$store.commit("setShowAddUserPopup", false);
+    },
+    async removeUser(userId) {
+      console.log(userId);
+      try {
+        await usersService.removeUser(userId);
+        this.$store.dispatch('updateUserList', await usersService.getAllUser());
+      } catch (error) {
+        console.error(error);
+      }
     },
   }
 };
@@ -47,12 +64,12 @@ export default {
         </thead>
         <tfoot></tfoot>
         <tbody>
-          <tr v-for="(item, index) in items" :key="index">
-            <td v-for="(value, columnIndex) in item" :key="columnIndex">{{ value }}</td>
+          <tr v-for="(filteredItem, index) in filteredItems" :key="index">
+            <td v-for="(value, columnIndex) in filteredItem.visibleColumns" :key="columnIndex">{{ value }}</td>
             <td>
               <form>
                 <button class="edit-button">Editer<i class=""></i></button>
-                <button class="delete-button">Supprimer<i class=""></i></button>
+                <button class="delete-button" @click.prevent="removeUser(filteredItem.uuid_user)">Supprimer<i class=""></i></button>
               </form>
             </td>
           </tr>

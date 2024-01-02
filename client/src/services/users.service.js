@@ -47,6 +47,15 @@ let getAllUser = async () => {
     }
 }
 
+let removeUser = async (id) => {
+    try {
+        const route = '/api/users/' + id;
+        return await Axios.delete(route);
+    } catch (error) {
+        throw new Error(error.response.data);
+    }
+}
+
 let saveRole = (role) => {
     localStorage.setItem('role', role);
 };
@@ -84,5 +93,6 @@ export const usersService = {
     removeRole,
     getAllUser,
     hashPassword,
-    adduser
+    adduser,
+    removeUser
 }
