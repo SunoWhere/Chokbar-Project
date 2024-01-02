@@ -1,6 +1,6 @@
 <script>
-import NavBar from '@/components/NavBar.vue'
-import Footer from '@/components/Footer.vue'
+import NavBar from '@/components/Global/NavBar.vue'
+import Footer from '@/components/Global/Footer.vue'
 
 export default {
   name: 'HomeView',

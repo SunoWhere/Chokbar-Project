@@ -124,7 +124,7 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: row;
-  background-image: url('../assets/ezcon.png');
+  background-image: url('../../assets/ezcon.png');
   background-size: cover;
   position: relative;
   overflow: hidden;
@@ -197,15 +197,15 @@ export default {
 }
 
 #borne-arcade {
-  background-image: url('../assets/2.jpg');
+  background-image: url('../../assets/2.jpg');
 }
 
 #tournois {
-  background-image: url('../assets/3.jpg');
+  background-image: url('../../assets/3.jpg');
 }
 
 #vr-img {
-  background-image: url('../assets/4.jpg');
+  background-image: url('../../assets/4.jpg');
 }
 
 .content-subtitle {

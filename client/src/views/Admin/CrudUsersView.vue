@@ -1,8 +1,8 @@
 <script>
-import SideBar from "@/components/SideBar.vue";
-import CrudTable from "@/components/CrudTable.vue";
+import SideBar from "@/components/Global/SideBar.vue";
+import CrudTable from "@/components/Admin/UsersCrudTable.vue";
 import {usersService} from "@/services";
-import AddPopup from "@/components/AddPopup.vue";
+import AddPopup from "@/components/Admin/AddUserPopup.vue";
 
 //FIXME: Doit-on voir tous les utilisateurs (admin et providers inclut) ou seulements les users
 
@@ -16,6 +16,13 @@ export default {
   },
   created() {
     this.allUsers();
+
+    this.$store.watch(
+        () => this.$store.getters.getUserList,
+        userList => {
+          this.users = userList.map(user => [user.first_name, user.last_name, this.getRoleLabel(user.id_role)]);
+        }
+    );
   },
   components: {
     AddPopup,

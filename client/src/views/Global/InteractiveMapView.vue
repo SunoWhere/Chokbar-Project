@@ -1,5 +1,5 @@
 <script>
-import MapTooltip from "@/components/MapTooltip.vue";
+import MapTooltip from "@/components/Global/MapTooltip.vue";
 export default {
   components: {
     MapTooltip

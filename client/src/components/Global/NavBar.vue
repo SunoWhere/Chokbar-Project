@@ -29,7 +29,7 @@ export default {
 
 <template>
   <nav>
-    <img src="../assets/logo.png" alt="Logo EZCon">
+    <img src="../../assets/logo.png" alt="Logo EZCon">
     <ul class="nav-list">
       <li>
         <button class="nav-item underline-animation">

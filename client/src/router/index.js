@@ -1,16 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '@/views/HomeView.vue'
-import BilletterieView from '@/views/BilletterieView.vue';
-import DashboardView from "@/views/DashboardView.vue";
-import LoginView from '@/views/LoginView.vue';
-import RegisterView from '@/views/RegisterView.vue';
-import CheckoutView from '@/views/CheckoutView.vue';
-import InteractiveMapView from "@/views/InteractiveMapView.vue";
-import CrudProvidersView from "@/views/CrudProvidersView.vue";
-import AproposView from "@/views/AproposView.vue";
-import DatesView from "@/views/DatesView.vue";
-import CrudUsersView from "@/views/CrudUsersView.vue";
+import HomeView from '@/views/Global/HomeView.vue'
+import BilletterieView from '@/views/Global/BilletterieView.vue';
+import DashboardView from "@/views/Admin/DashboardView.vue";
+import LoginView from '@/views/Global/Connection/LoginView.vue';
+import RegisterView from '@/views/Global/Connection/RegisterView.vue';
+import CheckoutView from '@/views/Global/CheckoutView.vue';
+import InteractiveMapView from "@/views/Global/InteractiveMapView.vue";
+import CrudProvidersView from "@/views/Admin/CrudProvidersView.vue";
+import AproposView from "@/views/Global/AproposView.vue";
+import DatesView from "@/views/Global/DatesView.vue";
+import CrudUsersView from "@/views/Admin/CrudUsersView.vue";
 
 Vue.use(VueRouter)
 

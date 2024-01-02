@@ -191,15 +191,15 @@ export default {
 }
 
 #foodtruck {
-  background-image: url('../assets/foodtrucks.jpg');
+  background-image: url('../../assets/foodtrucks.jpg');
 }
 
 #figurine {
-  background-image: url('../assets/figurine.JPG');
+  background-image: url('../../assets/figurine.JPG');
 }
 
 #vr-img-2 {
-  background-image: url('../assets/map.png');
+  background-image: url('../../assets/map.png');
 }
 
 .content-subtitle {

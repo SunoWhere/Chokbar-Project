@@ -1,6 +1,6 @@
 <script>
-import SideBar from '@/components/SideBar.vue';
-import DashboardContentAdmin from '@/components/DashboardContentAdmin.vue';
+import SideBar from '@/components/Global/SideBar.vue';
+import DashboardContentAdmin from '@/components/Admin/DashboardContentAdmin.vue';
 
 export default {
   name: 'DashboardView',

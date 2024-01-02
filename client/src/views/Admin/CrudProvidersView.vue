@@ -1,6 +1,6 @@
 <script>
-import SideBar from "@/components/SideBar.vue";
-import CrudAdminProviders from "@/components/CrudTable.vue";
+import SideBar from "@/components/Global/SideBar.vue";
+import CrudAdminProviders from "@/components/Admin/UsersCrudTable.vue";
 
 
 export default {

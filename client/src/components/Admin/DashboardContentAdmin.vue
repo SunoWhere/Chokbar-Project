@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import PieChart from '@/components/PieChart.vue';
+import PieChart from '@/components/Global/PieChart.vue';
 import {
   Chart as ChartJS,
   Title,
@@ -31,7 +31,7 @@ import { Bar } from 'vue-chartjs'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
-import InfosCard from "@/components/InfosDashboardCard.vue";
+import InfosCard from "@/components/Admin/InfosDashboardCard.vue";
 
 export default {
   name: 'DashboardContent',
