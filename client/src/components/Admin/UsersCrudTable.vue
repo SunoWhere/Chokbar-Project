@@ -62,7 +62,6 @@ export default {
               <form>
                 <button class="edit-button">Editer<i class=""></i></button>
                 <button class="delete-button" @click.prevent="openRemovePopup(filteredItem.uuid_user)">Supprimer<i class=""></i></button>
-                <RemoveUserPopup :typeTitle="'Users'"/>
               </form>
             </td>
           </tr>
