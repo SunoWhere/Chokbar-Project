@@ -9,8 +9,11 @@ export default new Vuex.Store({
     isMapTooltipOpen: false,
     isConnected: usersService.getUuid() != null,
     showAddUserPopup: false,
+    showRemoveUserPopup: false,
     role: usersService.getRole(),
     users: await usersService.getAllUser(),
+    currentUserIdSelected: '',
+    userIdToRemove: null,
   },
   getters: {
     getUserList: state => state.users,
@@ -25,8 +28,14 @@ export default new Vuex.Store({
     setShowAddUserPopup(state, value) {
       state.showAddUserPopup = value;
     },
+    setShowRemoveUserPopup(state, value) {
+      state.showRemoveUserPopup = value;
+    },
     setUserList(state, userList) {
       state.users = userList;
+    },
+    setUserIdToRemove(state, value) {
+      state.userIdToRemove = value;
     },
   },
   actions: {

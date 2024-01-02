@@ -1,7 +1,5 @@
 <script>
 
-import {usersService} from "@/services";
-
 export default {
   name: 'CrudTable',
   components: {
@@ -32,21 +30,15 @@ export default {
     },
   },
   methods: {
-    openPopup() {
-      console.log("crud table: " + this.showPopup)
+    openAddPopup() {
       this.$store.commit("setShowAddUserPopup", true);
     },
-    closePopup() {
+    closeAddPopup() {
       this.$store.commit("setShowAddUserPopup", false);
     },
-    async removeUser(userId) {
-      console.log(userId);
-      try {
-        await usersService.removeUser(userId);
-        this.$store.dispatch('updateUserList', await usersService.getAllUser());
-      } catch (error) {
-        console.error(error);
-      }
+    openRemovePopup(id) {
+      this.$store.commit("setUserIdToRemove", id);
+      this.$store.commit("setShowRemoveUserPopup", true);
     },
   }
 };
@@ -69,7 +61,8 @@ export default {
             <td>
               <form>
                 <button class="edit-button">Editer<i class=""></i></button>
-                <button class="delete-button" @click.prevent="removeUser(filteredItem.uuid_user)">Supprimer<i class=""></i></button>
+                <button class="delete-button" @click.prevent="openRemovePopup(filteredItem.uuid_user)">Supprimer<i class=""></i></button>
+                <RemoveUserPopup :typeTitle="'Users'"/>
               </form>
             </td>
           </tr>
@@ -77,7 +70,7 @@ export default {
       </table>
     </div>
     <div id="add-btn">
-      <button class="add-button" @click="openPopup">Ajouter<i class=""></i></button>
+      <button class="add-button" @click="openAddPopup">Ajouter<i class=""></i></button>
     </div>
   </div>
 </template>

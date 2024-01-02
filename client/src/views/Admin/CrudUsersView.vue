@@ -2,7 +2,8 @@
 import SideBar from "@/components/Global/SideBar.vue";
 import CrudTable from "@/components/Admin/UsersCrudTable.vue";
 import {usersService} from "@/services";
-import AddPopup from "@/components/Admin/AddUserPopup.vue";
+import AddUserPopup from "@/components/Admin/AddUserPopup.vue";
+import RemoveUserPopup from "@/components/Admin/RemoveUserPopup.vue";
 
 //FIXME: Doit-on voir tous les utilisateurs (admin et providers inclut) ou seulements les users
 //TODO: Faire en sorte que quand on veuille supprimer un utilisateur une popup de validation apparaisse
@@ -26,7 +27,8 @@ export default {
     );
   },
   components: {
-    AddPopup,
+    AddUserPopup,
+    RemoveUserPopup,
     CrudTable,
     SideBar
   },
@@ -56,6 +58,15 @@ export default {
           return '';
       }
     },
+    async removeUser() {
+      const userId = this.$store.state.userIdToRemove;
+      try {
+        await usersService.removeUser(userId);
+        await this.$store.dispatch('updateUserList', await usersService.getAllUser());
+      } catch (error) {
+        console.error(error);
+      }
+    },
   },
   computed: {
     isConnected() {
@@ -74,7 +85,8 @@ export default {
     <div id="dc" v-if="isConnected && getRole === 'admin'">
       <CrudTable :column-names="tableColumns" :items="users"/>
     </div>
-    <AddPopup :typeTitle="'Users'" />
+    <AddUserPopup :typeTitle="'Users'" />
+    <RemoveUserPopup :typeTitle="'Users'" @confirmed-deletion="removeUser" />
   </div>
 </template>
 

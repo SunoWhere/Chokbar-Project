@@ -51,6 +51,7 @@
 import {usersService} from "@/services";
 
 export default {
+  name: 'AddUserPopup',
   data() {
     return {
       addUser: {
