@@ -26,6 +26,16 @@ export default {
 
 <template>
   <div class="container">
+    <div class="planning-container">
+      <ul class="timetable">
+        <li class="table-head">Evénements</li>
+        <li class="table-event hover-effect" v-for="(time, index) in generateTimes" :key="index"><span class="event-name">Gaming</span><span class="event-time">{{ time }}h</span></li>
+      </ul>
+      <div class="table-event-add" v-if="this.$store.state.isConnected">
+        <button id="add" class="event-button">Ajouter</button>
+        <button id="edit" class="event-button">Modifier</button>
+      </div>
+    </div>
     <div class="map-container">
       <svg class="map" width="100%" height="100%" viewBox="0 0 2236 1578" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:square;stroke-miterlimit:1.5;">
         <g id="map-bg" transform="matrix(1,0,0,1,-783.554,-346.752)">
@@ -121,12 +131,6 @@ export default {
       </svg>
       <MapTooltip v-if="this.$store.state.isMapTooltipOpen" :booth-id="selectedBoothId" />
     </div>
-    <div class="planning-container">
-      <ul class="timetable">
-        <li class="table-head">Evénements</li>
-        <li class="table-event" v-for="(time, index) in generateTimes" :key="index"><span class="event-name">Gaming</span><span class="event-time">{{ time }}h</span></li>
-      </ul>
-    </div>
   </div>
 </template>
 
@@ -139,7 +143,7 @@ export default {
 }
 
 .map-container {
-  width: 60%;
+  width: 75%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -149,7 +153,7 @@ export default {
 .map {
   background-color: white;
   height: auto;
-  width: 90%;
+  width: 70%;
   border-radius: 17px;
 }
 
@@ -173,18 +177,21 @@ export default {
 
 
 .planning-container {
-  width: 40%;
+  width: 25%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
 .timetable {
-  width: 60%;
+  width: 100%;
+  height: 100%;
   background-color: white;
-  border-radius: 17px;
   text-decoration: none;
   list-style: none;
+  display: flex;
+  flex-direction: column;
 }
 
 .table-head {
@@ -192,21 +199,47 @@ export default {
   background-color: #ddd;
   padding: 5px;
   margin: 5px;
-  border-top-left-radius: 13px;
-  border-top-right-radius: 13px;
+  border-radius: 17px;
 }
 
 .table-event {
   display: flex;
   justify-content: space-between;
   padding: 7px;
-  margin: 5px;
+  margin: 3px;
   border-radius: 13px;
   transition: background-color 0.3s ease;
 }
 
-.table-event:hover {
+.table-event.hover-effect:hover {
   background-color: var(--component-background);
+  cursor: pointer;
+}
+
+.table-event-add {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+}
+
+.event-button {
+  margin: 10px;
+  font-size: 1.2em;
+  border: none;
+  background-color: var(--scnd2);
+  color: var(--white);
+  padding: 10px;
+  border-radius: 13px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px var(--scnd2);
+}
+
+.event-button:hover {
+  background-color: var(--scnd3);
+  box-shadow: 0 0 15px var(--scnd3);
   cursor: pointer;
 }
 
