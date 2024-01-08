@@ -1,7 +1,6 @@
 DROP TABLE IF EXISTS events_images,
     providers_images,
     stands_images,
-    guests_images,
     products_images,
     equipments_images,
     events_rating,
@@ -18,7 +17,6 @@ DROP TABLE IF EXISTS events_images,
     orders,
     tickets,
     stands,
-    guests,
     locations,
     images,
     equipment_types,
@@ -26,7 +24,6 @@ DROP TABLE IF EXISTS events_images,
     order_types,
     ticket_types,
     stand_types,
-    guest_categories,
     providers,
     location_sizes,
     product_types,
@@ -72,14 +69,7 @@ CREATE TABLE providers
     description_fr TEXT NOT NULL,
     PRIMARY KEY (id_provider),
     UNIQUE (uuid_user),
-    FOREIGN KEY (uuid_user) REFERENCES users (uuid_user)
-);
-
-CREATE TABLE guest_categories
-(
-    id_guest_category SERIAL,
-    name              VARCHAR(50),
-    PRIMARY KEY (id_guest_category)
+    FOREIGN KEY (uuid_user) REFERENCES users (uuid_user) ON DELETE SET NULL
 );
 
 CREATE TABLE stand_types
@@ -121,25 +111,19 @@ CREATE TABLE equipment_types
 
 CREATE TABLE images
 (
-    image VARCHAR(50),
-    PRIMARY KEY (image)
+    id_image SERIAL,
+    image    VARCHAR(50),
+    PRIMARY KEY (id_image)
 );
 
 CREATE TABLE locations
 (
-    id_location      SERIAL,
-    code             VARCHAR(3),
+    id_location SERIAL,
+    code        VARCHAR(3),
     PRIMARY KEY (id_location)
 );
 
-CREATE TABLE guests
-(
-    id_guest          SERIAL,
-    name              VARCHAR(100),
-    id_guest_category INT NOT NULL,
-    PRIMARY KEY (id_guest),
-    FOREIGN KEY (id_guest_category) REFERENCES guest_categories (id_guest_category)
-);
+
 
 CREATE TABLE stands
 (
@@ -152,9 +136,9 @@ CREATE TABLE stands
     description_fr TEXT         NOT NULL,
     PRIMARY KEY (id_stand),
     UNIQUE (id_location),
-    FOREIGN KEY (id_location) REFERENCES locations (id_location),
-    FOREIGN KEY (id_provider) REFERENCES providers (id_provider),
-    FOREIGN KEY (id_stand_type) REFERENCES stand_types (id_stand_type)
+    FOREIGN KEY (id_location) REFERENCES locations (id_location) ON DELETE SET NULL,
+    FOREIGN KEY (id_provider) REFERENCES providers (id_provider) ON DELETE SET NULL,
+    FOREIGN KEY (id_stand_type) REFERENCES stand_types (id_stand_type) ON DELETE SET NULL
 );
 
 CREATE TABLE tickets
@@ -179,7 +163,7 @@ CREATE TABLE orders
     id_user       uuid NOT NULL,
     PRIMARY KEY (id_order),
     UNIQUE (hash),
-    FOREIGN KEY (id_stand) REFERENCES stand (id_stand),
+    FOREIGN KEY (id_stand) REFERENCES stands (id_stand),
     FOREIGN KEY (id_order_type) REFERENCES order_types (id_order_type),
     FOREIGN KEY (id_user) REFERENCES users (uuid_user)
 );
@@ -238,23 +222,7 @@ CREATE TABLE products
     FOREIGN KEY (id_product_type) REFERENCES product_types (id_product_type)
 );
 
-CREATE TABLE starring_events
-(
-    id_event INT,
-    id_guest INT,
-    PRIMARY KEY (id_event, id_guest),
-    FOREIGN KEY (id_event) REFERENCES events (id_event),
-    FOREIGN KEY (id_guest) REFERENCES guests (id_guest)
-);
 
-CREATE TABLE starring_stands
-(
-    id_guest INT,
-    id_stand INT,
-    PRIMARY KEY (id_guest, id_stand),
-    FOREIGN KEY (id_guest) REFERENCES guests (id_guest),
-    FOREIGN KEY (id_stand) REFERENCES stands (id_stand)
-);
 
 CREATE TABLE cart_lines
 (
@@ -291,8 +259,8 @@ CREATE TABLE entries_rating
     id_entry INT,
     rate     INT,
     PRIMARY KEY (id_user, id_entry),
-    FOREIGN KEY (id_user) REFERENCES users (uuid_user),
-    FOREIGN KEY (id_entry) REFERENCES entries (id_entry)
+    FOREIGN KEY (id_user) REFERENCES users (uuid_user) ON DELETE SET NULL,
+    FOREIGN KEY (id_entry) REFERENCES entries (id_entry) ON DELETE CASCADE
 );
 
 CREATE TABLE events_rating
@@ -301,62 +269,54 @@ CREATE TABLE events_rating
     id_event INT,
     rate     INT,
     PRIMARY KEY (id_user, id_event),
-    FOREIGN KEY (id_user) REFERENCES users (uuid_user),
-    FOREIGN KEY (id_event) REFERENCES events (id_event)
+    FOREIGN KEY (id_user) REFERENCES users (uuid_user) ON DELETE SET NULL,
+    FOREIGN KEY (id_event) REFERENCES events (id_event) ON DELETE CASCADE
 );
 
 CREATE TABLE events_images
 (
     id_event INT,
-    image    VARCHAR(50),
-    PRIMARY KEY (id_event, image),
-    FOREIGN KEY (id_event) REFERENCES events (id_event),
-    FOREIGN KEY (image) REFERENCES images (image)
+    id_image int,
+    PRIMARY KEY (id_event, id_image),
+    FOREIGN KEY (id_event) REFERENCES events (id_event) ON DELETE CASCADE,
+    FOREIGN KEY (id_image) REFERENCES images (image) ON DELETE CASCADE
 );
 
 CREATE TABLE providers_images
 (
     id_provider INT,
-    image       VARCHAR(50),
-    PRIMARY KEY (id_provider, image),
-    FOREIGN KEY (id_provider) REFERENCES providers (id_provider),
-    FOREIGN KEY (image) REFERENCES images (image)
+    id_image    INT,
+    PRIMARY KEY (id_provider, id_image),
+    FOREIGN KEY (id_provider) REFERENCES providers (id_provider) ON DELETE CASCADE,
+    FOREIGN KEY (id_image) REFERENCES images (image) ON DELETE CASCADE
 );
 
 CREATE TABLE stands_images
 (
     id_stand INT,
-    image    VARCHAR(50),
-    PRIMARY KEY (id_stand, image),
-    FOREIGN KEY (id_stand) REFERENCES stands (id_stand),
-    FOREIGN KEY (image) REFERENCES images (image)
+    id_image INT,
+    PRIMARY KEY (id_stand, id_image),
+    FOREIGN KEY (id_stand) REFERENCES stands (id_stand) ON DELETE CASCADE,
+    FOREIGN KEY (id_image) REFERENCES images (image) ON DELETE CASCADE
 );
 
-CREATE TABLE guests_images
-(
-    id_guest INT,
-    image    VARCHAR(50),
-    PRIMARY KEY (id_guest, image),
-    FOREIGN KEY (id_guest) REFERENCES guests (id_guest),
-    FOREIGN KEY (image) REFERENCES images (image)
-);
 
 CREATE TABLE products_images
 (
     id_product INT,
-    image      VARCHAR(50),
-    PRIMARY KEY (id_product, image),
-    FOREIGN KEY (id_product) REFERENCES products (id_product),
-    FOREIGN KEY (image) REFERENCES images (image)
+    id_image   INT,
+    PRIMARY KEY (id_product, id_image),
+    FOREIGN KEY (id_product) REFERENCES products (id_product) ON DELETE CASCADE,
+    FOREIGN KEY (id_image) REFERENCES images (image) ON DELETE CASCADE
 );
 
 CREATE TABLE equipments_images
 (
     id_equipment INT,
-    image        VARCHAR(50),
-    PRIMARY KEY (id_equipment, image),
-    FOREIGN KEY (id_equipment) REFERENCES equipments (id_equipment),
-    FOREIGN KEY (image) REFERENCES images (image)
+    id_image     INT,
+    PRIMARY KEY (id_equipment, id_image),
+    FOREIGN KEY (id_equipment) REFERENCES equipments (id_equipment) ON DELETE CASCADE,
+    FOREIGN KEY (id_image) REFERENCES images (image) ON DELETE CASCADE
 );
 
 
