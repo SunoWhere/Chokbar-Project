@@ -6,8 +6,6 @@ exports.getEvents = async () => {
     try {
         const result = await EventsModel.findAll({
         })
-        if (data.length === 0)
-            throw new Error("No events found")
         return result
     } catch (err) {
         console.log(err)
