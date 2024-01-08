@@ -14,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     email: {
       type: DataTypes.STRING(256),
-      allowNull: true
+      allowNull: false
     },
     id_ticket_type: {
       type: DataTypes.INTEGER,
@@ -24,9 +24,9 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id_ticket_type'
       }
     },
-    id_user: {
+    uuid_user: {
       type: DataTypes.UUID,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'users',
         key: 'uuid_user'

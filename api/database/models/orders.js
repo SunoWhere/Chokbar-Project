@@ -12,20 +12,28 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       unique: "orders_hash_key"
     },
-    id_order_type: {
+    id_stand: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
-        model: 'order_types',
-        key: 'id_order_type'
+        model: 'stands',
+        key: 'id_stand'
       }
     },
-    id_user: {
+    uuid_user: {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
         model: 'users',
         key: 'uuid_user'
+      }
+    },
+    id_order_state: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'order_states',
+        key: 'id_order_state'
       }
     }
   }, {

@@ -1,36 +1,40 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('guests_images', {
-    id_guest: {
+  return sequelize.define('order_lines', {
+    id_order: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       references: {
-        model: 'guests',
-        key: 'id_guest'
+        model: 'orders',
+        key: 'id_order'
       }
     },
-    image: {
-      type: DataTypes.STRING(50),
+    id_product: {
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       references: {
-        model: 'images',
-        key: 'image'
+        model: 'products',
+        key: 'id_product'
       }
+    },
+    quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'guests_images',
+    tableName: 'order_lines',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "guests_images_pkey",
+        name: "order_lines_pkey",
         unique: true,
         fields: [
-          { name: "id_guest" },
-          { name: "image" },
+          { name: "id_order" },
+          { name: "id_product" },
         ]
       },
     ]
