@@ -1,5 +1,6 @@
 const EventsModel = require("../database/DB.connection").DB_models.events
 const ImagesModel = require("../database/DB.connection").DB_models.images
+const LocationsModel = require("../database/BD.connection").DB_models.locations
 
 exports.getEvents = async () => {
     try {
@@ -18,6 +19,9 @@ exports.getEvents = async () => {
 exports.getEventByID = async (id) => {
     try {
         const result = await EventsModel.findAll({
+            include: {
+                model: LocationsModel, as: "id_location_location"
+            },
             where: {
                 id_event: id
             }

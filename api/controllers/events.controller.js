@@ -19,14 +19,15 @@ exports.getEventByID = async (req, res) => {
 
 exports.addEvent = async (req, res) => {
     try {
-        const {name, max_capacity, starting_time, finishing_time, description_en, description_fr} = req.body
+        const {name, max_capacity, starting_time, finishing_time, description_en, description_fr, id_location} = req.body
         return res.status(200).send(await eventsServices.addEvent({
             name: name, 
             max_capacity: max_capacity, 
             starting_time: starting_time,
             finishing_time: finishing_time, 
             description_en: description_en, 
-            description_fr: description_fr
+            description_fr: description_fr,
+            id_location: id_location
         }))
     } catch (err) {
         return res.status(400).send(err.message)
@@ -36,14 +37,15 @@ exports.addEvent = async (req, res) => {
 exports.updateEvent = async (req, res) => {
     try {
         const id = req.params.id
-        const {name, max_capacity, starting_time, finishing_time, description_en, description_fr} = req.body
+        const {name, max_capacity, starting_time, finishing_time, description_en, description_fr, id_location} = req.body
         return res.status(200).send(await eventsServices.updateEvent({
             name: name, 
             max_capacity: max_capacity, 
             starting_time: starting_time,
             finishing_time: finishing_time, 
             description_en: description_en, 
-            description_fr: description_fr
+            description_fr: description_fr,
+            id_location: id_location
         }, id))
     } catch (err) {
         return res.status(400).send(err.message)

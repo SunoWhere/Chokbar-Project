@@ -7,6 +7,7 @@ const usersRoutes = require("./routes/users.router")
 const providersRoutes = require("./routes/providers.router")
 const standsRoutes = require("./routes/stands.router")
 const eventsRoutes = require("./routes/events.router")
+const locationsRoutes = require("./routes/locations.router")
 dotenv.config()
 
 const port = process.env.PORT
@@ -36,6 +37,7 @@ app.use("/api/users", usersRoutes)
 app.use("/api/providers", providersRoutes)
 app.use("/api/stands", standsRoutes)
 app.use("/api/events", eventsRoutes)
+app.use("/api/events", locationsRoutes)
 
 
 // npm start
