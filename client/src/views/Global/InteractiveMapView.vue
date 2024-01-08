@@ -1,19 +1,45 @@
 <script>
-import MapTooltip from "@/components/Global/MapTooltip.vue";
+import MapTooltip from "@/components/Global/Map/MapTooltip.vue";
+import PlanningInfo from "@/components/Global/Map/PlanningInfo.vue";
+import AddEventPopup from "@/components/Global/Map/AddEventPopup.vue";
 export default {
   components: {
+    AddEventPopup,
+    PlanningInfo,
     MapTooltip
   },
   name: 'InteractiveMap',
   data() {
     return {
       selectedBoothId: null,
+      days: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"],
+      selectedDayId: 0,
+      selectedDayString: "Lundi",
+
+      selectedEventTime: null,
+      selectedEventTitle: null,
     }
   },
   methods: {
     openTooltip(e) {
       this.selectedBoothId = e.target.id;
       this.$store.state.isMapTooltipOpen = true;
+    },
+    openPlanningInfo() {
+      this.$store.commit("setShowPlanningInfo", true);
+    },
+    openAddEvent() {
+      this.$store.commit("setShowAddEvent", true);
+    },
+    nextDay() {
+      if(this.selectedDayId === 4) return;
+      this.selectedDayId++;
+      this.selectedDayString = this.days[this.selectedDayId];
+    },
+    previousDay() {
+      if(this.selectedDayId === 0) return;
+      this.selectedDayId--;
+      this.selectedDayString = this.days[this.selectedDayId];
     }
   },
   computed: {
@@ -26,14 +52,19 @@ export default {
 
 <template>
   <div class="container">
+    <PlanningInfo v-if="this.$store.getters.getShowPlanningInfo" :time="selectedEventTime" :title="selectedEventTitle"/>
+    <AddEventPopup v-if="this.$store.getters.getShowAddEvent"/>
     <div class="planning-container">
       <ul class="timetable">
-        <li class="table-head">Evénements</li>
-        <li class="table-event hover-effect" v-for="(time, index) in generateTimes" :key="index"><span class="event-name">Gaming</span><span class="event-time">{{ time }}h</span></li>
+        <li class="table-head">
+          <button class="day-selector" id="previous-day" @click="previousDay"><font-awesome-icon icon="fa-solid fa-chevron-left" /></button>
+          <span id="day-string">{{ this.selectedDayString }}</span>
+          <button class="day-selector" id="next-day" @click="nextDay"><font-awesome-icon icon="fa-solid fa-chevron-right" /></button>
+        </li>
+        <li class="table-event hover-effect" v-for="(time, index) in generateTimes" :key="index" @click="openPlanningInfo"><span class="event-name">Gaming</span><span class="event-time">{{ time }}h</span></li>
       </ul>
       <div class="table-event-add" v-if="this.$store.state.isConnected">
-        <button id="add" class="event-button">Ajouter</button>
-        <button id="edit" class="event-button">Modifier</button>
+        <button id="add" class="event-button" @click="openAddEvent">Ajouter</button>
       </div>
     </div>
     <div class="map-container">
@@ -195,11 +226,39 @@ export default {
 }
 
 .table-head {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
   font-size: 1.5em;
   background-color: #ddd;
   padding: 5px;
-  margin: 5px;
-  border-radius: 17px;
+}
+
+.day-selector {
+  text-align: center;
+  border: none;
+  padding: 5px 10px;
+  font-size: 1.2em;
+  background-color: var(--scnd2);
+  color: var(--white);
+  box-shadow: 0 0 10px var(--scnd2);
+  border-radius: 13px;
+  transition: all 0.3s ease;
+}
+
+.day-selector:hover {
+  background-color: var(--scnd3);
+  box-shadow: 0 0 10px var(--scnd3);
+  cursor: pointer;
+}
+
+#day-string {
+  text-align: center;
+  font-size: 1.2em;
+  width: 30%;
+  margin: 0 10px;
 }
 
 .table-event {

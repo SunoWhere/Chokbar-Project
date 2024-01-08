@@ -10,19 +10,23 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import {
-  faUser,
-  faCartShopping,
-  faEnvelope,
-  faCheck,
-  faXmark,
-  faChevronDown,
-  faP,
-  faX
+    faUser,
+    faCartShopping,
+    faEnvelope,
+    faCheck,
+    faXmark,
+    faChevronDown,
+    faChevronLeft,
+    faChevronRight,
+    faP,
+    faX,
+    faArrowRight,
+    faArrowLeft
 } from '@fortawesome/free-solid-svg-icons'; // Solid Icons
 import {faFacebook, faInstagram, faSquareXTwitter, faTiktok} from "@fortawesome/free-brands-svg-icons"; // Brand Icons
 // import { regular } from '@fortawesome/free-regular-svg-icons' // Regular Icons
 
-library.add(faUser, faCartShopping, faEnvelope, faCheck, faXmark, faChevronDown, faUser, faP, faX); // Solid Icons
+library.add(faUser, faCartShopping, faEnvelope, faCheck, faXmark, faChevronDown, faChevronLeft, faChevronRight, faUser, faP, faX, faArrowRight, faArrowLeft); // Solid Icons
 library.add(); // Regular Icons
 library.add(faFacebook, faSquareXTwitter, faTiktok, faInstagram); // Brands Icons
 

@@ -7,6 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     isMapTooltipOpen: false,
+    showPlanningInfo: false,
+    showAddEvent: false,
 
     isConnected: usersService.getUuid() != null,
     role: usersService.getRole(),
@@ -21,6 +23,8 @@ export default new Vuex.Store({
   },
   getters: {
     getUserList: state => state.users,
+    getShowPlanningInfo: state => state.showPlanningInfo,
+    getShowAddEvent: state => state.showAddEvent,
   },
   mutations: {
     setConnected(state, value) {
@@ -41,12 +45,12 @@ export default new Vuex.Store({
     setUserIdToRemove(state, value) {
       state.userIdToRemove = value;
     },
-    setUserToEdit(state, value) {
-      state.userToEdit = value;
+    setShowPlanningInfo(state, value) {
+      state.showPlanningInfo = value;
     },
-    setShowEditUserPopup(state, value) {
-      state.showEditUserPopup = value;
-    },
+    setShowAddEvent(state, value) {
+      state.showAddEvent = value;
+    }
   },
   actions: {
     async updateUserList({ commit }) {

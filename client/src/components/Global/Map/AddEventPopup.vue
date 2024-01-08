@@ -1,58 +1,47 @@
 <script>
-export default {
-  props: {
-    boothId: {
-      type: String,
-      required: true
-    }
-  },
-  methods: {
-    closeTooltip() {
-      this.$store.state.isMapTooltipOpen = false;
+  export default {
+    methods: {
+      closeAddEventPopup() {
+        this.$store.commit("setShowAddEvent", false);
+      }
     }
   }
-}
 </script>
 
 <template>
-  <div class="tooltip">
-    <div class="close-container" @click="closeTooltip">
-      <div class="leftright"></div>
-      <div class="rightleft"></div>
-    </div>
-    <div class="tooltip-content">
-      <p id="booth-id">{{ boothId }}</p>
-      <p>Prestataire: M. Ambert</p>
-      <p>Catégorie: Stand</p>
-    </div>
-  </div>
+ <div class="add-event-container">
+   <div class="content">
+     <div class="close-container" @click="closeAddEventPopup">
+       <div class="leftright"></div>
+       <div class="rightleft"></div>
+     </div>
+     <form class="add-form" action="/api/events" method="post">
+
+     </form>
+   </div>
+ </div>
 </template>
 
 <style scoped>
-.tooltip {
+.add-event-container {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - 80px);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.content {
   position: absolute;
   align-self: center;
-  border: 1px solid var(--background);
+  height: 50%;
+  width: 30%;
+  border: 2px solid var(--scnd3);
   background-color: var(--background);
-  padding: 10px;
-  z-index: 9999;
-  height: 30%;
-  width: 20%;
+  box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
   border-radius: 17px;
-  box-shadow: 0 0 30px var(--background);
-}
-
-.tooltip-content {
-  margin: 8px;
-  color: var(--white);
-  font-size: 1.2em;
-}
-
-#booth-id {
-  text-align: center;
-  color: var(--white);
-  font-size: 1.3em;
-  margin-bottom: 5px;
 }
 
 .close-container {
@@ -90,6 +79,7 @@ export default {
 .close-container:hover .leftright {
   transform: rotate(-45deg);
 }
+
 .close-container:hover .rightleft {
   transform: rotate(45deg);
 }
