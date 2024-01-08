@@ -3,10 +3,6 @@ const providersController = require("../controllers/providers.controller")
 const providersMiddleware = require("../middlewares/providers.middleware")
 var router = express.Router()
 
-// TODO Alléger les réponse en enlevant les info suplementaire sur le user : éviter les répétitions
-
-// TODO : s'assurer à la création et suppression que le user change de role
-
 
 router.get("/", providersController.getProviders)
 router.get("/:id", providersMiddleware.validateId, providersController.getProviderById)

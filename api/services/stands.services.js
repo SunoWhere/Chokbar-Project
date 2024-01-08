@@ -107,7 +107,6 @@ exports.getProductsByIdByStandId = async (id, id_product) => {
     }
 }
 
-// FIXME : corriger l'enregistrement des noms, depuis la mise a jours de la bdd
 exports.updateStandById = async (id, id_location, id_provider, id_stand_type, name, description_en, description_fr) => {
     try {
         const res = await StandsModel.update({
@@ -144,7 +143,6 @@ exports.deleteStandById = async (id) => {
         throw err
     }
 }
-// FIXME : corriger l'enregistrement des noms, depuis la mise a jours de la bdd
 exports.saveStand = async (id_location, id_provider, id_stand_type, name, description_en, description_fr) => {
     try {
         await StandsModel.create({

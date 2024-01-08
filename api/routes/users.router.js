@@ -3,6 +3,10 @@ const usersController = require("../controllers/users.controller")
 const usersMiddleware = require("../middlewares/users.middleware")
 var router = express.Router()
 
+/*
+    TODO : faire en sorte de return le titre du role plutôt que la valeur id_role
+ */
+
 router.get("/", usersController.getUsers)
 router.get("/login", usersMiddleware.validateLoginInput, usersController.verifyLogin)
 router.get("/:uuid", usersMiddleware.validateUuid, usersController.getUserByID)
