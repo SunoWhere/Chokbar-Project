@@ -38,13 +38,13 @@ exports.verifyLogin = async (req, res) => {
 
 exports.saveUser = async (req, res) => {
     try {
-        await usersServices.saveUser(
+        const newUser = await usersServices.saveUser(
             req.body.email,
             req.body.password,
             req.body.first_name,
             req.body.last_name
         )
-        return res.status(200).send("New user saved successfully.")
+        return res.status(200).send(newUser)
     } catch (err) {
         return res.status(500).send(err.message)
     }
