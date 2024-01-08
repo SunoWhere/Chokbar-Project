@@ -145,6 +145,7 @@ thead{
   font-size: 16px;
   border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 #add-btn {
@@ -164,10 +165,11 @@ thead{
   font-size: 16px;
   border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .edit-button{
-  background-color: var(--crud-vert);
+  background-color: var(--crud-bleu);
   margin-right: 10px;
   border: none;
   color: white;
@@ -178,6 +180,7 @@ thead{
   font-size: 16px;
   border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .add-button:hover{
@@ -185,10 +188,10 @@ thead{
 }
 
 .edit-button:hover{
-  background-color: var(--btn-green-hover);
+  background-color: rgb(0, 82, 159);
 }
 
 .delete-button:hover{
-  background-color: var(--scnd2);
+  background-color: #a20000;
 }
 </style>

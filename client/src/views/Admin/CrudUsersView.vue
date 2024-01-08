@@ -77,7 +77,10 @@ export default {
       return this.$store.state.role;
     },
     usersClientList() {
-      return this.users.filter(user => (user[5] !== 'Admin' && user[5] !== 'Provider'));
+      const usersCopy = [...this.users];
+
+      const sortedUsers = usersCopy.sort((a, b) => (a[2].localeCompare(b[2])));
+      return sortedUsers.filter(user => user[5] !== 'Admin' && user[5] !== 'Provider');
     },
   },
 }
