@@ -1,7 +1,7 @@
 <script>
 
 export default {
-  name: 'UsersCrudTable',
+  name: 'ProvidersCrudTable',
   components: {
 
   },
@@ -13,36 +13,40 @@ export default {
         return value.every(item => typeof item === 'string');
       }
     },
-    items: {
+    usersProviders: {
       type: Array,
       required: true,
-    }
+    },
+    providers: {
+      type: Array,
+      required: true,
+    },
   },
   computed: {
-    showAddPopup() {
-      return this.$store.state.showAddUserPopup;
-    },
-    filteredItems() {
-      return this.items.map(item => ({
-        visibleColumns: item.slice(2),
-        uuid_user: item[0],
-        password: item[1]
+    processedProviders() {
+      return this.providers.map(provider => ({
+        id: provider[0],
+        name: provider[1],
+        email: provider[2],
       }));
-    },
+    }
   },
   methods: {
-    openAddPopup() {
-      this.$store.commit("setShowAddUserPopup", true);
+    openNewClientOrNotPopup() {
+      this.$store.commit("setShowNewClientOrNotPopup", true);
+    },
+    closeAddPopup() {
+      this.$store.commit("setShowAddUserPopup", false);
     },
     openRemovePopup(id) {
-      this.$store.commit("setUserIdToRemove", id);
-      this.$store.commit("setShowRemoveUserPopup", true);
+      this.$store.commit("setProviderIdToRemove", id);
+      this.$store.commit("setShowRemoveProviderPopup", true);
     },
     openEditPopup(user) {
       this.$store.commit("setUserToEdit", user);
       this.$store.commit("setShowEditUserPopup", true);
     },
-  }
+  },
 };
 </script>
 
@@ -59,12 +63,12 @@ export default {
           </thead>
           <tfoot></tfoot>
           <tbody>
-          <tr v-for="(filteredItem, index) in filteredItems" :key="index">
-            <td v-for="(value, columnIndex) in filteredItem.visibleColumns" :key="columnIndex">{{ value }}</td>
+          <tr v-for="(item, index) in processedProviders" :key="index">
+            <td v-for="(value, columnIndex) in item" :key="columnIndex">{{ value }}</td>
             <td>
               <form>
-                <button class="edit-button" @click.prevent="openEditPopup(filteredItem)">Editer<i class=""></i></button>
-                <button class="delete-button" @click.prevent="openRemovePopup(filteredItem.uuid_user)">Supprimer<i class=""></i></button>
+                <button class="edit-button">Editer<i class=""></i></button>
+                <button class="delete-button" @click.prevent="openRemovePopup(item.id)" >Supprimer<i class=""></i></button>
               </form>
             </td>
           </tr>
@@ -73,7 +77,7 @@ export default {
       </div>
     </div>
     <div id="add-btn">
-      <button class="add-button" @click="openAddPopup">Ajouter<i class=""></i></button>
+      <button class="add-button" @click="openNewClientOrNotPopup">Ajouter<i class=""></i></button>
     </div>
   </div>
 </template>
@@ -85,7 +89,7 @@ body{
 }
 
 table{
-	width:100%;
+  width:100%;
   border-collapse: collapse;
   border-radius: 5px;
 }
@@ -97,7 +101,6 @@ tr:nth-child(even){
 td{
   text-align: center;
   padding: 5px;
-  //border-left: 1px solid var(--component-background);
 }
 
 td:nth-child(1) {

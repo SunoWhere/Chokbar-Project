@@ -26,7 +26,7 @@ let reciveRole = async () => {
     }
 }
 
-let adduser = async (credentials) => {
+let addUser = async (credentials) => {
     try {
         return await Axios.post('/api/users/', {
             email: credentials.email,
@@ -108,7 +108,7 @@ export const usersService = {
     removeRole,
     getAllUser,
     hashPassword,
-    adduser,
+    addUser,
     removeUser,
     editUser,
 }

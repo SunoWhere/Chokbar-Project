@@ -17,6 +17,9 @@
       <div class="content">
         <form action="/users/" method="POST" @submit.prevent="submitForm">
           <div class="form-main-content">
+            <label for="name">Nom Intervenant</label>
+            <input type="text" id="name" name="name" placeholder="Startup name" v-model="addProvider.name" required>
+
             <label for="firstname">Firstname</label>
             <input type="text" id="firstname" name="firstname" placeholder="Firstname" v-model="addUser.first_name" required>
 
@@ -48,7 +51,7 @@
 </template>
 
 <script>
-import {usersService} from "@/services";
+import {usersService, providersService} from "@/services";
 
 export default {
   name: 'AddUserPopup',
@@ -60,6 +63,10 @@ export default {
         email: '',
         password: '',
         confirmPassword: ''
+      },
+      addProvider: {
+        name: '',
+        id: ''
       },
       passwordMatch: false,
       message: null
@@ -73,12 +80,12 @@ export default {
   },
   computed: {
     showPopup() {
-      return this.$store.state.showAddUserPopup;
+      return this.$store.state.showAddProviderPopup;
     }
   },
   methods: {
     closePopup() {
-      this.$store.commit("setShowAddUserPopup", false);
+      this.$store.commit("setShowAddProviderPopup", false);
     },
     toggleShowPassword() {
       const passwordInput = document.getElementById("password");
@@ -97,13 +104,20 @@ export default {
     },
     submitForm() {
       if (this.addUser.password === this.addUser.confirmPassword) {
-        usersService.adduser(this.addUser)
+        usersService.addUser(this.addUser)
             .then(async res => {
-              this.message = res.data;
-              this.closePopup();
+              this.addProvider.id = res.data.uuid_user;
 
               const updatedUserList = await usersService.getAllUser();
               await this.$store.dispatch('updateUserList', updatedUserList);
+
+              providersService.addProvider(this.addProvider)
+                  .then(async res => {
+                    this.message = res.data;
+                    this.closePopup();
+
+                    await this.$store.dispatch('updateProviderList');
+                  })
             })
             .catch(err => {
               console.error(err);
@@ -126,7 +140,7 @@ export default {
   border: 1px solid var(--background);
   background-color: var(--white);
   z-index: 999;
-  height: 600px;
+  height: 620px;
   width: 400px;
   top: 50%;
   left: 50%;

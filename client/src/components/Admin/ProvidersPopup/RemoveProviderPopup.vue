@@ -13,7 +13,7 @@
         <p>Êtes vous sûr de votre action ?</p>
       </div>
       <div class="content">
-        <form action="/users/" method="POST" @submit.prevent="submitForm">
+        <form @submit.prevent="submitForm">
           <div class="buttons">
             <div class="submit-btn">
               <button type="submit">Ok</button>
@@ -31,7 +31,7 @@
 <script>
 
 export default {
-  name: 'RemoveUserPopup',
+  name: 'RemoveProviderPopup',
   data() {
     return {
       message: null,
@@ -45,12 +45,12 @@ export default {
   },
   computed: {
     showPopup() {
-      return this.$store.state.showRemoveUserPopup;
+      return this.$store.state.showRemoveProviderPopup;
     }
   },
   methods: {
     closePopup() {
-      this.$store.commit("setShowRemoveUserPopup", false);
+      this.$store.commit("setShowRemoveProviderPopup", false);
     },
     submitForm() {
       this.$emit("confirmed-deletion");
