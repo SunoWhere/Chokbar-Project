@@ -8,38 +8,48 @@ export default {
   },
   methods: {
     closeTooltip() {
-      this.$store.state.isMapTooltipOpen = false;
+      this.$store.commit("setShowMapTooltip", false);
     }
   }
 }
 </script>
 
 <template>
-  <div class="tooltip">
-    <div class="close-container" @click="closeTooltip">
-      <div class="leftright"></div>
-      <div class="rightleft"></div>
-    </div>
-    <div class="tooltip-content">
-      <p id="booth-id">{{ boothId }}</p>
-      <p>Prestataire: M. Ambert</p>
-      <p>Catégorie: Stand</p>
+  <div class="tooltip-container">
+    <div class="tooltip">
+      <div class="close-container" @click="closeTooltip">
+        <div class="leftright"></div>
+        <div class="rightleft"></div>
+      </div>
+      <div class="tooltip-content">
+        <p id="booth-id">{{ boothId }}</p>
+        <p>Prestataire: M. Ambert</p>
+        <p>Catégorie: Stand</p>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.tooltip-container {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - 80px);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 .tooltip {
   position: absolute;
   align-self: center;
+  height: 50%;
+  width: 30%;
   border: 2px solid var(--scnd3);
   background-color: var(--background);
-  padding: 10px;
-  z-index: 9999;
-  height: 30%;
-  width: 20%;
-  border-radius: 17px;
   box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
+  border-radius: 17px;
 }
 
 .tooltip-content {

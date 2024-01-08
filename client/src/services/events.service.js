@@ -20,7 +20,7 @@ let getEventById = async (id) => {
 
 
 
-export const usersService = {
+export const eventsService = {
     getEvents,
     getEventById,
 }
