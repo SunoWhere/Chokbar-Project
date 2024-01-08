@@ -3,6 +3,8 @@ const standsController = require("../controllers/stands.controller")
 const standsMiddleware = require("../middlewares/stands.middleware")
 var router = express.Router()
 
+
+// TODO ajouter des lien API vers les images dans la réponse
 router.get("/", standsController.getStands)
 router.get("/:id", standsMiddleware.validateId, standsController.getStandById)
 
@@ -14,13 +16,14 @@ router.delete("/:id",standsMiddleware.validateId, standsController.deleteStandBy
 
 // TODO products CRUD
 
+// TODO ajouter une route pour les product type
 router.get("/:id/products/", standsMiddleware.validateId, standsController.getProductsByStandId)
 router.get("/:id/products/:id_product",standsMiddleware.validateId, standsMiddleware.validateProductId, standsController.getProductsByIdByStandId)
 
-router.post("/:id/products/")
-router.put("/:id/products/:id_product")
+router.post("/:id/products/", standsMiddleware.validateId, standsController.saveProduct)
+router.put("/:id/products/:id_product", standsMiddleware.validateId, standsMiddleware.validateProductId, standsController.updateProductById)
 
-router.delete("/:id/products/:id_product")
+router.delete("/:id/products/:id_product",  standsMiddleware.validateId, standsController.deleteProductById)
 
 // TODO ajouter les routes pour les images
 

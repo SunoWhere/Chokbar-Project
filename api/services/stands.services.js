@@ -6,14 +6,80 @@ const ProvidersModel = require("../database/DB.connection").DB_models.providers
 const LocationsModel = require("../database/DB.connection").DB_models.locations
 const LocationSizesModel = require("../database/DB.connection").DB_models.location_sizes
 
+/*
+id_product
+price
+quantity
+id_stand
+id_product_type
+description_en
+description_fr
+name_en
+name_fr
+ */
+exports.deleteProductById = async (id) => {
+    try {
+        const res = await StandsModel.destroy({
+            where: {
+                id_product: id
+            }
+        })
+        if (res === 0)
+            throw new Error("Product not found")
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+};
+exports.updateProductById = async (id, price, quantity, id_stand, id_product_type, description_en, description_fr, name_en, name_fr) => {
+    try {
+        const res = await ProductsModel.update({
+            price: price,
+            quantity: quantity,
+            id_stand: id_stand,
+            id_product_type: id_product_type,
+            description_en: description_en,
+            description_fr: description_fr,
+            name_en: name_en,
+            name_fr: name_fr
+        }, {
+            where: {
+                id_product: id
+            }
+        })
+
+        if (res[0] === 0)
+            throw new Error("Product not found")
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+};
+exports.saveProduct = async (price, quantity, id_stand, id_product_type, description_en, description_fr, name_en, name_fr) => {
+    try {
+        await ProductsModel.create({
+            price: price,
+            quantity: quantity,
+            id_stand: id_stand,
+            id_product_type: id_product_type,
+            description_en: description_en,
+            description_fr: description_fr,
+            name_en: name_en,
+            name_fr: name_fr
+        })
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+};
 exports.getProductsByStandId = async (id) => {
     try {
         const res = await ProductsModel.findAll({
-            where:{
-                id_stand:id
+            where: {
+                id_stand: id
             },
-            include:[{
-                model
+            include: [{
+                // TODO include Images
             }]
         })
         if (res.length === 0)
@@ -27,9 +93,9 @@ exports.getProductsByStandId = async (id) => {
 exports.getProductsByIdByStandId = async (id, id_product) => {
     try {
         const res = await ProductsModel.findAll({
-            where:{
-                id_stand:id,
-                id_product:id_product
+            where: {
+                id_stand: id,
+                id_product: id_product
             }
         })
         if (res.length === 0)
