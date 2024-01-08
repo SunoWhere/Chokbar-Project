@@ -2,6 +2,9 @@
 import MapTooltip from "@/components/Global/Map/MapTooltip.vue";
 import PlanningInfo from "@/components/Global/Map/PlanningInfo.vue";
 import AddEventPopup from "@/components/Global/Map/AddEventPopup.vue";
+
+import { eventsService } from "@/services";
+
 export default {
   components: {
     AddEventPopup,
@@ -11,6 +14,8 @@ export default {
   name: 'InteractiveMap',
   data() {
     return {
+      events: [],
+
       selectedBoothId: null,
       days: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"],
       selectedDayId: 0,
@@ -24,7 +29,7 @@ export default {
   methods: {
     openTooltip(e) {
       this.selectedBoothId = e.target.id;
-      this.$store.state.isMapTooltipOpen = true;
+      this.$store.commit("setShowMapTooltip", true);
     },
     openPlanningInfo() {
       this.$store.commit("setShowPlanningInfo", true);
@@ -41,11 +46,28 @@ export default {
       if(this.selectedDayId === 0) return;
       this.selectedDayId--;
       this.selectedDayString = this.days[this.selectedDayId];
+    },
+
+    async getAllEvents() {
+      try {
+        const res = await eventsService.getEvents();
+        this.events = res.data.map(event => [event.id_event, event.name, event.max_capacity, event.starting_time, event.finishing_time, event.description, event.id_location]);
+      } catch(err) {
+        console.log(err);
+      }
     }
+  },
+  created() {
+    this.getAllEvents();
   },
   computed: {
     generateTimes() {
       return [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
+    }
+  },
+  metaInfo() {
+    return {
+      title: 'Carte Interactive'
     }
   }
 }
@@ -53,8 +75,9 @@ export default {
 
 <template>
   <div class="container">
-    <PlanningInfo v-if="this.$store.getters.getShowPlanningInfo" :time="selectedEventTime" :title="selectedEventTitle"/>
+    <PlanningInfo v-if="this.$store.getters.getShowPlanningInfo" :time="selectedEventStartTime" :title="selectedEventTitle"/>
     <AddEventPopup v-if="this.$store.getters.getShowAddEvent"/>
+    <MapTooltip v-if="this.$store.getters.getShowMapTooltip" :booth-id="selectedBoothId" />
     <div class="planning-container">
       <ul class="timetable">
         <li class="table-head">
@@ -62,7 +85,9 @@ export default {
           <span id="day-string">{{ this.selectedDayString }}</span>
           <button class="day-selector" id="next-day" @click="nextDay"><font-awesome-icon icon="fa-solid fa-chevron-right" /></button>
         </li>
-        <li class="table-event hover-effect" v-for="(time, index) in generateTimes" :key="index" @click="openPlanningInfo"><span class="event-name">Gaming</span><span class="event-time">{{ time }}h</span></li>
+        <!-- TODO: ###### remplacer par events quand il y aura des données ###### -->
+        <li class="table-event hover-effect" v-for="(time, id) in generateTimes" :key="id" @click="openPlanningInfo"><span class="event-name">Gaming</span><span class="event-time">{{ time }}h</span></li>
+<!--        <li class="table-event hover-effect" v-for="(event, id_event) in events" :key="id_event" @click="openPlanningInfo"><span class="event-name">{{ event.name }}</span><span class="event-time">{{ event.starting_time }} - {{ event.finishing_time }}</span></li>-->
       </ul>
       <div class="table-event-add" v-if="this.$store.state.isConnected">
         <button id="add" class="event-button" @click="openAddEvent">Ajouter</button>
@@ -161,7 +186,6 @@ export default {
           </g>
         </g>
       </svg>
-      <MapTooltip v-if="this.$store.state.isMapTooltipOpen" :booth-id="selectedBoothId" />
     </div>
   </div>
 </template>
