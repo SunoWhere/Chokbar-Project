@@ -16,7 +16,7 @@
        <div class="rightleft"></div>
      </div>
      <form class="add-form" action="/api/events" method="post">
-
+       <!-- TODO: faire le form + lier à l'api -->
      </form>
    </div>
  </div>

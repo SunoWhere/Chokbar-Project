@@ -16,7 +16,8 @@ export default {
       selectedDayId: 0,
       selectedDayString: "Lundi",
 
-      selectedEventTime: null,
+      selectedEventStartTime: null,
+      selectedEventEndTime: null,
       selectedEventTitle: null,
     }
   },
