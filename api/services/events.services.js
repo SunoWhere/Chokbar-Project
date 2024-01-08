@@ -1,6 +1,6 @@
 const EventsModel = require("../database/DB.connection").DB_models.events
 const ImagesModel = require("../database/DB.connection").DB_models.images
-const LocationsModel = require("../database/BD.connection").DB_models.locations
+const LocationsModel = require("../database/DB.connection").DB_models.locations
 
 exports.getEvents = async () => {
     try {

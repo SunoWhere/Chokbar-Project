@@ -6,7 +6,7 @@ exports.getLocations = async () => {
     try {
        const result = await LocationsModel.findAll({
         include: {
-            model: StandsModel, as: "evestandnts"
+            model: StandsModel, as: "stand"
         }
        })
        return result;
@@ -23,7 +23,7 @@ exports.getLocationEvents = async (id) => {
             model: EventsModel, as: "events"
         },
         where: {
-            id_event: id
+            id_location: id
         }
        })
        return result

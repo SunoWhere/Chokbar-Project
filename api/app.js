@@ -37,7 +37,7 @@ app.use("/api/users", usersRoutes)
 app.use("/api/providers", providersRoutes)
 app.use("/api/stands", standsRoutes)
 app.use("/api/events", eventsRoutes)
-app.use("/api/events", locationsRoutes)
+app.use("/api/locations", locationsRoutes)
 
 
 // npm start
