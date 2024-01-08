@@ -63,7 +63,8 @@ exports.getProviderById = async (id) => {
             }, {
                 model: StandsModel, as: "stands"
             }, {
-                model: UsersModel, as: "uuid_user_user"
+                model: UsersModel, as: "uuid_user_user",
+                attributes: ["uuid_user","first_name", "last_name", "email", "id_role"]
             }],
             where: {
                 id_provider: id
@@ -84,7 +85,8 @@ exports.getProviders = async () => {
             }, {
                 model: StandsModel, as: "stands"
             }, {
-                model: UsersModel, as: "uuid_user_user"
+                model: UsersModel, as: "uuid_user_user",
+                attributes: ["uuid_user","first_name", "last_name", "email", "id_role"]
             }]
         })
         if (data.length === 0)
