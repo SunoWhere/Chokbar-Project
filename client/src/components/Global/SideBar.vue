@@ -29,8 +29,8 @@ export default {
       }
       if (this.getRole() === 'provider') {
         return [
-          { label: 'Produits', route: '/intervenant/produits' },
           { label: 'Stands', route: '/intervenant/stands' },
+          { label: 'Produits', route: '/intervenant/produits' },
           { label: 'Events', route: '/intervenant/events'},
         ];
       }

@@ -12,6 +12,7 @@ import AproposView from "@/views/Global/AproposView.vue";
 import DatesView from "@/views/Global/DatesView.vue";
 import CrudUsersView from "@/views/Admin/CrudUsersView.vue";
 import CreditCardView from "@/views/Global/CreditCardView.vue";
+import CrudStandView from "@/views/Provider/CrudStandView.vue";
 
 Vue.use(VueRouter)
 
@@ -75,6 +76,11 @@ const routes = [
     path: '/Billetterie/checkout/creditcard',
     name: 'CreditCard',
     component: CreditCardView
+  },
+  {
+    path: '/intervenant/stands',
+    name: 'CrudStand',
+    component: CrudStandView
   }
 ]
 
