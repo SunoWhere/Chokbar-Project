@@ -4,24 +4,18 @@ const eventsMiddleware = require("../middlewares/events.middleware")
 var router = express.Router()
 
 router.get("/", eventsController.getEvents)
-router.get("/:id")
 
-router.post("/")
+router.post("/:id/images", eventsController.addEventImage)
 
-router.put("/:id")
+router.put("/:id/images", eventsController.updateEventImage)
 
-router.delete("/:id")
+router.get("/:id", eventsController.getEventByID)
 
-// TODO : ajouter les routes pour les descriptions
-router.get("/:id/descriptions/")
-router.get("/:id/descriptions/:language")
+router.post("/", eventsController.addEvent)
 
-router.post("/:id/descriptions/:language")
+router.put("/:id", eventsController.updateEvent)
 
-router.put("/:id/descriptions/:language")
+router.delete("/:id", eventsController.deleteEvent)
 
-router.delete("/:id/descriptions/:language")
-
-// TODO ajouter les routes pour les images
 
 module.exports = router
