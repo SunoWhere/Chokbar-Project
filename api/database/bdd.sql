@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS events_images,
     entries_rating,
     register_for,
     cart_lines,
-    items,
+    order_lines,
     starring_stands,
     starring_events,
     products,
@@ -254,16 +254,6 @@ CREATE TABLE starring_stands
     PRIMARY KEY (id_guest, id_stand),
     FOREIGN KEY (id_guest) REFERENCES guests (id_guest),
     FOREIGN KEY (id_stand) REFERENCES stands (id_stand)
-);
-
-CREATE TABLE items
-(
-    id_product INT,
-    id_order   INT,
-    quantity   INT,
-    PRIMARY KEY (id_product, id_order),
-    FOREIGN KEY (id_product) REFERENCES products (id_product),
-    FOREIGN KEY (id_order) REFERENCES orders (id_order)
 );
 
 CREATE TABLE cart_lines
