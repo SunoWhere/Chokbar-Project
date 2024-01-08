@@ -330,14 +330,26 @@ VALUES ('user'),
 
 INSERT INTO users(email, password, first_name, last_name, id_role)
 VALUES ('admin@ezcon.fr', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin', 'admin', 3),
-       ('MSI@ezcon.fr', '5c4c1964340aca5b65393bbe9d3249cdd71be26665b3320ad694f034f2743283', 'MSI', 'MSI',
-        2),
-       ('user@ezcon.fr', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'user', 'user', 1);
+       ('MSI@ezcon.fr', '5c4c1964340aca5b65393bbe9d3249cdd71be26665b3320ad694f034f2743283', 'MSI', 'MSI', 2),
+       ('Asus@ezcon.fr', '5c4c1964340aca5b65393bbe9d3249cdd71be26665b3320ad694f034f2743283', 'Asus', 'Asus', 2),
+       ('KFC@ezcon.fr', '5c4c1964340aca5b65393bbe9d3249cdd71be26665b3320ad694f034f2743283', 'KFC', 'KFC', 2),
+       ('user@ezcon.fr', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'user', 'user', 1),
+       ('user2@ezcon.fr', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'user2', 'user2', 1);
 
 INSERT INTO providers (name, uuid_user, description_en, description_fr)
 SELECT 'MSI', uuid_user, 'MSI description in English', 'Description MSI en français'
 FROM users
 WHERE email = 'MSI@ezcon.fr';
+
+INSERT INTO providers (name, uuid_user, description_en, description_fr)
+SELECT 'Asus', uuid_user, 'Asus description in English', 'Description Asus en français'
+FROM users
+WHERE email = 'Asus@ezcon.fr';
+
+INSERT INTO providers (name, uuid_user, description_en, description_fr)
+SELECT 'KFC', uuid_user, 'KFC description in English', 'Description KFC en français'
+FROM users
+WHERE email = 'KFC@ezcon.fr';
 
 INSERT INTO images (image)
 VALUES ('MSI_LOGO.png');
@@ -348,5 +360,45 @@ FROM providers p
          JOIN images i ON i.image = 'MSI_LOGO.png'
 WHERE p.name LIKE 'provider';
 
-INSERT INTO locations (code)
-VALUES ('A12');
+INSERT INTO locations (code) VALUES ('A01'),
+('A02'),
+('A03'),
+('A04'),
+('A05'),
+('A06'),
+('A07'),
+('A08'),
+('B01'),
+('B02'),
+('B03'),
+('B04'),
+('B05'),
+('B06'),
+('B07'),
+('C01'),
+('C02'),
+('C03'),
+('C04'),
+('C05'),
+('C06'),
+('C07'),
+('C08'),
+('D01'),
+('D02'),
+('D03'),
+('S01'),
+('S02'),
+('S03');
+
+INSERT INTO stand_types (name) VALUES ('Vente de produits'),
+('Restauration'),
+('Essaie de produits'),
+('Dédicace');
+
+INSERT INTO stands (id_location, id_provider, id_stand_type, name, description_en, description_fr) VALUES (1, 1, 1, 'MSI Shop', 'Buy some MSI stuff', 'Acheter des produits MSI'),
+(2, 1, 3, 'MSI Demo Center', 'Test some MSI stuff', 'Essayer des produits MSI'),
+(3, 1, 4, 'MSI & Amouranth', 'Meet Amouranth', 'Rencontrer Amouranth'),
+(4, 2, 1, 'Asus Shop', 'Buy some Asus stuff', 'Acheter des produits Asus'),
+(5, 2, 3, 'Asus Shop', 'Test some Asus stuff', 'Essayer des produits Asus'),
+(6, 3, 2, 'KFC Fast Food', E'It\'s finger lickin\' good', E'C\'est bon à s\'en lêcher les doigts'),
+(7, 3, 1, 'KFC Goodies Shop', 'Buy some KFC stuff', 'Acheter des produits KFC');
