@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    isMapTooltipOpen: false,
+    showMapTooltip: false,
     showPlanningInfo: false,
     showAddEvent: false,
 
@@ -33,6 +33,7 @@ export default new Vuex.Store({
     getUserList: state => state.users,
     getProviderList: state => state.providers,
 
+    getShowMapTooltip: state => state.showMapTooltip,
     getShowPlanningInfo: state => state.showPlanningInfo,
     getShowAddEvent: state => state.showAddEvent,
   },
@@ -74,6 +75,9 @@ export default new Vuex.Store({
     },
     setShowAddEvent(state, value) {
       state.showAddEvent = value;
+    },
+    setShowMapTooltip(state, value) {
+      state.showMapTooltip = value;
     },
 
     // Providers
