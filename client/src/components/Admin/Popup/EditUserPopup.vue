@@ -9,19 +9,18 @@
         <div v-if="message" id="error-message">
           <p class="error-message">{{ message }}</p>
         </div>
-        <p>{{this.editUser}}</p>
       </div>
       <div class="content">
         <form action="/users/" method="POST" @submit.prevent="submitForm">
           <div class="form-main-content">
             <label for="firstname">Firstname</label>
-            <input type="text" id="firstname" name="firstname" placeholder="Firstname" v-model="editUser.first_name" required>
+            <input type="text" id="firstname" name="firstname" placeholder="Firstname" v-model="$store.state.userToEdit.visibleColumns[0]" required>
 
             <label for="lastname">Lastname</label>
-            <input type="text" id="lastname" name="lastname" placeholder="Lastname" v-model="editUser.last_name" required>
+            <input type="text" id="lastname" name="lastname" placeholder="Lastname" v-model="$store.state.userToEdit.visibleColumns[1]" required>
 
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Email" v-model="editUser.email" required>
+            <input type="email" id="email" name="email" placeholder="Email" v-model="$store.state.userToEdit.visibleColumns[2]" required>
 
             <label for="password">Password</label>
             <input type="password" id="password" name="password" placeholder="Password" v-model="editUser.password">
@@ -52,7 +51,6 @@
 <script>
 
 import {usersService} from "@/services";
-import crypto from "crypto";
 
 export default {
   name: 'RemoveUserPopup',
@@ -68,16 +66,10 @@ export default {
       },
       passwordMatch: false,
       message: null,
-      user: this.$store.state.userToEdit,
     }
   },
-  mounted() {
-    if(this.$store.state.userToEdit) {
-      this.editUser.id = this.$store.state.userToEdit.uuid_user;
-      this.editUser.first_name = this.$store.state.userToEdit.visibleColumns[0];
-      this.editUser.last_name = this.$store.state.userToEdit.visibleColumns[1];
-      this.editUser.email = this.$store.state.userToEdit.visibleColumns[2];
-    }
+  created() {
+
   },
   props: {
     typeTitle: {
@@ -110,12 +102,17 @@ export default {
       }
     },
     submitForm() {
+      this.editUser.id = this.$store.state.userToEdit.uuid_user;
+      this.editUser.first_name = this.$store.state.userToEdit.visibleColumns[0];
+      this.editUser.last_name = this.$store.state.userToEdit.visibleColumns[1];
+      this.editUser.email = this.$store.state.userToEdit.visibleColumns[2];
+
       if (this.editUser.password === this.editUser.confirmPassword) {
         if(this.editUser.password == null || this.editUser.password === '') {
-          this.editUser.password = this.$store.state.userToEdit.password[2];
+          this.editUser.password = this.$store.state.userToEdit.password;
         }
         else {
-          this.editUser.password = this.hashPassword(this.editUser.password);
+          this.editUser.password = usersService.hashPassword(this.editUser.password);
         }
         usersService.editUser(this.editUser)
             .then(async res => {
@@ -133,21 +130,9 @@ export default {
       else {
         this.message = "Passwords dosn't matchs.";
       }
-      this.clearEditUser();
+      this.editUser.password = '';
+      this.editUser.confirmPassword = '';
     },
-    hashPassword(password) {
-      const hash = crypto.createHash('sha256');
-      hash.update(password);
-      return hash.digest('hex'); // return hashed password
-    },
-    clearEditUser() {
-      this.editUser.id = this.$store.state.userToEdit.uuid_user;
-      this.editUser.first_name = this.$store.state.userToEdit.visibleColumns[0];
-      this.editUser.last_name = this.$store.state.userToEdit.visibleColumns[1];
-      this.editUser.email = this.$store.state.userToEdit.visibleColumns[2];
-      this.editUser.password = "";
-      this.editUser.confirmPassword = "";
-    }
   },
 };
 
@@ -202,41 +187,6 @@ export default {
   width: 100%;
   text-align: center;
   padding-top: 10px;
-}
-
-.close-container {
-  display: flex;
-  align-items: center;
-  width: 35px;
-  height: 35px;
-  cursor: pointer;
-}
-
-.leftright {
-  height: 4px;
-  width: 35px;
-  position: absolute;
-  background-color: var(--scnd2);
-  border-radius: 2px;
-  transform: rotate(45deg);
-  transition: all .3s ease-in;
-}
-
-.rightleft {
-  height: 4px;
-  width: 35px;
-  position: absolute;
-  background-color: var(--scnd3);
-  border-radius: 2px;
-  transform: rotate(-45deg);
-  transition: all .3s ease-in;
-}
-
-.close-container:hover .leftright {
-  transform: rotate(-45deg);
-}
-.close-container:hover .rightleft {
-  transform: rotate(45deg);
 }
 
 .form-main-content {
