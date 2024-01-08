@@ -25,6 +25,8 @@ router.put("/:id/products/:id_product", standsMiddleware.validateId, standsMiddl
 
 router.delete("/:id/products/:id_product",  standsMiddleware.validateId, standsController.deleteProductById)
 
+// TODO : le delete du stands doit changer le state de tout les produits relier
+
 // TODO ajouter les routes pour les images
 
 module.exports = router
