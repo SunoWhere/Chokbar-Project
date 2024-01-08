@@ -1,5 +1,24 @@
 const standsServices = require("../services/stands.services")
 
+exports.getProductsByIdByStandId = async (req, res) => {
+    try {
+        return res.status(200).send(await standsServices.getProductsByIdByStandId(
+            req.params.id,
+            req.params.id_product
+        ))
+    } catch (err) {
+        return res.status(500).send(err.message)
+    }
+}
+exports.getProductsByStandId = async (req, res) => {
+    try {
+        return res.status(200).send(await standsServices.getProductsByStandId(
+            req.params.id
+        ))
+    } catch (err) {
+        return res.status(500).send(err.message)
+    }
+}
 exports.updateStandById = async (req, res) => {
     try {
         await standsServices.updateStandById(
@@ -7,7 +26,9 @@ exports.updateStandById = async (req, res) => {
             req.body.id_location,
             req.body.id_provider,
             req.body.id_stand_type,
-            req.body.name
+            req.body.name,
+            req.body.description_en,
+            req.body.description_fr
         )
         return res.status(200).send("Stands updated successfully")
     } catch (err) {
@@ -30,7 +51,9 @@ exports.saveStand = async (req, res) => {
             req.body.id_location,
             req.body.id_provider,
             req.body.id_stand_type,
-            req.body.name
+            req.body.name,
+            req.body.description_en,
+            req.body.description_fr
         )
         return res.status(200).send("New stand saved successfully.")
     } catch (err) {
