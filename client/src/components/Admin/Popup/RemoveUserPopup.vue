@@ -6,6 +6,9 @@
       </div>
       <div class="content-sub-title">
         <h2>{{typeTitle}}</h2>
+        <div v-if="message" id="error-message">
+          <p class="error-message">{{ message }}</p>
+        </div>
         <p>Vous êtes sur le points de supprimer un {{typeTitle}}.</p>
         <p>Êtes vous sûr de votre action ?</p>
       </div>
@@ -29,6 +32,11 @@
 
 export default {
   name: 'RemoveUserPopup',
+  data() {
+    return {
+      message: null,
+    }
+  },
   props: {
     typeTitle: {
       type: String,

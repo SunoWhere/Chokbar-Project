@@ -56,6 +56,21 @@ let removeUser = async (id) => {
     }
 }
 
+let editUser = async (credentials) => {
+    try {
+        const route = '/api/users/' + credentials.id;
+        return await Axios.put(route, {
+            uuid: credentials.id,
+            email: credentials.email,
+            password: credentials.password,
+            first_name: credentials.first_name,
+            last_name: credentials.last_name
+        });
+    } catch (error) {
+        throw new Error(error.response.data);
+    }
+}
+
 let saveRole = (role) => {
     localStorage.setItem('role', role);
 };
@@ -94,5 +109,6 @@ export const usersService = {
     getAllUser,
     hashPassword,
     adduser,
-    removeUser
+    removeUser,
+    editUser,
 }

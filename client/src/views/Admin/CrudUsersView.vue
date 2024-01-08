@@ -2,17 +2,17 @@
 import SideBar from "@/components/Global/SideBar.vue";
 import CrudTable from "@/components/Admin/UsersCrudTable.vue";
 import {usersService} from "@/services";
-import AddUserPopup from "@/components/Admin/AddUserPopup.vue";
-import RemoveUserPopup from "@/components/Admin/RemoveUserPopup.vue";
+import AddUserPopup from "@/components/Admin/Popup/AddUserPopup.vue";
+import RemoveUserPopup from "@/components/Admin/Popup/RemoveUserPopup.vue";
+import EditUserPopup from "@/components/Admin/Popup/EditUserPopup.vue";
 
 //FIXME: Doit-on voir tous les utilisateurs (admin et providers inclut) ou seulements les users
-//TODO: Faire en sorte que quand on veuille supprimer un utilisateur une popup de validation apparaisse
 
 export default {
   name: 'CrudProvidersView',
   data () {
     return {
-      tableColumns: ["Nom", "Prenom", "Rôle"],
+      tableColumns: ["Nom", "Prenom", "Email", "Rôle"],
       users: []
     }
   },
@@ -22,15 +22,16 @@ export default {
     this.$store.watch(
         () => this.$store.getters.getUserList,
         userList => {
-          this.users = userList.map(user => [user.uuid_user, user.first_name, user.last_name, this.getRoleLabel(user.id_role)]);
+          this.users = userList.map(user => [user.uuid_user, user.password, user.first_name, user.last_name, user.email, this.getRoleLabel(user.id_role)]);
         }
     );
   },
   components: {
     AddUserPopup,
     RemoveUserPopup,
+    EditUserPopup,
     CrudTable,
-    SideBar
+    SideBar,
   },
   metaInfo() {
     return {
@@ -41,7 +42,7 @@ export default {
     async allUsers() {
       try {
         const res = await usersService.getAllUser();
-        this.users = res.data.map(user => [user.uuid_user, user.first_name, user.last_name, this.getRoleLabel(user.id_role)]);
+        this.users = res.data.map(user => [user.uuid_user, user.password, user.first_name, user.last_name, user.email, this.getRoleLabel(user.id_role)]);
       } catch (error) {
         console.log(error);
       }
@@ -87,6 +88,7 @@ export default {
     </div>
     <AddUserPopup :typeTitle="'Users'" />
     <RemoveUserPopup :typeTitle="'Users'" @confirmed-deletion="removeUser" />
+    <EditUserPopup :typeTitle="'Users'" />
   </div>
 </template>
 

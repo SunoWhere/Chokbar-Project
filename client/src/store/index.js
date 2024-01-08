@@ -7,13 +7,17 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     isMapTooltipOpen: false,
+
     isConnected: usersService.getUuid() != null,
-    showAddUserPopup: false,
-    showRemoveUserPopup: false,
     role: usersService.getRole(),
-    users: await usersService.getAllUser(),
-    currentUserIdSelected: '',
+
+    users: await usersService.getAllUser(), // All users of the base
     userIdToRemove: null,
+    userToEdit: null,
+
+    showAddUserPopup: false,
+    showEditUserPopup: false,
+    showRemoveUserPopup: false,
   },
   getters: {
     getUserList: state => state.users,
@@ -36,6 +40,12 @@ export default new Vuex.Store({
     },
     setUserIdToRemove(state, value) {
       state.userIdToRemove = value;
+    },
+    setUserToEdit(state, value) {
+      state.userToEdit = value;
+    },
+    setShowEditUserPopup(state, value) {
+      state.showEditUserPopup = value;
     },
   },
   actions: {

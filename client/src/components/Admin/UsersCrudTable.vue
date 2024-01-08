@@ -19,13 +19,14 @@ export default {
     }
   },
   computed: {
-    showPopup() {
+    showAddPopup() {
       return this.$store.state.showAddUserPopup;
     },
     filteredItems() {
       return this.items.map(item => ({
-        visibleColumns: item.slice(1),
+        visibleColumns: item.slice(2),
         uuid_user: item[0],
+        password: item[1]
       }));
     },
   },
@@ -39,6 +40,10 @@ export default {
     openRemovePopup(id) {
       this.$store.commit("setUserIdToRemove", id);
       this.$store.commit("setShowRemoveUserPopup", true);
+    },
+    openEditPopup(user) {
+      this.$store.commit("setUserToEdit", user);
+      this.$store.commit("setShowEditUserPopup", true);
     },
   }
 };
@@ -60,7 +65,7 @@ export default {
             <td v-for="(value, columnIndex) in filteredItem.visibleColumns" :key="columnIndex">{{ value }}</td>
             <td>
               <form>
-                <button class="edit-button">Editer<i class=""></i></button>
+                <button class="edit-button" @click.prevent="openEditPopup(filteredItem)">Editer<i class=""></i></button>
                 <button class="delete-button" @click.prevent="openRemovePopup(filteredItem.uuid_user)">Supprimer<i class=""></i></button>
               </form>
             </td>
@@ -76,10 +81,10 @@ export default {
 
 <style scoped>
 
-
 body{
   background-color:lightgray;
 }
+
 table{
 	width:100%;
   border-collapse: collapse;
@@ -111,10 +116,10 @@ thead{
   top: 50%;
   left: 50%;
   width: 50%;
+  height: 50%;
   transform: translate(-35%, -50%);
   background-color:white;
   border-radius: 10px;
-  max-height: 50%;
   overflow-y: scroll;
   overflow-x: hidden;
   display: flex;
@@ -186,5 +191,4 @@ thead{
 .delete-button:hover{
   background-color: var(--scnd2);
 }
-
 </style>
