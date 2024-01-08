@@ -2,9 +2,9 @@
 import SideBar from "@/components/Global/SideBar.vue";
 import CrudTable from "@/components/Admin/UsersCrudTable.vue";
 import {usersService} from "@/services";
-import AddUserPopup from "@/components/Admin/Popup/AddUserPopup.vue";
-import RemoveUserPopup from "@/components/Admin/Popup/RemoveUserPopup.vue";
-import EditUserPopup from "@/components/Admin/Popup/EditUserPopup.vue";
+import AddUserPopup from "@/components/Admin/UsersPopup/AddUserPopup.vue";
+import RemoveUserPopup from "@/components/Admin/UsersPopup/RemoveUserPopup.vue";
+import EditUserPopup from "@/components/Admin/UsersPopup/EditUserPopup.vue";
 
 //FIXME: Doit-on voir tous les utilisateurs (admin et providers inclut) ou seulements les users
 
@@ -76,6 +76,12 @@ export default {
     getRole() {
       return this.$store.state.role;
     },
+    usersClientList() {
+      const usersCopy = [...this.users];
+
+      const sortedUsers = usersCopy.sort((a, b) => (a[2].localeCompare(b[2])));
+      return sortedUsers.filter(user => user[5] !== 'Admin' && user[5] !== 'Provider');
+    },
   },
 }
 </script>
@@ -84,7 +90,7 @@ export default {
   <div class="dashboard-container">
     <SideBar/>
     <div id="dc" v-if="isConnected && getRole === 'admin'">
-      <CrudTable :column-names="tableColumns" :items="users"/>
+      <CrudTable :column-names="tableColumns" :items="usersClientList"/>
     </div>
     <AddUserPopup :typeTitle="'Users'" />
     <RemoveUserPopup :typeTitle="'Users'" @confirmed-deletion="removeUser" />

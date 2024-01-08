@@ -50,6 +50,12 @@ export default new Vuex.Store({
     },
     setShowAddEvent(state, value) {
       state.showAddEvent = value;
+    },
+    setUserToEdit(state, value) {
+      state.userToEdit = value;
+    },
+    setShowEditUserPopup(state, value) {
+      state.showEditUserPopup = value;
     }
   },
   actions: {

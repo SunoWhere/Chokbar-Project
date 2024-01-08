@@ -50,17 +50,18 @@ export default {
 </script>
 
 <template>
-  <div class="container">
-    <div class="container-table">
-      <table>
-        <thead>
+  <div class="pre-container">
+    <div class="container">
+      <div class="container-table">
+        <table>
+          <thead>
           <tr>
             <th v-for="columnName in columnNames" :key="columnName">{{ columnName }}</th>
             <th>Actions</th>
           </tr>
-        </thead>
-        <tfoot></tfoot>
-        <tbody>
+          </thead>
+          <tfoot></tfoot>
+          <tbody>
           <tr v-for="(filteredItem, index) in filteredItems" :key="index">
             <td v-for="(value, columnIndex) in filteredItem.visibleColumns" :key="columnIndex">{{ value }}</td>
             <td>
@@ -70,8 +71,9 @@ export default {
               </form>
             </td>
           </tr>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
     <div id="add-btn">
       <button class="add-button" @click="openAddPopup">Ajouter<i class=""></i></button>
@@ -132,12 +134,13 @@ thead{
 
 
 .add-button{
-  width: fit-content;
+  width: 100px;
+  height: 40px;
   background-color: var(--crud-vert);
   border: none;
   color: white;
   padding: 5px 5px;
-  margin-top: 10px;
+  margin-top: 100px;
   margin-bottom: 10px;
   text-align: center;
   text-decoration: none;
@@ -145,6 +148,7 @@ thead{
   font-size: 16px;
   border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 #add-btn {
@@ -164,10 +168,11 @@ thead{
   font-size: 16px;
   border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .edit-button{
-  background-color: var(--crud-vert);
+  background-color: var(--crud-bleu);
   margin-right: 10px;
   border: none;
   color: white;
@@ -178,6 +183,7 @@ thead{
   font-size: 16px;
   border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .add-button:hover{
@@ -185,10 +191,10 @@ thead{
 }
 
 .edit-button:hover{
-  background-color: var(--btn-green-hover);
+  background-color: rgb(0, 82, 159);
 }
 
 .delete-button:hover{
-  background-color: var(--scnd2);
+  background-color: #D20000FF;
 }
 </style>
