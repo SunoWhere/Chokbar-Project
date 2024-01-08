@@ -63,13 +63,6 @@ CREATE TABLE product_types
     PRIMARY KEY (id_product_type)
 );
 
-CREATE TABLE location_sizes
-(
-    id_location_size SERIAL,
-    name             VARCHAR(50),
-    PRIMARY KEY (id_location_size)
-);
-
 CREATE TABLE providers
 (
     id_provider    SERIAL,
@@ -136,9 +129,7 @@ CREATE TABLE locations
 (
     id_location      SERIAL,
     code             VARCHAR(3),
-    id_location_size INT NOT NULL,
-    PRIMARY KEY (id_location),
-    FOREIGN KEY (id_location_size) REFERENCES location_sizes (id_location_size)
+    PRIMARY KEY (id_location)
 );
 
 CREATE TABLE guests
@@ -183,10 +174,12 @@ CREATE TABLE orders
 (
     id_order      SERIAL,
     hash          VARCHAR(256),
+    id_stand      INT,
     id_order_type INT  NOT NULL,
     id_user       uuid NOT NULL,
     PRIMARY KEY (id_order),
     UNIQUE (hash),
+    FOREIGN KEY (id_stand) REFERENCES stand (id_stand),
     FOREIGN KEY (id_order_type) REFERENCES order_types (id_order_type),
     FOREIGN KEY (id_user) REFERENCES users (uuid_user)
 );
@@ -283,6 +276,16 @@ CREATE TABLE cart_lines
     FOREIGN KEY (id_product) REFERENCES products (id_product)
 );
 
+CREATE TABLE order_lines
+(
+    id_order   INT,
+    id_product INT,
+    quantity   INT,
+    PRIMARY KEY (id_order, id_product),
+    FOREIGN KEY (id_order) REFERENCES orders (id_order),
+    FOREIGN KEY (id_product) REFERENCES products (id_product)
+);
+
 CREATE TABLE register_for
 (
     id_event INT,
@@ -357,7 +360,7 @@ CREATE TABLE products_images
     FOREIGN KEY (image) REFERENCES images (image)
 );
 
-CREATE TABLE Equipments_images
+CREATE TABLE equipments_images
 (
     id_equipment INT,
     image        VARCHAR(50),
