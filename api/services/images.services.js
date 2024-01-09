@@ -33,8 +33,8 @@ exports.addImage = async (data) => {
         for (let i = 0; i < 32; i++) {
             name += alphanum.charAt(Math.floor(Math.random() * alphanum.length));
         }
-        image.mv(imagesFolderPath + name + '.' + image.name.split('.').pop())
         name = name + '.' + image.name.split('.').pop() 
+        image.mv(imagesFolderPath + name)
         const result = await ImagesModel.create({image: name})
         return result
     } catch (err) {
@@ -44,7 +44,16 @@ exports.addImage = async (data) => {
 }
 
 exports.deleteImage = async (id) => {
-
+    try {
+        await ImagesModel.destroy({
+            where: {
+                id_image: id
+            }
+        })
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
 }
 
 exports.imagesFolderPath = imagesFolderPath

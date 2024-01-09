@@ -26,7 +26,8 @@ exports.addImage = async (req, res) => {
 
 exports.deleteImage = async (req, res) => {
     try {
-        return res.status(200).send(await imagesServices.deleteImage(req.params.id))
+        await imagesServices.deleteImage(req.params.id)
+        return res.status(200).send("Image deleted successfully")
     } catch (err) {
         return res.status(400).send(err.message)
     }

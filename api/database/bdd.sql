@@ -352,7 +352,8 @@ FROM users
 WHERE email = 'KFC@ezcon.fr';
 
 INSERT INTO images (image)
-VALUES ('MSI_LOGO.png');
+VALUES ('MSI_LOGO.png'),
+('MSI_LOGO.png');
 
 INSERT INTO providers_images (id_provider, id_image)
 SELECT p.id_provider, i.id_image
@@ -402,3 +403,25 @@ INSERT INTO stands (id_location, id_provider, id_stand_type, name, description_e
 (5, 2, 3, 'Asus Shop', 'Test some Asus stuff', 'Essayer des produits Asus'),
 (6, 3, 2, 'KFC Fast Food', E'It\'s finger lickin\' good', E'C\'est bon à s\'en lêcher les doigts'),
 (7, 3, 1, 'KFC Goodies Shop', 'Buy some KFC stuff', 'Acheter des produits KFC');
+
+
+-- Event 1
+INSERT INTO events (name, max_capacity, starting_time, finishing_time, description_en, description_fr, id_location)
+VALUES ('Event 1', 85, '2024-01-09 12:00:00+01', '2024-01-09 13:00:00+01', 'Random English Description 1', 'Description Française Aléatoire 1', 29),
+('Event 2', 50, '2024-01-09 15:30:00+01', '2024-01-09 16:30:00+01', 'Random English Description 2', 'Description Française Aléatoire 2', 29),
+('Event 3', 75, '2024-01-09 18:45:00+01', '2024-01-09 19:45:00+01', 'Random English Description 3', 'Description Française Aléatoire 3', 29),
+('Event 4', 40, '2024-01-09 21:15:00+01', '2024-01-09 22:15:00+01', 'Random English Description 4', 'Description Française Aléatoire 4', 29),
+('Event 5', 20, '2024-01-09 23:00:00+01', '2024-01-10 00:00:00+01', 'Random English Description 5', 'Description Française Aléatoire 5', 29),
+('Event 6', 60, '2024-01-10 02:30:00+01', '2024-01-10 03:30:00+01', 'Random English Description 6', 'Description Française Aléatoire 6', 29),
+('Event 7', 35, '2024-01-10 05:45:00+01', '2024-01-10 06:45:00+01', 'Random English Description 7', 'Description Française Aléatoire 7', 29),
+('Event 8', 95, '2024-01-10 08:15:00+01', '2024-01-10 09:15:00+01', 'Random English Description 8', 'Description Française Aléatoire 8', 29),
+('Event 9', 55, '2024-01-10 10:30:00+01', '2024-01-10 11:30:00+01', 'Random English Description 9', 'Description Française Aléatoire 9', 29),
+('Event 10', 80, '2024-01-10 13:00:00+01', '2024-01-10 14:00:00+01', 'Random English Description 10', 'Description Française Aléatoire 10', 29);
+
+INSERT INTO events_images (id_event, id_image)
+VALUES (1, 1),
+(2, 1),
+(3, 1),
+(1, 2),
+(2, 2),
+(3, 2);

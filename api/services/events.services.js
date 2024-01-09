@@ -1,10 +1,25 @@
 const EventsModel = require("../database/DB.connection").DB_models.events
-const ImagesModel = require("../database/DB.connection").DB_models.images
 const LocationsModel = require("../database/DB.connection").DB_models.locations
+const ImagesModel = require("../database/DB.connection").DB_models.images
 
 exports.getEvents = async () => {
     try {
-        const result = await EventsModel.findAll({})
+        const result = await EventsModel.findAll({
+            attributes: {exclude: ['id_location']},
+            include: [
+                {model: ImagesModel, as: "id_image_images_events_images"},
+                {model: LocationsModel, as: "id_location_location"}
+            ]
+        })
+        for (let e of result) {
+            e.dataValues.location = e.dataValues.id_location_location
+            e.dataValues.images = e.dataValues.id_image_images_events_images
+            delete e.dataValues.id_image_images_events_images
+            delete e.dataValues.id_location_location
+            for(let i of e.dataValues.images) {
+                delete i.dataValues.events_images
+            }
+        }
         return result
     } catch (err) {
         console.log(err)
@@ -15,13 +30,24 @@ exports.getEvents = async () => {
 exports.getEventByID = async (id) => {
     try {
         const result = await EventsModel.findAll({
-            include: {
-                model: LocationsModel, as: "id_location_location"
-            },
+            attributes: {exclude: ['id_location']},
+            include: [
+                {model: LocationsModel, as: "id_location_location"},
+                {model: ImagesModel, as: "id_image_images_events_images"},
+            ],
             where: {
                 id_event: id
             }
         })
+        for (let e of result) {
+            e.dataValues.location = e.dataValues.id_location_location
+            e.dataValues.images = e.dataValues.id_image_images_events_images
+            delete e.dataValues.id_image_images_events_images
+            delete e.dataValues.id_location_location
+            for(let i of e.dataValues.images) {
+                delete i.dataValues.events_images
+            }
+        }
         return result
     } catch (err) {
         console.log(err)

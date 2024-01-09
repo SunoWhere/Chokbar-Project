@@ -10,5 +10,4 @@ router.post("/", imagesController.addImage)
 
 router.delete("/:id", imagesController.deleteImage)
 
-
 module.exports = router
