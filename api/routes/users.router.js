@@ -67,6 +67,8 @@ router.get("/", usersController.getUsers)
  *         description: Internal Server Error
  */
 router.get("/login", usersMiddleware.validateLoginInput, usersController.verifyLogin)
+router.get("/:uuid/cart", usersController.getCart)
+
 /**
  * @swagger
  * /api/users/{uuid}:
@@ -138,6 +140,7 @@ router.get("/:uuid", usersMiddleware.validateUuid, usersController.getUserByID)
  *         description: Internal Server Error
  */
 router.post("/", usersMiddleware.validateUserInput, usersController.saveUser)
+router.post("/:uuid/cart",  usersController.addToCart)
 
 /**
  * @swagger
