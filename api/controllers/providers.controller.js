@@ -9,10 +9,7 @@ exports.deleteImageByProviderId = async (req, res) => {
         )
         return res.status(200).send("Provider image deleted successfully")
     } catch (err) {
-        if (err instanceof CustomError)
-            return res.status(err.errorCode).send(err.message)
-        else
-            return res.status(500).send(err.message)
+        return res.status(err.errorCode || 500).send(err.message)
     }
 };
 exports.saveImageByProviderId = async (req, res) => {
@@ -22,10 +19,7 @@ exports.saveImageByProviderId = async (req, res) => {
             req.files
         ))
     } catch (err) {
-        if (err instanceof CustomError)
-            return res.status(err.errorCode).send(err.message)
-        else
-            return res.status(500).send(err.message)
+        return res.status(err.errorCode || 500).send(err.message)
     }
 };
 exports.deleteProviderById = async (req, res) => {
@@ -35,10 +29,7 @@ exports.deleteProviderById = async (req, res) => {
         )
         return res.status(200).send("Provider deleted successfully")
     } catch (err) {
-        if (err instanceof CustomError)
-            return res.status(err.errorCode).send(err.message)
-        else
-            return res.status(500).send(err.message)
+        return res.status(err.errorCode || 500).send(err.message)
     }
 }
 exports.updateProviderById = async (req, res) => {
@@ -52,10 +43,7 @@ exports.updateProviderById = async (req, res) => {
         )
         return res.status(200).send("Provider updated successfully")
     } catch (err) {
-        if (err instanceof CustomError)
-            return res.status(err.errorCode).send(err.message)
-        else
-            return res.status(500).send(err.message)
+        return res.status(err.errorCode || 500).send(err.message)
     }
 }
 exports.saveProvider = async (req, res) => {
@@ -67,10 +55,7 @@ exports.saveProvider = async (req, res) => {
             req.body.description_en
         ))
     } catch (err) {
-        if (err instanceof CustomError)
-            return res.status(err.errorCode).send(err.message)
-        else
-            return res.status(500).send(err.message)
+        return res.status(err.errorCode || 500).send(err.message)
     }
 }
 exports.getProviderById = async (req, res) => {
@@ -79,19 +64,13 @@ exports.getProviderById = async (req, res) => {
             req.params.id
         ))
     } catch (err) {
-        if (err instanceof CustomError)
-            return res.status(err.errorCode).send(err.message)
-        else
-            return res.status(500).send(err.message)
+        return res.status(err.errorCode || 500).send(err.message)
     }
 }
 exports.getProviders = async (req, res) => {
     try {
         return res.status(200).send(await providersServices.getProviders())
     } catch (err) {
-        if (err instanceof CustomError)
-            return res.status(err.errorCode).send(err.message)
-        else
-            return res.status(500).send(err.message)
+        return res.status(err.errorCode || 500).send(err.message)
     }
 }
