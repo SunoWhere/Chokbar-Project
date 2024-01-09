@@ -13,7 +13,7 @@ exports.getImages = async () => {
 
 exports.getImageByName = async (filename) => {
     try {
-        const result = await ImagesModel.findAll({
+        const result = await ImagesModel.findOne({
             where: {
                 image: filename
             }
@@ -27,7 +27,7 @@ exports.getImageByName = async (filename) => {
 
 exports.getImageById = async (id) => {
     try {
-        const result = await ImagesModel.findAll({
+        const result = await ImagesModel.findOne({
             where: {
                 id_image: id
             }

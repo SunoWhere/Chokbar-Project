@@ -31,7 +31,7 @@ exports.getEvents = async () => {
 
 exports.getEventByID = async (id) => {
     try {
-        const result = await EventsModel.findAll({
+        const result = await EventsModel.findOne({
             attributes: {exclude: ['id_location']},
             include: [
                 {model: LocationsModel, as: "id_location_location"},

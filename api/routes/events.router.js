@@ -17,5 +17,4 @@ router.put("/:id", eventsController.updateEvent)
 
 router.delete("/:id", eventsController.deleteEvent)
 
-
 module.exports = router

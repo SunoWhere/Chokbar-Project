@@ -18,7 +18,7 @@ exports.getLocations = async () => {
 
 exports.getLocationById = async (id) => {
     try {
-       const result = await LocationsModel.findAll({
+       const result = await LocationsModel.findOne({
         include: [
             {model: StandsModel, as: "stand"},
             {model: EventsModel, as: "events"}
@@ -36,7 +36,7 @@ exports.getLocationById = async (id) => {
 
 exports.getLocationEvents = async (id) => {
     try {
-       const result = await LocationsModel.findAll({
+       const result = await LocationsModel.findOne({
         include: {
             model: EventsModel, as: "events"
         },
