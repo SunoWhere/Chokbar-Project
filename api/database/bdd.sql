@@ -358,7 +358,7 @@ INSERT INTO providers_images (id_provider, id_image)
 SELECT p.id_provider, i.id_image
 FROM providers p
          JOIN images i ON i.image = 'MSI_LOGO.png'
-WHERE p.name LIKE 'provider';
+WHERE p.name LIKE 'MSI';
 
 INSERT INTO locations (code) VALUES ('A01'),
 ('A02'),
