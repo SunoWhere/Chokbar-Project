@@ -20,7 +20,7 @@ let editProviderStand = async (standDetails) => {
     }
 }
 
-export const providerService = {
+export const standsService = {
     getProviderStands,
     editProviderStand
 }
