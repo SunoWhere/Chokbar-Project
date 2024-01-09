@@ -1,3 +1,5 @@
+const CustomError = require("../utils/CustomError")
+
 const ImagesModel = require("../database/DB.connection").DB_models.images
 const imagesFolderPath = __dirname.split('/services')[0] + '/database/assets/images/'
 
@@ -18,6 +20,9 @@ exports.getImageByName = async (filename) => {
                 image: filename
             }
         })
+        if(!result) {
+            throw new CustomError('Image not found', 404)
+        }
         return imagesFolderPath + result[0].image
     } catch (err) {
         console.log(err)
@@ -32,6 +37,9 @@ exports.getImageById = async (id) => {
                 id_image: id
             }
         })
+        if(!result) {
+            throw new CustomError('Image not found', 404)
+        }
         return result
     } catch (err) {
         console.log(err)

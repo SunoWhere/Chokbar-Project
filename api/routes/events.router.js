@@ -5,14 +5,14 @@ var router = express.Router()
 
 router.get("/", eventsController.getEvents)
 
-router.post("/:id/images", eventsController.addEventImage)
+router.post("/:id/images", eventsMiddleware.validateEventId, eventsController.addEventImage)
 
-router.get("/:id", eventsController.getEventByID)
+router.get("/:id", eventsMiddleware.validateEventId, eventsController.getEventByID)
 
 router.post("/", eventsController.addEvent)
 
-router.put("/:id", eventsController.updateEvent)
+router.put("/:id", eventsMiddleware.validateEventId, eventsController.updateEvent)
 
-router.delete("/:id", eventsController.deleteEvent)
+router.delete("/:id", eventsMiddleware.validateEventId, eventsController.deleteEvent)
 
 module.exports = router
