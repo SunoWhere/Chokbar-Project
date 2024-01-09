@@ -4,7 +4,7 @@ exports.getEvents = async (req,res) => {
     try {
         return res.status(200).send(await eventsServices.getEvents())
     } catch (err) {
-        return res.status(400).send(err.message)
+        return res.status(err.errorCode || 500).send(err.message)
     }
 };
 
@@ -13,7 +13,7 @@ exports.getEventByID = async (req, res) => {
         const id = req.params.id
         return res.status(200).send(await eventsServices.getEventByID(id))
     } catch (err) {
-        return res.status(400).send(err.message)
+        return res.status(err.errorCode || 500).send(err.message)
     }
 }
 
@@ -30,7 +30,7 @@ exports.addEvent = async (req, res) => {
             id_location: id_location
         }))
     } catch (err) {
-        return res.status(400).send(err.message)
+        return res.status(err.errorCode || 500).send(err.message)
     }
 }
 
@@ -48,7 +48,7 @@ exports.updateEvent = async (req, res) => {
             id_location: id_location
         }, id))
     } catch (err) {
-        return res.status(400).send(err.message)
+        return res.status(err.errorCode || 500).send(err.message)
     }
 }
 
@@ -56,7 +56,7 @@ exports.deleteEvent = async (req, res) => {
     try {
         return res.status(200).send(await eventsServices.deleteEvent(id))
     } catch (err) {
-        return res.status(400).send(err.message)
+        return res.status(err.errorCode || 500).send(err.message)
     }
 }
 
@@ -65,6 +65,6 @@ exports.addEventImage = async (req, res) => {
         await eventsServices.addEventImage(req.files, req.params.id)
         return res.status(200).send("Successfully added new image to event with id : " + req.params.id)
     } catch (err) {
-        return res.status(400).send(err.message)
+        return res.status(err.errorCode || 500).send(err.message)
     }
 }

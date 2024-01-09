@@ -193,13 +193,20 @@ exports.deleteItemFromCart = async (uuid, id_product) => {
                 id_product: id_product
             }
         })
+        if(!itemAlreadyInCart) {
+            throw new CustomError('Product not in user cart', 404)
+        }
         const product = await ProductsModel.findOne({
             where: {
                 id_product: id_product
             }
         })
-        const quantity = itemAlreadyInCart.dataValues.quantity + product.dataValues.quantity
-        await ProductStatesModel.update({quantity: quantity}, {
+        if(!product) {
+            throw new CustomError('Product not found', 404)
+        }
+        const new_quantity = itemAlreadyInCart.dataValues.quantity + product.dataValues.quantity
+        console.log(new_quantity)
+        await ProductsModel.update({quantity: new_quantity}, {
             where: {
                 id_product: id_product
             }
@@ -221,7 +228,17 @@ exports.deleteItemFromCart = async (uuid, id_product) => {
 exports.clearCart = async (uuid) => {
     const transac = await sequelize.transaction()
     try {
-
+        const items = await CartLinesModel.findAll({
+            where: {
+                uuid_user: uuid
+            }
+        })
+        if(items.length === 0) {
+            throw new CustomError('Empty cart', 404)
+        }
+        for(item of items) {
+            await this.deleteItemFromCart(uuid, item.dataValues.id_product)
+        }
         transac.commit()
     } catch (err) {
         console.log(err)
