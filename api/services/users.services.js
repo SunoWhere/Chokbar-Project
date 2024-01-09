@@ -77,7 +77,7 @@ exports.saveUser = async (email, password, first_name, last_name) => {
 exports.getUsers = async () => {
     try {
         const data = await UserModel.findAll({
-            attributes: ["uuid_user","first_name", "last_name", "email", "id_role"]
+            attributes: ["uuid_user","first_name", "last_name", "email", "password","id_role"]
         })
         if (data.length === 0)
             throw new Error("No user found")
@@ -91,7 +91,7 @@ exports.getUsers = async () => {
 exports.getUserByID = async (uuid) => {
     try {
         const user = await UserModel.findAll({
-            attributes: ["uuid_user","first_name", "last_name", "email", "id_role"],
+            attributes: ["uuid_user","first_name", "last_name", "email", "password","id_role"],
             where: {
                 uuid_user: uuid
             }
