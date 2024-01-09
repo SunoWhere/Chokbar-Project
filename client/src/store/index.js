@@ -15,6 +15,7 @@ export default new Vuex.Store({
 
     users: [],
     providers: [],
+    stads: [],
 
     userIdToRemove: null,
     providerIdToRemove: null,
@@ -30,6 +31,9 @@ export default new Vuex.Store({
     showLinkClientProviderPopup: false,
     showRemoveProviderPopup: false,
     showEditProviderPopup: false,
+
+    standToEdit: null,
+    showEditStandPopup: false,
   },
   getters: {
     getUserList: state => state.users,
@@ -104,6 +108,17 @@ export default new Vuex.Store({
     setProviderToEdit(state, provider) {
       state.providerToEdit = provider;
     },
+
+    // Stands
+    setStandList(state, standList) {
+      state.stands = standList;
+    },
+    setStandToEdit(state, value) {
+      state.standToEdit = value;
+    },
+    setShowEditStandPopup(state, value) {
+      state.showEditStandPopup = value;
+    }
   },
   actions: {
     async updateUserList({ commit }) {

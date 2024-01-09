@@ -4,8 +4,7 @@ Axios.defaults.baseURL = "http://localhost:8081";
 
 let getProviderStands = async () => {
     try {
-        const stands = await Axios.get("/api/providers/");
-        return stands.data;
+        return await Axios.get("/api/stands/");
     } catch (error) {
         console.error(error);
     }
@@ -13,8 +12,10 @@ let getProviderStands = async () => {
 
 let editProviderStand = async (standDetails) => {
     try {
-        const stand = await Axios.put("/api/stands/", standDetails);
-        return stand.data;
+        const stand = "/api/stands/" + standDetails.id_stand;
+        return await Axios.put(stand, {
+            name: standDetails.name
+        });
     } catch (error) {
         console.error(error);
     }
