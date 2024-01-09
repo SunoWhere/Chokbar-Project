@@ -5,6 +5,7 @@ var router = express.Router()
 
 /*
     TODO : faire en sorte de return le titre du role plutôt que la valeur id_role
+    TODO : documentation swagger des routes /:uuid/cart
  */
 
 /**
@@ -67,6 +68,7 @@ router.get("/", usersController.getUsers)
  *         description: Internal Server Error
  */
 router.get("/login", usersMiddleware.validateLoginInput, usersController.verifyLogin)
+
 router.get("/:uuid/cart", usersController.getCart)
 
 /**
@@ -140,6 +142,7 @@ router.get("/:uuid", usersMiddleware.validateUuid, usersController.getUserByID)
  *         description: Internal Server Error
  */
 router.post("/", usersMiddleware.validateUserInput, usersController.saveUser)
+
 router.post("/:uuid/cart",  usersController.addToCart)
 
 /**
