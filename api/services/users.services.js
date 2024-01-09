@@ -90,7 +90,7 @@ exports.getUsers = async () => {
 
 exports.getUserByID = async (uuid) => {
     try {
-        const user = await UserModel.findAll({
+        const user = await UserModel.findOne({
             attributes: ["uuid_user","first_name", "last_name", "email", "password","id_role"],
             where: {
                 uuid_user: uuid
