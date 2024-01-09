@@ -1,12 +1,12 @@
 <script>
 import SideBar from "@/components/Global/SideBar.vue";
-import ProvidersCrudTable from "@/components/Admin/ProvidersPopup/ProvidersCrudTable.vue";
+import ProvidersCrudTable from "@/components/Admin/Providers/ProvidersCrudTable.vue";
 import {usersService, providersService} from "@/services";
-import EditProviderPopup from "@/components/Admin/ProvidersPopup/EditProviderPopup.vue";
-import AddProviderPopup from "@/components/Admin/ProvidersPopup/AddProviderPopup.vue";
-import NewClientOrNotPopup from "@/components/Admin/ProvidersPopup/NewClientOrNotPopup.vue";
-import LinkClientProviderPopup from "@/components/Admin/ProvidersPopup/LinkClientProviderPopup.vue";
-import RemoveProviderPopup from "@/components/Admin/ProvidersPopup/RemoveProviderPopup.vue";
+import EditProviderPopup from "@/components/Admin/Providers/EditProviderPopup.vue";
+import AddProviderPopup from "@/components/Admin/Providers/AddProviderPopup.vue";
+import NewClientOrNotPopup from "@/components/Admin/Providers/NewClientOrNotPopup.vue";
+import LinkClientProviderPopup from "@/components/Admin/Providers/LinkClientProviderPopup.vue";
+import RemoveProviderPopup from "@/components/Admin/Providers/RemoveProviderPopup.vue";
 
 export default {
   name: 'CrudProvidersView',

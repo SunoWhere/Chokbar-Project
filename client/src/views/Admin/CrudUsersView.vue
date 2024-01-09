@@ -1,10 +1,10 @@
 <script>
 import SideBar from "@/components/Global/SideBar.vue";
-import CrudTable from "@/components/Admin/UsersCrudTable.vue";
+import CrudTable from "@/components/Admin/Users/UsersCrudTable.vue";
 import {usersService} from "@/services";
-import AddUserPopup from "@/components/Admin/UsersPopup/AddUserPopup.vue";
-import RemoveUserPopup from "@/components/Admin/UsersPopup/RemoveUserPopup.vue";
-import EditUserPopup from "@/components/Admin/UsersPopup/EditUserPopup.vue";
+import AddUserPopup from "@/components/Admin/Users/AddUserPopup.vue";
+import RemoveUserPopup from "@/components/Admin/Users/RemoveUserPopup.vue";
+import EditUserPopup from "@/components/Admin/Users/EditUserPopup.vue";
 
 //FIXME: Doit-on voir tous les utilisateurs (admin et providers inclut) ou seulements les users
 

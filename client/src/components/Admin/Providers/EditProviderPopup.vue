@@ -3,6 +3,10 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1>Edit</h1>
+        <div class="close-container" @click="closePopup">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </div>
       </div>
       <div class="content-sub-title">
         <h2>{{typeTitle}}</h2>
@@ -36,10 +40,7 @@
 
           <div class="buttons">
             <div class="submit-btn">
-              <button type="submit">Ok</button>
-            </div>
-            <div class="close-btn">
-              <button @click="closePopup">Non</button>
+              <button type="submit">Edit</button>
             </div>
           </div>
         </form>
@@ -53,7 +54,7 @@
 import {usersService} from "@/services";
 
 export default {
-  name: 'RemoveUserPopup',
+  name: 'EditProviderPopup',
   data() {
     return {
       editUser: {
@@ -79,7 +80,7 @@ export default {
   },
   computed: {
     showPopup() {
-      return this.$store.state.showEditUserPopup;
+      return this.$store.state.showEditProviderPopup;
     }
   },
   methods: {
@@ -145,7 +146,7 @@ export default {
   border: 1px solid var(--background);
   background-color: var(--white);
   z-index: 999;
-  height: 600px;
+  height: 550px;
   width: 400px;
   top: 50%;
   left: 50%;
@@ -160,7 +161,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 3px 10px;
-  background-color: var(--crud-vert);
+  background-color: var(--crud-bleu);
   border-radius: 17px 17px 0 0;
   height: 10%;
   color: var(--white);
@@ -232,7 +233,7 @@ input[type="password"] {
 
 button {
   padding: 10px 20px;
-  background-color: var(--btn-green);
+  background-color: var(--crud-bleu);
   color: var(--white);
   border: none;
   border-radius: 4px;
@@ -241,7 +242,7 @@ button {
 }
 
 button:hover {
-  background-color: var(--btn-green-hover);
+  background-color: rgb(0, 82, 159);
 }
 
 .submit-btn {
@@ -265,6 +266,42 @@ button:hover {
   justify-content: center;
   align-items: center;
   margin: 0 10px 20px 10px;
+}
+
+
+.close-container {
+  display: flex;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+.leftright {
+  height: 4px;
+  width: 35px;
+  position: absolute;
+  background-color: var(--scnd2);
+  border-radius: 2px;
+  transform: rotate(45deg);
+  transition: all .3s ease-in;
+}
+
+.rightleft {
+  height: 4px;
+  width: 35px;
+  position: absolute;
+  background-color: var(--scnd3);
+  border-radius: 2px;
+  transform: rotate(-45deg);
+  transition: all .3s ease-in;
+}
+
+.close-container:hover .leftright {
+  transform: rotate(-45deg);
+}
+.close-container:hover .rightleft {
+  transform: rotate(45deg);
 }
 
 </style>

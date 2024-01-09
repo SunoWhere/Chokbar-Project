@@ -1,57 +1,54 @@
-<!--<template>-->
-<!--  <div class="dashboard-container">-->
-<!--    <sideBar/>-->
-<!--    <div id="dc" v-if="isConnected && getRole === 'provider'">-->
-<!--      <CrudProviderStands :stands="providerStands"/>-->
-<!--      <button @click="openEditStandPopup(selectedStand)">Edit Stand</button>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</template>-->
+<template>
+  <div class="dashboard-container">
+    <sideBar/>
+    <div id="dc" v-if="isConnected && getRole === 'provider'">
+      <button @click="openEditStandPopup(selectedStand)">Edit Stand</button>
+    </div>
+  </div>
+</template>
 
-<!--<script>-->
-<!--import {providerService} from "@/services";-->
-<!--import CrudProviderStands from "@/components/Provider/ProviderStandsTable.vue";-->
-<!--import SideBar from "@/components/Global/SideBar.vue";-->
+<script>
+import {providerService} from "@/services";
+import SideBar from "@/components/Global/SideBar.vue";
 
-<!--export default {-->
-<!--  name: 'CrudProviderStandsView',-->
-<!--  components: {-->
-<!--    CrudProviderStands,-->
-<!--    SideBar-->
-<!--  },-->
-<!--  data() {-->
-<!--    return {-->
-<!--      providerStands: [],-->
-<!--      selectedStand: null,-->
-<!--    };-->
-<!--  },-->
-<!--  created() {-->
-<!--    this.loadProviderStands();-->
-<!--  },-->
-<!--  methods: {-->
-<!--    async loadProviderStands() {-->
-<!--      try {-->
-<!--        const response = await providerService.getProviderStands();-->
-<!--        this.providerStands = response.data;-->
-<!--      } catch (error) {-->
-<!--        console.error(error);-->
-<!--      }-->
-<!--    },-->
-<!--    openEditStandPopup(stand) {-->
-<!--      this.selectedStand = stand;-->
-<!--    },-->
-<!--  }-->
-<!--}-->
-<!--</script>-->
+export default {
+  name: 'CrudStandView',
+  components: {
+    SideBar
+  },
+  data() {
+    return {
+      providerStands: [],
+      selectedStand: null,
+    };
+  },
+  created() {
+    this.loadProviderStands();
+  },
+  methods: {
+    async loadProviderStands() {
+      try {
+        const response = await providerService.getProviderStands();
+        this.providerStands = response.data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    openEditStandPopup(stand) {
+      this.selectedStand = stand;
+    },
+  }
+}
+</script>
 
-<!--<style scoped>-->
-<!--.dashboard-container {-->
-<!--  height: 100vh;-->
-<!--  display: flex;-->
-<!--  flex-direction: row;-->
-<!--}-->
+<style scoped>
+.dashboard-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
 
-<!--#dc {-->
-<!--  width: 100%;-->
-<!--}-->
-<!--</style>-->
+#dc {
+  width: 100%;
+}
+</style>

@@ -19,6 +19,7 @@ export default new Vuex.Store({
     userIdToRemove: null,
     providerIdToRemove: null,
     userToEdit: null,
+    providerToEdit: null,
 
     showAddUserPopup: false,
     showEditUserPopup: false,
@@ -28,6 +29,7 @@ export default new Vuex.Store({
     showAddProviderPopup: false,
     showLinkClientProviderPopup: false,
     showRemoveProviderPopup: false,
+    showEditProviderPopup: false,
   },
   getters: {
     getUserList: state => state.users,
@@ -95,6 +97,12 @@ export default new Vuex.Store({
     },
     setShowRemoveProviderPopup(state, value) {
       state.showRemoveProviderPopup = value;
+    },
+    setShowEditProviderPopup(state, value) {
+      state.showEditProviderPopup = value;
+    },
+    setProviderToEdit(state, provider) {
+      state.providerToEdit = provider;
     },
   },
   actions: {

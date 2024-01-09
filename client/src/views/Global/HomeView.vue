@@ -5,9 +5,7 @@ export default {
   components: {
   },
   computed: {
-    selectedRole() {
-      return this.$store.state.selectedRole;
-    }
+
   },
   metaInfo() {
     return {
@@ -23,6 +21,7 @@ export default {
       <div id="title">
         <div id="title-h1">
           <h1>EZCon</h1>
+          <h3>20 > 25 Mai 2023</h3>
         </div>
         <h2>LA conférence terrifortaine du jeu vidéo !</h2>
         <div class="button-home" @click="$router.push('/Billetterie')">Billetterie</div>
@@ -277,6 +276,11 @@ export default {
   padding-right: 20%;
   display: flex;
   justify-content: center;
+}
+
+h3 {
+  font-size: 16px;
+  color: var(--scnd2);
 }
 
 </style>

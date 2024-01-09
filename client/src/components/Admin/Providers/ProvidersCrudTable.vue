@@ -42,9 +42,9 @@ export default {
       this.$store.commit("setProviderIdToRemove", id);
       this.$store.commit("setShowRemoveProviderPopup", true);
     },
-    openEditPopup(user) {
-      this.$store.commit("setUserToEdit", user);
-      this.$store.commit("setShowEditUserPopup", true);
+    openEditPopup(provider) {
+      this.$store.commit("setProviderToEdit", provider);
+      this.$store.commit("setShowEditProviderPopup", true);
     },
   },
 };
@@ -67,8 +67,8 @@ export default {
             <td v-for="(value, columnIndex) in item" :key="columnIndex">{{ value }}</td>
             <td>
               <form>
-                <button class="edit-button">Editer<i class=""></i></button>
-                <button class="delete-button" @click.prevent="openRemovePopup(item.id)" >Supprimer<i class=""></i></button>
+                <button class="edit-button" @click.prevent="openEditPopup(item)">Editer</button>
+                <button class="delete-button" @click.prevent="openRemovePopup(item.id)" >Supprimer</button>
               </form>
             </td>
           </tr>
@@ -101,6 +101,10 @@ tr:nth-child(even){
 td{
   text-align: center;
   padding: 5px;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 td:nth-child(1) {
