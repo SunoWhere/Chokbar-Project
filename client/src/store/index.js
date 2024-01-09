@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {providersService, usersService} from "@/services";
+import {providersService, usersService, eventsService} from "@/services";
 
 Vue.use(Vuex)
 
@@ -16,6 +16,7 @@ export default new Vuex.Store({
     users: [],
     providers: [],
     stands: [],
+    events: [],
 
     userIdToRemove: null,
     providerIdToRemove: null,
@@ -38,6 +39,7 @@ export default new Vuex.Store({
   getters: {
     getUserList: state => state.users,
     getProviderList: state => state.providers,
+    getEventList: state => state.events,
 
     getShowMapTooltip: state => state.showMapTooltip,
     getShowPlanningInfo: state => state.showPlanningInfo,
@@ -84,6 +86,9 @@ export default new Vuex.Store({
     },
     setShowMapTooltip(state, value) {
       state.showMapTooltip = value;
+    },
+    setEventList(state, eventList) {
+      state.events = eventList;
     },
 
     // Providers
@@ -137,6 +142,14 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
+    async updateEventList({ commit }) {
+      try {
+        const eventList = await eventsService.getEvents();
+        commit('setEventList', eventList.data);
+      } catch(err) {
+        console.log(err);
+      }
+    }
   },
   modules: {
   }

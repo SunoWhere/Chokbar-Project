@@ -1,14 +1,18 @@
 <script>
+  import moment from "moment/moment";
+
   export default {
     props: {
-      title: String,
-      time: String,
-      provider: String
+      event: Object
     },
     methods: {
       closeInfo() {
         this.$store.commit("setShowPlanningInfo", false);
-      }
+      },
+      moment(date) {
+        moment.locale("fr");
+        return moment(date).format("LT");
+      },
     }
   }
 </script>
@@ -21,9 +25,10 @@
         <div class="rightleft"></div>
       </div>
       <div class="content">
-        <p>{{ title }}</p>
-        <p>{{ startingTime }} - {{ endingTime }}</p>
-        <p></p>
+        <ul class="event-info">
+          <li class="info-item">Nom: {{ event.name }}</li>
+          <li class="info-item">Horaire: {{ moment(event.starting_time) }} - {{ moment(event.finishing_time) }}</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -49,6 +54,22 @@
   background-color: var(--background);
   box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
   border-radius: 17px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.event-info {
+  list-style: none;
+}
+
+.info-item {
+  color: white;
+  font-size: 1.1em;
 }
 
 .close-container {

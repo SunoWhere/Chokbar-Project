@@ -4,6 +4,7 @@ import PlanningInfo from "@/components/Global/Map/PlanningInfo.vue";
 import AddEventPopup from "@/components/Global/Map/AddEventPopup.vue";
 
 import { eventsService } from "@/services";
+import moment from "moment";
 
 export default {
   components: {
@@ -21,9 +22,7 @@ export default {
       selectedDayId: 0,
       selectedDayString: "Lundi",
 
-      selectedEventStartTime: null,
-      selectedEventEndTime: null,
-      selectedEventTitle: null,
+      selectedEvent: null,
     }
   },
   methods: {
@@ -31,7 +30,8 @@ export default {
       this.selectedBoothId = e.target.id;
       this.$store.commit("setShowMapTooltip", true);
     },
-    openPlanningInfo() {
+    openPlanningInfo(id_event) {
+      this.getEventById(id_event);
       this.$store.commit("setShowPlanningInfo", true);
     },
     openAddEvent() {
@@ -47,11 +47,23 @@ export default {
       this.selectedDayId--;
       this.selectedDayString = this.days[this.selectedDayId];
     },
+    moment(date) {
+      moment.locale("fr");
+      return moment(date).format("LT");
+    },
 
     async getAllEvents() {
       try {
         const res = await eventsService.getEvents();
-        this.events = res.data.map(event => [event.id_event, event.name, event.max_capacity, event.starting_time, event.finishing_time, event.description, event.id_location]);
+        this.events = res.data;
+      } catch(err) {
+        console.log(err);
+      }
+    },
+    async getEventById(id) {
+      try {
+        const res = await eventsService.getEventById(id);
+        this.selectedEvent = res.data;
       } catch(err) {
         console.log(err);
       }
@@ -59,11 +71,13 @@ export default {
   },
   created() {
     this.getAllEvents();
-  },
-  computed: {
-    generateTimes() {
-      return [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
-    }
+
+    this.$store.watch(
+        () => this.$store.getters.getEventList,
+        eventList => {
+          this.events = eventList.data;
+        }
+    );
   },
   metaInfo() {
     return {
@@ -75,9 +89,9 @@ export default {
 
 <template>
   <div class="container">
-    <PlanningInfo v-if="this.$store.getters.getShowPlanningInfo" :time="selectedEventStartTime" :title="selectedEventTitle"/>
+    <PlanningInfo v-if="this.$store.getters.getShowPlanningInfo" :event="selectedEvent[0]"/>
     <AddEventPopup v-if="this.$store.getters.getShowAddEvent"/>
-    <MapTooltip v-if="this.$store.getters.getShowMapTooltip" :booth-id="selectedBoothId" />
+    <MapTooltip v-if="this.$store.getters.getShowMapTooltip" :booth-id="selectedBoothId"/>
     <div class="planning-container">
       <ul class="timetable">
         <li class="table-head">
@@ -85,14 +99,18 @@ export default {
           <span id="day-string">{{ this.selectedDayString }}</span>
           <button class="day-selector" id="next-day" @click="nextDay"><font-awesome-icon icon="fa-solid fa-chevron-right" /></button>
         </li>
-        <!-- TODO: ###### remplacer par events quand il y aura des données ###### -->
-        <li class="table-event hover-effect" v-for="(time, id) in generateTimes" :key="id" @click="openPlanningInfo"><span class="event-name">Gaming</span><span class="event-time">{{ time }}h</span></li>
-<!--        <li class="table-event hover-effect" v-for="(event, id_event) in events" :key="id_event" @click="openPlanningInfo"><span class="event-name">{{ event.name }}</span><span class="event-time">{{ event.starting_time }} - {{ event.finishing_time }}</span></li>-->
+
+        <li class="table-event hover-effect" v-for="(event, id_event) in events" :key="id_event" @click="openPlanningInfo(id_event)">
+          <span class="event-name">{{ event.name }}</span>
+          <span class="event-time">{{ moment(event.starting_time) }} - {{ moment(event.finishing_time) }}</span>
+        </li>
       </ul>
+
       <div class="table-event-add" v-if="this.$store.state.isConnected">
         <button id="add" class="event-button" @click="openAddEvent">Ajouter</button>
       </div>
     </div>
+
     <div class="map-container">
       <svg class="map" width="100%" height="100%" viewBox="0 0 2236 1578" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:square;stroke-miterlimit:1.5;">
         <g id="map-bg" transform="matrix(1,0,0,1,-783.554,-346.752)">

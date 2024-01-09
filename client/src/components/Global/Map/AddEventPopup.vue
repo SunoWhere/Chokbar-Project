@@ -1,9 +1,76 @@
 <script>
+  import { eventsService } from "@/services";
   export default {
+    data() {
+      return {
+        locations: [],
+        errMessage: null,
+        days: [
+          {
+            name: "Lundi",
+            timestamp: "2024-05-20"
+          },
+          {
+            name: "Mardi",
+            timestamp: "2024-05-21"
+          },
+          {
+            name: "Mercredi",
+            timestamp: "2024-05-22"
+          },
+          {
+            name: "Jeudi",
+            timestamp: "2024-05-23"
+          },
+          {
+            name: "Vendredi",
+            timestamp: "2024-05-24"
+          },
+          {
+            name: "Samedi",
+            timestamp: "2024-05-25"
+          }
+        ],
+        addEvent: {
+          name: "",
+          max_capacity: null,
+          starting_time: null,
+          finishing_time: null,
+          description_en: "english desc",
+          description_fr: "french desc",
+          id_location: null,
+
+        }
+      }
+    },
     methods: {
       closeAddEventPopup() {
         this.$store.commit("setShowAddEvent", false);
+      },
+
+      async getLocations() {
+        try {
+          const res = await eventsService.getLocations();
+          this.locations = res.data;
+        } catch(err) {
+          console.log(err);
+        }
+      },
+      submitForm() {
+        eventsService.addEvent(this.addEvent)
+            .then(async () => {
+              this.closeAddEventPopup();
+
+              const updatedEventList = await eventsService.getEvents();
+              await this.$store.dispatch('updateEventList', updatedEventList);
+            })
+            .catch(err => {
+              console.log(err);
+            });
       }
+    },
+    created() {
+      this.getLocations();
     }
   }
 </script>
@@ -16,25 +83,56 @@
        <div class="rightleft"></div>
      </div>
      <div class="add-event-header"><p>Ajouter un Événement</p></div>
-     <form class="add-form" action="/api/events" method="post">
-       <label for="name">Nom</label>
-       <input id="name" type="text">
-       
-       <!-- TODO: réfléchir à comment faire pour la description -->
-<!--       <label for="description">Description</label>-->
-<!--       <textarea id="description" cols="30" rows="10"></textarea>-->
 
-       <label for="max-capacity">Capacité</label>
-       <input id="max-capacity" type="number">
-       
-       <label for="starting-time">Heure de Début</label>
-       <input id="starting-time" type="time">
+     <div v-if="errMessage" class="err-msg">{{ errMessage }}</div>
 
-       <label for="finishing-time">Heure de Fin</label>
-       <input id="finishing-time" type="time">
+     <form class="add-form" action="/api/events" method="post" @submit.prevent="submitForm">
 
-       <label for="location">Emplacement</label>
-       <select id="location"></select>
+       // TODO: fini ça enculé
+
+       <div class="item-group">
+         <label for="name">Nom</label>
+         <input id="name" type="text" v-model="addEvent.name">
+
+         <label for="max-capacity">Capacité</label>
+         <input id="max-capacity" type="number" v-model="addEvent.max_capacity">
+       </div>
+
+       <div class="item-group">
+         <label for="description">Description FR</label>
+         <textarea id="description" cols="30" rows="10" v-model="addEvent.description_fr"></textarea>
+
+         <label for="description">Description EN</label>
+         <textarea id="description" cols="30" rows="10" v-model="addEvent.description_en"></textarea>
+       </div>
+
+       <div class="item-group">
+         <div class="group">
+           <label for="jour">Jour</label>
+           <select id="jour">
+             <option v-for="(day, id_day) in days" :key="id_day" :value="id_day">{{ day.name }}</option>
+           </select>
+         </div>
+
+         <div class="group">
+           <label for="location">Emplacement</label>
+           <select id="location" v-model="addEvent.id_location">
+             <option v-for="(location, id_location) in locations" :key="id_location" :value="id_location">{{ location.code }}</option>
+           </select>
+         </div>
+       </div>
+
+       <div class="item-group">
+         <div class="group">
+           <label for="starting-time">Heure de Début</label>
+           <input id="starting-time" type="time" v-model="addEvent.starting_time">
+         </div>
+
+         <div class="group">
+           <label for="finishing-time">Heure de Fin</label>
+           <input id="finishing-time" type="time" v-model="addEvent.finishing_time">
+         </div>
+       </div>
 
        <input id="sumbit-add" type="submit" value="Ajouter">
      </form>
@@ -74,16 +172,24 @@
   margin: 7px 15px;
 }
 
+.err-msg {
+
+}
+
 .add-form {
   display: flex;
   width: 60%;
   height: fit-content;
   flex-direction: column;
-  margin: auto;
-  margin-top: 20px;
+  margin: 20px auto auto;
 }
 
-.add-form > label {
+.item-group {
+  display: flex;
+  flex-direction: row;
+}
+
+label {
   color: white;
   align-self: start;
 }
@@ -99,6 +205,7 @@ textarea {
   border: 1px solid #ccc;
   border-radius: 4px;
   width: 100%;
+  resize: none;
 }
 
 #sumbit-add {
