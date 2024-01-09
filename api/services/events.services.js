@@ -104,12 +104,3 @@ exports.addEventImage = async (file, id) => {
         throw err
     }
 }
-
-exports.addEventImageWithId = async (id_event, id_image) => {
-    try {
-        await EventsImagesModel.create({id_event: id_event, id_image: id_image})
-    } catch (err) {
-        console.log(err)
-        throw err
-    }
-}

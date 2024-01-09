@@ -68,12 +68,3 @@ exports.addEventImage = async (req, res) => {
         return res.status(400).send(err.message)
     }
 }
-
-exports.addEventImageWithId = async (req, res) => {
-    try {
-        await eventsServices.addEventImageWithId(req.params.id, req.body.id_image)
-        return res.status(200).send("Successfully added new image to event with id : " + req.params.id)
-    } catch (err) {
-        return res.status(400).send(err.message)
-    }
-}
