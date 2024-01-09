@@ -10,14 +10,6 @@ module.exports = function(sequelize, DataTypes) {
     code: {
       type: DataTypes.STRING(3),
       allowNull: true
-    },
-    id_location_size: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'location_sizes',
-        key: 'id_location_size'
-      }
     }
   }, {
     sequelize,

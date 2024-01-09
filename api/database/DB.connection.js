@@ -19,7 +19,8 @@ sequelize.authenticate().then(() => {
 })
 
 module.exports = {
-    DB_models
+    DB_models,
+    sequelize
 }
 
 // sequelize.close().then(() => {

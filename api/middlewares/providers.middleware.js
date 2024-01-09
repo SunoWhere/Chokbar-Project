@@ -1,4 +1,7 @@
 const validator = require("validator")
+/*
+TODO ajouter les validators pour les nouveau champs ajouter avec l'update de la DB
+ */
 
 exports.validateProviderInput = (req, res, next) => {
     if (!validateName(req.body.name))

@@ -11,9 +11,13 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true
     },
-    name: {
+    name_en: {
       type: DataTypes.STRING(50),
-      allowNull: true
+      allowNull: false
+    },
+    name_fr: {
+      type: DataTypes.STRING(50),
+      allowNull: false
     },
     id_equipment_type: {
       type: DataTypes.INTEGER,

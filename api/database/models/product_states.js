@@ -1,27 +1,27 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('location_sizes', {
-    id_location_size: {
+  return sequelize.define('product_states', {
+    id_product_state: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    name: {
-      type: DataTypes.STRING(50),
+    state: {
+      type: DataTypes.STRING(20),
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'location_sizes',
+    tableName: 'product_states',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "location_sizes_pkey",
+        name: "product_states_pkey",
         unique: true,
         fields: [
-          { name: "id_location_size" },
+          { name: "id_product_state" },
         ]
       },
     ]

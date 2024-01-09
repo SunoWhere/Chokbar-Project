@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('entries_rating', {
-    id_user: {
+    uuid_user: {
       type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true,
@@ -33,7 +33,7 @@ module.exports = function(sequelize, DataTypes) {
         name: "entries_rating_pkey",
         unique: true,
         fields: [
-          { name: "id_user" },
+          { name: "uuid_user" },
           { name: "id_entry" },
         ]
       },

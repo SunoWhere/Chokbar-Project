@@ -10,13 +10,13 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id_event'
       }
     },
-    image: {
-      type: DataTypes.STRING(50),
+    id_image: {
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       references: {
         model: 'images',
-        key: 'image'
+        key: 'id_image'
       }
     }
   }, {
@@ -30,7 +30,7 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         fields: [
           { name: "id_event" },
-          { name: "image" },
+          { name: "id_image" },
         ]
       },
     ]
