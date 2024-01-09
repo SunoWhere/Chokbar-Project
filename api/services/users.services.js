@@ -183,3 +183,49 @@ exports.addToCart = async (uuid, id_product, quantity) => {
         throw err
     }
 }
+
+exports.deleteItemFromCart = async (uuid, id_product) => {
+    const transac = await sequelize.transaction()
+    try {
+        const itemAlreadyInCart = await CartLinesModel.findOne({
+            where: {
+                uuid_user: uuid,
+                id_product: id_product
+            }
+        })
+        const product = await ProductsModel.findOne({
+            where: {
+                id_product: id_product
+            }
+        })
+        const quantity = itemAlreadyInCart.dataValues.quantity + product.dataValues.quantity
+        await ProductStatesModel.update({quantity: quantity}, {
+            where: {
+                id_product: id_product
+            }
+        })
+        await CartLinesModel.destroy({
+            where: {
+                uuid_user: uuid,
+                id_product: id_product
+            }
+        })
+        transac.commit()
+    } catch (err) {
+        console.log(err)
+        transac.rollback()
+        throw err
+    }
+}
+
+exports.clearCart = async (uuid) => {
+    const transac = await sequelize.transaction()
+    try {
+
+        transac.commit()
+    } catch (err) {
+        console.log(err)
+        transac.rollback()
+        throw err
+    }
+}

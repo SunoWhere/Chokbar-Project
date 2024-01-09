@@ -113,3 +113,26 @@ exports.addToCart = async (req, res) => {
         return res.status(500).send(err.message)
     }
 }
+
+exports.deleteItemFromCart = async(req, res) => {
+    try {
+        await usersServices.deleteItemFromCart(
+            req.params.uuid,
+            req.params.id_product
+        )
+        return res.status(200).send("Successfully deleted from cart")
+    } catch (err) {
+        return res.status(500).send(err.message)
+    }
+}
+
+exports.clearCart = async(req, res) => {
+    try {
+        await usersServices.clearCart(
+            req.params.uuid
+        )
+        return res.status(200).send("Successfully deleted all from cart")
+    } catch (err) {
+        return res.status(500).send(err.message)
+    }
+}
