@@ -15,27 +15,15 @@
         </div>
       </div>
       <div class="content">
-        <form action="/users/" method="POST" @submit.prevent="submitForm">
+        <form @submit.prevent="submitForm">
           <div class="form-main-content">
-            <label for="firstname">Firstname</label>
-            <input type="text" id="firstname" name="firstname" placeholder="Firstname" v-model="addUser.first_name" required>
+            <label for="name">Nom Intervenant</label>
+            <input type="text" id="name" name="name" placeholder="Startup name" v-model="addProvider.name" required>
 
-            <label for="lastname">Lastname</label>
-            <input type="text" id="lastname" name="lastname" placeholder="Lastname" v-model="addUser.last_name" required>
-
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Email" v-model="addUser.email" required>
-
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Password" v-model="addUser.password" required>
-
-            <label for="confirm-password">Confirm Password</label>
-            <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" v-model="addUser.confirmPassword" required>
-
-            <p class="show-password">
-              <input type="checkbox" id="show-password" @click="toggleShowPassword">
-              <label for="show-password">Show Password</label>
-            </p>
+            <label for="userId">Sélectionner un utilisateur</label>
+            <select v-model="addProvider.id" id="userId" name="userId" required>
+              <option v-for="user in users" :key="user[0]" :value="user[0]">{{ user[2] }} {{ user[3] }}</option>
+            </select>
           </div>
 
           <div class="submit-btn">
@@ -48,10 +36,10 @@
 </template>
 
 <script>
-import {usersService} from "@/services";
+import {providersService} from "@/services";
 
 export default {
-  name: 'AddUserPopup',
+  name: 'LinkClientProviderPopup',
   data() {
     return {
       addUser: {
@@ -61,6 +49,10 @@ export default {
         password: '',
         confirmPassword: ''
       },
+      addProvider: {
+        name: '',
+        id: ''
+      },
       passwordMatch: false,
       message: null
     }
@@ -69,41 +61,29 @@ export default {
     typeTitle: {
       type: String,
       required: true
+    },
+    users: {
+      type: Array,
+      required: true
     }
   },
   computed: {
     showPopup() {
-      return this.$store.state.showAddUserPopup;
-    }
+      return this.$store.state.showLinkClientProviderPopup;
+    },
   },
   methods: {
     closePopup() {
-      this.$store.commit("setShowAddUserPopup", false);
-    },
-    toggleShowPassword() {
-      const passwordInput = document.getElementById("password");
-      const cpasswordInput = document.getElementById("confirm-password");
-
-      if(passwordInput.type === "password") {
-        passwordInput.type = "text";
-      } else {
-        passwordInput.type = "password";
-      }
-      if(cpasswordInput.type === "password") {
-        cpasswordInput.type = "text";
-      } else {
-        cpasswordInput.type = "password";
-      }
+      this.$store.commit("setShowLinkClientProviderPopup", false);
     },
     submitForm() {
-      if (this.addUser.password === this.addUser.confirmPassword) {
-        usersService.addUser(this.addUser)
+      if (this.addProvider.name != null || this.addProvider.name !== "") {
+        providersService.addProvider(this.addProvider)
             .then(async res => {
               this.message = res.data;
               this.closePopup();
 
-              const updatedUserList = await usersService.getAllUser();
-              await this.$store.dispatch('updateUserList', updatedUserList);
+              await this.$store.dispatch('updateProviderList');
             })
             .catch(err => {
               console.error(err);
@@ -126,7 +106,7 @@ export default {
   border: 1px solid var(--background);
   background-color: var(--white);
   z-index: 999;
-  height: 550px;
+  height: 350px;
   width: 400px;
   top: 50%;
   left: 50%;
@@ -143,7 +123,7 @@ export default {
   padding: 3px 10px;
   background-color: var(--crud-vert);
   border-radius: 17px 17px 0 0;
-  height: 10%;
+  height: 15%;
   color: var(--white);
 }
 
@@ -167,7 +147,7 @@ export default {
 .content-sub-title {
   width: 100%;
   text-align: center;
-  padding-top: 10px;
+  padding: 10px 10px;
 }
 
 .close-container {
@@ -237,11 +217,6 @@ input[type="password"] {
   border-radius: 4px;
 }
 
-.show-password {
-  margin-top: -5px;
-  margin-bottom: 10px;
-}
-
 .show-password input {
   margin-right: 3px;
 }
@@ -282,5 +257,4 @@ button:hover {
   align-items: center;
   margin: 0 10px 20px 10px;
 }
-
 </style>

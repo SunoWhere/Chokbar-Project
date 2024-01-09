@@ -2,24 +2,27 @@
   <div class="modal" v-if="showPopup">
     <div class="modal-content">
       <div class="modal-header">
-        <h1>Remove</h1>
+        <h1>New Provider Or Not ?</h1>
+        <div class="close-container" @click="closePopup">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </div>
       </div>
       <div class="content-sub-title">
         <h2>{{typeTitle}}</h2>
         <div v-if="message" id="error-message">
           <p class="error-message">{{ message }}</p>
         </div>
-        <p>Vous êtes sur le points de supprimer un {{typeTitle}}.</p>
-        <p>Êtes vous sûr de votre action ?</p>
+        <p>Voulez vous créer un nouvel utilisateur ou déclarer un utilisateur déjà existant en tant qu'intervenant ?</p>
       </div>
       <div class="content">
-        <form action="/users/" method="POST" @submit.prevent="submitForm">
+        <form>
           <div class="buttons">
-            <div class="close-btn">
-              <button id="close-button" @click="closePopup">Non</button>
-            </div>
             <div class="submit-btn">
-              <button id="submit-button" type="submit">Ok</button>
+              <button @click="newProvider">Nouveau intervenant</button>
+            </div>
+            <div class="close-btn">
+              <button @click="syncClientProvider">Lier un client</button>
             </div>
           </div>
         </form>
@@ -31,7 +34,7 @@
 <script>
 
 export default {
-  name: 'RemoveUserPopup',
+  name: 'NewClientOrNotPopup',
   data() {
     return {
       message: null,
@@ -45,15 +48,19 @@ export default {
   },
   computed: {
     showPopup() {
-      return this.$store.state.showRemoveUserPopup;
+      return this.$store.state.showNewClientOrNotPopup;
     }
   },
   methods: {
     closePopup() {
-      this.$store.commit("setShowRemoveUserPopup", false);
+      this.$store.commit("setShowNewClientOrNotPopup", false);
     },
-    submitForm() {
-      this.$emit("confirmed-deletion");
+    syncClientProvider() {
+      this.$emit("sync-client-provider");
+      this.closePopup();
+    },
+    newProvider() {
+      this.$emit("new-client");
       this.closePopup();
     },
   },
@@ -68,8 +75,8 @@ export default {
   border: 1px solid var(--background);
   background-color: var(--white);
   z-index: 999;
-  height: 200px;
-  width: 400px;
+  height: 250px;
+  width: 500px;
   top: 50%;
   left: 50%;
   transform: translate(-20%, -50%);
@@ -83,7 +90,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 3px 10px;
-  background-color: var(--crud-rouge);
+  background-color: var(--crud-vert);
   border-radius: 17px 17px 0 0;
   height: 20%;
   color: var(--white);
@@ -144,11 +151,13 @@ input[type="password"] {
 
 button {
   padding: 10px 20px;
+  background-color: var(--btn-green);
   color: var(--white);
   border: none;
   border-radius: 4px;
   cursor: pointer;
   width: 100%;
+  height: 50px;
   transition: background-color 0.3s ease;
 }
 
@@ -166,27 +175,13 @@ button:hover {
   width: 120px;
 }
 
-#close-button {
+.close-btn {
   width: 120px;
-  background-color: var(--crud-rouge);
 }
-
-#close-button:hover {
-  background-color: #a20000;
-}
-
-#submit-button {
-  width: 120px;
-  background-color: var(--crud-vert);
-}
-
-#submit-button:hover {
-  background-color: var(--btn-green-hover);
-}
-
 
 .buttons {
   display: flex;
+  align-items: center;
   justify-content: space-evenly;
 }
 
@@ -200,6 +195,41 @@ button:hover {
   justify-content: center;
   align-items: center;
   margin: 0 10px 20px 10px;
+}
+
+.close-container {
+  display: flex;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+.leftright {
+  height: 4px;
+  width: 35px;
+  position: absolute;
+  background-color: var(--scnd2);
+  border-radius: 2px;
+  transform: rotate(45deg);
+  transition: all .3s ease-in;
+}
+
+.rightleft {
+  height: 4px;
+  width: 35px;
+  position: absolute;
+  background-color: var(--scnd3);
+  border-radius: 2px;
+  transform: rotate(-45deg);
+  transition: all .3s ease-in;
+}
+
+.close-container:hover .leftright {
+  transform: rotate(-45deg);
+}
+.close-container:hover .rightleft {
+  transform: rotate(45deg);
 }
 
 </style>
