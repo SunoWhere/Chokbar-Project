@@ -15,7 +15,7 @@ export default new Vuex.Store({
 
     users: [],
     providers: [],
-    stads: [],
+    stands: [],
 
     userIdToRemove: null,
     providerIdToRemove: null,
