@@ -5,18 +5,19 @@ const StandImagesModel = require("../database/DB.connection").DB_models.stands_i
 const ProvidersModel = require("../database/DB.connection").DB_models.providers
 const LocationsModel = require("../database/DB.connection").DB_models.locations
 const LocationSizesModel = require("../database/DB.connection").DB_models.location_sizes
+const ProductTypesModel = require("../database/DB.connection").DB_models.product_types
 
-/*
-id_product
-price
-quantity
-id_stand
-id_product_type
-description_en
-description_fr
-name_en
-name_fr
- */
+exports.getProductTypes = async () => {
+    try {
+        const data = await ProductTypesModel.findAll()
+        if (!data)
+            throw new Error("No product types found")
+        return data
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+};
 exports.deleteProductById = async (id) => {
     try {
         const res = await StandsModel.destroy({
