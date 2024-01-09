@@ -50,12 +50,8 @@ export default {
   font-size: 0.7em;
 }
 
-.content-p {
-  font-size: 0.45em;
-  text-align: justify;
-}
-
 .sub-container {
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -65,6 +61,8 @@ export default {
 
 .sub-container p {
   width: 35%;
+  font-size: 0.45em;
+  text-align: justify;
 }
 
 </style>
