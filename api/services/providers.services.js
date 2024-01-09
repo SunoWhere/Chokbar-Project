@@ -1,3 +1,4 @@
+const imagesServices = require("./images.services");
 const sequelize = require("../database/DB.connection").sequelize
 const ProvidersModel = require("../database/DB.connection").DB_models.providers
 const ProvidersImagesModel = require("../database/DB.connection").DB_models.providers_images
@@ -6,12 +7,69 @@ const ProductsModel = require("../database/DB.connection").DB_models.products
 const ProductsImagesModel = require("../database/DB.connection").DB_models.products_images
 const UsersModel = require("../database/DB.connection").DB_models.users
 const RolesModel = require("../database/DB.connection").DB_models.roles
+const ImagesModel = require("../database/DB.connection").DB_models.images
 
 /*
 TODO : Refactor les changement de role pour extraire les méthodes
  */
 
 
+exports.deleteImageByProviderId = async (id_provider, id_image) => {
+    try {
+        const provider = await ProvidersModel.findOne({where: {id_provider: id}})
+        if (!provider) {
+            throw new Error("Provider not found")
+        }
+
+        const image = ImagesModel.findOne({where: {id_image: id_image}})
+        if (!image) {
+            throw new Error("Image not found")
+        }
+
+        const provider_image = ProvidersImagesModel.findOne({where: {id_image: id_image, id_provider: id_provider}})
+        if (!provider_image) {
+            throw new Error("Provider image not found")
+        }
+
+        await provider_image.destroy()
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+};
+exports.saveImageByProviderId = async (id, image_file) => {
+    let image
+    try {
+        image = await imagesServices.addImage(
+            image_file
+        )
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+
+    try {
+        const provider = await ProvidersModel.findOne({where: {id_provider: id_provider}})
+        if (!provider) {
+            imagesServices.deleteImage(image.id_image)
+            throw new Error("Provider not found")
+        }
+
+        const provider_image = ProvidersImagesModel.create({
+            id_provider: provider.id_provider,
+            id_image: image.id_image
+        })
+
+        if (!provider_image) {
+            imagesServices.deleteImage(image.id_image)
+            throw new Error("Provider not found")
+        }
+
+        return image
+    } catch (err) {
+        console.log(err)
+    }
+};
 exports.deleteProviderById = async (id) => {
     try {
 
@@ -111,18 +169,31 @@ exports.saveProvider = async (name, uuid_user, description_en, description_fr) =
 
 exports.getProviderById = async (id) => {
     try {
-        const data = await ProvidersModel.findAll({
+        const provider = await ProvidersModel.findOne({
             include: [{
-                model: ProvidersImagesModel, as: 'providers_images'
+                model: ImagesModel, as: 'id_image_images_providers_images'
             }, {
-                model: StandsModel, as: "stands"
+                model: StandsModel, as: "stands",
+                attributes: ["id_stand"]
             }],
             where: {
                 id_provider: id
             }
         })
-        if (data.length === 0) throw new Error("No provider found")
-        return data
+        if (provider.length === 0) throw new Error("No provider found")
+
+        const {id_image_images_providers_images, stands, ...providerData} = provider.toJSON();
+
+        return {
+            ...providerData,
+            images: id_image_images_providers_images.map((image) => {
+                return {
+                    id_image: image.id_image,
+                    image: image.image
+                }
+            }),
+            stand_ids: stands.map(stand => stand.id_stand) // Rename key and transform stands to an array of ids
+        };
     } catch (err) {
         console.log(err)
         throw err
@@ -132,11 +203,10 @@ exports.getProviders = async () => {
     try {
         const providers = await ProvidersModel.findAll({
             include: [{
-                model: ProvidersImagesModel, as: 'providers_images'
-            //     TODO : include images correctly
+                model: ImagesModel, as: 'id_image_images_providers_images',
             }, {
                 model: StandsModel, as: "stands",
-                attributes:["id_stand"]
+                attributes: ["id_stand"]
             }]
         })
         if (providers.length === 0)
@@ -144,11 +214,17 @@ exports.getProviders = async () => {
 
         return providers.map(provider => {
             // Extract the provider data and stands into separate variables
-            const { stands, ...providerData } = provider.toJSON();
+            const {id_image_images_providers_images, stands, ...providerData} = provider.toJSON();
 
             // Create a new object with the modified structure
             return {
                 ...providerData,
+                images: id_image_images_providers_images.map((image) => {
+                    return {
+                        id_image: image.id_image,
+                        image: image.image
+                    }
+                }),
                 stand_ids: stands.map(stand => stand.id_stand) // Rename key and transform stands to an array of ids
             };
         });

@@ -1,11 +1,32 @@
 const providersServices = require("../services/providers.services")
 
+exports.deleteImageByProviderId = async (req,res) => {
+    try {
+        await providersServices.deleteImageByProviderId(
+            req.params.id_provider,
+            req.params.id_image
+        )
+        return res.status(200).send("Provider image deleted successfully")
+    } catch (err) {
+        return res.status(500).send(err.message)
+    }
+};
+exports.saveImageByProviderId = async (req, res) => {
+    try {
+        return res.status(200).send(await providersServices.saveImageByProviderId(
+            req.params.id,
+            req.files
+        ))
+    } catch (err) {
+        return res.status(500).send(err.message)
+    }
+};
 exports.deleteProviderById = async (req, res) => {
     try {
         await providersServices.deleteProviderById(
             req.params.id
         )
-        return res.status(200).send("User deleted successfully")
+        return res.status(200).send("Provider deleted successfully")
     } catch (err) {
         return res.status(500).send(err.message)
     }
@@ -19,7 +40,7 @@ exports.updateProviderById = async (req, res) => {
             req.body.description_fr,
             req.body.description_en
         )
-        return res.status(200).send("User updated successfully")
+        return res.status(200).send("Provider updated successfully")
     } catch (err) {
         return res.status(500).send(err.message)
     }
