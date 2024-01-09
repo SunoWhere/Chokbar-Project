@@ -16,6 +16,24 @@ exports.getLocations = async () => {
     }
 }
 
+exports.getLocationById = async (id) => {
+    try {
+       const result = await LocationsModel.findAll({
+        include: [
+            {model: StandsModel, as: "stand"},
+            {model: EventsModel, as: "events"}
+        ],
+        where: {
+            id_location: id
+        }
+       })
+       return result;
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+}
+
 exports.getLocationEvents = async (id) => {
     try {
        const result = await LocationsModel.findAll({

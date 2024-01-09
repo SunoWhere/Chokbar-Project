@@ -5,9 +5,9 @@ var router = express.Router()
 
 router.get("/", eventsController.getEvents)
 
-router.post("/:id/images", eventsController.addEventImage)
+router.post("/:id/images/", eventsController.addEventImageWithId)
 
-router.put("/:id/images", eventsController.updateEventImage)
+router.post("/:id/images", eventsController.addEventImage)
 
 router.get("/:id", eventsController.getEventByID)
 

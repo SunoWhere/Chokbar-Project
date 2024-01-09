@@ -1,6 +1,8 @@
 const EventsModel = require("../database/DB.connection").DB_models.events
 const LocationsModel = require("../database/DB.connection").DB_models.locations
 const ImagesModel = require("../database/DB.connection").DB_models.images
+const EventsImagesModel = require("../database/DB.connection").DB_models.events_images
+const imagesServices = require("../services/images.services")
 
 exports.getEvents = async () => {
     try {
@@ -94,16 +96,18 @@ exports.deleteEvent = async (id) => {
 
 exports.addEventImage = async (file, id) => {
     try {
-        // TO DO
+        const image = await imagesServices.addImage(file)
+        let id_image = image.dataValues.id_image
+        await EventsImagesModel.create({id_event: id, id_image: id_image})
     } catch (err) {
         console.log(err)
         throw err
     }
 }
 
-exports.updateEventImage = async (file, id) => {
+exports.addEventImageWithId = async (id_event, id_image) => {
     try {
-        // TO DO
+        await EventsImagesModel.create({id_event: id_event, id_image: id_image})
     } catch (err) {
         console.log(err)
         throw err

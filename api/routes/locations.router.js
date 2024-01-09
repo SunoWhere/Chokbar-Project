@@ -6,4 +6,6 @@ router.get("/", locationsController.getLocations)
 
 router.get("/:id/events", locationsController.getLocationEvents)
 
+router.get("/:id", locationsController.getLocationById)
+
 module.exports = router

@@ -25,6 +25,20 @@ exports.getImageByName = async (filename) => {
     }
 }
 
+exports.getImageById = async (id) => {
+    try {
+        const result = await ImagesModel.findAll({
+            where: {
+                id_image: id
+            }
+        })
+        return result
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+}
+
 exports.addImage = async (data) => {
     try {
         const {image} = data
