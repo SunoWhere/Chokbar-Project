@@ -1,6 +1,8 @@
 const {v4: uuid4} = require("uuid")
+const CustomError = require("../utils/CustomError");
 const UserModel = require("../database/DB.connection").DB_models.users
 
+// Return the number of affected row
 exports.deleteUserById = async (uuid) => {
     try {
         const res = await UserModel.destroy({
@@ -8,13 +10,13 @@ exports.deleteUserById = async (uuid) => {
                 uuid_user: uuid
             }
         })
-        if (res === 0)
-            throw new Error("User not found")
+        return res[0]
     } catch (err) {
         console.log(err)
         throw err
     }
 };
+// Return the number of affected row
 exports.updateUserById = async (uuid, email, password, first_name, last_name) => {
     try {
         const res = await UserModel.update({
@@ -27,9 +29,7 @@ exports.updateUserById = async (uuid, email, password, first_name, last_name) =>
                 uuid_user: uuid
             }
         })
-
-        if (res[0] === 0)
-            throw new Error("User not found")
+        return res[0]
     } catch (err) {
         console.log(err)
         throw err
@@ -38,16 +38,12 @@ exports.updateUserById = async (uuid, email, password, first_name, last_name) =>
 
 exports.verifyLogin = async (email, password) => {
     try {
-        const data = await UserModel.findAll({
+        return await UserModel.findOne({
             where: {
                 email: email,
                 password: password
             }
         })
-        if (data.length !== 0) {
-            // console.log(data[0].dataValues.uuid_user)
-            return data[0].dataValues.uuid_user
-        } else throw new Error("Invalid email or login")
     } catch (err) {
         console.log(err)
         throw err
@@ -65,22 +61,15 @@ exports.saveUser = async (email, password, first_name, last_name) => {
         })
     } catch (err) {
         console.log(err)
-
-        if (err.name === "SequelizeUniqueConstraintError")
-            throw new Error("Account with this email already exist")
-
         throw err
     }
 }
 
 exports.getUsers = async () => {
     try {
-        const data = await UserModel.findAll({
-            attributes: ["uuid_user","first_name", "last_name", "email", "id_role"]
+        return await UserModel.findAll({
+            attributes: ["uuid_user", "first_name", "last_name", "email", "password", "id_role"]
         })
-        if (data.length === 0)
-            throw new Error("No user found")
-        return data
     } catch (err) {
         console.log(err)
         throw err
@@ -89,15 +78,12 @@ exports.getUsers = async () => {
 
 exports.getUserByID = async (uuid) => {
     try {
-        const user = await UserModel.findAll({
-            attributes: ["uuid_user","first_name", "last_name", "email", "id_role"],
+        return await UserModel.findOne({
+            attributes: ["uuid_user", "first_name", "last_name", "email", "password", "id_role"],
             where: {
                 uuid_user: uuid
             }
         })
-        if (user.length === 0)
-            throw new Error("No user found")
-        else return user
     } catch (err) {
         console.log(err)
         throw err
