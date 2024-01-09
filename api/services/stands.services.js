@@ -160,30 +160,10 @@ exports.saveStand = async (id_location, id_provider, id_stand_type, name, descri
 }
 exports.getStandById = async (id) => {
     try {
-        const data = await StandsModel.findAll({
+        const data = await StandsModel.findOne({
             where: {
                 id_stand: id
-            },
-            include: [{
-                model: StandType,
-                as: "id_stand_type_stand_type"
-            }, {
-                model: ProductsModel,
-                as: "products"
-            }, {
-                model: StandImagesModel,
-                as: "stands_images"
-            }, {
-                model: ProvidersModel,
-                as: "id_provider_provider"
-            }, {
-                model: LocationsModel,
-                as: "id_location_location",
-                include: {
-                    model: LocationSizesModel,
-                    as: "id_location_size_location_size"
-                }
-            }]
+            }
         })
         if (data === 0)
             throw new Error("No stand found")
@@ -195,28 +175,7 @@ exports.getStandById = async (id) => {
 }
 exports.getStands = async () => {
     try {
-        const data = await StandsModel.findAll({
-            include: [{
-                model: StandType,
-                as: "id_stand_type_stand_type"
-            }, {
-                model: ProductsModel,
-                as: "products"
-            }, {
-                model: StandImagesModel,
-                as: "stands_images"
-            }, {
-                model: ProvidersModel,
-                as: "id_provider_provider"
-            }, {
-                model: LocationsModel,
-                as: "id_location_location",
-                include: {
-                    model: LocationSizesModel,
-                    as: "id_location_size_location_size"
-                }
-            }]
-        })
+        const data = await StandsModel.findAll()
         if (data === 0)
             throw new Error("No stand found")
         return data
