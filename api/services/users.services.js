@@ -1,5 +1,10 @@
 const {v4: uuid4} = require("uuid")
 const UserModel = require("../database/DB.connection").DB_models.users
+const CartLinesModel = require("../database/DB.connection").DB_models.cart_lines
+const ProductsModel = require("../database/DB.connection").DB_models.products
+const ProductStatesModel = require("../database/DB.connection").DB_models.product_states
+const {sequelize} = require('../database/DB.connection') 
+
 
 exports.deleteUserById = async (uuid) => {
     try {
@@ -100,6 +105,95 @@ exports.getUserByID = async (uuid) => {
         else return user
     } catch (err) {
         console.log(err)
+        throw err
+    }
+}
+
+exports.getCart = async (uuid) => {
+    try {
+        const cart = await CartLinesModel.findAll({
+            where: {
+                uuid_user: uuid
+            },
+            attributes: {
+                exclude: ['id_product', 'uuid_user']
+            },
+            include: {
+                model: ProductsModel, as: 'id_product_product',
+                attributes: {
+                    exclude: ['description_en', 'description_fr', 'id_product_state', 'id_product_type', 'quantity']
+                }
+            }
+        })
+        for (item of cart) {
+            item.dataValues.product = item.dataValues.id_product_product
+            delete item.dataValues.id_product_product            
+        }
+        return cart
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+}
+
+exports.addToCart = async (uuid, id_product, quantity) => {
+    const transac = await sequelize.transaction()
+    try {
+        let item = null
+        const itemAlreadyInCart = await CartLinesModel.findOne({
+            where: {
+                uuid_user: uuid,
+                id_product: id_product
+            },
+            include: {
+                model: ProductsModel, as: 'id_product_product'
+            }
+        })
+        if(itemAlreadyInCart) {
+            itemAlreadyInCart.dataValues.product = itemAlreadyInCart.dataValues.id_product_product
+            delete itemAlreadyInCart.dataValues.id_product_product
+        }
+        const product = await ProductsModel.findOne({
+            where: {
+                id_product: id_product
+            },
+            include: {
+                model: ProductStatesModel, as: 'id_product_state_product_state'
+            }
+        })
+        product.dataValues.product_state = product.dataValues.id_product_state_product_state
+        delete product.dataValues.id_product_state_product_state
+        console.log(product.dataValues.product_state)
+        if(product.dataValues.product_state.dataValues.state !== 'Available') {
+            throw new Error('Product not available')
+        } else if(product.dataValues.quantity < quantity) {
+            throw new Error('Not enough quantity remaining in stock')
+        }
+        if(itemAlreadyInCart) {
+            let new_quantity = quantity + itemAlreadyInCart.dataValues.quantity
+            item = await CartLinesModel.update({quantity: new_quantity}, {
+                where: {
+                    uuid_user: uuid,
+                    id_product: id_product
+                }
+            })
+        } else {
+            item = await CartLinesModel.create({
+                uuid_user: uuid,
+                id_product: id_product,
+                quantity: quantity
+            })
+        }
+        let new_quantity = product.dataValues.quantity - quantity
+        await ProductsModel.update({quantity: new_quantity}, {
+            where: {
+                id_product: id_product
+            }
+        })
+        transac.commit()
+    } catch (err) {
+        console.log(err)
+        transac.rollback()
         throw err
     }
 }

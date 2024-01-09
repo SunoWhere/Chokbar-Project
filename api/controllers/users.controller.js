@@ -71,3 +71,27 @@ exports.getUserByID = async (req, res) => {
         return res.status(500).send(err.message)
     }
 }
+
+exports.getCart = async (req, res) => {
+    try {
+        const user = await usersServices.getCart(
+            req.params.uuid
+        )
+        return res.status(200).send(user)
+    } catch (err) {
+        return res.status(500).send(err.message)
+    }
+}
+
+exports.addToCart = async (req, res) => {
+    try {
+        await usersServices.addToCart(
+            req.params.uuid,
+            req.body.id_product,
+            req.body.quantity
+        )
+        return res.status(200).send("Successfully added to cart")
+    } catch (err) {
+        return res.status(500).send(err.message)
+    }
+}

@@ -9,9 +9,11 @@ var router = express.Router()
 
 router.get("/", usersController.getUsers)
 router.get("/login", usersMiddleware.validateLoginInput, usersController.verifyLogin)
+router.get("/:uuid/cart", usersController.getCart)
 router.get("/:uuid", usersMiddleware.validateUuid, usersController.getUserByID)
 
 router.post("/", usersMiddleware.validateUserInput, usersController.saveUser)
+router.post("/:uuid/cart",  usersController.addToCart)
 
 router.put("/:uuid", usersMiddleware.validateUuid, usersMiddleware.validateUserInput, usersController.updateUserById)
 
