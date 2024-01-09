@@ -4,15 +4,13 @@ const LocationsModel = require("../database/DB.connection").DB_models.locations
 
 exports.getEvents = async () => {
     try {
-        const result = await EventsModel.findAll({
-        })
+        const result = await EventsModel.findAll({})
         return result
     } catch (err) {
         console.log(err)
         throw err
     }
 };
-
 
 exports.getEventByID = async (id) => {
     try {
