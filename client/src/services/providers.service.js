@@ -15,6 +15,8 @@ let addProvider = async (credentials) => {
         return await Axios.post('/api/providers/', {
             name: credentials.name,
             uuid_user: credentials.id,
+            description_fr: credentials.description_fr,
+            description_en: credentials.description_en
         });
     } catch (error) {
         throw new Error(error.response.data);
@@ -32,22 +34,31 @@ let removeProvider = async (id) => {
 
 let editProvider = async (credentials) => {
     try {
-        const route = '/api/users/' + credentials.id;
+        const route = '/api/providers/' + credentials.id;
         return await Axios.put(route, {
-            uuid: credentials.id,
-            email: credentials.email,
-            password: credentials.password,
-            first_name: credentials.first_name,
-            last_name: credentials.last_name
+            id: credentials.id,
+            name: credentials.name,
+            uuid_user: credentials.uuid_user,
+            description_fr: credentials.description_fr,
+            description_en: credentials.description_en
         });
     } catch (error) {
         throw new Error(error.response.data);
     }
 }
 
+let getProviderById = async (id) => {
+    try {
+        const res = await Axios.get('/api/providers/' + id);
+        return res.data;
+    } catch(error) {
+        throw new Error(error.response.data);
+    }
+}
 
 export const providersService = {
     getAllProvider,
+    getProviderById,
     addProvider,
     removeProvider,
     editProvider,

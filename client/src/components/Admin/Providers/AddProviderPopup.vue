@@ -15,30 +15,58 @@
         </div>
       </div>
       <div class="content">
-        <form action="/users/" method="POST" @submit.prevent="submitForm">
+        <form @submit.prevent="submitForm">
           <div class="form-main-content">
-            <label for="name">Nom Intervenant</label>
-            <input type="text" id="name" name="name" placeholder="Startup name" v-model="addProvider.name" required>
+            <!-- Nom Intervenant -->
+            <div>
+              <label for="name">Nom Intervenant</label>
+              <input type="text" id="name" name="name" placeholder="Startup name" v-model="addProvider.name" required>
+            </div>
 
-            <label for="firstname">Firstname</label>
-            <input type="text" id="firstname" name="firstname" placeholder="Firstname" v-model="addUser.first_name" required>
+            <!-- Descriptions côte à côte -->
+            <div class="descriptions">
+              <div>
+                <label for="story">Description française</label>
+                <textarea id="story" v-model="addProvider.description_fr" name="story" rows="5" cols="33" required>Decription française</textarea>
+              </div>
+              <div>
+                <label for="story">Description anglaise</label>
+                <textarea id="story" v-model="addProvider.description_en" name="story" rows="5" cols="33" required>Decription anglaise</textarea>
+              </div>
+            </div>
 
-            <label for="lastname">Lastname</label>
-            <input type="text" id="lastname" name="lastname" placeholder="Lastname" v-model="addUser.last_name" required>
+            <!-- Prénom et Nom côte à côte -->
+            <div class="name-fields">
+              <div>
+                <label for="firstname">Firstname</label>
+                <input type="text" id="firstname" name="firstname" placeholder="Firstname" v-model="addUser.first_name" required>
+              </div>
+              <div>
+                <label for="lastname">Lastname</label>
+                <input type="text" id="lastname" name="lastname" placeholder="Lastname" v-model="addUser.last_name" required>
+              </div>
+            </div>
 
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Email" v-model="addUser.email" required>
+            <!-- Autres champs -->
+            <div>
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="Email" v-model="addUser.email" required>
+            </div>
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Password" v-model="addUser.password" required>
+            <div>
+              <label for="password">Password</label>
+              <input type="password" id="password" name="password" placeholder="Password" v-model="addUser.password" required>
+            </div>
 
-            <label for="confirm-password">Confirm Password</label>
-            <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" v-model="addUser.confirmPassword" required>
+            <div>
+              <label for="confirm-password">Confirm Password</label>
+              <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" v-model="addUser.confirmPassword" required>
+            </div>
 
-            <p class="show-password">
+            <div class="show-password">
               <input type="checkbox" id="show-password" @click="toggleShowPassword">
               <label for="show-password">Show Password</label>
-            </p>
+            </div>
           </div>
 
           <div class="submit-btn">
@@ -66,7 +94,9 @@ export default {
       },
       addProvider: {
         name: '',
-        id: ''
+        id: '',
+        description_fr: '',
+        description_en: '',
       },
       passwordMatch: false,
       message: null
@@ -118,10 +148,14 @@ export default {
 
                     await this.$store.dispatch('updateProviderList');
                   })
+                  .catch(err => {
+                    console.error(err);
+                    this.message = err ? err : "Erreur lors de l'ajout intervenant.";
+                  });
             })
             .catch(err => {
               console.error(err);
-              this.message = err ? err : "Erreur lors de l'ajout.";
+              this.message = err ? err : "Erreur lors de l'ajout utilisateur.";
             });
       }
       else {
@@ -134,14 +168,28 @@ export default {
 </script>
 
 <style scoped>
+
+.show-password {
+  display: flex;
+  align-items: center;
+}
+
+.show-password input {
+  margin-right: 5px;
+}
+
+.show-password label {
+  margin-bottom: -2px;
+}
+
 .modal {
   position: absolute;
   align-self: center;
   border: 1px solid var(--background);
   background-color: var(--white);
   z-index: 999;
-  height: 620px;
-  width: 400px;
+  height: 800px;
+  width: 600px;
   top: 50%;
   left: 50%;
   transform: translate(-20%, -50%);
@@ -225,6 +273,24 @@ export default {
   width: 100%;
 }
 
+.form-main-content > div {
+  margin-bottom: 15px;
+}
+
+.descriptions {
+  display: flex;
+  gap: 20px;
+}
+
+textarea {
+  resize: none;
+}
+
+.name-fields {
+  display: flex;
+  gap: 20px;
+}
+
 form {
   width: 100%;
   display: flex;
@@ -233,7 +299,9 @@ form {
 }
 
 label {
+  display: block;
   margin-bottom: 5px;
+  margin-right: 5px;
 
   user-select: none;
   -webkit-touch-callout: none;
@@ -249,6 +317,7 @@ input[type="password"] {
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  width: 100%;
 }
 
 .show-password {

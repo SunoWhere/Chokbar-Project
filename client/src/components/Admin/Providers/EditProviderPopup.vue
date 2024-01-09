@@ -15,16 +15,26 @@
         </div>
       </div>
       <div class="content">
-        <form action="/users/" method="POST" @submit.prevent="submitForm">
+        <form @submit.prevent="submitForm">
           <div class="form-main-content">
+
+            <label for="name">Nom Intervenant</label>
+            <input type="text" id="name" name="name" placeholder="Startup name" v-model="$store.state.providerToEdit.visibleColumns.name" required>
+
+            <label for="story">Description française</label>
+            <textarea id="story" name="story" rows="5" cols="33"  v-model="$store.state.providerToEdit.description_fr" required>Decription française</textarea>
+
+            <label for="story">Description anglaise</label>
+            <textarea id="story" name="story" rows="5" cols="33" v-model="$store.state.providerToEdit.description_en" required>Decription anglaise</textarea>
+
             <label for="firstname">Firstname</label>
-            <input type="text" id="firstname" name="firstname" placeholder="Firstname" v-model="$store.state.userToEdit.visibleColumns[0]" required>
+            <input type="text" id="firstname" name="firstname" placeholder="Firstname" v-model="$store.state.userToEdit.first_name" required>
 
             <label for="lastname">Lastname</label>
-            <input type="text" id="lastname" name="lastname" placeholder="Lastname" v-model="$store.state.userToEdit.visibleColumns[1]" required>
+            <input type="text" id="lastname" name="lastname" placeholder="Lastname" v-model="$store.state.userToEdit.last_name" required>
 
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Email" v-model="$store.state.userToEdit.visibleColumns[2]" required>
+            <input type="email" id="email" name="email" placeholder="Email" v-model="$store.state.userToEdit.email" required>
 
             <label for="password">Password</label>
             <input type="password" id="password" name="password" placeholder="Password" v-model="editUser.password">
@@ -51,7 +61,7 @@
 
 <script>
 
-import {usersService} from "@/services";
+import {providersService, usersService} from "@/services";
 
 export default {
   name: 'EditProviderPopup',
@@ -65,12 +75,16 @@ export default {
         password: '',
         confirmPassword: ''
       },
+      editProvider: {
+        id: '',
+        name: '',
+        uuid_user: '',
+        description_fr: '',
+        description_en: ''
+      },
       passwordMatch: false,
       message: null,
     }
-  },
-  created() {
-
   },
   props: {
     typeTitle: {
@@ -85,7 +99,7 @@ export default {
   },
   methods: {
     closePopup() {
-      this.$store.commit("setShowEditUserPopup", false);
+      this.$store.commit("setShowEditProviderPopup", false);
     },
     toggleShowPassword() {
       const passwordInput = document.getElementById("password");
@@ -103,10 +117,16 @@ export default {
       }
     },
     submitForm() {
+      this.editProvider.id = this.$store.state.providerToEdit.visibleColumns.id;
+      this.editProvider.name = this.$store.state.providerToEdit.visibleColumns.name;
+      this.editProvider.uuid_user = this.$store.state.providerToEdit.uuid_user;
+      this.editProvider.description_fr = this.$store.state.providerToEdit.description_fr;
+      this.editProvider.description_en = this.$store.state.providerToEdit.description_en;
+
       this.editUser.id = this.$store.state.userToEdit.uuid_user;
-      this.editUser.first_name = this.$store.state.userToEdit.visibleColumns[0];
-      this.editUser.last_name = this.$store.state.userToEdit.visibleColumns[1];
-      this.editUser.email = this.$store.state.userToEdit.visibleColumns[2];
+      this.editUser.first_name = this.$store.state.userToEdit.first_name;
+      this.editUser.last_name = this.$store.state.userToEdit.last_name;
+      this.editUser.email = this.$store.state.userToEdit.email;
 
       if (this.editUser.password === this.editUser.confirmPassword) {
         if(this.editUser.password == null || this.editUser.password === '') {
@@ -118,10 +138,18 @@ export default {
         usersService.editUser(this.editUser)
             .then(async res => {
               this.message = res.data;
-              this.closePopup();
 
+              await providersService.editProvider(this.editProvider)
+                  .then(async res => {
+                    this.message = res.data;
+                    this.closePopup();
+                  })
+                  .catch(err => {
+                    console.error(err);
+                    this.message = err ? err : "Erreur lors de l'edit.";
+                  });
               const updatedUserList = await usersService.getAllUser();
-              await this.$store.dispatch('updateUserList', updatedUserList);
+              await this.$store.dispatch('updateProviderList', updatedUserList);
             })
             .catch(err => {
               console.error(err);
@@ -302,6 +330,10 @@ button:hover {
 }
 .close-container:hover .rightleft {
   transform: rotate(45deg);
+}
+
+textarea {
+  resize: none;
 }
 
 </style>

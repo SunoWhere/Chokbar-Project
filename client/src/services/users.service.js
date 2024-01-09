@@ -47,6 +47,15 @@ let getAllUser = async () => {
     }
 }
 
+let getUserById = async (id) => {
+    try {
+        const res = await Axios.get('/api/users/' + id);
+        return res.data;
+    } catch(error) {
+        throw new Error(error.response.data);
+    }
+}
+
 let removeUser = async (id) => {
     try {
         const route = '/api/users/' + id;
@@ -111,4 +120,5 @@ export const usersService = {
     addUser,
     removeUser,
     editUser,
+    getUserById,
 }

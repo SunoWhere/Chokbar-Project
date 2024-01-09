@@ -1,5 +1,7 @@
 <script>
 
+import {usersService} from "@/services";
+
 export default {
   name: 'ProvidersCrudTable',
   components: {
@@ -24,10 +26,16 @@ export default {
   },
   computed: {
     processedProviders() {
-      return this.providers.map(provider => ({
-        id: provider[0],
-        name: provider[1],
-        email: provider[2],
+      console.log(this.providers)
+      return this.providers.map(provider =>({
+        visibleColumns: {
+          id: provider[0],
+          name: provider[1],
+          mail: provider[2]
+        },
+        uuid_user: provider[3],
+        description_en: provider[5],
+        description_fr: provider[4]
       }));
     }
   },
@@ -35,17 +43,23 @@ export default {
     openNewClientOrNotPopup() {
       this.$store.commit("setShowNewClientOrNotPopup", true);
     },
-    closeAddPopup() {
-      this.$store.commit("setShowAddUserPopup", false);
-    },
     openRemovePopup(id) {
       this.$store.commit("setProviderIdToRemove", id);
       this.$store.commit("setShowRemoveProviderPopup", true);
     },
     openEditPopup(provider) {
-      this.$store.commit("setProviderToEdit", provider);
-      this.$store.commit("setShowEditProviderPopup", true);
-    },
+      try {
+        this.$store.commit("setProviderToEdit", provider);
+
+        (async () => {
+          const client = await usersService.getUserById(provider.uuid_user);
+          this.$store.commit("setUserToEdit", client);
+          this.$store.commit("setShowEditProviderPopup", true);
+        })();
+      } catch (error) {
+        console.error("Une erreur s'est produite :", error);
+      }
+    }
   },
 };
 </script>
@@ -64,11 +78,11 @@ export default {
           <tfoot></tfoot>
           <tbody>
           <tr v-for="(item, index) in processedProviders" :key="index">
-            <td v-for="(value, columnIndex) in item" :key="columnIndex">{{ value }}</td>
+            <td v-for="(value, columnIndex) in item.visibleColumns" :key="columnIndex">{{ value }}</td>
             <td>
               <form>
                 <button class="edit-button" @click.prevent="openEditPopup(item)">Editer</button>
-                <button class="delete-button" @click.prevent="openRemovePopup(item.id)" >Supprimer</button>
+                <button class="delete-button" @click.prevent="openRemovePopup(item.visibleColumns.id)" >Supprimer</button>
               </form>
             </td>
           </tr>
@@ -136,7 +150,6 @@ thead{
   border-radius: 5px;
 }
 
-
 .add-button{
   width: 100px;
   height: 40px;
@@ -199,6 +212,6 @@ thead{
 }
 
 .delete-button:hover{
-  background-color: #D20000FF;
+  background-color: #a80000;
 }
 </style>

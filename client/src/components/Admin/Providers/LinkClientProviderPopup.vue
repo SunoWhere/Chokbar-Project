@@ -20,6 +20,12 @@
             <label for="name">Nom Intervenant</label>
             <input type="text" id="name" name="name" placeholder="Startup name" v-model="addProvider.name" required>
 
+            <label for="desc-fr">Description française</label>
+            <textarea id="story" v-model="addProvider.description_fr" name="desc-fr" rows="5" cols="33" required>Decription française</textarea>
+
+            <label for="story">Description anglaise</label>
+            <textarea id="desc-en" v-model="addProvider.description_en" name="desc-en" rows="5" cols="33" required>Decription anglaise</textarea>
+
             <label for="userId">Sélectionner un utilisateur</label>
             <select v-model="addProvider.id" id="userId" name="userId" required>
               <option v-for="user in users" :key="user[0]" :value="user[0]">{{ user[2] }} {{ user[3] }}</option>
@@ -51,7 +57,9 @@ export default {
       },
       addProvider: {
         name: '',
-        id: ''
+        id: '',
+        description_fr: '',
+        description_en: '',
       },
       passwordMatch: false,
       message: null
@@ -106,7 +114,7 @@ export default {
   border: 1px solid var(--background);
   background-color: var(--white);
   z-index: 999;
-  height: 350px;
+  height: 500px;
   width: 400px;
   top: 50%;
   left: 50%;
@@ -256,5 +264,9 @@ button:hover {
   justify-content: center;
   align-items: center;
   margin: 0 10px 20px 10px;
+}
+
+textarea {
+  resize: none;
 }
 </style>

@@ -1,20 +1,22 @@
 <script>
 import SideBar from "@/components/Global/SideBar.vue";
 import ProvidersCrudTable from "@/components/Admin/Providers/ProvidersCrudTable.vue";
-import {usersService, providersService} from "@/services";
+import {usersService, providersService, standsService} from "@/services";
 import EditProviderPopup from "@/components/Admin/Providers/EditProviderPopup.vue";
 import AddProviderPopup from "@/components/Admin/Providers/AddProviderPopup.vue";
 import NewClientOrNotPopup from "@/components/Admin/Providers/NewClientOrNotPopup.vue";
 import LinkClientProviderPopup from "@/components/Admin/Providers/LinkClientProviderPopup.vue";
 import RemoveProviderPopup from "@/components/Admin/Providers/RemoveProviderPopup.vue";
+import LinkedStandsPopup from "@/components/Admin/Providers/DeleteLinkedStandsPopup.vue";
 
 export default {
   name: 'CrudProvidersView',
-  data () {
+  data() {
     return {
       tableColumns: ["Id", "Nom", "Mail"],
       users: [],
       providers: [],
+      providerStands: [],
     }
   },
   created() {
@@ -30,13 +32,20 @@ export default {
 
     this.$store.watch(
         () => this.$store.getters.getProviderList,
-        providerList => {
-          console.log('Provider List:', providerList);
-          this.providers = providerList.map(provider => [provider.id_provider, provider.name, provider.uuid_user_user.email]);
+        async (providerList) => {
+          await (async () => {
+            this.providers = await Promise.all(
+                providerList.map(async (provider) => {
+                  const userData = await usersService.getUserById(provider.uuid_user);
+                  return [provider.id_provider, provider.name, userData.email, provider.uuid_user, provider.description_fr, provider.description_en];
+                })
+            );
+          })();
         }
     );
   },
   components: {
+    LinkedStandsPopup,
     RemoveProviderPopup,
     NewClientOrNotPopup,
     AddProviderPopup,
@@ -62,10 +71,23 @@ export default {
     async allProviders() {
       try {
         const res = await providersService.getAllProvider();
-        this.providers = res.data.map(provider => [provider.id_provider, provider.name, provider.uuid_user_user.email]);
+
+        this.providers = await Promise.all(
+            res.data.map(async (provider) => {
+              const userData = await usersService.getUserById(provider.uuid_user);
+              return [provider.id_provider, provider.name, userData.email, provider.uuid_user, provider.description_fr, provider.description_en, provider.stand_ids];
+            })
+        );
       } catch (error) {
-        console.log(error);
+        if (error.message.includes("500")) {
+          await this.$store.dispatch('updateProviderList', []);
+        }
+        console.log(this.providers)
+        console.error(error)
       }
+    },
+    updateStandsList(updatedStandsList) {
+      this.providerStands = updatedStandsList;
     },
     getRoleLabel(idRole) {
       switch (idRole) {
@@ -81,10 +103,24 @@ export default {
     },
     async removeProvider() {
       const providerId = this.$store.state.providerIdToRemove;
+      const pr = await providersService.getProviderById(providerId);
+      this.providerStands = [];
       try {
-        await providersService.removeProvider(providerId);
+        if (pr.stand_ids.length > 0) {
+          for (const standId of pr.stand_ids) {
+            const stand = await standsService.getStandById(standId);
+            this.providerStands.push({ id: standId, name: stand.name });
+          }
+
+          this.openRemoveStandsPopup();
+        } else {
+          await providersService.removeProvider(providerId);
+        }
         await this.$store.dispatch('updateProviderList', await providersService.getAllProvider());
       } catch (error) {
+        if (error.message.includes("No provider found")) {
+          this.providers = [];
+        }
         console.error(error);
       }
     },
@@ -94,6 +130,9 @@ export default {
     openSyncPopup() {
       this.$store.commit("setShowLinkClientProviderPopup", true);
     },
+    openRemoveStandsPopup() {
+      this.$store.commit("setShowLinkedStandsPopup", true);
+    }
   },
   computed: {
     isConnected() {
@@ -128,15 +167,16 @@ export default {
     <div id="dc" v-if="isConnected && getRole === 'admin'">
       <ProvidersCrudTable :column-names="tableColumns" :providers="providersList" :usersProviders="usersProviderList"/>
     </div>
-    <NewClientOrNotPopup :typeTitle="'Intervenants'" @new-client="openAddPopup" @sync-client-provider="openSyncPopup" />
+    <NewClientOrNotPopup :typeTitle="'Intervenants'" @new-client="openAddPopup" @sync-client-provider="openSyncPopup"/>
     <AddProviderPopup :typeTitle="'Intervenants'"/>
     <EditProviderPopup :typeTitle="'Intervenants'"/>
-    <RemoveProviderPopup type-title="'Intervenants" @confirmed-deletion="removeProvider"/>
+    <RemoveProviderPopup type-title="Intervenants" @confirmed-deletion="removeProvider"/>
     <LinkClientProviderPopup :typeTitle="'Intervenants'" :users="usersClientList"/>
+    <LinkedStandsPopup :type-title="'Intervenants'" :standsList="providerStands" @updateStandsList="updateStandsList"  @standsConfirmed="removeProvider"/>
   </div>
 </template>
 
-<style >
+<style>
 
 .dashboard-container {
   height: 100vh;

@@ -32,6 +32,7 @@ export default new Vuex.Store({
     showLinkClientProviderPopup: false,
     showRemoveProviderPopup: false,
     showEditProviderPopup: false,
+    showLinkedStandsPopup: false,
 
     standToEdit: null,
     showEditStandPopup: false,
@@ -112,6 +113,9 @@ export default new Vuex.Store({
     },
     setProviderToEdit(state, provider) {
       state.providerToEdit = provider;
+    },
+    setShowLinkedStandsPopup(state, value) {
+      state.showLinkedStandsPopup = value;
     },
 
     // Stands

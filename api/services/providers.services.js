@@ -137,7 +137,7 @@ exports.updateProviderById = async (id, name, uuid_user, description_en, descrip
         throw err
     }
 }
-exports.saveProvider = async (name, uuid_user, description_en, description_fr) => {
+exports.saveProvider = async (name, uuid_user, description_fr, description_en) => {
     try {
         const user = await UsersModel.findOne({where: {uuid_user: uuid_user}});
         if (!user) {
