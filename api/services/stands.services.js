@@ -71,7 +71,7 @@ exports.getProductsByStandId = async (id) => {
                 id_stand: id
             },
             include: [{
-                model: ProductsImagesModel, as: 'id_image_images_products_images'
+                model: ProductsImagesModel, as: 'products_images'
             }]
         })
         if (res.length === 0)
