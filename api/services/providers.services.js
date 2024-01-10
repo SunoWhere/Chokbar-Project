@@ -240,7 +240,7 @@ exports.getProviders = async () => {
     }
 }
 
-exports.validateOrder = async (id_order) => {
+exports.validateOrder = async (id_provider, id_order) => {
     const order = await OrdersModel.findOne({
         where: {
             id_order: id_order
@@ -249,6 +249,16 @@ exports.validateOrder = async (id_order) => {
     if(!order) {
         throw new CustomError("No order found", 404)
     }
+    const stand_id = order.dataValues.id_stand
+    const stand = await StandsModel.findOne({
+        where: {
+            id_stand: stand_id
+        }
+    })
+    const provider_id = stand.dataValues.id_provider
+    if(provider_id !== id_provider) {
+        throw new CustomError('Unauthorized validation, wrong provider', 403)
+    }
     const states = await OrderStatesModel.findAll()
     let state = states.find((s) => s.dataValues.id_order_state == order.dataValues.id_order_state)
     if(state.dataValues.state !== 'Waiting') {
@@ -256,7 +266,6 @@ exports.validateOrder = async (id_order) => {
     }
     state = states.find((s) => s.dataValues.state === 'Validated')
     new_state_id = state.dataValues.id_order_state
-    console.log(new_state_id, id_order)
     await OrdersModel.update({id_order_state: new_state_id}, {
         where: {
             id_order: id_order
@@ -264,6 +273,37 @@ exports.validateOrder = async (id_order) => {
     })
 }
 
-exports.completeOrder = async (hash) => {
-    
+exports.completeOrder = async (id_provider, hash) => {
+    const order = await OrdersModel.findOne({
+        where: {
+            hash: hash
+        }
+    })
+    if(!order) {
+        throw new CustomError("No order found", 404)
+    }
+    const stand_id = order.dataValues.id_stand
+    const stand = await StandsModel.findOne({
+        where: {
+            id_stand: stand_id
+        }
+    })
+    const provider_id = stand.dataValues.id_provider
+    if(provider_id !== id_provider) {
+        throw new CustomError('Unauthorized validation, wrong provider', 403)
+    }
+    const states = await OrderStatesModel.findAll()
+    let state = states.find((s) => s.dataValues.id_order_state == order.dataValues.id_order_state)
+    if(state.dataValues.state == 'Completed') {
+        throw new CustomError('Order has already been completed', 400)
+    } else if (state.dataValues.state == 'Waiting') {
+        throw new CustomError('Order has not been validated yet', 400)
+    }
+    state = states.find((s) => s.dataValues.state === 'Completed')
+    new_state_id = state.dataValues.id_order_state
+    await OrdersModel.update({id_order_state: new_state_id}, {
+        where: {
+            id_order: id_order
+        }
+    })
 }
