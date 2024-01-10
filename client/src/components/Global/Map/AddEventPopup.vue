@@ -31,6 +31,9 @@
             timestamp: "2024-05-25"
           }
         ],
+        selectedDay: null,
+        startingTime: null,
+        finishingTime: null,
         addEvent: {
           name: "",
           max_capacity: null,
@@ -47,6 +50,10 @@
       closeAddEventPopup() {
         this.$store.commit("setShowAddEvent", false);
       },
+      concatTimestamp() {
+        this.addEvent.starting_time = `${this.selectedDay.timestamp}T${this.startingTime}:00.000Z`;
+        this.addEvent.finishing_time = `${this.selectedDay.timestamp}T${this.finishingTime}:00.000Z`;
+      },
 
       async getLocations() {
         try {
@@ -57,16 +64,22 @@
         }
       },
       submitForm() {
-        eventsService.addEvent(this.addEvent)
-            .then(async () => {
-              this.closeAddEventPopup();
+        if(this.selectedDay && this.startingTime && this.finishingTime) {
+          eventsService.addEvent(this.addEvent)
+              .then(async res => {
+                this.errMessage = res.data;
+                this.closeAddEventPopup();
 
-              const updatedEventList = await eventsService.getEvents();
-              await this.$store.dispatch('updateEventList', updatedEventList);
-            })
-            .catch(err => {
-              console.log(err);
-            });
+                const updatedEventList = await eventsService.getEvents();
+                await this.$store.dispatch('updateEventList', updatedEventList);
+              })
+              .catch(err => {
+                this.errMessage = err;
+                console.log(err);
+              });
+        } else {
+          this.errMessage = "Il manque des infos chef";
+        }
       }
     },
     created() {
@@ -88,35 +101,41 @@
 
      <form class="add-form" action="/api/events" method="post" @submit.prevent="submitForm">
 
-       // TODO: fini ça enculé
-
        <div class="item-group">
-         <label for="name">Nom</label>
-         <input id="name" type="text" v-model="addEvent.name">
+         <div class="group">
+           <label for="name">Nom</label>
+           <input id="name" type="text" v-model="addEvent.name" required>
+         </div>
 
-         <label for="max-capacity">Capacité</label>
-         <input id="max-capacity" type="number" v-model="addEvent.max_capacity">
+         <div class="group">
+           <label for="max-capacity">Capacité</label>
+           <input id="max-capacity" type="number" v-model="addEvent.max_capacity" required>
+         </div>
        </div>
 
        <div class="item-group">
-         <label for="description">Description FR</label>
-         <textarea id="description" cols="30" rows="10" v-model="addEvent.description_fr"></textarea>
+         <div class="group">
+           <label for="description">Description FR</label>
+           <textarea id="description" cols="30" rows="10" v-model="addEvent.description_fr" required></textarea>
+         </div>
 
-         <label for="description">Description EN</label>
-         <textarea id="description" cols="30" rows="10" v-model="addEvent.description_en"></textarea>
+         <div class="group">
+           <label for="description">Description EN</label>
+           <textarea id="description" cols="30" rows="10" v-model="addEvent.description_en" required></textarea>
+         </div>
        </div>
 
        <div class="item-group">
          <div class="group">
            <label for="jour">Jour</label>
-           <select id="jour">
-             <option v-for="(day, id_day) in days" :key="id_day" :value="id_day">{{ day.name }}</option>
+           <select id="jour" v-model="selectedDay" @change="concatTimestamp" required>
+             <option v-for="(day, id_day) in days" :key="id_day" :value="day">{{ day.name }}</option>
            </select>
          </div>
 
          <div class="group">
            <label for="location">Emplacement</label>
-           <select id="location" v-model="addEvent.id_location">
+           <select id="location" v-model="addEvent.id_location" required>
              <option v-for="(location, id_location) in locations" :key="id_location" :value="id_location">{{ location.code }}</option>
            </select>
          </div>
@@ -125,12 +144,12 @@
        <div class="item-group">
          <div class="group">
            <label for="starting-time">Heure de Début</label>
-           <input id="starting-time" type="time" v-model="addEvent.starting_time">
+           <input id="starting-time" type="time" v-model="startingTime" @change="concatTimestamp" required>
          </div>
 
          <div class="group">
            <label for="finishing-time">Heure de Fin</label>
-           <input id="finishing-time" type="time" v-model="addEvent.finishing_time">
+           <input id="finishing-time" type="time" v-model="finishingTime" @change="concatTimestamp" required>
          </div>
        </div>
 
@@ -154,7 +173,7 @@
 .content {
   position: absolute;
   height: fit-content;
-  width: 30%;
+  width: 50%;
   border: 2px solid var(--scnd3);
   background-color: var(--background);
   box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
@@ -173,12 +192,18 @@
 }
 
 .err-msg {
-
+  color: white;
+  padding: 7px;
+  margin: 15px auto;
+  width: 80%;
+  background-color: var(--scnd2);
+  box-shadow: 0 0 10px var(--scnd2);
+  border-radius: 13px;
 }
 
 .add-form {
   display: flex;
-  width: 60%;
+  width: fit-content;
   height: fit-content;
   flex-direction: column;
   margin: 20px auto auto;
@@ -187,6 +212,12 @@
 .item-group {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+}
+
+.group {
+  width: 100%;
+  margin: 0 10px;
 }
 
 label {
@@ -216,7 +247,7 @@ textarea {
   color: white;
   font-size: 1.1em;
   padding: 10px;
-  width: 50%;
+  width: 30%;
   border-radius: 13px;
   transition: all 0.3s ease;
 }

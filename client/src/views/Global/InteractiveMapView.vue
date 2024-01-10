@@ -18,12 +18,48 @@ export default {
       events: [],
 
       selectedBoothId: null,
-      days: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"],
+      days: [
+        {
+          name: "Lundi",
+          timestamp: "2024-05-20"
+        },
+        {
+          name: "Mardi",
+          timestamp: "2024-05-21"
+        },
+        {
+          name: "Mercredi",
+          timestamp: "2024-05-22"
+        },
+        {
+          name: "Jeudi",
+          timestamp: "2024-05-23"
+        },
+        {
+          name: "Vendredi",
+          timestamp: "2024-05-24"
+        },
+        {
+          name: "Samedi",
+          timestamp: "2024-05-25"
+        }
+      ],
       selectedDayId: 0,
-      selectedDayString: "Lundi",
-
       selectedEvent: null,
     }
+  },
+  computed: {
+    filterEventsByDay() {
+      const selectedDayTimestamp = moment(this.days[this.selectedDayId].timestamp).format('YYYY-MM-DD');
+
+      let filteredEvents = [];
+      filteredEvents = this.events.filter(event => {
+        const eventDate = moment(event.starting_time).format('YYYY-MM-DD');
+        return eventDate === selectedDayTimestamp;
+      });
+
+      return filteredEvents;
+    },
   },
   methods: {
     openTooltip(e) {
@@ -38,14 +74,12 @@ export default {
       this.$store.commit("setShowAddEvent", true);
     },
     nextDay() {
-      if(this.selectedDayId === 4) return;
+      if(this.selectedDayId === this.days.length-1) return;
       this.selectedDayId++;
-      this.selectedDayString = this.days[this.selectedDayId];
     },
     previousDay() {
       if(this.selectedDayId === 0) return;
       this.selectedDayId--;
-      this.selectedDayString = this.days[this.selectedDayId];
     },
     moment(date) {
       moment.locale("fr");
@@ -96,11 +130,12 @@ export default {
       <ul class="timetable">
         <li class="table-head">
           <button class="day-selector" id="previous-day" @click="previousDay"><font-awesome-icon icon="fa-solid fa-chevron-left" /></button>
-          <span id="day-string">{{ this.selectedDayString }}</span>
+          <span id="day-string">{{ this.days[selectedDayId].name }}</span>
           <button class="day-selector" id="next-day" @click="nextDay"><font-awesome-icon icon="fa-solid fa-chevron-right" /></button>
         </li>
 
-        <li class="table-event hover-effect" v-for="(event, id_event) in events" :key="id_event" @click="openPlanningInfo(id_event)">
+        <!-- TODO: voir pourquoi les heures prennent un +2 dans la gueule -->
+        <li class="table-event hover-effect" v-for="(event, id_event) in filterEventsByDay" :key="id_event" @click="openPlanningInfo(event.id_event)">
           <span class="event-name">{{ event.name }}</span>
           <span class="event-time">{{ moment(event.starting_time) }} - {{ moment(event.finishing_time) }}</span>
         </li>
