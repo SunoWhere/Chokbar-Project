@@ -80,7 +80,7 @@ exports.getUserByID = async (req, res) => {
         const user = await usersServices.getUserByID(
             req.params.uuid
         )
-        if (user.length === 0)
+        if (!user)
             return res.status(404).send("User not found.")
         else
             return res.status(200).send(user)
@@ -106,12 +106,17 @@ exports.getUserRole = async (req, res) => {
             req.params.uuid
         )
         let role_name;
-        if(role === 3) {
+        if (role === 3) {
             role_name = 'admin';
         } else if (role === 2) {
             role_name = 'provider';
         } else role_name = 'user';
         return res.status(200).send(role_name)
+    } catch (err) {
+        return res.status(500).send(err.message)
+    }
+}
+
 exports.addToCart = async (req, res) => {
     try {
         await usersServices.addToCart(
@@ -125,7 +130,7 @@ exports.addToCart = async (req, res) => {
     }
 }
 
-exports.deleteItemFromCart = async(req, res) => {
+exports.deleteItemFromCart = async (req, res) => {
     try {
         await usersServices.deleteItemFromCart(
             req.params.uuid,
@@ -137,7 +142,7 @@ exports.deleteItemFromCart = async(req, res) => {
     }
 }
 
-exports.clearCart = async(req, res) => {
+exports.clearCart = async (req, res) => {
     try {
         await usersServices.clearCart(
             req.params.uuid
