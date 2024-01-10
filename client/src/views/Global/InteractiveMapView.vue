@@ -123,7 +123,7 @@ export default {
 
 <template>
   <div class="container">
-    <PlanningInfo v-if="this.$store.getters.getShowPlanningInfo" :event="selectedEvent[0]"/>
+    <PlanningInfo v-if="this.$store.getters.getShowPlanningInfo" :event="selectedEvent"/>
     <AddEventPopup v-if="this.$store.getters.getShowAddEvent"/>
     <MapTooltip v-if="this.$store.getters.getShowMapTooltip" :booth-id="selectedBoothId"/>
     <div class="planning-container">
