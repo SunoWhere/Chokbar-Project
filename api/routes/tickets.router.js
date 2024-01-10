@@ -12,6 +12,7 @@ router.get("/:id", ticketsController.getTicketById)
 router.post("/", ticketsController.saveTicket)
 
 router.put("/validate/:hash", ticketsController.validateTicketByHash)
+
 router.put("/:id", ticketsController.updateTicketById)
 
 module.exports = router

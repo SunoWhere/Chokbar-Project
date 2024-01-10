@@ -246,7 +246,9 @@ router.put("/:uuid", usersMiddleware.validateUuid, usersMiddleware.validateUserI
  *               example: Internal Server Error
  */
 router.delete("/:uuid", usersMiddleware.validateUuid, usersController.deleteUserById)
+
 router.delete("/:uuid/cart", usersMiddleware.validateUuid, usersController.clearCart)
+
 router.delete("/:uuid/cart/:id_product", usersMiddleware.validateUuid, usersMiddleware.validateProductId, usersController.deleteItemFromCart)
 
 

@@ -4,6 +4,7 @@ const productsMiddleware = require("../middlewares/products.middleware")
 var router = express.Router()
 
 router.get("/product_types/", productsController.getProductTypes)
+
 router.get("/:id_product", productsMiddleware.validateProductId, productsController.getProductById)
 
 router.post("/", productsController.saveProduct)
