@@ -6,6 +6,8 @@ var router = express.Router()
 
 // TODO ajouter des lien API vers les images dans la réponse
 router.get("/", standsController.getStands)
+// TODO ajout get product types
+router.get("/product_types/", standsController.getProductTypes)
 router.get("/:id", standsMiddleware.validateId, standsController.getStandById)
 
 router.post("/", standsMiddleware.validateStandInput, standsController.saveStand)
@@ -13,8 +15,6 @@ router.post("/", standsMiddleware.validateStandInput, standsController.saveStand
 router.put("/:id", standsMiddleware.validateId, standsMiddleware.validateStandInput, standsController.updateStandById)
 
 router.delete("/:id",standsMiddleware.validateId, standsController.deleteStandById)
-
-// TODO products CRUD
 
 // TODO ajouter une route pour les product type
 router.get("/:id/products/", standsMiddleware.validateId, standsController.getProductsByStandId)

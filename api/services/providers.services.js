@@ -1,4 +1,5 @@
 const imagesServices = require("./images.services");
+const CustomError = require("../utils/CustomError");
 const sequelize = require("../database/DB.connection").sequelize
 const ProvidersModel = require("../database/DB.connection").DB_models.providers
 const ProvidersImagesModel = require("../database/DB.connection").DB_models.providers_images
@@ -18,23 +19,23 @@ exports.deleteImageByProviderId = async (id_provider, id_image) => {
     try {
         const provider = await ProvidersModel.findOne({where: {id_provider: id}})
         if (!provider) {
-            throw new Error("Provider not found")
+            throw new CustomError("Provider not found.", 404)
         }
 
         const image = ImagesModel.findOne({where: {id_image: id_image}})
         if (!image) {
-            throw new Error("Image not found")
+            throw new CustomError("Image not found.", 404)
         }
 
         const provider_image = ProvidersImagesModel.findOne({where: {id_image: id_image, id_provider: id_provider}})
         if (!provider_image) {
-            throw new Error("Provider image not found")
+            throw new CustomError("Provider image not found.", 404)
         }
 
         await provider_image.destroy()
     } catch (err) {
         console.log(err)
-        throw err
+        throw new CustomError(err.message, 500)
     }
 };
 exports.saveImageByProviderId = async (id, image_file) => {
@@ -45,14 +46,17 @@ exports.saveImageByProviderId = async (id, image_file) => {
         )
     } catch (err) {
         console.log(err)
-        throw err
+        if (err instanceof CustomError)
+            throw err
+        else
+            throw new CustomError(err.message, 500)
     }
 
     try {
         const provider = await ProvidersModel.findOne({where: {id_provider: id_provider}})
         if (!provider) {
             imagesServices.deleteImage(image.id_image)
-            throw new Error("Provider not found")
+            throw new CustomError("Provider not found.", 404)
         }
 
         const provider_image = ProvidersImagesModel.create({
@@ -62,7 +66,7 @@ exports.saveImageByProviderId = async (id, image_file) => {
 
         if (!provider_image) {
             imagesServices.deleteImage(image.id_image)
-            throw new Error("Provider not found")
+            throw new CustomError("Provider not found.", 404)
         }
 
         return image
@@ -76,7 +80,7 @@ exports.deleteProviderById = async (id) => {
         const provider = await ProvidersModel.findOne({where: {id_provider: id}})
 
         if (!provider) {
-            throw new Error("Provider not found")
+            throw new CustomError("Provider not found.", 404)
         }
 
         const user = await UsersModel.findOne({where: {uuid_user: provider.uuid_user}})
@@ -89,7 +93,7 @@ exports.deleteProviderById = async (id) => {
             }
         })
         if (!role) {
-            throw new Error("Could find Role User to update the User's role.");
+            throw new CustomError("Could not update the user's role.", 500);
         }
 
         await user.update({
@@ -97,14 +101,14 @@ exports.deleteProviderById = async (id) => {
         })
     } catch (err) {
         console.log(err)
-        throw err
+        throw new CustomError(err.message, 500)
     }
 }
 exports.updateProviderById = async (id, name, uuid_user, description_en, description_fr) => {
     try {
         const provider = await ProvidersModel.findOne({where: {id_provider: id}})
         if (!provider) {
-            throw new Error("Provider not found")
+            throw new CustomError("Provider not found.", 404)
         }
         console.log(provider)
         if (uuid_user !== provider.uuid_user) {
@@ -134,14 +138,14 @@ exports.updateProviderById = async (id, name, uuid_user, description_en, descrip
         })
     } catch (err) {
         console.log(err)
-        throw err
+        throw new CustomError(err.message, 500)
     }
 }
 exports.saveProvider = async (name, uuid_user, description_fr, description_en) => {
     try {
         const user = await UsersModel.findOne({where: {uuid_user: uuid_user}});
         if (!user) {
-            throw new Error("User not existing.");
+            throw new CustomError("User not found.", 404);
         }
 
         const provider = await ProvidersModel.create({
@@ -153,7 +157,7 @@ exports.saveProvider = async (name, uuid_user, description_fr, description_en) =
 
         const role = await RolesModel.findOne({attributes: ["id_role"], where: {name: "provider"}});
         if (!role) {
-            throw new Error("Could find Role provider to update the User's role.");
+            throw new CustomError("Could not update the user's role.", 500);
         }
 
         await user.update({id_role: role.id_role});
@@ -161,9 +165,9 @@ exports.saveProvider = async (name, uuid_user, description_fr, description_en) =
         return provider
     } catch (error) {
         if (error.name === "SequelizeUniqueConstraintError")
-            throw new Error("Duplicate Provider on one user.")
+            throw new CustomError("Duplicate Provider on one user.", 409)
         console.log(error);
-        throw error;
+        throw new CustomError(err.message, 500);
     }
 }
 
@@ -180,7 +184,7 @@ exports.getProviderById = async (id) => {
                 id_provider: id
             }
         })
-        if (provider.length === 0) throw new Error("No provider found")
+        if (provider.length === 0) throw new CustomError("No provider found.", 404)
 
         const {id_image_images_providers_images, stands, ...providerData} = provider.toJSON();
 
@@ -196,7 +200,7 @@ exports.getProviderById = async (id) => {
         };
     } catch (err) {
         console.log(err)
-        throw err
+        throw new CustomError(err.message, 500)
     }
 }
 exports.getProviders = async () => {
@@ -210,7 +214,7 @@ exports.getProviders = async () => {
             }]
         })
         if (providers.length === 0)
-            throw new Error("No provider found")
+            throw new CustomError("Provider not found", 404)
 
         return providers.map(provider => {
             // Extract the provider data and stands into separate variables
@@ -230,6 +234,6 @@ exports.getProviders = async () => {
         });
     } catch (err) {
         console.log(err)
-        throw err
+        throw new CustomError(err.message, 500)
     }
 }

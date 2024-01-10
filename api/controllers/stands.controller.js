@@ -1,5 +1,12 @@
 const standsServices = require("../services/stands.services")
 
+exports.getProductTypes = async (req, res) => {
+    try {
+        return await standsServices.getProductTypes()
+    } catch (err) {
+        return res.status(500).send(err.message)
+    }
+};
 exports.deleteProductById = async (req, res) => {
     try {
         await standsServices.deleteProductById(

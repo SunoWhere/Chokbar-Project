@@ -63,7 +63,13 @@ export default {
     async allUsers() {
       try {
         const res = await usersService.getAllUser();
-        this.users = res.data.map(user => [user.uuid_user, user.password, user.first_name, user.last_name, user.email, this.getRoleLabel(user.id_role)]);
+        this.users = res.data.map(user =>
+            [user.uuid_user,
+             user.password,
+             user.first_name,
+             user.last_name,
+             user.email,
+             this.getRoleLabel(user.id_role)]);
       } catch (error) {
         console.log(error);
       }
@@ -75,14 +81,16 @@ export default {
         this.providers = await Promise.all(
             res.data.map(async (provider) => {
               const userData = await usersService.getUserById(provider.uuid_user);
-              return [provider.id_provider, provider.name, userData.email, provider.uuid_user, provider.description_fr, provider.description_en, provider.stand_ids];
+              return [provider.id_provider,
+                      provider.name,
+                      userData.email,
+                      provider.uuid_user,
+                      provider.description_fr,
+                      provider.description_en,
+                      provider.stand_ids];
             })
         );
       } catch (error) {
-        if (error.message.includes("500")) {
-          await this.$store.dispatch('updateProviderList', []);
-        }
-        console.log(this.providers)
         console.error(error)
       }
     },
@@ -118,7 +126,7 @@ export default {
         }
         await this.$store.dispatch('updateProviderList', await providersService.getAllProvider());
       } catch (error) {
-        if (error.message.includes("No provider found")) {
+        if (error.message.includes("Provider not found")) {
           this.providers = [];
         }
         console.error(error);
