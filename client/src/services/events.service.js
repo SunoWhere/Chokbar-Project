@@ -18,14 +18,6 @@ let getEventById = async (id) => {
     }
 }
 
-let getLocations = async () => {
-    try {
-        return await Axios.get('/api/locations');
-    } catch(err) {
-        throw new Error(err.response.data);
-    }
-}
-
 let addEvent = async (eventToAdd) => {
     try {
         return await Axios.post('/api/events/', {
@@ -47,6 +39,5 @@ let addEvent = async (eventToAdd) => {
 export const eventsService = {
     getEvents,
     getEventById,
-    getLocations,
     addEvent,
 }

@@ -1,5 +1,7 @@
 <script>
   import { eventsService } from "@/services";
+  import { locationsService } from "@/services/locations.service";
+
   export default {
     data() {
       return {
@@ -57,7 +59,7 @@
 
       async getLocations() {
         try {
-          const res = await eventsService.getLocations();
+          const res = await locationsService.getLocations();
           this.locations = res.data;
         } catch(err) {
           console.log(err);
@@ -136,7 +138,7 @@
          <div class="group">
            <label for="location">Emplacement</label>
            <select id="location" v-model="addEvent.id_location" required>
-             <option v-for="(location, id_location) in locations" :key="id_location" :value="id_location">{{ location.code }}</option>
+             <option v-for="(location, id_location) in locations" :key="id_location" :value="id_location+1">{{ location.code }}</option>
            </select>
          </div>
        </div>

@@ -4,7 +4,7 @@ import PlanningInfo from "@/components/Global/Map/PlanningInfo.vue";
 import AddEventPopup from "@/components/Global/Map/AddEventPopup.vue";
 
 import { eventsService } from "@/services";
-import moment from "moment";
+import moment from "moment-timezone";
 
 export default {
   components: {
@@ -49,7 +49,7 @@ export default {
     }
   },
   computed: {
-    filterEventsByDay() {
+    filterEventsByDayAndTime() {
       const selectedDayTimestamp = moment(this.days[this.selectedDayId].timestamp).format('YYYY-MM-DD');
 
       let filteredEvents = [];
@@ -58,12 +58,19 @@ export default {
         return eventDate === selectedDayTimestamp;
       });
 
+      filteredEvents.sort((eventA, eventB) => {
+        const timeA = moment(eventA.starting_time).tz("Atlantic/Azores").format('HH:mm');
+        const timeB = moment(eventB.starting_time).tz("Atlantic/Azores").format('HH:mm');
+        return timeA.localeCompare(timeB);
+      });
+
       return filteredEvents;
     },
   },
   methods: {
     openTooltip(e) {
       this.selectedBoothId = e.target.id;
+
       this.$store.commit("setShowMapTooltip", true);
     },
     openPlanningInfo(id_event) {
@@ -82,8 +89,7 @@ export default {
       this.selectedDayId--;
     },
     moment(date) {
-      moment.locale("fr");
-      return moment(date).format("LT");
+      return moment(date).tz("Atlantic/Azores").format("HH:mm");
     },
 
     async getAllEvents() {
@@ -91,7 +97,7 @@ export default {
         const res = await eventsService.getEvents();
         this.events = res.data;
       } catch(err) {
-        console.log(err);
+        console.error(err);
       }
     },
     async getEventById(id) {
@@ -99,7 +105,7 @@ export default {
         const res = await eventsService.getEventById(id);
         this.selectedEvent = res.data;
       } catch(err) {
-        console.log(err);
+        console.error(err);
       }
     }
   },
@@ -123,7 +129,7 @@ export default {
 
 <template>
   <div class="container">
-    <PlanningInfo v-if="this.$store.getters.getShowPlanningInfo" :event="selectedEvent"/>
+    <PlanningInfo v-if="this.$store.getters.getShowPlanningInfo" :selected-event="selectedEvent"/>
     <AddEventPopup v-if="this.$store.getters.getShowAddEvent"/>
     <MapTooltip v-if="this.$store.getters.getShowMapTooltip" :booth-id="selectedBoothId"/>
     <div class="planning-container">
@@ -134,8 +140,7 @@ export default {
           <button class="day-selector" id="next-day" @click="nextDay"><font-awesome-icon icon="fa-solid fa-chevron-right" /></button>
         </li>
 
-        <!-- TODO: voir pourquoi les heures prennent un +2 dans la gueule -->
-        <li class="table-event hover-effect" v-for="(event, id_event) in filterEventsByDay" :key="id_event" @click="openPlanningInfo(event.id_event)">
+        <li class="table-event hover-effect" v-for="(event, id_event) in filterEventsByDayAndTime" :key="id_event" @click="openPlanningInfo(event.id_event)">
           <span class="event-name">{{ event.name }}</span>
           <span class="event-time">{{ moment(event.starting_time) }} - {{ moment(event.finishing_time) }}</span>
         </li>
@@ -146,6 +151,8 @@ export default {
       </div>
     </div>
 
+
+    <!-- TODO: récupérer les codes pour acceder aux stands via un getLocations() -->
     <div class="map-container">
       <svg class="map" width="100%" height="100%" viewBox="0 0 2236 1578" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:square;stroke-miterlimit:1.5;">
         <g id="map-bg" transform="matrix(1,0,0,1,-783.554,-346.752)">

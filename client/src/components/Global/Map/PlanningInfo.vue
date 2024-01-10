@@ -1,19 +1,30 @@
 <script>
-  import moment from "moment/moment";
+  import moment from "moment-timezone";
 
   export default {
+    data() {
+      return {
+      }
+    },
     props: {
-      event: Object
+      selectedEvent: Object
     },
     methods: {
       closeInfo() {
         this.$store.commit("setShowPlanningInfo", false);
       },
       moment(date) {
-        moment.locale("fr");
-        return moment(date).format("LT");
+        return moment(date).tz("Atlantic/Azores").format("HH:mm");
       },
-    }
+      locationName(locationCode) {
+        switch (locationCode) {
+          case "S01": return "Restauration";
+          case "S02": return "Scène";
+          case "S03": return "Espace VIP";
+          default: return locationCode;
+        }
+      }
+    },
   }
 </script>
 
@@ -24,12 +35,22 @@
         <div class="leftright"></div>
         <div class="rightleft"></div>
       </div>
+
       <div class="content">
+        <div class="event-info-header"><p>{{ selectedEvent.name }}</p></div>
+
         <ul class="event-info">
-          <li class="info-item">Nom: {{ event.name }}</li>
-          <li class="info-item">Horaire: {{ moment(event.starting_time) }} - {{ moment(event.finishing_time) }}</li>
+          <li id="time" class="event-info-item">Horaire: {{ moment(selectedEvent.starting_time) }} - {{ moment(selectedEvent.finishing_time) }}</li>
+          <li id="location" class="event-info-item">Emplacement: {{ locationName(selectedEvent.location.code) }}</li>
+          <li id="max-capacity" class="event-info-item">Capacité: {{ selectedEvent.max_capacity }}</li>
+          <li id="description-fr" class="event-info-item">Description: {{ selectedEvent.description_fr }}</li>
         </ul>
+        <div class="event-controls" v-if="this.$store.state.isConnected">
+          <button class="event-controls-button">Modifier</button>
+          <button class="event-controls-button">Supprimer</button>
+        </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -59,17 +80,52 @@
 .content {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  height: 100%;
+}
+
+.event-info-header {
+  height: fit-content;
+  border-radius: 17px;
+}
+
+.event-info-header > p {
+  color: white;
+  font-size: 1.5em;
+  margin: 7px 15px;
 }
 
 .event-info {
   list-style: none;
 }
 
-.info-item {
+.event-info-item {
   color: white;
   font-size: 1.1em;
+}
+
+.event-controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: auto;
+}
+
+.event-controls-button {
+  margin: 10px;
+  font-size: 1.2em;
+  border: none;
+  background-color: var(--scnd2);
+  color: var(--white);
+  padding: 10px;
+  border-radius: 13px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px var(--scnd2);
+}
+
+.event-controls-button:hover {
+  background-color: var(--scnd3);
+  box-shadow: 0 0 15px var(--scnd3);
+  cursor: pointer;
 }
 
 .close-container {
