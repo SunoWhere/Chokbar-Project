@@ -299,7 +299,7 @@ exports.saveOrder = async (uuid) => {
             })
             const cart_lines_stand = await sequelize.query(
                 `SELECT cart_lines.id_product, 
-                        cart_lines.quantity, 
+                        cart_lines.quantity,
                         price 
                 FROM cart_lines 
                 INNER JOIN products ON cart_lines.id_product = products.id_product
@@ -309,20 +309,14 @@ exports.saveOrder = async (uuid) => {
                 replacements: [`${stand_id}`],
             })
             for(line of cart_lines_stand) {
-                const product_id = line.dataValues.id_product
-                const quantity = line.dataValues.quantity
-                const price = line.dataValues.price
-                await OrderLinesModel.create({id_product: product_id, price: price, quantity: quantity})
+                console.log(line)
+                const product_id = line.id_product
+                const quantity = line.quantity
+                const price = line.price
+                const order_id = new_order.dataValues.id_order
+                await OrderLinesModel.create({id_product: product_id, price: price, quantity: quantity, id_order: order_id})
+                await CartLinesModel.destroy({where: {id_product: product_id, uuid_user: uuid}})
             }
-            await sequelize.query(
-                `DELETE
-                FROM cart_lines 
-                INNER JOIN products ON cart_lines.id_product = products.id_product
-                WHERE products.id_stand = ?;`,
-            {
-                type: sequelize.QueryTypes.DELETE,
-                replacements: [`${stand_id}`],
-            })
         }
         transac.commit()
     } catch (err) {
