@@ -97,7 +97,7 @@ router.post("/", providersMiddleware.validateProviderInput, providersController.
 /**
  * @swagger
  * /api/providers/{id}/validate-order/{id_order}:
- *   post:
+ *   put:
  *     tags:
  *       - Providers
  *     summary: Validate an order
@@ -123,12 +123,12 @@ router.post("/", providersMiddleware.validateProviderInput, providersController.
  *       500:
  *         description: Internal server error.
  */
-router.post("/:id/validate-order/:id_order", providersMiddleware.validateId, providersMiddleware.validateOrderId, providersController.validateOrder)
+router.put("/:id/validate-order/:id_order", providersMiddleware.validateId, providersMiddleware.validateOrderId, providersController.validateOrder)
 
 /**
  * @swagger
  * /api/providers/{id}/complete-order/{hash}:
- *   post:
+ *   put:
  *     tags:
  *       - Providers
  *     summary: Complete an order
@@ -154,7 +154,7 @@ router.post("/:id/validate-order/:id_order", providersMiddleware.validateId, pro
  *       500:
  *         description: Internal server error.
  */
-router.post("/:id/complete-order/:hash", providersMiddleware.validateId, providersMiddleware.validateHash, providersController.completeOrder)
+router.put("/:id/complete-order/:hash", providersMiddleware.validateId, providersMiddleware.validateHash, providersController.completeOrder)
 
 /**
  * @swagger
