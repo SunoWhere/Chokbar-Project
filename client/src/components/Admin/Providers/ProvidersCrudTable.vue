@@ -82,7 +82,7 @@ export default {
             <td>
               <form>
                 <button class="edit-button" @click.prevent="openEditPopup(item)">Editer</button>
-                <button class="delete-button" @click.prevent="openRemovePopup(item.visibleColumns.id)" >Supprimer</button>
+                <button class="delete-button" @click.prevent="openRemovePopup(item.visibleColumns.id)">Supprimer</button>
               </form>
             </td>
           </tr>

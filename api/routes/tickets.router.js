@@ -1,0 +1,12 @@
+const express = require("express");
+const ticketsController = require("../controllers/tickets.controller")
+var router = express.Router()
+
+// get all tickets
+router.get("/", ticketsController.getTickets)
+// get all ticket types
+router.get("/ticket_types", ticketsController.getTicketTypes)
+// get ticket information by ID
+router.get("/:id", ticketsController.getTicketById)
+
+module.exports = router

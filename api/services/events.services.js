@@ -3,6 +3,7 @@ const LocationsModel = require("../database/DB.connection").DB_models.locations
 const ImagesModel = require("../database/DB.connection").DB_models.images
 const EventsImagesModel = require("../database/DB.connection").DB_models.events_images
 const imagesServices = require("../services/images.services")
+const CustomError = require("../utils/CustomError")
 
 exports.getEvents = async () => {
     try {
@@ -13,6 +14,9 @@ exports.getEvents = async () => {
                 {model: LocationsModel, as: "id_location_location"}
             ]
         })
+        if(result.length == 0) {
+            throw new CustomError("No Events Found", 404)
+        }
         for (let e of result) {
             e.dataValues.location = e.dataValues.id_location_location
             e.dataValues.images = e.dataValues.id_image_images_events_images
@@ -31,7 +35,7 @@ exports.getEvents = async () => {
 
 exports.getEventByID = async (id) => {
     try {
-        const result = await EventsModel.findAll({
+        const result = await EventsModel.findOne({
             attributes: {exclude: ['id_location']},
             include: [
                 {model: LocationsModel, as: "id_location_location"},
@@ -41,15 +45,16 @@ exports.getEventByID = async (id) => {
                 id_event: id
             }
         })
-        for (let e of result) {
-            e.dataValues.location = e.dataValues.id_location_location
-            e.dataValues.images = e.dataValues.id_image_images_events_images
-            delete e.dataValues.id_image_images_events_images
-            delete e.dataValues.id_location_location
-            for(let i of e.dataValues.images) {
+        if(!result) {
+            throw new CustomError("No Event Found", 404)
+        }
+            result.dataValues.location = result.dataValues.id_location_location
+            result.dataValues.images = result.dataValues.id_image_images_events_images
+            delete result.dataValues.id_image_images_events_images
+            delete result.dataValues.id_location_location
+            for(let i of result.dataValues.images) {
                 delete i.dataValues.events_images
             }
-        }
         return result
     } catch (err) {
         console.log(err)
@@ -99,15 +104,6 @@ exports.addEventImage = async (file, id) => {
         const image = await imagesServices.addImage(file)
         let id_image = image.dataValues.id_image
         await EventsImagesModel.create({id_event: id, id_image: id_image})
-    } catch (err) {
-        console.log(err)
-        throw err
-    }
-}
-
-exports.addEventImageWithId = async (id_event, id_image) => {
-    try {
-        await EventsImagesModel.create({id_event: id_event, id_image: id_image})
     } catch (err) {
         console.log(err)
         throw err

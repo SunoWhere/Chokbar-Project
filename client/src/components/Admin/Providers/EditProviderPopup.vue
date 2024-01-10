@@ -21,12 +21,16 @@
             <label for="name">Nom Intervenant</label>
             <input type="text" id="name" name="name" placeholder="Startup name" v-model="$store.state.providerToEdit.visibleColumns.name" required>
 
-            <label for="story">Description française</label>
-            <textarea id="story" name="story" rows="5" cols="33"  v-model="$store.state.providerToEdit.description_fr" required>Decription française</textarea>
-
-            <label for="story">Description anglaise</label>
-            <textarea id="story" name="story" rows="5" cols="33" v-model="$store.state.providerToEdit.description_en" required>Decription anglaise</textarea>
-
+            <div class="descriptions">
+              <div>
+                <label for="story">Description française</label>
+                <textarea id="story" name="story" rows="5" cols="33"  v-model="$store.state.providerToEdit.description_fr" required>Decription française</textarea>
+              </div>
+              <div>
+                <label for="story">Description anglaise</label>
+                <textarea id="story" name="story" rows="5" cols="33" v-model="$store.state.providerToEdit.description_en" required>Decription anglaise</textarea>
+              </div>
+            </div>
             <label for="firstname">Firstname</label>
             <input type="text" id="firstname" name="firstname" placeholder="Firstname" v-model="$store.state.userToEdit.first_name" required>
 
@@ -167,15 +171,30 @@ export default {
 
 </script>
 
+
 <style scoped>
+
+.show-password {
+  display: flex;
+  align-items: center;
+}
+
+.show-password input {
+  margin-right: 5px;
+}
+
+.show-password label {
+  margin-bottom: -2px;
+}
+
 .modal {
   position: absolute;
   align-self: center;
   border: 1px solid var(--background);
   background-color: var(--white);
   z-index: 999;
-  height: 550px;
-  width: 400px;
+  height: 750px;
+  width: 600px;
   top: 50%;
   left: 50%;
   transform: translate(-20%, -50%);
@@ -218,85 +237,6 @@ export default {
   padding-top: 10px;
 }
 
-.form-main-content {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-form {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-content: space-between;
-}
-
-label {
-  margin-bottom: 5px;
-
-  user-select: none;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-}
-
-input[type="email"],
-input[type="text"],
-input[type="password"] {
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.show-password {
-  margin-top: -5px;
-  margin-bottom: 10px;
-}
-
-.show-password input {
-  margin-right: 3px;
-}
-
-button {
-  padding: 10px 20px;
-  background-color: var(--crud-bleu);
-  color: var(--white);
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: rgb(0, 82, 159);
-}
-
-.submit-btn {
-  display: flex;
-  align-items: flex-end;
-  width: 100%;
-  height: 100%;
-}
-
-.submit-btn button {
-  width: 100%;
-}
-
-#error-message {
-  color: var(--white);
-  height: 30px;
-  width: auto;
-  border-radius: 7px;
-  background-color: var(--crud-rouge);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 10px 20px 10px;
-}
-
-
 .close-container {
   display: flex;
   align-items: center;
@@ -332,8 +272,94 @@ button:hover {
   transform: rotate(45deg);
 }
 
+.form-main-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.descriptions {
+  display: flex;
+  gap: 20px;
+}
+
 textarea {
   resize: none;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  margin-right: 5px;
+
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+input[type="email"],
+input[type="text"],
+input[type="password"] {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.show-password {
+  margin-top: -5px;
+  margin-bottom: 10px;
+}
+
+.show-password input {
+  margin-right: 3px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: var(--crud-bleu);
+  color: var(--white);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #004eab;
+}
+
+.submit-btn {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+}
+
+.submit-btn button {
+  width: 100%;
+}
+
+#error-message {
+  color: var(--white);
+  height: 30px;
+  width: auto;
+  border-radius: 7px;
+  background-color: var(--crud-rouge);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 10px 20px 10px;
 }
 
 </style>

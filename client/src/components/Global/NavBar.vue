@@ -21,8 +21,20 @@ export default {
     },
     role() {
       return usersService.getRole() !== null;
+    },
+    getRole() {
+      return this.$store.state.role;
     }
   },
+  computed: {
+    dashboard() {
+      if(this.getRole() !== 'user') {
+        return "Dashboard";
+      } else {
+        return "Mon compte";
+      }
+    }
+  }
 }
 
 </script>
@@ -44,6 +56,11 @@ export default {
       <li>
         <button class="nav-item underline-animation" @click="$router.push('/Billetterie')">
           Billetterie
+        </button>
+      </li>
+      <li>
+        <button class="nav-item underline-animation" @click="$router.push('/Boutique')">
+          Boutique
         </button>
       </li>
       <li id="dropdown">
@@ -69,11 +86,9 @@ export default {
     </ul>
     <ul class="nav-list">
       <li v-if="isConnected()">
-        <router-link class="router-link" to="/Dashboard">
-          <button class="nav-btn">
-            Dashboard
-          </button>
-        </router-link>
+        <button class="nav-btn" @click="$router.push('/Dashboard')">
+          {{ dashboard }}
+        </button>
       </li>
       <li v-if="!isConnected()">
         <button class="nav-item underline-animation" @click="$router.push('/Login')">
@@ -85,8 +100,16 @@ export default {
           <font-awesome-icon icon="fa-solid fa-user" /> Se Déconnecter
         </button>
       </li>
-      <li><button class="nav-item underline-animation"><font-awesome-icon icon="fa-solid fa-cart-shopping" /> Panier</button></li>
-      <li><button class="nav-item underline-animation">FR</button></li>
+      <li>
+        <button class="nav-item underline-animation" @click="$router.push('/Cart')">
+          <font-awesome-icon icon="fa-solid fa-cart-shopping"/> Panier
+        </button>
+      </li>
+      <li>
+        <button class="nav-item underline-animation">
+          FR
+        </button>
+      </li>
     </ul>
   </nav>
 </template>

@@ -23,8 +23,7 @@ export default {
         return [
           { label: 'Utilisateurs', route:  '/admin/user' },
           { label: 'Intervenants', route: '/Admin/Intervenants' },
-          { label: 'Produits', route: '/admin/produits' },
-          { label: 'Calendrier', route: '/admin/calendrier' }
+          { label: 'Calendrier', route: '/map' }
         ];
       }
       if (this.getRole() === 'provider') {

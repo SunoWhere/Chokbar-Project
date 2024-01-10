@@ -214,9 +214,9 @@ CREATE TABLE products
     id_product       SERIAL,
     price            DECIMAL(6, 2),
     quantity         INT,
-    id_stand         INT         NOT NULL,
+    id_stand         INT,
     id_product_type  INT         NOT NULL,
-    id_product_state INT,
+    id_product_state INT         NOT NULL,
     description_en   TEXT        NOT NULL,
     description_fr   TEXT        NOT NULL,
     name_en          VARCHAR(50) NOT NULL,
@@ -241,6 +241,7 @@ CREATE TABLE order_lines
 (
     id_order   INT,
     id_product INT,
+    price      DECIMAL(6, 2),
     quantity   INT,
     PRIMARY KEY (id_order, id_product),
     FOREIGN KEY (id_order) REFERENCES orders (id_order),
@@ -322,11 +323,31 @@ CREATE TABLE equipments_images
     FOREIGN KEY (id_image) REFERENCES images (id_image) ON DELETE CASCADE
 );
 
-
 INSERT INTO roles(name)
 VALUES ('user'),
        ('provider'),
        ('admin');
+
+INSERT INTO ticket_types(name, price)
+VALUES ('visitore', 10),
+('addict', 45),
+('regular', 25);
+
+INSERT INTO product_types(name)
+VALUES ('Game'),
+('Food'),
+('Drinks'),
+('Hardware'),
+('Goodies');
+
+INSERT INTO order_states(state)
+VALUES ('Waiting'),
+('Validated'),
+('Retrieved');
+
+INSERT INTO product_states(state)
+VALUES ('Available'),
+('Not available');
 
 INSERT INTO users(email, password, first_name, last_name, id_role)
 VALUES ('admin@ezcon.fr', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin', 'admin', 3),
@@ -391,10 +412,10 @@ INSERT INTO locations (code) VALUES ('A01'),
 ('S02'),
 ('S03');
 
-INSERT INTO stand_types (name) VALUES ('Vente de produits'),
-('Restauration'),
-('Essaie de produits'),
-('Dédicace');
+INSERT INTO stand_types (name) VALUES ('Goods selling'),
+('Catering'),
+('Demo'),
+('Autograph');
 
 INSERT INTO stands (id_location, id_provider, id_stand_type, name, description_en, description_fr) VALUES (1, 1, 1, 'MSI Shop', 'Buy some MSI stuff', 'Acheter des produits MSI'),
 (2, 1, 3, 'MSI Demo Center', 'Test some MSI stuff', 'Essayer des produits MSI'),
@@ -425,3 +446,45 @@ VALUES (1, 1),
 (1, 2),
 (2, 2),
 (3, 2);
+
+INSERT INTO products (price, quantity, id_stand, id_product_type, id_product_state, description_en, description_fr, name_en, name_fr)
+VALUES (19.99, 50, 1, 3, 1, 'English description 1', 'Description française 1', 'Product Name 1 (EN)', 'Nom du produit 1 (FR)'),
+(29.99, 30, 2, 2, 2, 'English description 2', 'Description française 2', 'Product Name 2 (EN)', 'Nom du produit 2 (FR)'),
+(24.50, 40, 4, 1, 1, 'English description 3', 'Description française 3', 'Product Name 3 (EN)', 'Nom du produit 3 (FR)'),
+(15.75, 25, 6, 3, 2, 'English description 4', 'Description française 4', 'Product Name 4 (EN)', 'Nom du produit 4 (FR)'),
+(39.99, 15, 3, 4, 1, 'English description 5', 'Description française 5', 'Product Name 5 (EN)', 'Nom du produit 5 (FR)'),
+(12.49, 60, 5, 2, 2, 'English description 6', 'Description française 6', 'Product Name 6 (EN)', 'Nom du produit 6 (FR)'),
+(49.99, 10, 1, 1, 1, 'English description 7', 'Description française 7', 'Product Name 7 (EN)', 'Nom du produit 7 (FR)'),
+(29.75, 35, 7, 4, 2, 'English description 8', 'Description française 8', 'Product Name 8 (EN)', 'Nom du produit 8 (FR)'),
+(18.25, 45, 2, 1, 1, 'English description 9', 'Description française 9', 'Product Name 9 (EN)', 'Nom du produit 9 (FR)'),
+(34.99, 20, 4, 3, 2, 'English description 10', 'Description française 10', 'Product Name 10 (EN)', 'Nom du produit 10 (FR)'),
+(21.99, 45, 3, 1, 2, 'English description 11', 'Description française 11', 'Product Name 11 (EN)', 'Nom du produit 11 (FR)'),
+(32.50, 25, 5, 2, 1, 'English description 12', 'Description française 12', 'Product Name 12 (EN)', 'Nom du produit 12 (FR)'),
+(18.75, 35, 7, 3, 2, 'English description 13', 'Description française 13', 'Product Name 13 (EN)', 'Nom du produit 13 (FR)'),
+(14.99, 40, 2, 4, 1, 'English description 14', 'Description française 14', 'Product Name 14 (EN)', 'Nom du produit 14 (FR)'),
+(41.99, 18, 4, 1, 2, 'English description 15', 'Description française 15', 'Product Name 15 (EN)', 'Nom du produit 15 (FR)'),
+(13.49, 55, 6, 2, 1, 'English description 16', 'Description française 16', 'Product Name 16 (EN)', 'Nom du produit 16 (FR)'),
+(47.99, 15, 1, 3, 2, 'English description 17', 'Description française 17', 'Product Name 17 (EN)', 'Nom du produit 17 (FR)'),
+(28.75, 30, 3, 4, 1, 'English description 18', 'Description française 18', 'Product Name 18 (EN)', 'Nom du produit 18 (FR)'),
+(17.25, 50, 5, 1, 2, 'English description 19', 'Description française 19', 'Product Name 19 (EN)', 'Nom du produit 19 (FR)'),
+(33.99, 22, 2, 2, 1, 'English description 20', 'Description française 20', 'Product Name 20 (EN)', 'Nom du produit 20 (FR)'),
+(24.50, 40, 4, 3, 2, 'English description 21', 'Description française 21', 'Product Name 21 (EN)', 'Nom du produit 21 (FR)'),
+(15.75, 25, 6, 4, 1, 'English description 22', 'Description française 22', 'Product Name 22 (EN)', 'Nom du produit 22 (FR)'),
+(39.99, 15, 3, 1, 2, 'English description 23', 'Description française 23', 'Product Name 23 (EN)', 'Nom du produit 23 (FR)'),
+(12.49, 60, 5, 2, 1, 'English description 24', 'Description française 24', 'Product Name 24 (EN)', 'Nom du produit 24 (FR)'),
+(49.99, 10, 1, 3, 2, 'English description 25', 'Description française 25', 'Product Name 25 (EN)', 'Nom du produit 25 (FR)'),
+(29.75, 35, 7, 4, 1, 'English description 26', 'Description française 26', 'Product Name 26 (EN)', 'Nom du produit 26 (FR)'),
+(18.25, 45, 2, 1, 2, 'English description 27', 'Description française 27', 'Product Name 27 (EN)', 'Nom du produit 27 (FR)'),
+(34.99, 20, 4, 3, 1, 'English description 28', 'Description française 28', 'Product Name 28 (EN)', 'Nom du produit 28 (FR)'),
+(22.50, 55, 6, 2, 2, 'English description 29', 'Description française 29', 'Product Name 29 (EN)', 'Nom du produit 29 (FR)'),
+(14.99, 30, 3, 1, 1, 'English description 30', 'Description française 30', 'Product Name 30 (EN)', 'Nom du produit 30 (FR)'),
+(22.50, 55, 6, 2, 1, 'English description 31', 'Description française 31', 'Product Name 31 (EN)', 'Nom du produit 31 (FR)'),
+(14.99, 30, 3, 1, 2, 'English description 32', 'Description française 32', 'Product Name 32 (EN)', 'Nom du produit 32 (FR)'),
+(37.25, 18, 5, 4, 1, 'English description 33', 'Description française 33', 'Product Name 33 (EN)', 'Nom du produit 33 (FR)'),
+(19.99, 40, 2, 3, 2, 'English description 34', 'Description française 34', 'Product Name 34 (EN)', 'Nom du produit 34 (FR)'),
+(44.50, 15, 7, 1, 1, 'English description 35', 'Description française 35', 'Product Name 35 (EN)', 'Nom du produit 35 (FR)'),
+(27.75, 28, 1, 2, 2, 'English description 36', 'Description française 36', 'Product Name 36 (EN)', 'Nom du produit 36 (FR)'),
+(16.25, 48, 4, 4, 1, 'English description 37', 'Description française 37', 'Product Name 37 (EN)', 'Nom du produit 37 (FR)'),
+(32.99, 22, 6, 1, 2, 'English description 38', 'Description française 38', 'Product Name 38 (EN)', 'Nom du produit 38 (FR)'),
+(14.99, 20, 5, 1, 1, 'English description 39', 'Description française 39', 'Product Name 39 (EN)', 'Nom du produit 39 (FR)'),
+(44.99, 10, 3, 4, 2, 'English description 40', 'Description française 40', 'Product Name 40 (EN)', 'Nom du produit 40 (FR)');

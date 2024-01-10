@@ -46,21 +46,20 @@ export default {
   },
   computed: {
     filteredItems() {
-      console.log('filteredItems:', this.items);
-      return this.items.map(item => ({
-        visibleColumns: item.slice(2),
-        name_stand: item[0],
+      console.log('filteredItems:', this.stands);
+      return this.stands.map(stand => ({
+        visibleColumns: Object.fromEntries(Object.entries(stand).slice(2)),
+        name_stand: stand.name,
       }));
     },
   },
   methods: {
-
     viewArticles(stand) {
       this.$emit('view-articles', stand);
     },
-    openEditPopup(user) {
-      this.$store.commit("setUserToEdit", user);
-      this.$store.commit("setShowEditUserPopup", true);
+    openEditPopup(stand) {
+      this.$store.commit("setStandToEdit", stand);
+      this.$store.commit("setShowEditStandPopup", true);
     }
   }
 }
@@ -117,45 +116,6 @@ thead {
   border-radius: 5px;
 }
 
-
-.add-button {
-  width: 100px;
-  height: 40px;
-  background-color: var(--crud-vert);
-  border: none;
-  color: white;
-  padding: 5px 5px;
-  margin-top: 100px;
-  margin-bottom: 10px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-#add-btn {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.delete-button {
-  background-color: var(--crud-rouge);
-  border: none;
-  color: white;
-  padding: 5px 5px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
 .edit-button {
   background-color: var(--crud-bleu);
   margin-right: 10px;
@@ -171,15 +131,7 @@ thead {
   transition: background-color 0.3s ease;
 }
 
-.add-button:hover {
-  background-color: var(--btn-green-hover);
-}
-
 .edit-button:hover {
   background-color: rgb(0, 82, 159);
-}
-
-.delete-button:hover {
-  background-color: #D20000FF;
 }
 </style>
