@@ -137,6 +137,8 @@ exports.deleteStandById = async (id) => {
                 id_stand: id
             }
         })
+
+        // TODO si il y a un delete du stand, l'id_stand dans les produit seras mis à null, il faut donc mettre le state du produit à indisponible
         if (res === 0)
             throw new Error("Stand not found")
     } catch (err) {

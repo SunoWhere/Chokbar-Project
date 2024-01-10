@@ -71,6 +71,8 @@ router.get("/login", usersMiddleware.validateLoginInput, usersController.verifyL
 
 router.get("/:uuid/cart", usersController.getCart)
 
+router.get("/:uuid/tickets", usersController.getTicketsByUserId)
+
 router.get("/:uuid/orders", usersMiddleware.validateUuid, usersController.getOrders)
 
 /**

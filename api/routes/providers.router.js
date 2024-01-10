@@ -3,6 +3,7 @@ const providersController = require("../controllers/providers.controller")
 const providersMiddleware = require("../middlewares/providers.middleware")
 var router = express.Router()
 
+// TODO : ajouter l'attribution du stands à la création et modification du provider
 
 router.get("/", providersController.getProviders)
 router.get("/:id", providersMiddleware.validateId, providersController.getProviderById)

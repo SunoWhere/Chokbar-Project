@@ -9,4 +9,8 @@ router.get("/ticket_types", ticketsController.getTicketTypes)
 // get ticket information by ID
 router.get("/:id", ticketsController.getTicketById)
 
+router.post("/", ticketsController.saveTicket)
+
+router.put("/:id", ticketsController.updateTicketById)
+
 module.exports = router
