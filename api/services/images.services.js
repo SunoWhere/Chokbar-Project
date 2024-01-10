@@ -1,3 +1,5 @@
+const CustomError = require("../utils/CustomError")
+
 const ImagesModel = require("../database/DB.connection").DB_models.images
 const imagesFolderPath = __dirname.split('/services')[0] + '/database/assets/images/'
 
@@ -13,11 +15,14 @@ exports.getImages = async () => {
 
 exports.getImageByName = async (filename) => {
     try {
-        const result = await ImagesModel.findAll({
+        const result = await ImagesModel.findOne({
             where: {
                 image: filename
             }
         })
+        if(!result) {
+            throw new CustomError('Image not found', 404)
+        }
         return imagesFolderPath + result[0].image
     } catch (err) {
         console.log(err)
@@ -27,11 +32,14 @@ exports.getImageByName = async (filename) => {
 
 exports.getImageById = async (id) => {
     try {
-        const result = await ImagesModel.findAll({
+        const result = await ImagesModel.findOne({
             where: {
                 id_image: id
             }
         })
+        if(!result) {
+            throw new CustomError('Image not found', 404)
+        }
         return result
     } catch (err) {
         console.log(err)
