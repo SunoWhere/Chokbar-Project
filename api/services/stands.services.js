@@ -121,7 +121,7 @@ exports.updateStandById = async (id, id_location, id_provider, id_stand_type, na
 }
 exports.deleteStandById = async (id) => {
     try {
-        const new_product_state = await ProductSatesModel.findOne({
+        const new_product_state = await ProductStatesModel.findOne({
             where: {
                 state: 'Not available'
             }
