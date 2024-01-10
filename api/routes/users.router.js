@@ -69,10 +69,69 @@ router.get("/", usersController.getUsers)
  */
 router.get("/login", usersMiddleware.validateLoginInput, usersController.verifyLogin)
 
+/**
+ * @swagger
+ * /api/users/{uuid}/cart:
+ *   get:
+ *     tags:
+ *       - Users
+ *     summary: Get user's cart
+ *     description: Endpoint for retrieving a user's cart.
+ *     parameters:
+ *       - in: path
+ *         name: uuid
+ *         required: true
+ *         description: The UUID of the user to retrieve.
+ *         type: string
+ */
 router.get("/:uuid/cart", usersController.getCart)
 
+/**
+ * @swagger
+ * /api/users/{uuid}/tickets:
+ *   get:
+ *     tags:
+ *       - Users
+ *     summary: Get user's tickets
+ *     description: Endpoint for retrieving a user's tickets.
+ *     parameters:
+ *       - in: path
+ *         name: uuid
+ *         required: true
+ *         description: The UUID of the user to retrieve.
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: List of tickets retrieved successfully.
+ *       404:
+ *         description: No tickets or user found.
+ *       500:
+ *         description: Internal Server Error
+ */
 router.get("/:uuid/tickets", usersController.getTicketsByUserId)
 
+/**
+ * @swagger
+ * /api/users/{uuid}/orders:
+ *   get:
+ *     tags:
+ *       - Users
+ *     summary: Get user's orders
+ *     description: Endpoint for retrieving a user's orders.
+ *     parameters:
+ *       - in: path
+ *         name: uuid
+ *         required: true
+ *         description: The UUID of the user to retrieve.
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: List of orders retrieved successfully.
+ *       404:
+ *         description: No orders or user found.
+ *       500:
+ *         description: Internal Server Error
+ */
 router.get("/:uuid/orders", usersMiddleware.validateUuid, usersController.getOrders)
 
 /**
@@ -147,8 +206,61 @@ router.get("/:uuid", usersMiddleware.validateUuid, usersController.getUserByID)
  */
 router.post("/", usersMiddleware.validateUserInput, usersController.saveUser)
 
+/**
+ * @swagger
+ * /api/users/{uuid}/cart:
+ *   post:
+ *     tags:
+ *       - Users
+ *     summary: Add a product to the user's cart
+ *     description: Endpoint for adding a product to the user's cart.
+ *     parameters:
+ *       - in: path
+ *         name: uuid
+ *         required: true
+ *         description: The UUID of the user.
+ *         type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id_product:
+ *                 type: integer
+ *               quantity:
+ *                 type: integer
+ *     responses:
+ *       201:
+ *         description: Product added to cart successfully.
+ *       404:
+ *         description: Product not found.
+ *       500:
+ *         description: Internal Server Error
+ */
 router.post("/:uuid/cart", usersMiddleware.validateUuid, usersController.addToCart)
 
+/**
+ * @swagger
+ * /api/users/{uuid}/orders:
+ *   post:
+ *     tags:
+ *       - Users
+ *     summary: Create an order
+ *     description: Endpoint for creating an order.
+ *     parameters:
+ *       - in: path
+ *         name: uuid
+ *         required: true
+ *         description: The UUID of the user.
+ *         type: string
+ *     responses:
+ *       201:
+ *         description: Order created based on the cart successfully.
+ *       500:
+ *         description: Internal Server Error
+ */
 router.post("/:uuid/orders", usersMiddleware.validateUuid, usersController.saveOrder)
 
 /**
@@ -247,8 +359,55 @@ router.put("/:uuid", usersMiddleware.validateUuid, usersMiddleware.validateUserI
  */
 router.delete("/:uuid", usersMiddleware.validateUuid, usersController.deleteUserById)
 
+/**
+ * @swagger
+ * /api/users/{uuid}/cart:
+ *   delete:
+ *     tags:
+ *       - Users
+ *     summary: Clear the user's cart
+ *     description: Endpoint for clearing the user's cart.
+ *     parameters:
+ *       - in: path
+ *         name: uuid
+ *         required: true
+ *         description: The UUID of the user.
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Cart cleared successfully.
+ *       500:
+ *         description: Internal Server Error
+ */
 router.delete("/:uuid/cart", usersMiddleware.validateUuid, usersController.clearCart)
 
+/**
+ * @swagger
+ * /api/users/{uuid}/cart/{id_product}:
+ *   delete:
+ *     tags:
+ *       - Users
+ *     summary: Delete a product from the user's cart
+ *     description: Endpoint for deleting a product from the user's cart.
+ *     parameters:
+ *       - in: path
+ *         name: uuid
+ *         required: true
+ *         description: The UUID of the user.
+ *         type: string
+ *       - in: path
+ *         name: id_product
+ *         required: true
+ *         description: The ID of the product to delete.
+ *         type: integer
+ *     responses:
+ *       200:
+ *         description: Product deleted from cart successfully.
+ *       404:
+ *         description: Product not found.
+ *       500:
+ *         description: Internal Server Error
+ */
 router.delete("/:uuid/cart/:id_product", usersMiddleware.validateUuid, usersMiddleware.validateProductId, usersController.deleteItemFromCart)
 
 
