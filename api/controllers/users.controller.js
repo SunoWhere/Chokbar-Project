@@ -47,13 +47,13 @@ exports.verifyLogin = async (req, res) => {
 
 exports.saveUser = async (req, res) => {
     try {
-        await usersServices.saveUser(
+        const uuid_user = await usersServices.saveUser(
             req.body.email,
             req.body.password,
             req.body.first_name,
             req.body.last_name
         )
-        return res.status(201).send("New user saved successfully.")
+        return res.status(201).send(uuid_user)
     } catch (err) {
         if (err.name === "SequelizeUniqueConstraintError")
             return res.status(409).send("Duplicate email. User not saved.")

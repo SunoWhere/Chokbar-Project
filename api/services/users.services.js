@@ -54,16 +54,17 @@ exports.verifyLogin = async (email, password) => {
         throw err
     }
 }
-
+// return the new user uuid
 exports.saveUser = async (email, password, first_name, last_name) => {
     try {
-        return await UserModel.create({
+        const user = await UserModel.create({
             email: email,
             password: password,
             first_name: first_name,
             last_name: last_name,
             id_role: 1
         });
+        return user.uuid_user
     } catch (err) {
         console.log(err)
         throw err
