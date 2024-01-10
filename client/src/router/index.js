@@ -13,6 +13,8 @@ import DatesView from "@/views/Global/DatesView.vue";
 import CrudUsersView from "@/views/Admin/CrudUsersView.vue";
 import CreditCardView from "@/views/Global/CreditCardView.vue";
 import CrudStandView from "@/views/Provider/CrudStandView.vue";
+import CartView from "@/views/Global/CartView.vue"
+import ShopView from "@/views/Global/ShopView.vue"
 
 Vue.use(VueRouter)
 
@@ -31,6 +33,11 @@ const routes = [
     path: '/Dashboard',
     name: 'Dashboard',
     component: DashboardView
+  },
+  {
+    path: '/Cart',
+    name: 'Cart',
+    component: CartView
   },
   {
     path: '/Admin/Intervenants',
@@ -56,6 +63,11 @@ const routes = [
   path: '/Billetterie/checkout',
   name: 'Checkout',
   component: CheckoutView
+  },
+  {
+    path: '/Boutique',
+    name: 'Boutique',
+    component: ShopView
   },
   {
     path: '/Map',

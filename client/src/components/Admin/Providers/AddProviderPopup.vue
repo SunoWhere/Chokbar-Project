@@ -17,13 +17,11 @@
       <div class="content">
         <form @submit.prevent="submitForm">
           <div class="form-main-content">
-            <!-- Nom Intervenant -->
             <div>
               <label for="name">Nom Intervenant</label>
               <input type="text" id="name" name="name" placeholder="Startup name" v-model="addProvider.name" required>
             </div>
 
-            <!-- Descriptions côte à côte -->
             <div class="descriptions">
               <div>
                 <label for="story">Description française</label>
@@ -35,19 +33,12 @@
               </div>
             </div>
 
-            <!-- Prénom et Nom côte à côte -->
-            <div class="name-fields">
-              <div>
-                <label for="firstname">Firstname</label>
-                <input type="text" id="firstname" name="firstname" placeholder="Firstname" v-model="addUser.first_name" required>
-              </div>
-              <div>
-                <label for="lastname">Lastname</label>
-                <input type="text" id="lastname" name="lastname" placeholder="Lastname" v-model="addUser.last_name" required>
-              </div>
-            </div>
+            <label for="firstname">Firstname</label>
+            <input type="text" id="firstname" name="firstname" placeholder="Firstname" v-model="addUser.first_name" required>
 
-            <!-- Autres champs -->
+            <label for="lastname">Lastname</label>
+            <input type="text" id="lastname" name="lastname" placeholder="Lastname" v-model="addUser.last_name" required>
+
             <div>
               <label for="email">Email</label>
               <input type="email" id="email" name="email" placeholder="Email" v-model="addUser.email" required>
@@ -136,7 +127,8 @@ export default {
       if (this.addUser.password === this.addUser.confirmPassword) {
         usersService.addUser(this.addUser)
             .then(async res => {
-              this.addProvider.id = res.data.uuid_user;
+              this.addProvider.id = res.data;
+              console.log(this.addProvider.id);
 
               const updatedUserList = await usersService.getAllUser();
               await this.$store.dispatch('updateUserList', updatedUserList);
@@ -188,7 +180,7 @@ export default {
   border: 1px solid var(--background);
   background-color: var(--white);
   z-index: 999;
-  height: 800px;
+  height: 750px;
   width: 600px;
   top: 50%;
   left: 50%;
@@ -273,10 +265,6 @@ export default {
   width: 100%;
 }
 
-.form-main-content > div {
-  margin-bottom: 15px;
-}
-
 .descriptions {
   display: flex;
   gap: 20px;
@@ -284,11 +272,6 @@ export default {
 
 textarea {
   resize: none;
-}
-
-.name-fields {
-  display: flex;
-  gap: 20px;
 }
 
 form {
