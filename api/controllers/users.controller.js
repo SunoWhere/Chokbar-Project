@@ -47,7 +47,7 @@ exports.verifyLogin = async (req, res) => {
 
 exports.saveUser = async (req, res) => {
     try {
-        const newUser = await usersServices.saveUser(
+        await usersServices.saveUser(
             req.body.email,
             req.body.password,
             req.body.first_name,
