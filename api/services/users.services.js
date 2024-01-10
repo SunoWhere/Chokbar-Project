@@ -7,9 +7,28 @@ const ProductStatesModel = require("../database/DB.connection").DB_models.produc
 const OrdersModel = require("../database/DB.connection").DB_models.orders
 const OrderStatesModel = require("../database/DB.connection").DB_models.order_states
 const OrderLinesModel = require("../database/DB.connection").DB_models.order_lines
-const {sequelize} = require('../database/DB.connection'); 
-const { Sequelize } = require("sequelize");
+const TicketsModel = require("../database/DB.connection").DB_models.tickets
+const {sequelize} = require('../database/DB.connection');
+const {Sequelize} = require("sequelize");
 
+exports.getTicketsByUserId = async (uuid) => {
+    try {
+        const user = await UserModel.findOne({
+            where: {uuid_user: uuid},
+            include: {
+                model: TicketsModel, as: "tickets"
+            }
+        })
+        
+        if (!user)
+            throw new CustomError("User not found.", 404)
+
+        return user.tickets
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+};
 
 // Return the number of affected row
 exports.deleteUserById = async (uuid) => {
@@ -117,7 +136,7 @@ exports.getCart = async (uuid) => {
         })
         for (item of cart) {
             item.dataValues.product = item.dataValues.id_product_product
-            delete item.dataValues.id_product_product            
+            delete item.dataValues.id_product_product
         }
         return cart
     } catch (err) {
@@ -139,7 +158,7 @@ exports.addToCart = async (uuid, id_product, quantity) => {
                 model: ProductsModel, as: 'id_product_product'
             }
         })
-        if(itemAlreadyInCart) {
+        if (itemAlreadyInCart) {
             itemAlreadyInCart.dataValues.product = itemAlreadyInCart.dataValues.id_product_product
             delete itemAlreadyInCart.dataValues.id_product_product
         }
@@ -154,12 +173,12 @@ exports.addToCart = async (uuid, id_product, quantity) => {
         product.dataValues.product_state = product.dataValues.id_product_state_product_state
         delete product.dataValues.id_product_state_product_state
         console.log(product.dataValues.product_state)
-        if(product.dataValues.product_state.dataValues.state !== 'Available') {
+        if (product.dataValues.product_state.dataValues.state !== 'Available') {
             throw new Error('Product not available')
-        } else if(product.dataValues.quantity < quantity) {
+        } else if (product.dataValues.quantity < quantity) {
             throw new Error('Not enough quantity remaining in stock')
         }
-        if(itemAlreadyInCart) {
+        if (itemAlreadyInCart) {
             let new_quantity = quantity + itemAlreadyInCart.dataValues.quantity
             item = await CartLinesModel.update({quantity: new_quantity}, {
                 where: {
@@ -197,7 +216,7 @@ exports.deleteItemFromCart = async (uuid, id_product) => {
                 id_product: id_product
             }
         })
-        if(!itemAlreadyInCart) {
+        if (!itemAlreadyInCart) {
             throw new CustomError('Product not in user cart', 404)
         }
         const product = await ProductsModel.findOne({
@@ -205,7 +224,7 @@ exports.deleteItemFromCart = async (uuid, id_product) => {
                 id_product: id_product
             }
         })
-        if(!product) {
+        if (!product) {
             throw new CustomError('Product not found', 404)
         }
         const new_quantity = itemAlreadyInCart.dataValues.quantity + product.dataValues.quantity
@@ -237,10 +256,10 @@ exports.clearCart = async (uuid) => {
                 uuid_user: uuid
             }
         })
-        if(items.length === 0) {
+        if (items.length === 0) {
             throw new CustomError('Empty cart', 404)
         }
-        for(item of items) {
+        for (item of items) {
             await this.deleteItemFromCart(uuid, item.dataValues.id_product)
         }
         transac.commit()
@@ -258,7 +277,7 @@ exports.getOrders = async (uuid) => {
                 uuid_user: uuid
             }
         })
-        if(orders.length === 0) {
+        if (orders.length === 0) {
 
         }
         return orders
@@ -277,13 +296,13 @@ exports.saveOrder = async (uuid) => {
             FROM cart_lines 
             INNER JOIN products ON cart_lines.id_product = products.id_product 
             WHERE uuid_user = ?`,
-        {
-            type: sequelize.QueryTypes.SELECT,
-            replacements: [`${uuid}`],
-        })
+            {
+                type: sequelize.QueryTypes.SELECT,
+                replacements: [`${uuid}`],
+            })
         const alphanum = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_'
-        
-        for(stand of cart_stand_distinct) {
+
+        for (stand of cart_stand_distinct) {
             let hash = ''
             for (let i = 0; i < 256; i++) {
                 hash += alphanum.charAt(Math.floor(Math.random() * alphanum.length));
@@ -292,8 +311,8 @@ exports.saveOrder = async (uuid) => {
             const stand_id = stand.id_stand
             const order_state_id = order_state.dataValues.id_order_state
             const new_order = await OrdersModel.create({
-                hash: hash, 
-                id_stand: stand_id, 
+                hash: hash,
+                id_stand: stand_id,
                 uuid_user: uuid,
                 id_order_state: order_state_id
             })
@@ -304,17 +323,22 @@ exports.saveOrder = async (uuid) => {
                 FROM cart_lines 
                 INNER JOIN products ON cart_lines.id_product = products.id_product
                 WHERE products.id_stand = ?;`,
-            {
-                type: sequelize.QueryTypes.SELECT,
-                replacements: [`${stand_id}`],
-            })
-            for(line of cart_lines_stand) {
+                {
+                    type: sequelize.QueryTypes.SELECT,
+                    replacements: [`${stand_id}`],
+                })
+            for (line of cart_lines_stand) {
                 console.log(line)
                 const product_id = line.id_product
                 const quantity = line.quantity
                 const price = line.price
                 const order_id = new_order.dataValues.id_order
-                await OrderLinesModel.create({id_product: product_id, price: price, quantity: quantity, id_order: order_id})
+                await OrderLinesModel.create({
+                    id_product: product_id,
+                    price: price,
+                    quantity: quantity,
+                    id_order: order_id
+                })
                 await CartLinesModel.destroy({where: {id_product: product_id, uuid_user: uuid}})
             }
         }

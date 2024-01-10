@@ -1,6 +1,52 @@
+const CustomError = require("../utils/CustomError");
 const TicketsModel = require("../database/DB.connection").DB_models.tickets
 const TicketTypesModel = require("../database/DB.connection").DB_models.ticket_types
+const UserModel = require("../database/DB.connection").DB_models.users
 
+exports.updateTicketById = async (id, id_ticket_type) => {
+    try {
+        const ticket = await TicketsModel.findOne({where: {id_ticket: id}})
+        if (!ticket)
+            throw new CustomError("Ticket not found.", 404)
+
+        const ticketType = await TicketTypesModel.findOne({where: {id_ticket_type: id_ticket_type}})
+        if (!ticketType)
+            throw new CustomError("Ticket type not found.", 404)
+
+        ticket.update({id_ticket_type: id_ticket_type})
+
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+};
+exports.saveTicket = async (id_ticket_type, email) => {
+    try {
+        const ticketType = await TicketTypesModel.findOne({where: {id_ticket_type: id_ticket_type}})
+        if (!ticketType)
+            throw new CustomError("Ticket type not found.", 404)
+
+        const alphanum = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_'
+        let hash = ''
+        for (let i = 0; i < 256; i++) {
+            hash += alphanum.charAt(Math.floor(Math.random() * alphanum.length));
+        }
+
+        const user = await UserModel.findOne({where: {email: email}})
+
+        // TODO à finir
+        const ticket = await TicketsModel.create({
+            hash: hash,
+            email: email,
+            id_ticket_type: id_ticket_type,
+            uuid_user: (user && user.uuid_user) ? user.uuid_user : null
+        })
+        return ticket.id_ticket
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+};
 exports.getTicketById = async (id) => {
     try {
         return await TicketsModel.findOne({where: {id_ticket: id}})
