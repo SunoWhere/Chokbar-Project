@@ -14,6 +14,10 @@ module.exports = function(sequelize, DataTypes) {
     price: {
       type: DataTypes.DECIMAL,
       allowNull: true
+    },
+    duration: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
   }, {
     sequelize,
