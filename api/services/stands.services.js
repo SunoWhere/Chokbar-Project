@@ -3,6 +3,7 @@ const StandType = require("../database/DB.connection").DB_models.stand_types
 const ProductsModel = require("../database/DB.connection").DB_models.products
 const StandsImagesModel = require("../database/DB.connection").DB_models.stands_images
 const ProvidersModel = require("../database/DB.connection").DB_models.providers
+const ProductStatesModel = require("../database/DB.connection").DB_models.product_states
 const LocationsModel = require("../database/DB.connection").DB_models.locations
 const imagesServices = require("../services/images.services")
 const CustomError = require("../utils/CustomError")
@@ -121,7 +122,7 @@ exports.updateStandById = async (id, id_location, id_provider, id_stand_type, na
 }
 exports.deleteStandById = async (id) => {
     try {
-        const new_product_state = await ProductSatesModel.findOne({
+        const new_product_state = await ProductStatesModel.findOne({
             where: {
                 state: 'Not available'
             }
