@@ -57,8 +57,8 @@ export default {
     viewArticles(stand) {
       this.$emit('view-articles', stand);
     },
-    openEditPopup(stand) {
-      this.$store.commit("setStandToEdit", stand);
+    openEditPopup(selectedStand) {
+      this.$store.commit("setStandToEdit", selectedStand);
       this.$store.commit("setShowEditStandPopup", true);
     }
   }

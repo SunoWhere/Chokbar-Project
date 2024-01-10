@@ -15,16 +15,17 @@
         </div>
       </div>
       <div class="content">
-        <form   @submit.prevent="submitForm">
+        <form @submit.prevent="submitForm">
           <div class="form-main-content">
-             <label for="name">Nom  du stand</label>
-            <input type="text" id="name" name="name" placeholder="Startup name" v-model="$store.state.providerToEdit.visibleColumns.name" required>
+            <label for="name">Nom du stand</label>
+            <input type="text" id="name" name="name" v-model="$store.state.standToEdit.name" required>
 
             <label for="story">Description française</label>
-            <textarea id="story" name="story" rows="5" cols="33"  v-model="$store.state.providerToEdit.description_fr" required>Decription française</textarea>
+            <textarea id="story" name="story" rows="5" cols="33" v-model="$store.state.standToEdit.description_fr" >Decription française</textarea>
 
             <label for="story">Description anglaise</label>
-            <textarea id="story" name="story" rows="5" cols="33" v-model="$store.state.providerToEdit.description_en" required>Decription anglaise</textarea>
+            <textarea id="story" name="story" rows="5" cols="33" v-model="$store.state.standToEdit.description_en" >Decription anglaise</textarea>
+
           </div>
           <div class="buttons">
             <div class="submit-btn">
@@ -44,41 +45,41 @@ import {standsService} from "@/services";
 export default {
   name: 'EditStandPopup',
   data() {
-    return {}
-    },
-  created() {
-    },
+    return {
+      editStand:{
+        id:'',
+        name:'',
+        description_fr:'',
+        description_en:'',
+      },
+      message: null,
+    }
+  },
   props: {
-    stands: {
-      type: Array,
+    typeTitle: {
+      type: String,
       required: true,
     }
   },
   computed: {
     showPopup() {
-      return this.$store.state.showEditStandPopup;
+      return this.$store.state.showEditStandPopup
     },
-    typeTitle() {
-      return 'Stand';
-    }
   },
   methods: {
     closePopup() {
       this.$store.commit("setShowEditStandPopup", false);
     },
     async submitForm() {
-      try {
-        const response = await standsService.editProviderStand(this.editStand);
-        console.log(response.data);
+try {
+        const stand = await standsService.editProviderStand(this.$store.state.standToEdit);
         this.$store.commit("setShowEditStandPopup", false);
-        this.$store.commit("setStandToEdit", null);
-        this.$emit('standEdited');
+        this.$emit("standEdited", stand);
       } catch (error) {
         console.error(error);
-        this.message = error.response && error.response.data ? error.response.data.message : 'An error occurred';
-
+        this.message = error.message;
       }
-    }
+    },
   }
 }
 

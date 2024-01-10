@@ -27,19 +27,18 @@ let getStandById = async (id) => {
 }
 
 let editProviderStand = async (stand) => {
-     try {
-        const route = '/api/stands/' + stand.stand_ids;
-        return await Axios.put(route, {
-            stand_ids: stand.stand_ids,
+    try {
+        const route = '/api/stands/' + stand.id_stand; // Assuming id_stand is the unique identifier
+        const response = await Axios.put(route, {
             name: stand.name,
             description_fr: stand.description_fr,
             description_en: stand.description_en,
         });
+        return response.data;
     } catch (error) {
+        console.error(error);
         throw new Error(error.response.data);
     }
-
-
 }
 
 let removeStand = async (id) => {

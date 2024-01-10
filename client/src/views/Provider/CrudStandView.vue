@@ -4,7 +4,7 @@
     <div id="dc" v-if="isConnected && getRole === 'provider'">
       <CrudProviderStands v-if="StandId" :stands="StandId"/>
     </div>
-   <EditStandPopup :stands="StandId" @standEdited="getConnectedProviderStands"/>
+   <EditStandPopup typeTitle="Stand" :stands="StandId" @standEdited="getConnectedProviderStands"/>
   </div>
 </template>
 
@@ -55,18 +55,17 @@ export default {
       } catch (error) {
         console.error(error);
       }
-    }
+    },
   },
-
-  computed: {
-    isConnected() {
-      return this.$store.state.isConnected;
-    },
-    getRole() {
-      return this.$store.state.role;
-    },
+    computed: {
+      isConnected() {
+        return this.$store.state.isConnected;
+      },
+      getRole() {
+        return this.$store.state.role;
+      },
+    }
   }
-}
 </script>
 
 <style scoped>

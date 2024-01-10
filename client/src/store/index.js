@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {providersService, usersService, eventsService} from "@/services";
+import {providersService, usersService, eventsService, standsService} from "@/services";
 
 Vue.use(Vuex)
 
@@ -122,8 +122,8 @@ export default new Vuex.Store({
     setStandList(state, standList) {
       state.stands = standList;
     },
-    setStandToEdit(state, value) {
-      state.standToEdit = value;
+    setStandToEdit(state, stand) {
+      state.standToEdit = stand;
     },
     setShowEditStandPopup(state, value) {
       state.showEditStandPopup = value;
@@ -150,6 +150,14 @@ export default new Vuex.Store({
       try {
         const eventList = await eventsService.getEvents();
         commit('setEventList', eventList.data);
+      } catch(err) {
+        console.log(err);
+      }
+    },
+    async updateStandList({ commit }) {
+      try {
+        const standList = await standsService.getProvider();
+        commit('setStandList', standList.data);
       } catch(err) {
         console.log(err);
       }
