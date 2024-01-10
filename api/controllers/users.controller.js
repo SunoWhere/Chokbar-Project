@@ -1,5 +1,16 @@
 const usersServices = require("../services/users.services")
 
+exports.getTicketsByUserId = async (req, res) => {
+    try {
+        const tickets = await usersServices.getTicketsByUserId(req.params.uuid)
+        if (tickets.length === 0)
+            return res.status(404).send("No tickets found.")
+        else
+            return res.status(200).send(tickets)
+    } catch (err) {
+        return res.status(err.errorCode || 500).send(err.message)
+    }
+};
 exports.deleteUserById = async (req, res) => {
     try {
         const affectedRow = await usersServices.deleteUserById(

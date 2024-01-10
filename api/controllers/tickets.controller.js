@@ -1,5 +1,32 @@
 const ticketsServices = require("../services/tickets.services")
 
+exports.validateTicketByHash = async (req, res) => {
+    try {
+        const ticket = await ticketsServices.validateTicketByHash(req.params.hash)
+        return res.status(200).send(ticket)
+    } catch (err) {
+        return res.status(err.errorCode || 500).send(err.message)
+    }
+};
+exports.updateTicketById = async (req, res) => {
+    try {
+        const affectedRow = await ticketsServices.updateTicketById(req.params.id, req.body.id_ticket_type)
+        return res.status(200).send("Ticket updated successfully")
+    } catch (err) {
+        return res.status(err.errorCode || 500).send(err.message)
+    }
+};
+exports.saveTicket = async (req, res) => {
+    try {
+        const id_ticket = await ticketsServices.saveTicket(
+            req.body.id_ticket_type,
+            req.body.email
+        )
+        return res.status(201).send(id_ticket.toString())
+    } catch (err) {
+        return res.status(err.errorCode || 500).send(err.message)
+    }
+};
 exports.getTicketById = async (req, res) => {
     try {
         const ticket = await ticketsServices.getTicketById(req.params.id)

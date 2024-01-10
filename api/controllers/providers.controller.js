@@ -74,3 +74,21 @@ exports.getProviders = async (req, res) => {
         return res.status(err.errorCode || 500).send(err.message)
     }
 }
+
+exports.validateOrder = async (req, res) => {
+    try {
+        await providersServices.validateOrder(req.params.id, req.params.id_order)
+        return res.status(200).send('Successfully changed the state of the order to validated')
+    } catch (err) {
+        return res.status(err.errorCode || 500).send(err.message)
+    }
+}
+
+exports.completeOrder = async (req, res) => {
+    try {
+        await providersServices.completeOrder(req.params.id, req.params.hash)
+        return res.status(200).send('Successfully changed the state of the order to retrieved')
+    } catch (err) {
+        return res.status(err.errorCode || 500).send(err.message)
+    }
+}
