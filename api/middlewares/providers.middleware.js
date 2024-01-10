@@ -10,9 +10,23 @@ exports.validateProviderInput = (req, res, next) => {
         return res.status(400).send("Invalid format for user uuid")
     next()
 };
+
 exports.validateId = (req, res, next) => {
     if (!validateId(req.params.id))
         return res.status(400).send("Invalid format for id")
+    next()
+}
+
+exports.validateHash = (req, res, next) => {
+    if (!validateHash(req.params.hash))
+        return res.status(400).send("Invalid format for id")
+    next()
+}
+
+
+exports.validateOrderId = (req, res, next) => {
+    if (!validateId(req.params.id_order))
+        return res.status(400).send("Invalid format for order id")
     next()
 }
 
@@ -21,6 +35,12 @@ exports.validateUuid = (req, res, next) => {
     if (!validateUuid(uuid))
         return res.status(400).send("Invalid format for uuid")
     next()
+}
+
+const validateHash = (hash) => {
+    const hash_format = /^[a-zA-Z0-9-_]+$/
+    if(!hash) return false
+    return hash_format.test(hash) && validator.isLength(hash, {max: 256})
 }
 
 const validateId = (id) => {

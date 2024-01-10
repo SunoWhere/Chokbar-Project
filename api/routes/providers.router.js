@@ -8,6 +8,8 @@ router.get("/", providersController.getProviders)
 router.get("/:id", providersMiddleware.validateId, providersController.getProviderById)
 
 router.post("/", providersMiddleware.validateProviderInput, providersController.saveProvider)
+router.post("/validate-order/:id_order", providersMiddleware.validateOrderId, providersController.validateOrder)
+router.post("/retrieve-order/:hash", providersMiddleware.validateHash, providersController.completeOrder)
 router.post("/:id/image", providersController.saveImageByProviderId)
 
 router.put("/:id", providersMiddleware.validateId, providersMiddleware.validateProviderInput, providersController.updateProviderById)

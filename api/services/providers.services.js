@@ -9,6 +9,8 @@ const ProductsImagesModel = require("../database/DB.connection").DB_models.produ
 const UsersModel = require("../database/DB.connection").DB_models.users
 const RolesModel = require("../database/DB.connection").DB_models.roles
 const ImagesModel = require("../database/DB.connection").DB_models.images
+const OrdersModel = require("../database/DB.connection").DB_models.orders
+const OrderStatesModel = require("../database/DB.connection").DB_models.order_states
 
 /*
 TODO : Refactor les changement de role pour extraire les méthodes
@@ -236,4 +238,32 @@ exports.getProviders = async () => {
         console.log(err)
         throw new CustomError(err.message, 500)
     }
+}
+
+exports.validateOrder = async (id_order) => {
+    const order = await OrdersModel.findOne({
+        where: {
+            id_order: id_order
+        }
+    })
+    if(!order) {
+        throw new CustomError("No order found", 404)
+    }
+    const states = await OrderStatesModel.findAll()
+    let state = states.find((s) => s.dataValues.id_order_state == order.dataValues.id_order_state)
+    if(state.dataValues.state !== 'Waiting') {
+        throw new CustomError('Order has already been validated', 400)
+    }
+    state = states.find((s) => s.dataValues.state === 'Validated')
+    new_state_id = state.dataValues.id_order_state
+    console.log(new_state_id, id_order)
+    await OrdersModel.update({id_order_state: new_state_id}, {
+        where: {
+            id_order: id_order
+        }
+    })
+}
+
+exports.completeOrder = async (hash) => {
+    
 }
