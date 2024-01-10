@@ -71,6 +71,8 @@ router.get("/login", usersMiddleware.validateLoginInput, usersController.verifyL
 
 router.get("/:uuid/cart", usersController.getCart)
 
+router.get("/:uuid/orders", usersMiddleware.validateUuid, usersController.getOrders)
+
 /**
  * @swagger
  * /api/users/{uuid}:
@@ -143,7 +145,9 @@ router.get("/:uuid", usersMiddleware.validateUuid, usersController.getUserByID)
  */
 router.post("/", usersMiddleware.validateUserInput, usersController.saveUser)
 
-router.post("/:uuid/cart",  usersController.addToCart)
+router.post("/:uuid/cart", usersMiddleware.validateUuid, usersController.addToCart)
+
+router.post("/:uuid/orders", usersMiddleware.validateUuid, usersController.saveOrder)
 
 /**
  * @swagger
@@ -240,8 +244,8 @@ router.put("/:uuid", usersMiddleware.validateUuid, usersMiddleware.validateUserI
  *               example: Internal Server Error
  */
 router.delete("/:uuid", usersMiddleware.validateUuid, usersController.deleteUserById)
-router.delete("/:uuid/cart", usersController.clearCart)
-router.delete("/:uuid/cart/:id_product", usersController.deleteItemFromCart)
+router.delete("/:uuid/cart", usersMiddleware.validateUuid, usersController.clearCart)
+router.delete("/:uuid/cart/:id_product", usersMiddleware.validateUuid, usersMiddleware.validateProductId, usersController.deleteItemFromCart)
 
 
 module.exports = router

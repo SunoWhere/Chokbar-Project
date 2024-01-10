@@ -214,7 +214,7 @@ CREATE TABLE products
     id_product       SERIAL,
     price            DECIMAL(6, 2),
     quantity         INT,
-    id_stand         INT         NOT NULL,
+    id_stand         INT,
     id_product_type  INT         NOT NULL,
     id_product_state INT         NOT NULL,
     description_en   TEXT        NOT NULL,
@@ -241,6 +241,7 @@ CREATE TABLE order_lines
 (
     id_order   INT,
     id_product INT,
+    price      DECIMAL(6, 2),
     quantity   INT,
     PRIMARY KEY (id_order, id_product),
     FOREIGN KEY (id_order) REFERENCES orders (id_order),

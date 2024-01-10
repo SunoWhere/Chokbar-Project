@@ -97,7 +97,7 @@ exports.getCart = async (req, res) => {
         )
         return res.status(200).send(user)
     } catch (err) {
-        return res.status(500).send(err.message)
+        return res.status(err.errorCode || 500).send(err.message)
     }
 }
 
@@ -110,11 +110,11 @@ exports.addToCart = async (req, res) => {
         )
         return res.status(200).send("Successfully added to cart")
     } catch (err) {
-        return res.status(500).send(err.message)
+        return res.status(err.errorCode || 500).send(err.message)
     }
 }
 
-exports.deleteItemFromCart = async(req, res) => {
+exports.deleteItemFromCart = async (req, res) => {
     try {
         await usersServices.deleteItemFromCart(
             req.params.uuid,
@@ -122,17 +122,39 @@ exports.deleteItemFromCart = async(req, res) => {
         )
         return res.status(200).send("Successfully deleted from cart")
     } catch (err) {
-        return res.status(500).send(err.message)
+        return res.status(err.errorCode || 500).send(err.message)
     }
 }
 
-exports.clearCart = async(req, res) => {
+exports.clearCart = async (req, res) => {
     try {
         await usersServices.clearCart(
             req.params.uuid
         )
         return res.status(200).send("Successfully deleted all from cart")
     } catch (err) {
-        return res.status(500).send(err.message)
+        return res.status(err.errorCode || 500).send(err.message)
+    }
+}
+
+exports.getOrders = async (req, res) => {
+    try {
+        orders = await usersServices.getOrders(
+            req.params.uuid
+        )
+        return res.status(200).send(orders)
+    } catch (err) {
+        return res.status(err.errorCode || 500).send(err.message)
+    }
+}
+
+exports.saveOrder = async (req, res) => {
+    try {
+        order = await usersServices.saveOrder(
+            req.params.uuid
+        )
+        return res.status(200).send("Order successfully saved")
+    } catch (err) {
+        return res.status(err.errorCode || 500).send(err.message)
     }
 }

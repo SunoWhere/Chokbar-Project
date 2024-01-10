@@ -4,7 +4,11 @@ const UserModel = require("../database/DB.connection").DB_models.users
 const CartLinesModel = require("../database/DB.connection").DB_models.cart_lines
 const ProductsModel = require("../database/DB.connection").DB_models.products
 const ProductStatesModel = require("../database/DB.connection").DB_models.product_states
-const {sequelize} = require('../database/DB.connection') 
+const OrdersModel = require("../database/DB.connection").DB_models.orders
+const OrderStatesModel = require("../database/DB.connection").DB_models.order_states
+const OrderLinesModel = require("../database/DB.connection").DB_models.order_lines
+const {sequelize} = require('../database/DB.connection'); 
+const { Sequelize } = require("sequelize");
 
 
 // Return the number of affected row
@@ -238,6 +242,87 @@ exports.clearCart = async (uuid) => {
         }
         for(item of items) {
             await this.deleteItemFromCart(uuid, item.dataValues.id_product)
+        }
+        transac.commit()
+    } catch (err) {
+        console.log(err)
+        transac.rollback()
+        throw err
+    }
+}
+
+exports.getOrders = async (uuid) => {
+    try {
+        const orders = await OrdersModel.findAll({
+            where: {
+                uuid_user: uuid
+            }
+        })
+        if(orders.length === 0) {
+
+        }
+        return orders
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+}
+
+exports.saveOrder = async (uuid) => {
+    const transac = await sequelize.transaction()
+    try {
+        const cart_stand_distinct = await sequelize.query(
+            `SELECT 
+                DISTINCT id_stand
+            FROM cart_lines 
+            INNER JOIN products ON cart_lines.id_product = products.id_product 
+            WHERE uuid_user = ?`,
+        {
+            type: sequelize.QueryTypes.SELECT,
+            replacements: [`${uuid}`],
+        })
+        const alphanum = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_'
+        
+        for(stand of cart_stand_distinct) {
+            let hash = ''
+            for (let i = 0; i < 256; i++) {
+                hash += alphanum.charAt(Math.floor(Math.random() * alphanum.length));
+            }
+            const order_state = await OrderStatesModel.findOne({where: {state: 'Waiting'}})
+            const stand_id = stand.id_stand
+            const order_state_id = order_state.dataValues.id_order_state
+            const new_order = await OrdersModel.create({
+                hash: hash, 
+                id_stand: stand_id, 
+                uuid_user: uuid,
+                id_order_state: order_state_id
+            })
+            const cart_lines_stand = await sequelize.query(
+                `SELECT cart_lines.id_product, 
+                        cart_lines.quantity, 
+                        price 
+                FROM cart_lines 
+                INNER JOIN products ON cart_lines.id_product = products.id_product
+                WHERE products.id_stand = ?;`,
+            {
+                type: sequelize.QueryTypes.SELECT,
+                replacements: [`${stand_id}`],
+            })
+            for(line of cart_lines_stand) {
+                const product_id = line.dataValues.id_product
+                const quantity = line.dataValues.quantity
+                const price = line.dataValues.price
+                await OrderLinesModel.create({id_product: product_id, price: price, quantity: quantity})
+            }
+            await sequelize.query(
+                `DELETE
+                FROM cart_lines 
+                INNER JOIN products ON cart_lines.id_product = products.id_product
+                WHERE products.id_stand = ?;`,
+            {
+                type: sequelize.QueryTypes.DELETE,
+                replacements: [`${stand_id}`],
+            })
         }
         transac.commit()
     } catch (err) {
