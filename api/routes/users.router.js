@@ -15,31 +15,49 @@ var router = express.Router()
  *     tags:
  *       - Users
  *     summary: Get all users
- *     description: Endpoint for retrieving a list of all users.
+ *     description: Endpoint for retrieving all users in the system.
  *     responses:
  *       200:
- *         description: List of users retrieved successfully.
+ *         description: A list of users.
+ *         schema:
+ *           type: array
+ *           items:
+ *             type: object
+ *             properties:
+ *               uuid_user:
+ *                 type: string
+ *               first_name:
+ *                 type: string
+ *               last_name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               id_role:
+ *                 type: integer
  *       404:
- *         description: No users found.
+ *         description: No user found.
  *       500:
- *         description: Internal Server Error
+ *         description: Internal Server Error.
  */
 router.get("/", usersController.getUsers)
 
 /**
  * @swagger
- * /api/users/login:
- *   post:
+ * /api/login:
+ *   get:
  *     tags:
  *       - Users
  *     summary: User login
- *     description: Endpoint for user login. Authenticates the user and returns the user UUID if successful.
+ *     description: Endpoint for user authentication.
  *     consumes:
  *       - application/json
  *     parameters:
  *       - in: body
- *         name: user
- *         description: The credentials required for user login.
+ *         name: login
+ *         description: The user's login credentials.
+ *         required: true
  *         schema:
  *           type: object
  *           required:
@@ -49,23 +67,25 @@ router.get("/", usersController.getUsers)
  *             email:
  *               type: string
  *               format: email
- *               description: User's email address. Must be a valid email format.
+ *               description: User's email address.
  *             password:
  *               type: string
- *               description: User's password. The string format and length requirements depend on the system's password policy.
+ *               description: User's password.
  *     responses:
  *       200:
- *         description: Login successful. Returns the UUID of the authenticated user.
+ *         description: Authentication successful, returns user UUID.
  *         schema:
  *           type: object
  *           properties:
  *             uuid_user:
  *               type: string
- *               description: The UUID of the logged-in user.
+ *               description: The UUID of the corresponding user.
+ *       400:
+ *         description: Invalid format for email or password.
  *       401:
- *         description: Unauthorized. Invalid credentials.
+ *         description: Invalid email or login.
  *       500:
- *         description: Internal Server Error
+ *         description: Internal Server Error.
  */
 router.get("/login", usersMiddleware.validateLoginInput, usersController.verifyLogin)
 
@@ -76,13 +96,41 @@ router.get("/login", usersMiddleware.validateLoginInput, usersController.verifyL
  *     tags:
  *       - Users
  *     summary: Get user's cart
- *     description: Endpoint for retrieving a user's cart.
+ *     description: Endpoint for retrieving the cart of a specified user.
  *     parameters:
- *       - in: path
- *         name: uuid
+ *       - name: uuid
+ *         in: path
  *         required: true
- *         description: The UUID of the user to retrieve.
+ *         description: The UUID of the user whose cart is to be retrieved.
  *         type: string
+ *     responses:
+ *       200:
+ *         description: Cart retrieved successfully.
+ *         schema:
+ *           type: array
+ *           items:
+ *             type: object
+ *             properties:
+ *               quantity:
+ *                 type: integer
+ *               product:
+ *                 type: object
+ *                 properties:
+ *                   id_product:
+ *                     type: integer
+ *                   price:
+ *                     type: number
+ *                     format: decimal
+ *                   id_stand:
+ *                     type: integer
+ *                   name_en:
+ *                     type: string
+ *                   name_fr:
+ *                     type: string
+ *       404:
+ *         description: User not found or Cart is empty.
+ *       500:
+ *         description: Internal Server Error.
  */
 router.get("/:uuid/cart", usersController.getCart)
 
@@ -93,20 +141,20 @@ router.get("/:uuid/cart", usersController.getCart)
  *     tags:
  *       - Users
  *     summary: Get user's tickets
- *     description: Endpoint for retrieving a user's tickets.
+ *     description: Endpoint for retrieving all tickets associated with a specified user.
  *     parameters:
- *       - in: path
- *         name: uuid
+ *       - name: uuid
+ *         in: path
  *         required: true
- *         description: The UUID of the user to retrieve.
+ *         description: The UUID of the user whose tickets are to be retrieved.
  *         type: string
  *     responses:
  *       200:
- *         description: List of tickets retrieved successfully.
+ *         description: A list of tickets associated with the user.
  *       404:
- *         description: No tickets or user found.
+ *         description: User not found or No tickets found.
  *       500:
- *         description: Internal Server Error
+ *         description: Internal Server Error.
  */
 router.get("/:uuid/tickets", usersController.getTicketsByUserId)
 
