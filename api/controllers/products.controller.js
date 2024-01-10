@@ -2,11 +2,12 @@ const productsServices = require("../services/products.services")
 
 exports.getProductTypes = async (req, res) => {
     try {
-        return await productsServices.getProductTypes()
+        return res.status(200).send(await productsServices.getProductTypes())
     } catch (err) {
         return res.status(500).send(err.message)
     }
 };
+
 
 exports.deleteProductById = async (req, res) => {
     try {

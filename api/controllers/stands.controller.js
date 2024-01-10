@@ -1,12 +1,5 @@
 const standsServices = require("../services/stands.services")
 
-exports.getProductTypes = async (req, res) => {
-    try {
-        return await standsServices.getProductTypes()
-    } catch (err) {
-        return res.status(500).send(err.message)
-    }
-};
 exports.deleteProductById = async (req, res) => {
     try {
         await standsServices.deleteProductById(
@@ -126,5 +119,14 @@ exports.getStands = async (req, res) => {
         return res.status(200).send(await standsServices.getStands())
     } catch (err) {
         return res.status(500).send(err.message)
+    }
+}
+
+exports.addStandImage = async (req, res) => {
+    try {
+        await standsServices.addStandImage(req.files, req.params.id)
+        return res.status(200).send("Successfully added new image to stand with id : " + req.params.id)
+    } catch (err) {
+        return res.status(err.errorCode || 500).send(err.message)
     }
 }

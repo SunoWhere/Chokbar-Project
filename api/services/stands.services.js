@@ -1,26 +1,15 @@
 const StandsModel = require("../database/DB.connection").DB_models.stands
 const StandType = require("../database/DB.connection").DB_models.stand_types
 const ProductsModel = require("../database/DB.connection").DB_models.products
-const StandImagesModel = require("../database/DB.connection").DB_models.stands_images
+const StandsImagesModel = require("../database/DB.connection").DB_models.stands_images
 const ProvidersModel = require("../database/DB.connection").DB_models.providers
 const LocationsModel = require("../database/DB.connection").DB_models.locations
-const LocationSizesModel = require("../database/DB.connection").DB_models.location_sizes
-const ProductTypesModel = require("../database/DB.connection").DB_models.product_types
+const imagesServices = require("../services/images.services")
+const CustomError = require("../utils/CustomError")
 
-exports.getProductTypes = async () => {
-    try {
-        const data = await ProductTypesModel.findAll()
-        if (!data)
-            throw new Error("No product types found")
-        return data
-    } catch (err) {
-        console.log(err)
-        throw err
-    }
-};
 exports.deleteProductById = async (id) => {
     try {
-        const res = await StandsModel.destroy({
+        const res = await ProductsModel.destroy({
             where: {
                 id_product: id
             }
@@ -132,13 +121,22 @@ exports.updateStandById = async (id, id_location, id_provider, id_stand_type, na
 }
 exports.deleteStandById = async (id) => {
     try {
+        const new_product_state = await ProductSatesModel.findOne({
+            where: {
+                state: 'Not available'
+            }
+        })
+        const new_product_state_id = new_product_state.dataValues.id_product_state
+        await ProductsModel.update({id_product_state: new_product_state_id}, {
+            where: {
+                id_stand: id
+            }
+        })
         const res = await StandsModel.destroy({
             where: {
                 id_stand: id
             }
         })
-
-        // TODO si il y a un delete du stand, l'id_stand dans les produit seras mis à null, il faut donc mettre le state du produit à indisponible
         if (res === 0)
             throw new Error("Stand not found")
     } catch (err) {
@@ -171,21 +169,11 @@ exports.getStandById = async (id) => {
                 model: StandType,
                 as: "id_stand_type_stand_type"
             }, {
-                model: ProductsModel,
-                as: "products"
-            }, {
-                model: StandImagesModel,
+                model: StandsImagesModel,
                 as: "stands_images"
-            }, {
-                model: ProvidersModel,
-                as: "id_provider_provider"
             }, {
                 model: LocationsModel,
                 as: "id_location_location",
-                include: {
-                    model: LocationSizesModel,
-                    as: "id_location_size_location_size"
-                }
             }]
         })
         if (data === 0)
@@ -203,26 +191,27 @@ exports.getStands = async () => {
                 model: StandType,
                 as: "id_stand_type_stand_type"
             }, {
-                model: ProductsModel,
-                as: "products"
-            }, {
-                model: StandImagesModel,
+                model: StandsImagesModel,
                 as: "stands_images"
-            }, {
-                model: ProvidersModel,
-                as: "id_provider_provider"
             }, {
                 model: LocationsModel,
                 as: "id_location_location",
-                include: {
-                    model: LocationSizesModel,
-                    as: "id_location_size_location_size"
-                }
             }]
         })
         if (data === 0)
             throw new Error("No stand found")
         return data
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+}
+
+exports.addStandImage = async (file, id) => {
+    try {
+        const image = await imagesServices.addImage(file)
+        let id_image = image.dataValues.id_image
+        await StandsImagesModel.create({id_event: id, id_image: id_image})
     } catch (err) {
         console.log(err)
         throw err

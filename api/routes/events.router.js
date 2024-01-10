@@ -5,11 +5,11 @@ var router = express.Router()
 
 router.get("/", eventsController.getEvents)
 
-router.post("/:id/images", eventsMiddleware.validateEventId, eventsController.addEventImage)
-
 router.get("/:id", eventsMiddleware.validateEventId, eventsController.getEventByID)
 
 router.post("/", eventsController.addEvent)
+
+router.post("/:id/images", eventsMiddleware.validateEventId, eventsController.addEventImage)
 
 router.put("/:id", eventsMiddleware.validateEventId, eventsController.updateEvent)
 
