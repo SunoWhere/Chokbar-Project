@@ -4,6 +4,7 @@ const ProductsModel = require("../database/DB.connection").DB_models.products
 const StandsImagesModel = require("../database/DB.connection").DB_models.stands_images
 const ProvidersModel = require("../database/DB.connection").DB_models.providers
 const ProductStatesModel = require("../database/DB.connection").DB_models.product_states
+const ProductsImagesModel = require("../database/DB.connection").DB_models.products_images
 const LocationsModel = require("../database/DB.connection").DB_models.locations
 const imagesServices = require("../services/images.services")
 const CustomError = require("../utils/CustomError")
@@ -70,7 +71,7 @@ exports.getProductsByStandId = async (id) => {
                 id_stand: id
             },
             include: [{
-                // TODO include Images
+                model: ProductsImagesModel, as: 'id_image_images_products_images'
             }]
         })
         if (res.length === 0)
