@@ -31,7 +31,7 @@ export default {
         return [
           { label: 'Stands', route: '/intervenant/stands' },
           { label: 'Produits', route: '/intervenant/produits' },
-          { label: 'Events', route: '/intervenant/events'},
+          { label: 'Commandes', route: '/intervenant/events'},
         ];
       }
       return [];
