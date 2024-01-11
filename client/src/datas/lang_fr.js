@@ -55,11 +55,15 @@ export const lang_fr = {
     footer_mentions: "Mentions légales & GCU",
     footer_politique: "Politique de confidentalité",
     footer_contact: "NOUS CONTACTER",
-    footer_foot: "EZCon @ 2023 | Du 20 au 25 MAI 2023 | ANDELNAN SALLE D'EXPOSITION",
+    footer_foot: "EZCon @ 2023 | Du 20 au 25 MAI 2023 | ANDELNANS SALLE D'EXPOSITION",
 
     // Billetterie
     ticketing_name_card_1: "Visiteur",
-    ticketing_jours: "jour",
+    ticketing_name_card_2: "Habitué",
+    ticketing_name_card_3: "Accro",
+    ticketing_best_seller: "LE PLUS VENDU",
+    ticketing_jour: "jour",
+    ticketing_jours: "jours",
     ticketing_reserver: "Réserver",
     ticketing_avantages: "Avantages",
     ticketing_events: "Événements",

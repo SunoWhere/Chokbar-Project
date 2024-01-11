@@ -24,7 +24,7 @@ export default {
         <div class="box-top-section">
           <div class="plan-name">
             <strong>{{ getLang().ticketing_name_card_1 }}</strong>
-            <span>1 {{ getLang().ticketing_jours }}</span>
+            <span>1 {{ getLang().ticketing_jour }}</span>
           </div>
           <div class="price-section">
             <strong class="price">
@@ -89,10 +89,10 @@ export default {
       <div class="price-box popular">
         <div class="box-top-section">
           <div class="top-bar">
-            <span>LE PLUS VENDU</span>
+            <span>{{ getLang().ticketing_best_seller }}</span>
           </div>
           <div class="plan-name">
-            <strong>Addict</strong>
+            <strong>{{ getLang().ticketing_name_card_3 }}</strong>
             <span>5 {{ getLang().ticketing_jours }}</span>
           </div>
           <div class="price-section">
@@ -158,7 +158,7 @@ export default {
       <div class="price-box">
         <div class="box-top-section">
           <div class="plan-name">
-            <strong>Habitué</strong>
+            <strong>{{ getLang().ticketing_name_card_2 }}</strong>
             <span>3 {{ getLang().ticketing_jours }}</span>
           </div>
           <div class="price-section">

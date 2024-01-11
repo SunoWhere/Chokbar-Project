@@ -20,7 +20,7 @@ export const lang_en = {
 
     // HomePage
     home_sub_date: "20 > 25 May 2023",
-    home_subtitle: "THE Territorial video game conference of Belfort !",
+    home_subtitle: "THE video game conference of the Territoire de Belfort !",
 
     home_first_p_title: "EZCon 2024",
     home_first_p_subtitle: "Fun convergence in Belfort!",
@@ -43,11 +43,15 @@ export const lang_en = {
     footer_mentions: "Legal Notice & Terms of Use",
     footer_politique: "Privacy Policy",
     footer_contact: "CONTACT US",
-    footer_foot: "EZCon @ 2023 | May 20-25, 2023 | ANDELNAN EXHIBITION HALL",
+    footer_foot: "EZCon @ 2023 | May 20-25, 2023 | ANDELNANS EXHIBITION HALL",
 
     // Billetterie
     ticketing_name_card_1: "Visitor",
-    ticketing_jours: "day",
+    ticketing_name_card_2: "Frequenter",
+    ticketing_name_card_3: "Addicted",
+    ticketing_best_seller: "BEST SELLER",
+    ticketing_jour: "day",
+    ticketing_jours: "days",
     ticketing_reserver: "Book Now",
     ticketing_avantages: "Advantages",
     ticketing_events: "Events",

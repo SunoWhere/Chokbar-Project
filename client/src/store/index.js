@@ -5,11 +5,11 @@ import {providersService, usersService, eventsService, standsService, lang_fr, l
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-    state: {
-        showMapTooltip: false,
-        showPlanningInfo: false,
-        showAddEvent: false,
-        showEditEvent: false,
+  state: {
+    showStandInfo: false,
+    showPlanningInfo: false,
+    showAddEvent: false,
+    showEditEvent: false,
 
         isConnected: usersService.getUuid() != null,
         role: usersService.getRole(),
@@ -55,19 +55,19 @@ export default new Vuex.Store({
         getProviderList: state => state.providers,
         getEventList: state => state.events,
 
-        getShowMapTooltip: state => state.showMapTooltip,
-        getShowPlanningInfo: state => state.showPlanningInfo,
-        getShowAddEvent: state => state.showAddEvent,
-        getShowEditEvent: state => state.showEditEvent,
+    getShowStandInfo: state => state.showStandInfo,
+    getShowPlanningInfo: state => state.showPlanningInfo,
+    getShowAddEvent: state => state.showAddEvent,
+    getShowEditEvent: state => state.showEditEvent,
+  },
+  mutations: {
+    // Connection
+    setConnected(state, value) {
+      state.isConnected = value;
     },
-    mutations: {
-        // Connection
-        setConnected(state, value) {
-            state.isConnected = value;
-        },
-        setRole(state, value) {
-            state.role = value;
-        },
+    setRole(state, value) {
+      state.role = value;
+    },
 
         // Users
         setShowAddUserPopup(state, value) {
@@ -92,22 +92,22 @@ export default new Vuex.Store({
             state.showEditUserPopup = value;
         },
 
-        // Planning / Event
-        setShowPlanningInfo(state, value) {
-            state.showPlanningInfo = value;
-        },
-        setShowAddEvent(state, value) {
-            state.showAddEvent = value;
-        },
-        setShowEditEvent(state, value) {
-            state.showEditEvent = value;
-        },
-        setShowMapTooltip(state, value) {
-            state.showMapTooltip = value;
-        },
-        setEventList(state, eventList) {
-            state.events = eventList;
-        },
+    // Planning / Event
+    setShowPlanningInfo(state, value) {
+      state.showPlanningInfo = value;
+    },
+    setShowAddEvent(state, value) {
+      state.showAddEvent = value;
+    },
+    setShowEditEvent(state, value) {
+      state.showEditEvent = value;
+    },
+    setShowStandInfo(state, value) {
+      state.showStandInfo = value;
+    },
+    setEventList(state, eventList) {
+      state.events = eventList;
+    },
 
         // Providers
         setProviderIdToRemove(state, value) {
@@ -157,6 +157,7 @@ export default new Vuex.Store({
             }
             localStorage.setItem('lang', value);
         },
+
         // Articles
         setArticleList(state, articleList) {
             state.articles = articleList;

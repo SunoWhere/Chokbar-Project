@@ -1,25 +1,29 @@
 <script>
-import MapTooltip from "@/components/Global/Map/MapTooltip.vue";
+import StandInfo from "@/components/Global/Map/StandInfo.vue";
 import PlanningInfo from "@/components/Global/Map/PlanningInfo.vue";
 import AddEventPopup from "@/components/Global/Map/AddEventPopup.vue";
 import EditEventPopup from "@/components/Global/Map/EditEventPopup.vue";
 
 import { eventsService } from "@/services";
+import { locationsService } from "@/services/";
 import moment from "moment-timezone";
+
 
 export default {
   components: {
     EditEventPopup,
     AddEventPopup,
     PlanningInfo,
-    MapTooltip
+    StandInfo
   },
   name: 'InteractiveMap',
   data() {
     return {
       events: [],
+      locations: [],
 
-      selectedBoothId: null,
+      selectedBoothCode: null,
+      selectedLocation: null,
       days: [
         {
           name: "Lundi",
@@ -70,7 +74,13 @@ export default {
     },
     updateEvents() {
       return this.$store.getters.getEventList;
-    }
+    },
+    isConnected() {
+      return this.$store.state.isConnected;
+    },
+    getRole() {
+      return this.$store.state.role;
+    },
   },
   watch: {
     updateEvents() {
@@ -78,10 +88,12 @@ export default {
     }
   },
   methods: {
-    openTooltip(e) {
-      this.selectedBoothId = e.target.id;
+    async openTooltip(e) {
+      this.selectedBoothCode = e.target.id;
+      let location = this.locations.find(location => location.code === this.selectedBoothCode);
+      this.selectedLocation = await this.getLocationById(location.id_location);
 
-      this.$store.commit("setShowMapTooltip", true);
+      this.$store.commit("setShowStandInfo", true);
     },
     openPlanningInfo(id_event) {
       this.getEventById(id_event);
@@ -117,10 +129,27 @@ export default {
       } catch(err) {
         console.error(err);
       }
+    },
+    async getLocations() {
+      try {
+        const res = await locationsService.getLocations();
+        this.locations = res.data;
+      } catch(err) {
+        console.error(err);
+      }
+    },
+    async getLocationById(id_location) {
+      try {
+        const res = await locationsService.getLocationById(id_location);
+        return res.data;
+      } catch(err) {
+        console.error(err);
+      }
     }
   },
   created() {
     this.getAllEvents();
+    this.getLocations();
 
     this.$store.watch(
         () => this.$store.getters.getEventList,
@@ -141,7 +170,7 @@ export default {
   <div class="container">
     <PlanningInfo v-if="this.$store.getters.getShowPlanningInfo" :selected-event="selectedEvent"/>
     <AddEventPopup v-if="this.$store.getters.getShowAddEvent"/>
-    <MapTooltip v-if="this.$store.getters.getShowMapTooltip" :booth-id="selectedBoothId"/>
+    <StandInfo v-if="this.$store.getters.getShowStandInfo" :booth-id="selectedBoothCode" :selected-location="selectedLocation"/>
     <EditEventPopup v-if="this.$store.getters.getShowEditEvent" :selected-event="selectedEvent"/>
     <div class="planning-container">
       <ul class="timetable">
@@ -157,7 +186,7 @@ export default {
         </li>
       </ul>
 
-      <div class="table-event-add" v-if="this.$store.state.isConnected">
+      <div class="table-event-add" v-if="isConnected && getRole === 'admin'">
         <button id="add" class="event-button" @click="openAddEvent">Ajouter</button>
       </div>
     </div>
@@ -168,35 +197,16 @@ export default {
       <svg class="map" width="100%" height="100%" viewBox="0 0 2236 1578" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:square;stroke-miterlimit:1.5;">
         <g id="map-bg" transform="matrix(1,0,0,1,-783.554,-346.752)">
           <path d="M814.076,377.274L814.076,1302.49L1427.67,1893.6L2988.97,1893.6L2988.97,377.274L814.076,377.274Z" style="fill:none; stroke-width:33.86px;"/>
-          <g transform="matrix(1.27907,0,0,1,-53.1968,0)">
-              <rect id="A02" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
-          </g>
+
+          <!-- AXX -->
           <g transform="matrix(1.27907,0,0,1,-290.925,0)">
               <rect id="A01" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
           </g>
+          <g transform="matrix(1.27907,0,0,1,-53.1968,0)">
+              <rect id="A02" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
+          </g>
           <g transform="matrix(2.4186,0,0,1,-924.706,0)">
               <rect id="A03" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
-          </g>
-          <g transform="matrix(2.4186,0,0,1,-857.885,260.216)">
-              <rect id="A11" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
-          </g>
-          <g transform="matrix(1.48097e-16,-2.4186,1,6.12323e-17,1557.36,3774.83)">
-              <rect id="A19" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
-          </g>
-          <g transform="matrix(2.01497e-16,-3.2907,1,6.12323e-17,2275.92,4680.76)">
-              <rect id="Scène" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
-          </g>
-          <g transform="matrix(2.01497e-16,-3.2907,1,6.12323e-17,271.288,4453.47)">
-              <rect id="Restauration" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
-          </g>
-          <g transform="matrix(1.48097e-16,-2.4186,2.20755,1.35173e-16,1414.22,4247.9)">
-              <rect id="Espace VIP" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
-          </g>
-          <g transform="matrix(1.48097e-16,-2.4186,2.20755,1.35173e-16,405.576,3768.41)">
-              <rect id="A18" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
-          </g>
-          <g transform="matrix(1.48097e-16,-2.4186,2.20755,1.35173e-16,651.244,4247.9)">
-              <rect id="A25" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
           </g>
           <g transform="matrix(1.27907,0,0,1,568.116,0)">
               <rect id="A04" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
@@ -213,47 +223,76 @@ export default {
           <g transform="matrix(1.27907,0,0,1,1373.69,0)">
               <rect id="A08" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
           </g>
+
+          <!-- BXX -->
           <g transform="matrix(1.27907,0,0,1,-181.699,260.216)">
-              <rect id="A09" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
+              <rect id="B01" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
           </g>
           <g transform="matrix(1.27907,0,0,1,-5.00853,260.216)">
-              <rect id="A10" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
+              <rect id="B02" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
+          </g>
+          <g transform="matrix(2.4186,0,0,1,-857.885,260.216)">
+              <rect id="B03" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
           </g>
           <g transform="matrix(1.27907,0,0,1,652.921,260.216)">
-              <rect id="A12" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
-          </g>
-          <g transform="matrix(1.27907,0,0,1,340.822,1098.62)">
-              <rect id="A24" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
-          </g>
-          <g transform="matrix(1.27907,0,0,1,82.7905,537.212)">
-              <rect id="A17" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
-          </g>
-          <g transform="matrix(1.27907,0,0,1,-168.302,537.212)">
-              <rect id="A16" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
+              <rect id="B04" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
           </g>
           <g transform="matrix(1.27907,0,0,1,891.935,260.216)">
-              <rect id="A13" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
+              <rect id="B05" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
           </g>
           <g transform="matrix(1.27907,0,0,1,1130.95,260.216)">
-              <rect id="A14" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
+              <rect id="B06" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
           </g>
           <g transform="matrix(1.27907,0,0,1,1367.39,260.216)">
-              <rect id="A15" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
+              <rect id="B07" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
           </g>
-          <g transform="matrix(1.27907,0,0,1,1272.39,537.212)">
-              <rect id="A21" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
+
+          <!-- CXX -->
+          <g transform="matrix(1.27907,0,0,1,-168.302,537.212)">
+              <rect id="C01" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
+          </g>
+          <g transform="matrix(1.27907,0,0,1,82.7905,537.212)">
+              <rect id="C02" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
+          </g>
+          <g transform="matrix(1.48097e-16,-2.4186,2.20755,1.35173e-16,405.576,3768.41)">
+              <rect id="C03" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
+          </g>
+          <g transform="matrix(1.48097e-16,-2.4186,1,6.12323e-17,1557.36,3774.83)">
+              <rect id="C04" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
           </g>
           <g transform="matrix(1.27907,0,0,1,1095.7,537.212)">
-              <rect id="A20" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
+              <rect id="C05" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
           </g>
-          <g transform="matrix(1.27907,0,0,1,1272.39,707.477)">
-              <rect id="A23" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
+          <g transform="matrix(1.27907,0,0,1,1272.39,537.212)">
+              <rect id="C06" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
           </g>
           <g transform="matrix(1.27907,0,0,1,1095.7,707.477)">
-              <rect id="A22" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
+              <rect id="C07" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
+          </g>
+          <g transform="matrix(1.27907,0,0,1,1272.39,707.477)">
+              <rect id="C08" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
+          </g>
+
+          <!-- DXX -->
+          <g transform="matrix(1.27907,0,0,1,340.822,1098.62)">
+              <rect id="D01" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
+          </g>
+          <g transform="matrix(1.48097e-16,-2.4186,2.20755,1.35173e-16,651.244,4247.9)">
+              <rect id="D02" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
           </g>
           <g transform="matrix(1.27907,0,0,1,1083.4,1098.62)">
-              <rect id="A26" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
+              <rect id="D03" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
+          </g>
+
+          <!-- SXX -->
+          <g transform="matrix(2.01497e-16,-3.2907,1,6.12323e-17,271.288,4453.47)">
+              <rect id="S01" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
+          </g>
+          <g transform="matrix(2.01497e-16,-3.2907,1,6.12323e-17,2275.92,4680.76)">
+              <rect id="S02" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
+          </g>
+          <g transform="matrix(1.48097e-16,-2.4186,2.20755,1.35173e-16,1414.22,4247.9)">
+              <rect id="S03" v-on:click="e => openTooltip(e)" x="973.413" y="542.788" width="138.14" height="170.265" />
           </g>
         </g>
       </svg>
