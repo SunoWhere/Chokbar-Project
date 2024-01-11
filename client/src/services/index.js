@@ -12,6 +12,7 @@ export * from './providers.service';
 export * from './stands.service';
 export * from './products.service';
 export * from './carts.service';
+export * from './tickets.service';
 
 export {lang_fr};
 export {lang_en};

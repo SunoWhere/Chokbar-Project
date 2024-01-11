@@ -1,12 +1,14 @@
 <script>
 import SideBar from '@/components/Global/SideBar.vue';
 import DashboardContentAdmin from '@/components/Admin/DashboardContentAdmin.vue';
+import DashboardContentUser from "@/components/Clients/DashboardContentUser.vue";
 
 export default {
   name: 'DashboardView',
   components: {
     SideBar,
-    DashboardContentAdmin
+    DashboardContentAdmin,
+    DashboardContentUser,
   },
   metaInfo() {
     return {
@@ -29,6 +31,9 @@ export default {
     <SideBar/>
     <div id="dc" v-if="isConnected && getRole === 'admin'">
       <DashboardContentAdmin/>
+    </div>
+    <div id="dc" v-if="isConnected && getRole === 'user'">
+      <DashboardContentUser/>
     </div>
   </div>
 </template>

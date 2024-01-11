@@ -5,11 +5,11 @@ import {providersService, usersService, eventsService, standsService, lang_fr, l
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-    showStandInfo: false,
-    showPlanningInfo: false,
-    showAddEvent: false,
-    showEditEvent: false,
+    state: {
+        showStandInfo: false,
+        showPlanningInfo: false,
+        showAddEvent: false,
+        showEditEvent: false,
 
         isConnected: usersService.getUuid() != null,
         role: usersService.getRole(),
@@ -22,6 +22,8 @@ export default new Vuex.Store({
         stands: [],
         events: [],
         articles: [],
+
+        id_ticket_type: null,
 
         userIdToRemove: null,
         providerIdToRemove: null,
@@ -48,138 +50,142 @@ export default new Vuex.Store({
         showEditArticlePopup: false,
         showRemoveArticlePopup: false,
         showAddArticlePopup: false,
-
     },
     getters: {
         getUserList: state => state.users,
         getProviderList: state => state.providers,
         getEventList: state => state.events,
 
-    getShowStandInfo: state => state.showStandInfo,
-    getShowPlanningInfo: state => state.showPlanningInfo,
-    getShowAddEvent: state => state.showAddEvent,
-    getShowEditEvent: state => state.showEditEvent,
-  },
-  mutations: {
-    // Connection
-    setConnected(state, value) {
-      state.isConnected = value;
+        getShowStandInfo: state => state.showStandInfo,
+        getShowPlanningInfo: state => state.showPlanningInfo,
+        getShowAddEvent: state => state.showAddEvent,
+        getShowEditEvent: state => state.showEditEvent,
     },
-    setRole(state, value) {
-      state.role = value;
-    },
+    mutations: {
+      // Connection
+      setConnected(state, value) {
+          state.isConnected = value;
+      },
+      setRole(state, value) {
+          state.role = value;
+      },
 
-        // Users
-        setShowAddUserPopup(state, value) {
-            state.showAddUserPopup = value;
-        },
-        setShowRemoveUserPopup(state, value) {
-            state.showRemoveUserPopup = value;
-        },
-        setUserList(state, userList) {
-            state.users = userList;
-        },
-        setProviderList(state, providerList) {
-            state.providers = providerList;
-        },
-        setUserIdToRemove(state, value) {
-            state.userIdToRemove = value;
-        },
-        setUserToEdit(state, value) {
-            state.userToEdit = value;
-        },
-        setShowEditUserPopup(state, value) {
-            state.showEditUserPopup = value;
-        },
+      // Users
+      setShowAddUserPopup(state, value) {
+          state.showAddUserPopup = value;
+      },
+      setShowRemoveUserPopup(state, value) {
+          state.showRemoveUserPopup = value;
+      },
+      setUserList(state, userList) {
+          state.users = userList;
+      },
+      setProviderList(state, providerList) {
+          state.providers = providerList;
+      },
+      setUserIdToRemove(state, value) {
+          state.userIdToRemove = value;
+      },
+      setUserToEdit(state, value) {
+          state.userToEdit = value;
+      },
+      setShowEditUserPopup(state, value) {
+          state.showEditUserPopup = value;
+      },
 
-    // Planning / Event
-    setShowPlanningInfo(state, value) {
-      state.showPlanningInfo = value;
-    },
-    setShowAddEvent(state, value) {
-      state.showAddEvent = value;
-    },
-    setShowEditEvent(state, value) {
-      state.showEditEvent = value;
-    },
-    setShowStandInfo(state, value) {
-      state.showStandInfo = value;
-    },
-    setEventList(state, eventList) {
-      state.events = eventList;
-    },
+      // Planning / Event
+      setShowPlanningInfo(state, value) {
+          state.showPlanningInfo = value;
+      },
+      setShowAddEvent(state, value) {
+          state.showAddEvent = value;
+      },
+      setShowEditEvent(state, value) {
+          state.showEditEvent = value;
+      },
+      setShowStandInfo(state, value) {
+          state.showStandInfo = value;
+      },
+      setEventList(state, eventList) {
+          state.events = eventList;
+      },
 
-        // Providers
-        setProviderIdToRemove(state, value) {
-            state.providerIdToRemove = value;
-        },
-        setShowNewClientOrNotPopup(state, value) {
-            state.showNewClientOrNotPopup = value;
-        },
-        setShowAddProviderPopup(state, value) {
-            state.showAddProviderPopup = value;
-        },
-        setShowLinkClientProviderPopup(state, value) {
-            state.showLinkClientProviderPopup = value;
-        },
-        setShowRemoveProviderPopup(state, value) {
-            state.showRemoveProviderPopup = value;
-        },
-        setShowEditProviderPopup(state, value) {
-            state.showEditProviderPopup = value;
-        },
-        setProviderToEdit(state, provider) {
-            state.providerToEdit = provider;
-        },
-        setShowLinkedStandsPopup(state, value) {
-            state.showLinkedStandsPopup = value;
-        },
+      // Providers
+      setProviderIdToRemove(state, value) {
+          state.providerIdToRemove = value;
+      },
+      setShowNewClientOrNotPopup(state, value) {
+          state.showNewClientOrNotPopup = value;
+      },
+      setShowAddProviderPopup(state, value) {
+          state.showAddProviderPopup = value;
+      },
+      setShowLinkClientProviderPopup(state, value) {
+          state.showLinkClientProviderPopup = value;
+      },
+      setShowRemoveProviderPopup(state, value) {
+          state.showRemoveProviderPopup = value;
+      },
+      setShowEditProviderPopup(state, value) {
+          state.showEditProviderPopup = value;
+      },
+      setProviderToEdit(state, provider) {
+          state.providerToEdit = provider;
+      },
+      setShowLinkedStandsPopup(state, value) {
+          state.showLinkedStandsPopup = value;
+      },
 
-        // Stands
-        setStandList(state, standList) {
-            state.stands = standList;
-        },
-        setStandToEdit(state, stand) {
-            state.standToEdit = stand;
-        },
-        setShowEditStandPopup(state, value) {
-            state.showEditStandPopup = value;
-        },
+      // Stands
+      setStandList(state, standList) {
+          state.stands = standList;
+      },
+      setStandToEdit(state, stand) {
+          state.standToEdit = stand;
+      },
+      setShowEditStandPopup(state, value) {
+          state.showEditStandPopup = value;
+      },
 
-        // Lang
-        setLang(state, value) {
-            if (value.toUpperCase() === 'EN') {
-                state.lang = lang_en;
-                state.lang_name = 'EN';
-            } else {
-                state.lang = lang_fr;
-                state.lang_name = 'FR'
-            }
-            localStorage.setItem('lang', value);
-        },
+      // Lang
+      setLang(state, value) {
+          if (value.toUpperCase() === 'EN') {
+              state.lang = lang_en;
+              state.lang_name = 'EN';
+          } else {
+              state.lang = lang_fr;
+              state.lang_name = 'FR'
+          }
+          localStorage.setItem('lang', value);
+      },
 
-        // Articles
-        setArticleList(state, articleList) {
-            state.articles = articleList;
-        },
-        setArticleToEdit(state, article) {
-            state.articleToEdit = article;
-        },
-        setArticleToRemove(state, article) {
-            state.articleToRemove = article;
-        },
-        setArticleToAdd(state, article) {
-            state.articleToAdd = article;
-        },
-        setShowEditArticlePopup(state, value) {
-            state.showEditArticlePopup = value;
-        },
-        setShowRemoveArticlePopup(state, value) {
-            state.showRemoveArticlePopup = value;
-        },
-        setShowAddArticlePopup(state, value) {
-            state.showAddArticlePopup = value;
-        },
+      // Articles
+      setArticleList(state, articleList) {
+          state.articles = articleList;
+      },
+      setArticleToEdit(state, article) {
+          state.articleToEdit = article;
+      },
+      setArticleToRemove(state, article) {
+          state.articleToRemove = article;
+      },
+      setArticleToAdd(state, article) {
+          state.articleToAdd = article;
+      },
+      setShowEditArticlePopup(state, value) {
+          state.showEditArticlePopup = value;
+      },
+      setShowRemoveArticlePopup(state, value) {
+          state.showRemoveArticlePopup = value;
+      },
+      setShowAddArticlePopup(state, value) {
+          state.showAddArticlePopup = value;
+      },
+
+      // Ticket
+      setIdTicketType(state, value) {
+          state.id_ticket_type = value;
+      },
     },
     actions: {
         async updateUserList({commit}) {
@@ -215,5 +221,7 @@ export default new Vuex.Store({
             }
         }
     },
-    modules: {}
-})
+    modules: {
+
+    }
+});

@@ -1,4 +1,6 @@
 <script>
+import {ticketsService} from "@/services";
+
 export default {
   name: 'BilletterieView',
   components: {
@@ -8,10 +10,32 @@ export default {
       title: 'Billetterie'
     }
   },
+  data() {
+    return {
+      ticketTypes: [],
+    }
+  },
+  mounted() {
+    this.getTicketTypes();
+  },
   methods: {
     getLang() {
       return this.$store.state.lang;
     },
+    goToCheckout(ticket_type_name) {
+      console.log(this.ticketTypes)
+      const ticket = this.ticketTypes.find(ticket => ticket.name === ticket_type_name);
+      console.log(ticket)
+      this.$store.commit("setIdTicketType", ticket.id_ticket_type);
+      this.$router.push('/Billetterie/checkout')
+    },
+    async getTicketTypes() {
+      try {
+        this.ticketTypes = await ticketsService.getTicketsTypes();
+      } catch(error) {
+        console.error(error.message);
+      }
+    }
   },
 }
 
@@ -32,7 +56,7 @@ export default {
               <span>€</span>
             </strong>
           </div>
-          <a class="Choose-plan-btn" @click="$router.push('/Billetterie/checkout')">{{ getLang().ticketing_reserver }}</a>
+          <a class="Choose-plan-btn" @click="goToCheckout('visitore')">{{ getLang().ticketing_reserver }}</a>
         </div>
         <div class="box-features-section">
           <div class="box-features-title">
@@ -101,7 +125,7 @@ export default {
               <span>€</span>
             </strong>
           </div>
-          <a class="Choose-plan-btn" @click="$router.push('/Billetterie/checkout')">{{ getLang().ticketing_reserver }}</a>
+          <a class="Choose-plan-btn" @click="goToCheckout('addict')">{{ getLang().ticketing_reserver }}</a>
         </div>
         <div class="box-features-section">
           <div class="box-features-title">
@@ -167,7 +191,7 @@ export default {
               <span>€</span>
             </strong>
           </div>
-          <a class="Choose-plan-btn"  @click="$router.push('/Billetterie/checkout')">{{ getLang().ticketing_reserver }}</a>
+          <a class="Choose-plan-btn"  @click="goToCheckout('regular')">{{ getLang().ticketing_reserver }}</a>
         </div>
         <div class="box-features-section">
           <div class="box-features-title">

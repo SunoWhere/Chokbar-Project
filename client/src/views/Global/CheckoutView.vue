@@ -1,4 +1,6 @@
 <script>
+import {ticketsService, usersService} from "@/services";
+
 export default {
   name: 'CheckoutView',
   components: {
@@ -7,7 +9,20 @@ export default {
     return {
       title: 'Checkout'
     }
-  }
+  },
+  methods: {
+    async createTicket() {
+      try {
+        await usersService.getUserById(usersService.getUuid()).then(async (res) => {
+          await ticketsService.createTickets(this.$store.state.id_ticket_type, res.email).then(() => {
+            this.$router.push('/dashboard');
+          })
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  },
 }
 </script>
 
@@ -25,7 +40,7 @@ export default {
       <button class="payment-method">
         PayPal
       </button>
-      <button @click="$router.push('/Billetterie/checkout/creditcard')" class="payment-method">
+      <button @click="createTicket()" class="payment-method">
         Carte Bancaire
       </button>
     </div>
