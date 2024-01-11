@@ -22,7 +22,7 @@ exports.getImageByName = async (filename) => {
         if (!result) {
             throw new CustomError('Image not found', 404)
         }
-        return imagesFolderPath + result[0].image
+        return imagesFolderPath + result.image
     } catch (err) {
         console.log(err)
         throw err

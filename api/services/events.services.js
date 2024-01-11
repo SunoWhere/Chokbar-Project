@@ -10,7 +10,7 @@ exports.getEvents = async () => {
         const result = await EventsModel.findAll({
             attributes: {exclude: ['id_location']},
             include: [
-                {model: ImagesModel, as: "id_image_images_events_images"},
+                {model: ImagesModel, as: "id_image_images"},
                 {model: LocationsModel, as: "id_location_location"}
             ]
         })
@@ -19,8 +19,8 @@ exports.getEvents = async () => {
         }
         for (let e of result) {
             e.dataValues.location = e.dataValues.id_location_location
-            e.dataValues.images = e.dataValues.id_image_images_events_images
-            delete e.dataValues.id_image_images_events_images
+            e.dataValues.images = e.dataValues.id_image_images
+            delete e.dataValues.id_image_images
             delete e.dataValues.id_location_location
             for (let i of e.dataValues.images) {
                 delete i.dataValues.events_images
@@ -39,7 +39,7 @@ exports.getEventByID = async (id) => {
             attributes: {exclude: ['id_location']},
             include: [
                 {model: LocationsModel, as: "id_location_location"},
-                {model: ImagesModel, as: "id_image_images_events_images"},
+                {model: ImagesModel, as: "id_image_images"},
             ],
             where: {
                 id_event: id
@@ -49,8 +49,8 @@ exports.getEventByID = async (id) => {
             throw new CustomError("No Event Found", 404)
         }
         result.dataValues.location = result.dataValues.id_location_location
-        result.dataValues.images = result.dataValues.id_image_images_events_images
-        delete result.dataValues.id_image_images_events_images
+        result.dataValues.images = result.dataValues.id_image_images
+        delete result.dataValues.id_image_images
         delete result.dataValues.id_location_location
         for (let i of result.dataValues.images) {
             delete i.dataValues.events_images
