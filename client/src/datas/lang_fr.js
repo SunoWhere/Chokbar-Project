@@ -68,4 +68,37 @@ export const lang_fr = {
     ticketing_priority: "File prioritaire",
     ticketing_vip: "Espace VIP",
     ticketing_premiere: "Accès aux avants premières",
+
+    // À Propos
+    about_main_title: "À propos",
+    about_first_p_title1: "Explorez une palette culinaire",
+    about_first_p_title2: "locale",
+    about_first_p: "Des compétitions de gaming acharnées aux expériences\n" +
+        "            en réalité virtuelle captivantes, en passant par les démonstrations des\n" +
+        "            derniers jeux des développeurs locaux, notre événement vous plonge\n" +
+        "            entièrement dans un univers dynamique et passionnant. Parcourez les\n" +
+        "            bornes d'arcade rétro, plongez dans des mondes virtuels grâce à nos\n" +
+        "            expériences de réalité virtuelle époustouflantes et découvrez les créations\n" +
+        "            les plus innovantes des talents locaux. EZCon 2023 est bien plus qu'un événement,\n" +
+        "            c'est une aventure immersive qui célèbre toutes les facettes du jeu vidéo, du rétro au futuriste.",
+
+    about_second_p_title: "Des goodies de toutes les couleurs",
+    about_second_p: "Lors de votre expérience à EZCon, plongez dans un paradis des\n" +
+        "            goodies où une variété exceptionnelle vous attend. Des figurines\n" +
+        "            de la culture pop aux articles exclusifs, notre boutique propose\n" +
+        "            une sélection soigneusement choisie pour satisfaire tous les passionnés.\n" +
+        "            Que vous soyez à la recherche de souvenirs uniques, de vêtements\n" +
+        "            pop ou de trésors de collection, vous trouverez tout ce que vous\n" +
+        "            désirez.",
+
+    about_third_p_title: "Planifiez Votre Journée à EZCon",
+    about_third_p: "Pour vous assurer une expérience sans tracas, consultez\n" +
+        "            notre map interactive ainsi que le planning pour planifier\n" +
+        "            votre journée à EZCon. Découvrez les horaires des événements,\n" +
+        "            les emplacements des stands de restauration, et\n" +
+        "            assurez-vous de ne rien manquer des temps forts de\n" +
+        "            l'événement.",
+
+    about_go_map: "Aller sur la map",
+
 }
