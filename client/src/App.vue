@@ -62,12 +62,12 @@ body {
 
 ::-moz-selection {
   background-color: var(--scnd2);
-  border-radius: 8px;
+  color: white;
 }
 
 ::selection {
   background-color: var(--scnd2);
-  border-radius: 8px;
+  color: white;
 }
 
 #app {
