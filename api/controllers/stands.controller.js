@@ -7,7 +7,7 @@ exports.deleteProductById = async (req, res) => {
         )
         return res.status(200).send("Product deleted successfully")
     } catch (err) {
-        return res.status(500).send(err.message)
+        return res.status(err.errorCode || 500).send(err.message)
     }
 };
 exports.updateProductById = async (req, res) => {
@@ -25,7 +25,7 @@ exports.updateProductById = async (req, res) => {
         )
         return res.status(200).send("Product updated successfully")
     } catch (err) {
-        return res.status(500).send(err.message)
+        return res.status(err.errorCode || 500).send(err.message)
     }
 };
 exports.saveProduct = async (req, res) => {
@@ -52,7 +52,7 @@ exports.getProductsByIdByStandId = async (req, res) => {
             req.params.id_product
         ))
     } catch (err) {
-        return res.status(500).send(err.message)
+        return res.status(err.errorCode || 500).send(err.message)
     }
 }
 exports.getProductsByStandId = async (req, res) => {
@@ -61,7 +61,7 @@ exports.getProductsByStandId = async (req, res) => {
             req.params.id
         ))
     } catch (err) {
-        return res.status(500).send(err.message)
+        return res.status(err.errorCode || 500).send(err.message)
     }
 }
 exports.updateStandById = async (req, res) => {
@@ -77,7 +77,7 @@ exports.updateStandById = async (req, res) => {
         )
         return res.status(200).send("Stand updated successfully")
     } catch (err) {
-        return res.status(500).send(err.message)
+        return res.status(err.errorCode || 500).send(err.message)
     }
 }
 exports.deleteStandById = async (req, res) => {
@@ -118,7 +118,7 @@ exports.getStands = async (req, res) => {
     try {
         return res.status(200).send(await standsServices.getStands())
     } catch (err) {
-        return res.status(500).send(err.message)
+        return res.status(err.errorCode || 500).send(err.message)
     }
 }
 
