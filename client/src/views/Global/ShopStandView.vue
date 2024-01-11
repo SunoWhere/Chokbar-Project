@@ -71,6 +71,9 @@ export default {
     getLang() {
       return this.$store.state.lang;
     },
+    getRole() {
+      return this.$store.state.role;
+    },
   },
   computed: {
     availableProducts() {
@@ -82,7 +85,10 @@ export default {
         return storedLang;
       }
       return 'FR';
-    }
+    },
+    isConnected() {
+      return this.$store.state.isConnected;
+    },
   },
   mounted() {
     this.getStandById().then(() => {
@@ -130,8 +136,8 @@ export default {
               <div class="info-btn">
                 <button class="info-button" @click.prevent="">{{ getLang().stands_articles_shop_info }}</button>
               </div>
-              <div class="add-btn">
-                <button v-if="item.quantity !== 0" class="add-button" @click.prevent="addToCart(item)">{{ getLang().stands_articles_shop_cart }}</button>
+              <div class="add-btn" v-if="isConnected">
+                <button v-if="item.quantity !== 0 && getRole().toLowerCase() !== 'admin'" class="add-button" @click.prevent="addToCart(item)">{{ getLang().stands_articles_shop_cart }}</button>
               </div>
             </td>
           </tr>
@@ -283,6 +289,11 @@ td:nth-child(1) {
 
 .add-button:active {
   background-color: #2c1a7e;
+}
+
+table {
+  overflow: hidden;
+  border-radius: 15px;
 }
 
 </style>

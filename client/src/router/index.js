@@ -17,6 +17,8 @@ import CartView from "@/views/Global/CartView.vue"
 import ShopView from "@/views/Global/ShopView.vue"
 import ShopStandView from "@/views/Global/ShopStandView.vue"
 import CrudArticleStandView from "@/views/Provider/CrudArticleStandView.vue"
+import CartCheckoutView from "@/views/Global/CartCheckoutView.vue";
+import UserOrdersView from "@/views/Global/UserOrdersView.vue";
 
 Vue.use(VueRouter)
 
@@ -67,6 +69,11 @@ const routes = [
   component: CheckoutView
   },
   {
+    path: '/cart/checkout',
+    name: 'CheckoutPanier',
+    component: CartCheckoutView
+  },
+  {
     path: '/Boutique',
     name: 'Boutique',
     component: ShopView
@@ -106,7 +113,12 @@ const routes = [
     name: 'CrudArticle',
     component: CrudArticleStandView,
     props: true
-  }
+  },
+  {
+    path: '/users/orders',
+    name: 'Orders',
+    component: UserOrdersView
+  },
 ]
 
 const router = new VueRouter({

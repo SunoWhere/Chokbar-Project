@@ -15,7 +15,10 @@ export default {
       } else {
         passwordInput.type = "password";
       }
-    }
+    },
+    getLang() {
+      return this.$store.state.lang;
+    },
   }
 }
 </script>
@@ -23,28 +26,28 @@ export default {
 <template>
   <div class="register">
     <div class="register-form">
-      <h2>Register</h2>
+      <h2>{{ getLang().register_title }}</h2>
       <form id="register-form" action="/users/" method="POST">
 
         <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email" placeholder="example@ezcon.fr" required>
 
-        <label for="first_name">First Name</label>
+        <label for="first_name">{{ getLang().register_prenom }}</label>
         <input type="text" id="first_name" name="first_name" required>
 
-        <label for="last_name">Last Name</label>
+        <label for="last_name">{{ getLang().register_nom }}</label>
         <input type="text" id="last_name" name="last_name" required>
 
-        <label for="password">Password</label>
+        <label for="password">{{ getLang().form_password }}</label>
         <input type="password" id="password" name="password" required>
 
         <p class="show-password">
           <input type="checkbox" id="show-password" @click="toggleShowPassword">
-          <label for="show-password">Show Password</label>
+          <label for="show-password">{{ getLang().form_show_password}}</label>
         </p>
 
         <button type="submit">Register</button>
-        <a id="yes-account" @click="$router.push('/Login')">Vous avez déjà un compte ? Se connecter maintenant !</a>
+        <a id="yes-account" @click="$router.push('/Login')">{{ getLang().register_have_account }}</a>
       </form>
     </div>
   </div>

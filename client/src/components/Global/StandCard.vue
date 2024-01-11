@@ -12,13 +12,7 @@ export default {
 
   },
   computed: {
-    getStoredLang() {
-      const storedLang = localStorage.getItem('lang');
-      if(storedLang) {
-        return storedLang;
-      }
-      return 'FR';
-    }
+
   },
   mounted() {
 

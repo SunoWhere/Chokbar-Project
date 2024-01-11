@@ -125,7 +125,7 @@ export default {
           {{ getLang().navbar_logout }}
         </button>
       </li>
-      <li>
+      <li v-if="isConnected() && getRole() === 'user'">
         <button class="nav-item underline-animation" @click="$router.push('/Cart')">
           <font-awesome-icon icon="fa-solid fa-cart-shopping"/>
           {{ getLang().navbar_panier }}

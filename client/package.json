@@ -21,6 +21,7 @@
     "express": "^4.18.2",
     "moment": "^2.30.1",
     "moment-timezone": "^0.5.44",
+    "qrcode-generator": "^1.4.4",
     "stream-browserify": "^3.0.0",
     "vue": "^2.6.14",
     "vue-chartjs": "^5.2.0",

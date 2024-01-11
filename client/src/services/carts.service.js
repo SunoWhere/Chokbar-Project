@@ -31,8 +31,18 @@ let removeCartLine = async (uuid_user, id_product) => {
     }
 }
 
+let clearCart = async (uuid_user) => {
+    try {
+        const route = '/api/users/' + uuid_user + '/cart';
+        return await Axios.delete(route);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 export const cartsService = {
     addCart,
     getCartByUserId,
-    removeCartLine
+    removeCartLine,
+    clearCart,
 }

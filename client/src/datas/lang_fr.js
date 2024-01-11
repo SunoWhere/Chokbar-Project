@@ -113,4 +113,17 @@ export const lang_fr = {
     stands_articles_shop_unite: "Unité(s)",
     stands_articles_shop_info: "Infos",
     stands_articles_shop_cart: "Ajouter au panier",
+
+    // Login
+    login_title: "Se connecter",
+    form_password: "Mot de passe",
+    form_show_password: "Afficher le mot de passe",
+    login_no_account: "Vous n'avez pas de compte ? S'inscrire maintenant !",
+
+    // Register
+    register_title: "S'inscrire",
+    register_prenom: "Prénom",
+    register_nom: "Nom",
+    register_have_account: "Vous avez déjà un compte ? Se connecter maintenant !",
+
 }

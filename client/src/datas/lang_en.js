@@ -83,4 +83,16 @@ export const lang_en = {
     stands_articles_shop_unite: "Unit(s)",
     stands_articles_shop_info: "Details",
     stands_articles_shop_cart: "Add to cart",
+
+    // Login
+    login_title: "Login",
+    form_password: "Password",
+    form_show_password: "Show password",
+    login_no_account: "Do not have an account? Sign up now!",
+
+    // Register
+    register_title: "Register",
+    register_prenom: "First Name",
+    register_nom: "Last Name",
+    register_have_account: "Do you already have an account? Log in now!",
 }

@@ -51,7 +51,10 @@
         } else {
           passwordInput.type = "password";
         }
-      }
+      },
+      getLang() {
+        return this.$store.state.lang;
+      },
     }
   }
 </script>
@@ -59,7 +62,7 @@
 <template>
   <div class="login">
     <div class="login-form">
-      <h2>Login</h2>
+      <h2>{{getLang().login_title }}</h2>
       <div v-if="loginError" id="error-message">
         <p class="error-message">{{ loginError }}</p>
       </div>
@@ -68,17 +71,17 @@
         <label for="email">Email</label>
         <input type="email" id="email" name="email" v-model="user.email" placeholder="Email" required>
 
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" v-model="user.password" placeholder="Password" required>
+        <label for="password">{{ getLang().form_password }}</label>
+        <input type="password" id="password" name="password" v-model="user.password" :placeholder="getLang().form_password" required>
 
         <p class="show-password">
           <input type="checkbox" id="show-password" @click="toggleShowPassword">
-          <label for="show-password">Show Password</label>
+          <label for="show-password">{{ getLang().form_show_password }}</label>
         </p>
 
-        <button type="submit">Login</button>
+        <button type="submit">{{getLang().login_title }}</button>
 
-        <a id="no-account" @click="$router.push('/Register')">Vous n'avez pas de compte ? S'inscrire maintenant !</a>
+        <a id="no-account" @click="$router.push('/Register')">{{ getLang().login_no_account }}</a>
       </form>
     </div>
   </div>

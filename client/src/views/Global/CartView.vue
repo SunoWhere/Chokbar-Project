@@ -96,7 +96,21 @@ export default {
       } catch(error) {
         console.error(error.message);
       }
-    }
+    },
+    async clearCart() {
+      const uuid = usersService.getUuid();
+      if(uuid !== undefined) {
+        await cartsService.clearCart(uuid).then(() => {
+          this.getCart().then(() => {
+            this.getCart().then(() => {
+              this.totalCartPrice();
+            });
+          });
+        });
+      } else {
+        throw new Error("can't remove cart, uuid undefined");
+      }
+    },
   },
   computed: {
 
@@ -139,14 +153,19 @@ export default {
             </div>
           </div>
         </div>
+        <div>
+          <p class="no-article" v-if="cart.length === 0">Il n'y a aucun article pour le moment.</p>
+          <button class="delete-cart-btn" v-if="cart.length !== 0" @click="clearCart()">Vider le panier</button>
+        </div>
 
       </div>
+      <!--TODO: Mettre un bouton pour vider le panier -->
       <div class="right-side">
         <div class="total">
           <p>Total:</p>
           <p>{{totalPrice}} €</p>
         </div>
-        <button class="checkout-btn">Continue to checkout</button>
+        <button class="checkout-btn" v-if="totalPrice !== 0" @click="$router.push('/cart/checkout')">Continue to checkout</button>
       </div>
     </div>
   </div>
@@ -216,6 +235,27 @@ export default {
 .checkout-btn:hover {
   background-color: rgb(215, 215, 215);
 }
+
+.delete-cart-btn {
+  background-color: var(--white);
+  margin-top: 10px;
+  margin-right: 10px;
+  border: none;
+  color: black;
+  padding: 5px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-cart-btn:hover {
+  background-color: rgb(215, 215, 215);
+}
+
 
 .head {
   width: 100%;

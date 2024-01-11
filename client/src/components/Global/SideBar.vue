@@ -34,7 +34,11 @@ export default {
           { label: 'Commandes', route: '/intervenant/events'},
         ];
       }
-      return [];
+      else {
+        return [
+          { label: 'Commandes', route: '/users/orders' },
+        ]
+      }
     }
   }
 };

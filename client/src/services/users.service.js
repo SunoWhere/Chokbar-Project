@@ -106,6 +106,29 @@ let hashPassword = (password) => {
     return hash.digest('hex'); // return hashed password
 }
 
+let createOrder = async (uuid_user) => {
+    try {
+        const route = '/api/users/' + uuid_user + '/orders';
+        return await Axios.post(route);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+let getOrders = async (uuid_user) => {
+    try {
+        const route = '/api/users/' + uuid_user + '/orders';
+        const res = await Axios.get(route);
+        return res.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+let getAllOrderStates = async () => {
+
+}
+
 export const usersService = {
     login,
     getUuid,
@@ -119,6 +142,9 @@ export const usersService = {
     hashPassword,
     addUser,
     removeUser,
+    createOrder,
+    getOrders,
     editUser,
     getUserById,
+    getAllOrderStates,
 }

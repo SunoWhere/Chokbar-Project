@@ -33,8 +33,8 @@ export default {
           mail: provider[2]
         },
         uuid_user: provider[3],
-        description_en: provider[5],
-        description_fr: provider[4]
+        description_fr: provider[4],
+        description_en: provider[5]
       }));
     }
   },
