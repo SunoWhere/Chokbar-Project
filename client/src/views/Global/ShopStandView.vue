@@ -67,11 +67,21 @@ export default {
       } catch(error) {
         console.log(error)
       }
-    }
+    },
+    getLang() {
+      return this.$store.state.lang;
+    },
   },
   computed: {
     availableProducts() {
       return this.products.filter(product => product.id_product_state === 1);
+    },
+    getStoredLang() {
+      const storedLang = localStorage.getItem('lang');
+      if(storedLang) {
+        return storedLang;
+      }
+      return 'FR';
     }
   },
   mounted() {
@@ -90,7 +100,8 @@ export default {
       <div class="left-side">
         <h1>{{stand.name}}</h1>
         <div class="description">
-          <p>{{stand.description_fr}}</p>
+          <p v-if="'FR' === $store.state.lang_name">{{stand.description_fr}}</p>
+          <p v-else>{{stand.description_en}}</p>
         </div>
       </div>
       <div class="right-side">
@@ -101,22 +112,26 @@ export default {
       <table>
         <thead>
           <tr class="head">
-            <th>Nom</th>
-            <th>Prix</th>
-            <th>Quantité</th>
-            <th>Type d'article</th>
+            <th>{{ getLang().stands_articles_shop_nom }}</th>
+            <th>{{ getLang().stands_articles_shop_prix }}</th>
+            <th>{{ getLang().stands_articles_shop_quantite }}</th>
+            <th>{{ getLang().stands_articles_shop_type }}</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(item, index) in availableProducts" :key="index">
-            <td>{{ item.name_fr }}</td>
-            <td>{{ item.price}}</td>
-            <td>{{ item.quantity }}</td>
+            <td v-if="'EN' === $store.state.lang_name">{{ item.name_en }}</td>
+            <td v-else>{{ item.name_fr }}</td>
+            <td>{{ item.price}} €</td>
+            <td>{{ item.quantity }} {{ getLang().stands_articles_shop_unite }}</td>
             <td>{{ getProductType(item.id_product_type) }}</td>
             <td>
+              <div class="info-btn">
+                <button class="info-button" @click.prevent="">{{ getLang().stands_articles_shop_info }}</button>
+              </div>
               <div class="add-btn">
-                <button v-if="item.quantity !== 0" class="add-button" @click.prevent="addToCart(item)">Ajouter au panier</button>
+                <button v-if="item.quantity !== 0" class="add-button" @click.prevent="addToCart(item)">{{ getLang().stands_articles_shop_cart }}</button>
               </div>
             </td>
           </tr>
@@ -221,8 +236,33 @@ td:nth-child(1) {
   padding-top: 8px;
 }
 
+.info-btn {
+  width: 100%;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  padding-top: 8px;
+  margin-right: 10px;
+}
+
+.info-button {
+  width: 70px;
+  height: 28px;
+  border: none;
+  color: white;
+  margin-bottom: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background-color: #4728d4;
+}
+
 .add-button {
-  width: 200px;
+  width: 160px;
   height: 28px;
   border: none;
   color: white;
@@ -242,7 +282,7 @@ td:nth-child(1) {
 }
 
 .add-button:active {
-  background-color: #2c1a7e; /* Couleur pour l'état actif (clic) */
+  background-color: #2c1a7e;
 }
 
 </style>

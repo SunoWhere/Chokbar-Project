@@ -14,6 +14,7 @@ export default new Vuex.Store({
         isConnected: usersService.getUuid() != null,
         role: usersService.getRole(),
 
+        lang_name: "",
         lang: lang_fr,
 
         users: [],
@@ -149,8 +150,10 @@ export default new Vuex.Store({
         setLang(state, value) {
             if (value.toUpperCase() === 'EN') {
                 state.lang = lang_en;
+                state.lang_name = 'EN';
             } else {
                 state.lang = lang_fr;
+                state.lang_name = 'FR'
             }
             localStorage.setItem('lang', value);
         },

@@ -12,7 +12,13 @@ export default {
 
   },
   computed: {
-
+    getStoredLang() {
+      const storedLang = localStorage.getItem('lang');
+      if(storedLang) {
+        return storedLang;
+      }
+      return 'FR';
+    }
   },
   mounted() {
 
@@ -29,7 +35,8 @@ export default {
       </div>
       <div class="content-card">
         <p>{{stand.id_stand_type_stand_type.name}}</p>
-        <p>{{stand.description_fr}}</p>
+        <p v-if="'EN' === $store.state.lang_name">{{ stand.description_en }}</p>
+        <p v-else>{{ stand.description_fr }}</p>
       </div>
     </div>
   </router-link>

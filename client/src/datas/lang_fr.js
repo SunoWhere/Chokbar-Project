@@ -101,4 +101,12 @@ export const lang_fr = {
 
     about_go_map: "Aller sur la map",
 
+    // Stand Shop View
+    stands_articles_shop_nom: "Nom",
+    stands_articles_shop_prix: "Prix",
+    stands_articles_shop_quantite: "Quantité",
+    stands_articles_shop_type: "Type d'article",
+    stands_articles_shop_unite: "Unité(s)",
+    stands_articles_shop_info: "Infos",
+    stands_articles_shop_cart: "Ajouter au panier",
 }
