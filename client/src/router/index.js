@@ -16,6 +16,7 @@ import CrudStandView from "@/views/Provider/CrudStandView.vue";
 import CartView from "@/views/Global/CartView.vue"
 import ShopView from "@/views/Global/ShopView.vue"
 import ShopStandView from "@/views/Global/ShopStandView.vue"
+import CrudArticleStandView from "@/views/Provider/CrudArticleStandView.vue"
 
 Vue.use(VueRouter)
 
@@ -99,6 +100,12 @@ const routes = [
     path: '/intervenant/stands',
     name: 'CrudStand',
     component: CrudStandView
+  },
+    {
+    path: '/intervenant/stands/article',
+    name: 'CrudArticle',
+    component: CrudArticleStandView,
+    props: true
   }
 ]
 
