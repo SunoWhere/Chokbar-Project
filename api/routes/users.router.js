@@ -229,21 +229,21 @@ router.get("/:uuid", usersMiddleware.validateUuid, usersController.getUserByID)
  *       - Users
  *     summary: Create a new user
  *     description: Endpoint for creating a new user in the system.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               email:
- *                 type: string
- *               password:
- *                 type: string
- *               first_name:
- *                 type: string
- *               last_name:
- *                 type: string
+ *     parameters:
+ *       - in: body
+ *         name: user
+ *         description: The user to create.
+ *         schema:
+ *           type: object
+ *           properties:
+ *             email:
+ *               type: string
+ *             password:
+ *               type: string
+ *             first_name:
+ *               type: string
+ *             last_name:
+ *               type: string
  *     responses:
  *       201:
  *         description: New user saved successfully.
@@ -268,17 +268,17 @@ router.post("/", usersMiddleware.validateUserInput, usersController.saveUser)
  *         required: true
  *         description: The UUID of the user.
  *         type: string
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               id_product:
- *                 type: integer
- *               quantity:
- *                 type: integer
+ *       - in: body
+ *         name: product
+ *         required: true
+ *         description: The product to add to the cart.
+ *         schema:
+ *           type: object
+ *           properties:
+ *             id_product:
+ *               type: integer
+ *             quantity:
+ *               type: integer
  *     responses:
  *       201:
  *         description: Product added to cart successfully.
@@ -295,8 +295,8 @@ router.post("/:uuid/cart", usersMiddleware.validateUuid, usersController.addToCa
  *   post:
  *     tags:
  *       - Users
- *     summary: Create an order
- *     description: Endpoint for creating an order.
+ *     summary: Create an order based on the user's cart
+ *     description: Endpoint for creating an order based on the user's cart.
  *     parameters:
  *       - in: path
  *         name: uuid

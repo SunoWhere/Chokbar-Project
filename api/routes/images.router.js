@@ -56,18 +56,19 @@ router.get("/:filename", imagesMiddleware.validateFilename, imagesController.get
  *     summary: Add a new image
  *     description: Endpoint for uploading a new image.
  *     consumes:
- *       - multipart/form-data
- *     requestBody:
- *       required: true
- *       content:
- *         multipart/form-data:
- *           schema:
- *             type: object
- *             properties:
- *               image:
- *                 type: string
- *                 format: binary
- *                 description: Image file to upload.
+ *       - in: formData
+ *         name: image
+ *         type: file
+ *         description: The image to upload.
+ *         required: true
+ *         content: multipart/form-data
+ *         schema:
+ *           type: object
+ *           properties:
+ *             image:
+ *               type: file
+ *               format: binary
+ *               description: Image file to upload.
  *     responses:
  *       200:
  *         description: Image added successfully.

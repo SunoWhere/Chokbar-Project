@@ -253,47 +253,47 @@ router.get("/:id/products/:id_product", standsMiddleware.validateId, standsMiddl
  *         required: true
  *         description: The ID of the stand.
  *         type: integer
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - price
- *               - quantity
- *               - id_stand
- *               - id_product_type
- *               - description_en
- *               - description_fr
- *               - name_en
- *               - name_fr
- *             properties:
- *               price:
- *                 type: number
- *                 format: double
- *                 description: Price of the product.
- *               quantity:
- *                 type: integer
- *                 description: Quantity available.
- *               id_stand:
- *                 type: integer
- *                 description: Stand ID the product is associated with.
- *               id_product_type:
- *                 type: integer
- *                 description: Product type ID.
- *               description_en:
- *                 type: string
- *                 description: English description of the product.
- *               description_fr:
- *                 type: string
- *                 description: French description of the product.
- *               name_en:
- *                 type: string
- *                 description: English name of the product.
- *               name_fr:
- *                 type: string
- *                 description: French name of the product.
+ *       - in: body
+ *         name: product
+ *         description: Product information to be created.
+ *         required: true
+ *         schema:
+ *           type: object
+ *           required:
+ *             - price
+ *             - quantity
+ *             - id_stand
+ *             - id_product_type
+ *             - description_en
+ *             - description_fr
+ *             - name_en
+ *             - name_fr
+ *           properties:
+ *             price:
+ *               type: number
+ *               format: double
+ *               description: Price of the product.
+ *             quantity:
+ *               type: integer
+ *               description: Quantity available.
+ *             id_stand:
+ *               type: integer
+ *               description: Stand ID the product is associated with.
+ *             id_product_type:
+ *               type: integer
+ *               description: Product type ID.
+ *             description_en:
+ *               type: string
+ *               description: English description of the product.
+ *             description_fr:
+ *               type: string
+ *               description: French description of the product.
+ *             name_en:
+ *               type: string
+ *               description: English name of the product.
+ *             name_fr:
+ *               type: string
+ *               description: French name of the product.
  *     responses:
  *       200:
  *         description: New product saved successfully.
@@ -323,47 +323,47 @@ router.post("/:id/products/", standsMiddleware.validateId, standsController.save
  *         required: true
  *         description: The ID of the product.
  *         type: integer
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - price
- *               - quantity
- *               - id_stand
- *               - id_product_type
- *               - description_en
- *               - description_fr
- *               - name_en
- *               - name_fr
- *             properties:
- *               price:
- *                 type: number
- *                 format: double
- *                 description: Price of the product.
- *               quantity:
- *                 type: integer
- *                 description: Quantity available.
- *               id_stand:
- *                 type: integer
- *                 description: Stand ID the product is associated with.
- *               id_product_type:
- *                 type: integer
- *                 description: Product type ID.
- *               description_en:
- *                 type: string
- *                 description: English description of the product.
- *               description_fr:
- *                 type: string
- *                 description: French description of the product.
- *               name_en:
- *                 type: string
- *                 description: English name of the product.
- *               name_fr:
- *                 type: string
- *                 description: French name of the product.
+ *       - in: body
+ *         name: product
+ *         description: Product information to be updated.
+ *         required: true
+ *         schema:
+ *           type: object
+ *           required:
+ *             - price
+ *             - quantity
+ *             - id_stand
+ *             - id_product_type
+ *             - description_en
+ *             - description_fr
+ *             - name_en
+ *             - name_fr
+ *           properties:
+ *             price:
+ *               type: number
+ *               format: double
+ *               description: Price of the product.
+ *             quantity:
+ *               type: integer
+ *               description: Quantity available.
+ *             id_stand:
+ *               type: integer
+ *               description: Stand ID the product is associated with.
+ *             id_product_type:
+ *               type: integer
+ *               description: Product type ID.
+ *             description_en:
+ *               type: string
+ *               description: English description of the product.
+ *             description_fr:
+ *               type: string
+ *               description: French description of the product.
+ *             name_en:
+ *               type: string
+ *               description: English name of the product.
+ *             name_fr:
+ *               type: string
+ *               description: French name of the product.
  *     responses:
  *       200:
  *         description: Product updated successfully.
@@ -408,6 +408,7 @@ router.put("/:id/products/:id_product", standsMiddleware.validateId, standsMiddl
 router.delete("/:id/products/:id_product", standsMiddleware.validateId, standsController.deleteProductById)
 
 // ---- Images ----
+// FIXME
 /**
  * @swagger
  * /api/stands/{id}/images:
@@ -422,17 +423,18 @@ router.delete("/:id/products/:id_product", standsMiddleware.validateId, standsCo
  *         required: true
  *         description: The ID of the stand.
  *         type: integer
- *     requestBody:
- *       required: true
- *       content:
- *         multipart/form-data:
- *           schema:
- *             type: object
- *             properties:
- *               file:
- *                 type: string
- *                 format: binary
- *                 description: Image file to upload.
+ *       - in: formData
+ *         name: image
+ *         description: Image file to upload.
+ *         required: true
+ *         type: file
+ *         schema:
+ *           type: object
+ *           properties:
+ *             image:
+ *               type: string
+ *               format: binary
+ *               description: Image file to upload.
  *     responses:
  *       200:
  *         description: Successfully added new image to stand.

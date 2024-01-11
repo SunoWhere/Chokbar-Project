@@ -56,46 +56,44 @@ router.get("/:id", eventsMiddleware.validateEventId, eventsController.getEventBy
  *       - Events
  *     summary: Create a new event
  *     description: Endpoint for creating a new event.
- *     consumes:
- *       - application/json
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - name
- *               - max_capacity
- *               - starting_time
- *               - finishing_time
- *               - description_en
- *               - description_fr
- *               - id_location
- *             properties:
- *               name:
- *                 type: string
- *                 description: Name of the event.
- *               max_capacity:
- *                 type: integer
- *                 description: Maximum capacity of the event.
- *               starting_time:
- *                 type: string
- *                 format: date-time
- *                 description: Starting time of the event.
- *               finishing_time:
- *                 type: string
- *                 format: date-time
- *                 description: Finishing time of the event.
- *               description_en:
- *                 type: string
- *                 description: English description of the event.
- *               description_fr:
- *                 type: string
- *                 description: French description of the event.
- *               id_location:
- *                 type: integer
- *                 description: ID of the event's location.
+ *     parameters
+ *       - in: body
+ *         name: event
+ *         description: The event to create.
+ *         schema:
+ *           type: object
+ *           required:
+ *             - name
+ *             - max_capacity
+ *             - starting_time
+ *             - finishing_time
+ *             - description_en
+ *             - description_fr
+ *             - id_location
+ *           properties:
+ *             name:
+ *               type: string
+ *               description: Name of the event.
+ *             max_capacity:
+ *               type: integer
+ *               description: Maximum capacity of the event.
+ *             starting_time:
+ *               type: string
+ *               format: date-time
+ *               description: Starting time of the event.
+ *             finishing_time:
+ *               type: string
+ *               format: date-time
+ *               description: Finishing time of the event.
+ *             description_en:
+ *               type: string
+ *               description: English description of the event.
+ *             description_fr:
+ *               type: string
+ *               description: French description of the event.
+ *             id_location:
+ *               type: integer
+ *               description: ID of the event's location.
  *     responses:
  *       200:
  *         description: New event created successfully.
@@ -120,17 +118,19 @@ router.post("/", eventsMiddleware.validateEventInput, eventsController.addEvent)
  *         required: true
  *         description: The ID of the event.
  *         type: integer
- *     requestBody:
- *       required: true
- *       content:
- *         multipart/form-data:
- *           schema:
- *             type: object
- *             properties:
- *               file:
- *                 type: string
- *                 format: binary
- *                 description: Image file to upload.
+ *       - in: formData
+ *         name: image
+ *         type: file
+ *         description: The image to upload.
+ *         required: true
+ *         content: multipart/form-data
+ *         schema:
+ *           type: object
+ *           properties:
+ *             image:
+ *               type: file
+ *               format: binary
+ *               description: Image file to upload.
  *     responses:
  *       200:
  *         description: Successfully added new image to event.
@@ -155,44 +155,43 @@ router.post("/:id/images", eventsMiddleware.validateEventId, imagesMiddleware.va
  *         required: true
  *         description: The ID of the event to update.
  *         type: integer
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - name
- *               - max_capacity
- *               - starting_time
- *               - finishing_time
- *               - description_en
- *               - description_fr
- *               - id_location
- *             properties:
- *               name:
- *                 type: string
- *                 description: Name of the event.
- *               max_capacity:
- *                 type: integer
- *                 description: Maximum capacity of the event.
- *               starting_time:
- *                 type: string
- *                 format: date-time
- *                 description: Starting time of the event.
- *               finishing_time:
- *                 type: string
- *                 format: date-time
- *                 description: Finishing time of the event.
- *               description_en:
- *                 type: string
- *                 description: English description of the event.
- *               description_fr:
- *                 type: string
- *                 description: French description of the event.
- *               id_location:
- *                 type: integer
- *                 description: ID of the event's location.
+ *       - in: body
+ *         name: event
+ *         description: The event to update.
+ *         schema:
+ *           type: object
+ *           required:
+ *             - name
+ *             - max_capacity
+ *             - starting_time
+ *             - finishing_time
+ *             - description_en
+ *             - description_fr
+ *             - id_location
+ *           properties:
+ *             name:
+ *               type: string
+ *               description: Name of the event.
+ *             max_capacity:
+ *               type: integer
+ *               description: Maximum capacity of the event.
+ *             starting_time:
+ *               type: string
+ *               format: date-time
+ *               description: Starting time of the event.
+ *             finishing_time:
+ *               type: string
+ *               format: date-time
+ *               description: Finishing time of the event.
+ *             description_en:
+ *               type: string
+ *               description: English description of the event.
+ *             description_fr:
+ *               type: string
+ *               description: French description of the event.
+ *             id_location:
+ *               type: integer
+ *               description: ID of the event's location.
  *     responses:
  *       200:
  *         description: Event updated successfully.

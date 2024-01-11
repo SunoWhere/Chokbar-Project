@@ -5,7 +5,7 @@ var router = express.Router()
 
 /**
  * @swagger
- * /api/product_types/:
+ * /api/products/product_types/:
  *   get:
  *     tags:
  *       - Products
@@ -55,49 +55,47 @@ router.get("/:id_product", productsMiddleware.validateProductId, productsControl
  *       - Products
  *     summary: Create a new product
  *     description: Endpoint for creating a new product.
- *     consumes:
- *       - application/json
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - price
- *               - quantity
- *               - id_stand
- *               - id_product_type
- *               - description_en
- *               - description_fr
- *               - name_en
- *               - name_fr
- *             properties:
- *               price:
- *                 type: number
- *                 format: double
- *                 description: Price of the product.
- *               quantity:
- *                 type: integer
- *                 description: Quantity available.
- *               id_stand:
- *                 type: integer
- *                 description: Stand ID the product is associated with.
- *               id_product_type:
- *                 type: integer
- *                 description: Product type ID.
- *               description_en:
- *                 type: string
- *                 description: English description of the product.
- *               description_fr:
- *                 type: string
- *                 description: French description of the product.
- *               name_en:
- *                 type: string
- *                 description: English name of the product.
- *               name_fr:
- *                 type: string
- *                 description: French name of the product.
+ *     parameters:
+ *       - in: body
+ *         name: product
+ *         description: The product to create.
+ *         schema:
+ *           type: object
+ *           required:
+ *             - price
+ *             - quantity
+ *             - id_stand
+ *             - id_product_type
+ *             - description_en
+ *             - description_fr
+ *             - name_en
+ *             - name_fr
+ *           properties:
+ *             price:
+ *               type: number
+ *               format: double
+ *               description: Price of the product.
+ *             quantity:
+ *               type: integer
+ *               description: Quantity available.
+ *             id_stand:
+ *               type: integer
+ *               description: Stand ID the product is associated with.
+ *             id_product_type:
+ *               type: integer
+ *               description: Product type ID.
+ *             description_en:
+ *               type: string
+ *               description: English description of the product.
+ *             description_fr:
+ *               type: string
+ *               description: French description of the product.
+ *             name_en:
+ *               type: string
+ *               description: English name of the product.
+ *             name_fr:
+ *               type: string
+ *               description: French name of the product.
  *     responses:
  *       200:
  *         description: New product saved successfully.
@@ -122,47 +120,46 @@ router.post("/", productsMiddleware.validateProductInputs, productsController.sa
  *         required: true
  *         description: The ID of the product to update.
  *         type: integer
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - price
- *               - quantity
- *               - id_stand
- *               - id_product_type
- *               - description_en
- *               - description_fr
- *               - name_en
- *               - name_fr
- *             properties:
- *               price:
- *                 type: number
- *                 format: double
- *                 description: Price of the product.
- *               quantity:
- *                 type: integer
- *                 description: Quantity available.
- *               id_stand:
- *                 type: integer
- *                 description: Stand ID the product is associated with.
- *               id_product_type:
- *                 type: integer
- *                 description: Product type ID.
- *               description_en:
- *                 type: string
- *                 description: English description of the product.
- *               description_fr:
- *                 type: string
- *                 description: French description of the product.
- *               name_en:
- *                 type: string
- *                 description: English name of the product.
- *               name_fr:
- *                 type: string
- *                 description: French name of the product.
+ *       - in: body
+ *         name: product
+ *         description: The product to update.
+ *         schema:
+ *           type: object
+ *           required:
+ *             - price
+ *             - quantity
+ *             - id_stand
+ *             - id_product_type
+ *             - description_en
+ *             - description_fr
+ *             - name_en
+ *             - name_fr
+ *           properties:
+ *             price:
+ *               type: number
+ *               format: double
+ *               description: Price of the product.
+ *             quantity:
+ *               type: integer
+ *               description: Quantity available.
+ *             id_stand:
+ *               type: integer
+ *               description: Stand ID the product is associated with.
+ *             id_product_type:
+ *               type: integer
+ *               description: Product type ID.
+ *             description_en:
+ *               type: string
+ *               description: English description of the product.
+ *             description_fr:
+ *               type: string
+ *               description: French description of the product.
+ *             name_en:
+ *               type: string
+ *               description: English name of the product.
+ *             name_fr:
+ *               type: string
+ *               description: French name of the product.
  *     responses:
  *       200:
  *         description: Product updated successfully.
