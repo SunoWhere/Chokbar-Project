@@ -112,6 +112,7 @@ tr:nth-child(even){
 }
 
 td{
+  color: black;
   text-align: center;
   padding: 5px;
   max-width: 250px;
@@ -156,7 +157,7 @@ thead{
   border: none;
   color: white;
   padding: 5px 5px;
-  margin-top: 100px;
+  margin-top: 80px;
   margin-bottom: 10px;
   text-align: center;
   text-decoration: none;

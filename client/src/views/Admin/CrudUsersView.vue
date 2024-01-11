@@ -6,8 +6,6 @@ import AddUserPopup from "@/components/Admin/Users/AddUserPopup.vue";
 import RemoveUserPopup from "@/components/Admin/Users/RemoveUserPopup.vue";
 import EditUserPopup from "@/components/Admin/Users/EditUserPopup.vue";
 
-//FIXME: Doit-on voir tous les utilisateurs (admin et providers inclut) ou seulements les users
-
 export default {
   name: 'CrudProvidersView',
   data () {
