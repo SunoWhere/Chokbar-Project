@@ -1,25 +1,22 @@
 <script>
 export default {
-  name: "AproposView"
+  name: "AproposView",
+  methods: {
+    getLang() {
+      return this.$store.state.lang;
+    },
+  },
 }
 </script>
 
 <template>
   <div class="Date">
-    <h1 id="main-title">À propos:</h1>
+    <h1 id="main-title">{{ getLang().about_main_title }}</h1>
     <div class="sub-container">
       <div class="p-content" id="p-content-1">
         <div id="pt-content">
-          <h4 class="content-subtitle" id="scnd-sub-title">Explorez une palette culinaire <br>exceptionnelle</h4>
-          <p class="content-p">Des compétitions de gaming acharnées aux expériences
-            en réalité virtuelle captivantes, en passant par les démonstrations des
-            derniers jeux des développeurs locaux, notre événement vous plonge
-            entièrement dans un univers dynamique et passionnant. Parcourez les
-            bornes d'arcade rétro, plongez dans des mondes virtuels grâce à nos
-            expériences de réalité virtuelle époustouflantes et découvrez les créations
-            les plus innovantes des talents locaux. EZCon 2023 est bien plus qu'un événement,
-            c'est une aventure immersive qui célèbre toutes les facettes du jeu vidéo, du rétro au futuriste.
-          </p>
+          <h4 class="content-subtitle" id="scnd-sub-title">{{ getLang().about_first_p_title1 }} <br> {{ getLang().about_first_p_title2 }}</h4>
+          <p class="content-p">{{ getLang().about_first_p }}</p>
         </div>
         <div class="img" id="foodtruck"></div>
       </div>
@@ -27,16 +24,8 @@ export default {
     <div class="sub-container">
       <div class="p-content" id="p-content-2">
         <div id="pt-content">
-          <h3 class="content-subtitle">Des goodies de toutes les couleurs</h3>
-          <p class="content-p">
-            Lors de votre expérience à EZCon, plongez dans un paradis des
-            goodies où une variété exceptionnelle vous attend. Des figurines
-            de la culture pop aux articles exclusifs, notre boutique propose
-            une sélection soigneusement choisie pour satisfaire tous les passionnés.
-            Que vous soyez à la recherche de souvenirs uniques, de vêtements
-            pop ou de trésors de collection, vous trouverez tout ce que vous
-            désirez.
-          </p>
+          <h3 class="content-subtitle">{{ getLang().about_second_p_title }}</h3>
+          <p class="content-p">{{ getLang().about_second_p }}</p>
         </div>
         <div class="img" id="figurine"></div>
       </div>
@@ -44,18 +33,11 @@ export default {
     <div class="sub-container">
       <div class="p-content" id="p-content-3">
         <div id="pt-content">
-          <h3 class="content-subtitle">Planifiez Votre Journée à EZCon </h3>
-          <p class="content-p">
-            Pour vous assurer une expérience sans tracas, consultez
-            notre map interactive ainsi que le planning pour planifier
-            votre journée à EZCon. Découvrez les horaires des événements,
-            les emplacements des stands de restauration, et
-            assurez-vous de ne rien manquer des temps forts de
-            l'événement.
-          </p>
+          <h3 class="content-subtitle">{{ getLang().about_third_p_title }}</h3>
+          <p class="content-p">{{ getLang().about_third_p }}</p>
           <div id="vr-button-container">
-            <div id="vr-inscription-button">
-              S'inscrire
+            <div id="vr-inscription-button" @click="$router.push('/map')">
+              {{ getLang().about_go_map }}
             </div>
           </div>
         </div>

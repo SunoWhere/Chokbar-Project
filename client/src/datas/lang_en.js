@@ -32,6 +32,7 @@ export const lang_en = {
     home_third_p_title: "Virtual reality, EVA...",
     home_third_p: "For the 2024 edition, an exceptional VR experience awaits us with the arrival of EVA. Don't miss this unique opportunity and sign up now to live one of the most captivating VR experiences to date! Immerse yourself in virtual reality and explore fascinating worlds, all during an event that promises to be memorable. Join us for an unprecedented adventure and be ready to push the boundaries of immersion. Your spot in this exciting VR experience is waiting for you – reserve it today!",
 
+    // Footer
     footer_presentation_first: "EzCon is the must-attend event for video game enthusiasts in the Belfort region. Come discover the latest releases, meet industry experts, and immerse yourself in the fascinating gaming universe.",
     footer_presentation_second: "Join us for a unique experience! Explore virtual worlds, challenge your friends, and live unforgettable moments. EzCon is more than just a convention; it's a celebration of gaming culture.",
 
@@ -42,5 +43,31 @@ export const lang_en = {
     footer_mentions: "Legal Notice & Terms of Use",
     footer_politique: "Privacy Policy",
     footer_contact: "CONTACT US",
-    footer_foot: "EZCon @ 2023 | May 20-25, 2023 | ANDELNAN EXHIBITION HALL"
+    footer_foot: "EZCon @ 2023 | May 20-25, 2023 | ANDELNAN EXHIBITION HALL",
+
+    // Billetterie
+    ticketing_name_card_1: "Visitor",
+    ticketing_jours: "day",
+    ticketing_reserver: "Book Now",
+    ticketing_avantages: "Advantages",
+    ticketing_events: "Events",
+    ticketing_concours: "Contests",
+    ticketing_commandes: "Online Orders",
+    ticketing_priority: "Priority Queue",
+    ticketing_vip: "VIP Area",
+    ticketing_premiere: "Access to Premieres",
+
+    // À Propos
+    about_main_title: "About",
+    about_first_p_title1: "Explore a Local Culinary Palette",
+    about_first_p_title2: "",
+    about_first_p: "From intense gaming competitions to captivating virtual reality experiences, and demonstrations of the latest games from local developers, our event immerses you entirely in a dynamic and exciting universe. Explore retro arcade cabinets, dive into virtual worlds with our stunning virtual reality experiences, and discover the most innovative creations from local talents. EZCon 2023 is more than just an event; it's an immersive adventure that celebrates all facets of video gaming, from retro to futuristic.",
+
+    about_second_p_title: "Goodies in Every Color",
+    about_second_p: "During your experience at EZCon, dive into a paradise of goodies where an exceptional variety awaits you. From pop culture figurines to exclusive items, our shop offers a carefully curated selection to satisfy all enthusiasts. Whether you're looking for unique mementos, trendy clothing, or collector's treasures, you'll find everything you desire.",
+
+    about_third_p_title: "Plan Your Day at EZCon",
+    about_third_p: "To ensure a hassle-free experience, check out our interactive map and schedule to plan your day at EZCon. Discover event timings, locations of food stands, and make sure not to miss any highlights of the event.",
+
+    about_go_map: "Go on map",
 }
