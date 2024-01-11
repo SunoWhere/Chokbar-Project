@@ -7,7 +7,12 @@ export default {
     return {
       title: 'Billetterie'
     }
-  }
+  },
+  methods: {
+    getLang() {
+      return this.$store.state.lang;
+    },
+  },
 }
 
 </script>
@@ -18,8 +23,8 @@ export default {
       <div class="price-box">
         <div class="box-top-section">
           <div class="plan-name">
-            <strong>Visiteur</strong>
-            <span>1 jour</span>
+            <strong>{{ getLang().ticketing_name_card_1 }}</strong>
+            <span>1 {{ getLang().ticketing_jours }}</span>
           </div>
           <div class="price-section">
             <strong class="price">
@@ -27,29 +32,29 @@ export default {
               <span>€</span>
             </strong>
           </div>
-          <a class="Choose-plan-btn" @click="$router.push('/Billetterie/checkout')">Réserver</a>
+          <a class="Choose-plan-btn" @click="$router.push('/Billetterie/checkout')">{{ getLang().ticketing_reserver }}</a>
         </div>
         <div class="box-features-section">
           <div class="box-features-title">
-            <span>Avantage</span>
+            <span>{{ getLang().ticketing_avantages }}</span>
             </div>
           <div class="features-box">
             <div class="check-icon">
               <font-awesome-icon icon="fa-solid fa-check" />
             </div>
-            <span>Événements</span>
+            <span>{{ getLang().ticketing_events }}</span>
           </div>
           <div class="features-box">
             <div class="check-icon">
               <font-awesome-icon icon="fa-solid fa-check" />
             </div>
-            <span>Concours</span>
+            <span>{{ getLang().ticketing_concours }}</span>
           </div>
           <div class="features-box">
             <div class="check-icon">
               <font-awesome-icon icon="fa-solid fa-check" />
             </div>
-            <span>Commande en ligne</span>
+            <span>{{ getLang().ticketing_commandes }}</span>
           </div>
           <div class="box-features-title">
             <p>Extra</p>
@@ -64,19 +69,19 @@ export default {
             <div class="cross-icon">
               <font-awesome-icon icon="fa-solid fa-xmark" />
             </div>
-            <span>File prioritaire</span>
+            <span>{{ getLang().ticketing_priority }}</span>
           </div>
           <div class="features-box">
             <div class="cross-icon">
               <font-awesome-icon icon="fa-solid fa-xmark" />
             </div>
-            <span>Espace VIP</span>
+            <span>{{ getLang().ticketing_vip }}</span>
           </div>
           <div class="features-box">
             <div class="cross-icon">
               <font-awesome-icon icon="fa-solid fa-xmark" />
             </div>
-            <span>Accès aux avants premières</span>
+            <span>{{ getLang().ticketing_premiere }}</span>
           </div>
         </div>
       </div>
@@ -88,7 +93,7 @@ export default {
           </div>
           <div class="plan-name">
             <strong>Addict</strong>
-            <span>5 jours</span>
+            <span>5 {{ getLang().ticketing_jours }}</span>
           </div>
           <div class="price-section">
             <strong class="price">
@@ -96,29 +101,29 @@ export default {
               <span>€</span>
             </strong>
           </div>
-          <a class="Choose-plan-btn" @click="$router.push('/Billetterie/checkout')">Réserver </a>
+          <a class="Choose-plan-btn" @click="$router.push('/Billetterie/checkout')">{{ getLang().ticketing_reserver }}</a>
         </div>
         <div class="box-features-section">
           <div class="box-features-title">
-            <p>Avantage</p>
+            <p>{{ getLang().ticketing_avantages }}</p>
           </div>
           <div class="features-box">
             <div class="check-icon">
               <font-awesome-icon icon="fa-solid fa-check" />
             </div>
-            <span>Événements</span>
+            <span>{{ getLang().ticketing_events }}</span>
           </div>
           <div class="features-box">
             <div class="check-icon">
               <font-awesome-icon icon="fa-solid fa-check" />
             </div>
-            <span>Concours</span>
+            <span>{{ getLang().ticketing_concours }}</span>
           </div>
           <div class="features-box">
             <div class="check-icon">
               <font-awesome-icon icon="fa-solid fa-check" />
             </div>
-            <span>Commande en ligne</span>
+            <span>{{ getLang().ticketing_commandes }}</span>
           </div>
           <div class="box-features-title">
             <p>Extra</p>
@@ -133,19 +138,19 @@ export default {
             <div class="check-icon">
               <font-awesome-icon icon="fa-solid fa-check" />
             </div>
-            <span>File prioritaire</span>
+            <span>{{ getLang().ticketing_priority }}</span>
           </div>
           <div class="features-box">
             <div class="check-icon">
               <font-awesome-icon icon="fa-solid fa-check" />
             </div>
-            <span>Espace VIP</span>
+            <span>{{ getLang().ticketing_vip }}</span>
           </div>
           <div class="features-box">
             <div class="check-icon">
               <font-awesome-icon icon="fa-solid fa-check" />
             </div>
-            <span>Accès aux avants premières</span>
+            <span>{{ getLang().ticketing_premiere }}</span>
           </div>
         </div>
       </div>
@@ -154,7 +159,7 @@ export default {
         <div class="box-top-section">
           <div class="plan-name">
             <strong>Habitué</strong>
-            <span>3 jours</span>
+            <span>3 {{ getLang().ticketing_jours }}</span>
           </div>
           <div class="price-section">
             <strong class="price">
@@ -162,29 +167,29 @@ export default {
               <span>€</span>
             </strong>
           </div>
-          <a class="Choose-plan-btn"  @click="$router.push('/Billetterie/checkout')">Réserver</a>
+          <a class="Choose-plan-btn"  @click="$router.push('/Billetterie/checkout')">{{ getLang().ticketing_reserver }}</a>
         </div>
         <div class="box-features-section">
           <div class="box-features-title">
-            <p>Avantage</p>
+            <p>{{ getLang().ticketing_avantages }}</p>
           </div>
           <div class="features-box">
             <div class="check-icon">
               <font-awesome-icon icon="fa-solid fa-check" />
             </div>
-            <span>Événements</span>
+            <span>{{ getLang().ticketing_events }}</span>
           </div>
           <div class="features-box">
             <div class="check-icon">
               <font-awesome-icon icon="fa-solid fa-check" />
             </div>
-            <span>Concours</span>
+            <span>{{ getLang().ticketing_concours }}</span>
           </div>
           <div class="features-box">
             <div class="check-icon">
               <font-awesome-icon icon="fa-solid fa-check" />
             </div>
-            <span>Commande en ligne</span>
+            <span>{{ getLang().ticketing_commandes }}</span>
           </div>
           <div class="box-features-title">
             <p>Extra</p>
@@ -199,19 +204,19 @@ export default {
             <div class="check-icon">
               <font-awesome-icon icon="fa-solid fa-check" />
             </div>
-            <span>File prioritaire</span>
+            <span>{{ getLang().ticketing_priority }}</span>
           </div>
           <div class="features-box">
             <div class="cross-icon">
               <font-awesome-icon icon="fa-solid fa-xmark" />
             </div>
-            <span>Espace VIP</span>
+            <span>{{ getLang().ticketing_vip }}</span>
           </div>
           <div class="features-box">
             <div class="cross-icon">
               <font-awesome-icon icon="fa-solid fa-xmark" />
             </div>
-            <span>Accès aux avants premières</span>
+            <span>{{ getLang().ticketing_premiere }}</span>
           </div>
         </div>
       </div>

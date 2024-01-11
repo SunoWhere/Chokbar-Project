@@ -1,6 +1,7 @@
 
 export const lang_fr = {
 
+    // All
     btn_subscribe: "S'inscrire",
 
     // Navbar
@@ -38,6 +39,7 @@ export const lang_fr = {
         "            aventure inédite et soyez prêt à repousser les frontières de l'immersion. Votre place\n" +
         "            dans cette folle expérience VR vous attend – réservez-la dès aujourd'hui !",
 
+    // Footer
     footer_presentation_first: "EzCon est le rendez-vous incontournable des passionnés de jeux vidéo du territoire de Belfort.\n" +
         "            Venez découvrir les dernières nouveautés, rencontrer des experts de l'industrie\n" +
         "            et plongez-vous dans l'univers fascinant du gaming.",
@@ -53,5 +55,17 @@ export const lang_fr = {
     footer_mentions: "Mentions légales & GCU",
     footer_politique: "Politique de confidentalité",
     footer_contact: "NOUS CONTACTER",
-    footer_foot: "EZCon @ 2023 | Du 20 au 25 MAI 2023 | ANDELNAN SALLE D'EXPOSITION"
+    footer_foot: "EZCon @ 2023 | Du 20 au 25 MAI 2023 | ANDELNAN SALLE D'EXPOSITION",
+
+    // Billetterie
+    ticketing_name_card_1: "Visiteur",
+    ticketing_jours: "jour",
+    ticketing_reserver: "Réserver",
+    ticketing_avantages: "Avantages",
+    ticketing_events: "Événements",
+    ticketing_concours: "Concours",
+    ticketing_commandes: "Commandes en ligne",
+    ticketing_priority: "File prioritaire",
+    ticketing_vip: "Espace VIP",
+    ticketing_premiere: "Accès aux avants premières",
 }

@@ -32,6 +32,7 @@ export const lang_en = {
     home_third_p_title: "Virtual reality, EVA...",
     home_third_p: "For the 2024 edition, an exceptional VR experience awaits us with the arrival of EVA. Don't miss this unique opportunity and sign up now to live one of the most captivating VR experiences to date! Immerse yourself in virtual reality and explore fascinating worlds, all during an event that promises to be memorable. Join us for an unprecedented adventure and be ready to push the boundaries of immersion. Your spot in this exciting VR experience is waiting for you – reserve it today!",
 
+    // Footer
     footer_presentation_first: "EzCon is the must-attend event for video game enthusiasts in the Belfort region. Come discover the latest releases, meet industry experts, and immerse yourself in the fascinating gaming universe.",
     footer_presentation_second: "Join us for a unique experience! Explore virtual worlds, challenge your friends, and live unforgettable moments. EzCon is more than just a convention; it's a celebration of gaming culture.",
 
@@ -42,5 +43,17 @@ export const lang_en = {
     footer_mentions: "Legal Notice & Terms of Use",
     footer_politique: "Privacy Policy",
     footer_contact: "CONTACT US",
-    footer_foot: "EZCon @ 2023 | May 20-25, 2023 | ANDELNAN EXHIBITION HALL"
+    footer_foot: "EZCon @ 2023 | May 20-25, 2023 | ANDELNAN EXHIBITION HALL",
+
+    // Billetterie
+    ticketing_name_card_1: "Visitor",
+    ticketing_jours: "day",
+    ticketing_reserver: "Book Now",
+    ticketing_avantages: "Advantages",
+    ticketing_events: "Events",
+    ticketing_concours: "Contests",
+    ticketing_commandes: "Online Orders",
+    ticketing_priority: "Priority Queue",
+    ticketing_vip: "VIP Area",
+    ticketing_premiere: "Access to Premieres",
 }
