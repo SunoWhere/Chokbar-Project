@@ -7,6 +7,11 @@ export default {
   components: {
 
   },
+  methods: {
+    getLang() {
+      return this.$store.state.lang;
+    },
+  },
 }
 
 </script>
@@ -15,52 +20,44 @@ export default {
     <div class="footer">
       <div class="main-container">
         <div class="ezcon">
-          <h4 class="title">EzCon</h4>
-          <h5 class="footer-slogan">LE SALON BELFORTAIN DU JEU VIDEO</h5>
-          <p id="fpr-1" class="footer-presentation">
-            EzCon est le rendez-vous incontournable des passionnés de jeux vidéo du territoire de Belfort.
-            Venez découvrir les dernières nouveautés, rencontrer des experts de l'industrie
-            et plongez-vous dans l'univers fascinant du gaming.
-          </p>
-          <p class="footer-presentation">
-            Rejoignez-nous pour une expérience unique! Explorez des mondes virtuels,
-            défiez vos amis, et vivez des moments inoubliables. EzCon, c'est bien plus
-            qu'un salon, c'est une célébration de la culture vidéoludique.
-          </p>
+          <h4 class="title">EZCon</h4>
+          <h5 class="footer-slogan">{{ getLang().home_subtitle.toUpperCase() }}</h5>
+          <p id="fpr-1" class="footer-presentation">{{ getLang().footer_presentation_first }}</p>
+          <p class="footer-presentation">{{ getLang().footer_presentation_second }}</p>
         </div>
 
         <div class="infos-pratiques">
-          <h4 class="title">INFORMATIONS </h4>
+          <h4 class="title">{{ getLang().footer_infos_pratiques }}</h4>
 
-          <div class="button">Dates, Horaires, Accès</div>
-          <div class="button">Billetterie</div>
-          <div class="button">Tarifs</div>
-          <div class="button">Questions fréquentes</div>
+          <div class="button">{{ getLang().navbar_dp_dates }}s</div>
+          <div class="button">{{ getLang().navbar_billetterie }}</div>
+          <div class="button">{{ getLang().navbar_boutique }}</div>
+          <div class="button">{{ getLang().footer_questions }}</div>
         </div>
 
         <div class="activities">
-          <h4 class="title">ACTIVITIES</h4>
+          <h4 class="title">{{ getLang().footer_activite }}</h4>
 
           <div class="button">Cosplay</div>
           <div class="button">Esport</div>
         </div>
 
         <div class="apropos">
-          <h4 class="title">À PROPOS</h4>
+          <h4 class="title">{{ getLang().footer_apropos }}</h4>
 
-          <div class="button">Mentions légales & GCU</div>
-          <div class="button">Politique de confidentalité</div>
+          <div class="button">{{ getLang().footer_mentions }}</div>
+          <div class="button">{{ getLang().footer_politique }}</div>
           <div class="button">Cookies</div>
         </div>
 
         <div class="nous-contacter">
-          <h4 class="title">NOUS CONTACTER</h4>
+          <h4 class="title">{{ getLang().footer_contact }}</h4>
           <div class="mail-box">
             <div class="mail-icon">
               <font-awesome-icon icon="fa-solid fa-envelope" />
             </div>
             <div class="button mail-ref">
-              <a href="mailto:ezcon.exposition.com">ezcon.exposition.com</a>
+              <a href="mailto:ezcon.exposition.com">ezcon@exposition.com</a>
             </div>
           </div>
         </div>
@@ -83,7 +80,7 @@ export default {
 
       <div class="tfoot-container">
           <div class="tfoot">
-              <h4>EZCon @ 2023 | Du 20 au 25 MAI 2023 | ANDELNAN SALLE D'EXPOSITION</h4>
+              <h4>{{ getLang().footer_foot }}</h4>
           </div>
       </div>
     </div>
@@ -232,6 +229,10 @@ export default {
 
 #tiktok:hover {
   color: #D20000;
+}
+
+h5 {
+  font-size: 0.8em;
 }
 
 </style>

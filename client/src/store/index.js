@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {providersService, usersService, eventsService, standsService} from "@/services";
+import {providersService, usersService, eventsService, standsService, lang_fr, lang_en} from "@/services";
 
 Vue.use(Vuex)
 
@@ -13,6 +13,8 @@ export default new Vuex.Store({
 
     isConnected: usersService.getUuid() != null,
     role: usersService.getRole(),
+
+    lang: lang_fr,
 
     users: [],
     providers: [],
@@ -132,6 +134,17 @@ export default new Vuex.Store({
     },
     setShowEditStandPopup(state, value) {
       state.showEditStandPopup = value;
+    },
+
+    // Lang
+    setLang(state, value) {
+      if(value.toUpperCase() === 'EN')
+      {
+        state.lang = lang_en;
+      } else {
+        state.lang = lang_fr;
+      }
+      localStorage.setItem('lang', value);
     },
   },
   actions: {

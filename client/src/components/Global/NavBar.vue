@@ -3,6 +3,11 @@ import {usersService} from '@/services';
 
 export default {
   name: 'NavBar',
+  data() {
+    return {
+      lang_name: '',
+    }
+  },
   methods: {
     logout() {
       if (this.isConnected()) {
@@ -24,16 +29,39 @@ export default {
     },
     getRole() {
       return this.$store.state.role;
-    }
+    },
+    changeAppLang(lang) {
+      this.$store.commit("setLang", lang);
+    },
+    changeLang() {
+      if(this.lang_name.toUpperCase() === 'FR') {
+        this.lang_name = 'EN';
+      } else {
+        this.lang_name = 'FR';
+      }
+      return this.lang_name;
+    },
+    getLang() {
+      return this.$store.state.lang;
+    },
   },
   computed: {
     dashboard() {
       if(this.getRole() !== 'user') {
-        return "Dashboard";
+        return this.getLang().navbar_dashboard;
       } else {
-        return "Mon compte";
+        return this.getLang().navbar_compte;
       }
+    },
+  },
+  created() {
+    const storedLang = localStorage.getItem('lang');
+    if (storedLang) {
+      this.$store.commit('setLang', storedLang);
+    } else {
+      this.$store.commit("setLang", 'FR');
     }
+    this.lang_name = storedLang;
   }
 }
 
@@ -45,40 +73,35 @@ export default {
     <ul class="nav-list">
       <li>
         <button class="nav-item underline-animation">
-          <router-link class="router-link" to="/">Accueil</router-link>
+          <router-link class="router-link" to="/">{{ getLang().navbar_accueil }}</router-link>
         </button>
       </li>
       <li>
         <button class="nav-item underline-animation" @click="$router.push('/Map')">
-          Map
+          {{ getLang().navbar_map }}
         </button>
       </li>
       <li>
         <button class="nav-item underline-animation" @click="$router.push('/Billetterie')">
-          Billetterie
+          {{ getLang().navbar_billetterie }}
         </button>
       </li>
       <li>
         <button class="nav-item underline-animation" @click="$router.push('/Boutique')">
-          Boutique
+          {{ getLang().navbar_boutique }}
         </button>
       </li>
       <li id="dropdown">
-        <button class="nav-item dropdown">A Propos <font-awesome-icon icon="fa-solid fa-chevron-down" /></button>
+        <button class="nav-item dropdown">{{ getLang().navbar_apropos }}<font-awesome-icon icon="fa-solid fa-chevron-down" /></button>
         <ul class="dropdown-list">
           <li>
             <button class="dropdown-item underline-animation" @click="$router.push('/Infos/Ezcon')">
-              La EZCon
+              {{ getLang().navbar_dp_ezcon }}
             </button>
           </li>
           <li>
             <button class="dropdown-item underline-animation" @click="$router.push('/Infos/Dates')">
-              Dates, Horaires, Accès
-            </button>
-          </li>
-          <li>
-            <button class="dropdown-item underline-animation">
-              A Découvrir
+              {{ getLang().navbar_dp_dates }}
             </button>
           </li>
         </ul>
@@ -92,22 +115,25 @@ export default {
       </li>
       <li v-if="!isConnected()">
         <button class="nav-item underline-animation" @click="$router.push('/Login')">
-          <font-awesome-icon icon="fa-solid fa-user" /> Se Connecter
+          <font-awesome-icon icon="fa-solid fa-user" />
+          {{ getLang().navbar_login }}
         </button>
       </li>
       <li v-if="isConnected()">
         <button class="nav-item underline-animation" @click="logout()">
-          <font-awesome-icon icon="fa-solid fa-user" /> Se Déconnecter
+          <font-awesome-icon icon="fa-solid fa-user" />
+          {{ getLang().navbar_logout }}
         </button>
       </li>
       <li>
         <button class="nav-item underline-animation" @click="$router.push('/Cart')">
-          <font-awesome-icon icon="fa-solid fa-cart-shopping"/> Panier
+          <font-awesome-icon icon="fa-solid fa-cart-shopping"/>
+          {{ getLang().navbar_panier }}
         </button>
       </li>
       <li>
-        <button class="nav-item underline-animation">
-          FR
+        <button class="nav-item underline-animation" @click="changeAppLang(changeLang())">
+          {{lang_name}}
         </button>
       </li>
     </ul>

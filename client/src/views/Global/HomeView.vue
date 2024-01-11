@@ -4,6 +4,11 @@ export default {
   name: 'HomeView',
   components: {
   },
+  methods: {
+    getLang() {
+      return this.$store.state.lang;
+    },
+  },
   computed: {
 
   },
@@ -21,26 +26,19 @@ export default {
       <div id="title">
         <div id="title-h1">
           <h1>EZCon</h1>
-          <h3>20 > 25 Mai 2023</h3>
+          <h3>{{ getLang().home_sub_date }}</h3>
         </div>
-        <h2>LA conférence terrifortaine du jeu vidéo !</h2>
-        <div class="button-home" @click="$router.push('/Billetterie')">Billetterie</div>
+        <h2>{{ getLang().home_subtitle }}</h2>
+        <div class="button-home" @click="$router.push('/Billetterie')">{{ getLang().navbar_billetterie }}</div>
       </div>
     </div>
     <div class="sub-container">
       <div class="p-content" id="p-content-1">
         <div id="pt-content">
-          <h3 class="content-subtitle" id="first-sub-title">EZCon 2024</h3>
-          <h4 class="content-subtitle" id="scnd-sub-title">La convergence ludique à Belfort !</h4>
+          <h3 class="content-subtitle" id="first-sub-title">{{ getLang().home_first_p_title }}</h3>
+          <h4 class="content-subtitle" id="scnd-sub-title">{{ getLang().home_first_p_subtitle }}</h4>
           <p class="content-p">
-            Des compétitions de gaming acharnées aux expériences
-            en réalité virtuelle captivantes, en passant par les démonstrations des
-            derniers jeux des développeurs locaux, notre événement vous plonge
-            entièrement dans un univers dynamique et passionnant. Parcourez les
-            bornes d'arcade rétro, plongez dans des mondes virtuels grâce à nos
-            expériences de réalité virtuelle époustouflantes et découvrez les créations
-            les plus innovantes des talents locaux. EZCon 2023 est bien plus qu'un événement,
-            c'est une aventure immersive qui célèbre toutes les facettes du jeu vidéo, du rétro au futuriste.
+            {{ getLang().home_first_p }}
           </p>
         </div>
         <div class="img" id="borne-arcade"></div>
@@ -49,12 +47,8 @@ export default {
     <div class="sub-container">
       <div class="p-content" id="p-content-2">
         <div id="pt-content">
-          <h3 class="content-subtitle">Tournois, créateurs et plus</h3>
-          <p class="content-p">Découvrez les dernières nouveautés, participez
-            à des tournois passionnants, rencontrez des créateurs
-            de jeux et plongez-vous dans une communauté vibrante
-            de joueurs.
-          </p>
+          <h3 class="content-subtitle">{{ getLang().home_second_p_title }}</h3>
+          <p class="content-p">{{ getLang().home_second_p}}</p>
         </div>
         <div class="img" id="tournois"></div>
       </div>
@@ -62,20 +56,10 @@ export default {
     <div class="sub-container">
       <div class="p-content" id="p-content-3">
         <div id="pt-content">
-          <h3 class="content-subtitle">Réalité virtuelle, EVA...</h3>
-          <p class="content-p">
-            Pour l'édition 2024, une expérience VR exceptionnelle s'offre à nous avec
-            l'arrivée d'EVA. Ne manquez pas cette opportunité unique et inscrivez-vous
-            dès maintenant pour vivre l'une des expériences VR les plus captivantes à ce
-            jour ! Plongez au cœur de la réalité virtuelle et explorez des mondes fascinants,
-            le tout lors d'un événement qui promet d'être mémorable. Rejoignez-nous pour une
-            aventure inédite et soyez prêt à repousser les frontières de l'immersion. Votre place
-            dans cette folle expérience VR vous attend – réservez-la dès aujourd'hui !
-          </p>
+          <h3 class="content-subtitle">{{ getLang().home_third_p_title }}</h3>
+          <p class="content-p">{{ getLang().home_third_p }}</p>
           <div id="vr-button-container">
-            <div id="vr-inscription-button">
-              S'inscrire
-            </div>
+            <div id="vr-inscription-button">{{ getLang().btn_subscribe }}</div>
           </div>
         </div>
         <div class="img" id="vr-img"></div>
