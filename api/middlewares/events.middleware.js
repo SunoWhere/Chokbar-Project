@@ -27,12 +27,13 @@ exports.validateEventInput = (req, res, next) => {
 
 const validateDate = (date) => {
     const date_obj = new Date(date)
-    if(!date_obj || isNaN(date_obj.getDate())) return false
+    return (date_obj && !isNaN(date_obj.getDate()))
 }
 
 const validateNumeric = (number) => {
+    const number_string = new String(number)
     if (!number) return false
-    return validator.isNumeric(number)
+    return validator.isNumeric(number_string)
 }
 
 const validateName = (name) => {

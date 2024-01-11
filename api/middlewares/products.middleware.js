@@ -28,8 +28,9 @@ exports.validateProductInputs = (req, res, next) => {
 }
 
 const validateNumeric = (number) => {
+    const number_string = new String(number)
     if (!number) return false
-    return validator.isNumeric(number)
+    return validator.isNumeric(number_string)
 }
 
 const validateName = (name) => {
