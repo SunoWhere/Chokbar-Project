@@ -157,7 +157,6 @@ export default new Vuex.Store({
             }
             localStorage.setItem('lang', value);
         },
-
         // Articles
         setArticleList(state, articleList) {
             state.articles = articleList;
