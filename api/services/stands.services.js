@@ -17,7 +17,7 @@ exports.deleteProductById = async (id) => {
             }
         })
         if (res === 0)
-            throw new Error("Product not found")
+            throw new CustomError("Product not found", 404)
     } catch (err) {
         console.log(err)
         throw err
@@ -41,7 +41,7 @@ exports.updateProductById = async (id, price, quantity, id_stand, id_product_typ
         })
 
         if (res[0] === 0)
-            throw new Error("Product not found")
+            throw new CustomError("Product not found", 404)
     } catch (err) {
         console.log(err)
         throw err
@@ -75,7 +75,7 @@ exports.getProductsByStandId = async (id) => {
             }]
         })
         if (res.length === 0)
-            throw new Error("No product found")
+            throw new CustomError("No product found", 404)
         return res
     } catch (err) {
         console.log(err)
@@ -91,7 +91,7 @@ exports.getProductsByIdByStandId = async (id, id_product) => {
             }
         })
         if (res.length === 0)
-            throw new Error("No product found")
+            throw new CustomError("No product found", 404)
         return res
     } catch (err) {
         console.log(err)
@@ -115,7 +115,7 @@ exports.updateStandById = async (id, id_location, id_provider, id_stand_type, na
         })
 
         if (res[0] === 0)
-            throw new Error("User not found")
+            throw new CustomError("User not found", 404)
     } catch (err) {
         console.log(err)
         throw err
@@ -200,8 +200,8 @@ exports.getStands = async () => {
                 as: "id_location_location",
             }]
         })
-        if (data === 0)
-            throw new Error("No stand found")
+        if (data.length === 0)
+            throw new CustomError("No stand found", 404)
         return data
     } catch (err) {
         console.log(err)
