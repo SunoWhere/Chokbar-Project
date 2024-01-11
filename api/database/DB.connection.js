@@ -13,14 +13,15 @@ const sequelize = new Sequelize('ezcon', DB_USER, DB_PWD, {
 
 const DB_models = require("./models/init-models").initModels(sequelize)
 
-const initDb = () => {
+const initDb = async () => {
     sql_script = fs.readFileSync(__dirname + '/bdd.sql').toString()
-    sequelize.query(sql_script)
+    await sequelize.query(sql_script)
 }
 
-sequelize.authenticate().then(() => {
+sequelize.authenticate().then(async () => {
     console.log("Connection successful")
-    initDb()
+    await initDb()
+    console.log("Seed data inserted successfully")
 }).catch((err) => {
     console.log("Connection failed")
 })
