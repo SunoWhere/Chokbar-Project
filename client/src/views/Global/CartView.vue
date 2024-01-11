@@ -159,7 +159,6 @@ export default {
         </div>
 
       </div>
-      <!--TODO: Mettre un bouton pour vider le panier -->
       <div class="right-side">
         <div class="total">
           <p>Total:</p>
