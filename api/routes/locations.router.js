@@ -21,11 +21,6 @@ var router = express.Router()
  */
 router.get("/", locationsController.getLocations)
 
-<<<<<<< HEAD
-router.get("/:id/events", locationsMiddleware.validateLocationId, locationsController.getLocationEvents)
-
-router.get("/:id", locationsMiddleware.validateLocationId, locationsController.getLocationById)
-=======
 /**
  * @swagger
  * /api/locations/{id}/events:
@@ -48,7 +43,7 @@ router.get("/:id", locationsMiddleware.validateLocationId, locationsController.g
  *       500:
  *         description: Internal Server Error.
  */
-router.get("/:id/events", locationsController.getLocationEvents)
+router.get("/:id/events", locationsMiddleware.validateLocationId, locationsController.getLocationEvents)
 
 /**
  * @swagger
@@ -72,7 +67,6 @@ router.get("/:id/events", locationsController.getLocationEvents)
  *       500:
  *         description: Internal Server Error.
  */
-router.get("/:id", locationsController.getLocationById)
->>>>>>> 1645b4a88d3827ce7fcf93bbe36690a9558ed2f8
+router.get("/:id", locationsMiddleware.validateLocationId, locationsController.getLocationById)
 
 module.exports = router

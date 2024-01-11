@@ -102,7 +102,7 @@ router.get("/:id", eventsMiddleware.validateEventId, eventsController.getEventBy
  *       500:
  *         description: Internal Server Error.
  */
-router.post("/", eventsController.addEvent)
+router.post("/", eventsMiddleware.validateEventInput, eventsController.addEvent)
 
 /**
  * @swagger
@@ -137,7 +137,7 @@ router.post("/", eventsController.addEvent)
  *       500:
  *         description: Internal Server Error.
  */
-router.post("/:id/images", eventsMiddleware.validateEventId, eventsController.addEventImage)
+router.post("/:id/images", eventsMiddleware.validateEventId, imagesMiddleware.validateImage, eventsController.addEventImage)
 
 /**
  * @swagger
@@ -199,7 +199,7 @@ router.post("/:id/images", eventsMiddleware.validateEventId, eventsController.ad
  *       500:
  *         description: Internal Server Error.
  */
-router.put("/:id", eventsMiddleware.validateEventId, eventsController.updateEvent)
+router.put("/:id", eventsMiddleware.validateEventId, eventsMiddleware.validateEventInput, eventsController.updateEvent)
 
 /**
  * @swagger

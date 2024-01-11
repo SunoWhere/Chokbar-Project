@@ -43,7 +43,7 @@ router.get("/", imagesController.getImages)
  *       500:
  *         description: Internal Server Error.
  */
-router.get("/:filename", imagesController.getImageByName)
+router.get("/:filename", imagesMiddleware.validateFilename, imagesController.getImageByName)
 
 /**
  * @swagger
@@ -72,7 +72,7 @@ router.get("/:filename", imagesController.getImageByName)
  *       500:
  *         description: Internal Server Error.
  */
-router.post("/", imagesController.addImage)
+router.post("/", imagesMiddleware.validateImage, imagesController.addImage)
 
 /**
  * @swagger
@@ -94,6 +94,6 @@ router.post("/", imagesController.addImage)
  *       500:
  *         description: Internal Server Error.
  */
-router.delete("/:id", imagesController.deleteImage)
+router.delete("/:id", imagesMiddleware.validateId, imagesController.deleteImage)
 
 module.exports = router

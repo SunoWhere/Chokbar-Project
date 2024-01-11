@@ -104,7 +104,7 @@ router.get("/:id_product", productsMiddleware.validateProductId, productsControl
  *       500:
  *         description: Internal Server Error.
  */
-router.post("/", productsController.saveProduct)
+router.post("/", productsMiddleware.validateProductInputs, productsController.saveProduct)
 
 /**
  * @swagger
@@ -171,7 +171,7 @@ router.post("/", productsController.saveProduct)
  *       500:
  *         description: Internal Server Error.
  */
-router.put("/:id_product", productsMiddleware.validateProductId, productsController.updateProductById)
+router.put("/:id_product", productsMiddleware.validateProductId, productsMiddleware.validateProductInputs, productsController.updateProductById)
 
 /**
  * @swagger
