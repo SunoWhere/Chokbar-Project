@@ -126,4 +126,16 @@ export const lang_fr = {
     register_nom: "Nom",
     register_have_account: "Vous avez déjà un compte ? Se connecter maintenant !",
 
+    // Sidebar
+    sidebar_admin_users: "Utilisateurs",
+    sidebar_admin_providers: "Intervenants",
+    sidebar_admin_stands: "Stands",
+    sidebar_admin_calandar: "Calendrier",
+
+    sidebar_provider_stands: "Stands",
+    sidebar_provider_products: "Produits",
+    sidebar_provider_comands: "Commandes",
+
+    sidebar_user_commands: "Commandes",
+
 }

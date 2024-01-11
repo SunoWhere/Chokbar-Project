@@ -95,4 +95,16 @@ export const lang_en = {
     register_prenom: "First Name",
     register_nom: "Last Name",
     register_have_account: "Do you already have an account? Log in now!",
+
+    // Sidebar
+    sidebar_admin_users: "Users",
+    sidebar_admin_providers: "Providers",
+    sidebar_admin_stands: "Stands",
+    sidebar_admin_calandar: "Calendar",
+
+    sidebar_provider_stands: "Stands",
+    sidebar_provider_products: "Products",
+    sidebar_provider_comands: "Orders",
+
+    sidebar_user_commands: "Orders",
 }

@@ -15,28 +15,31 @@ export default {
   methods: {
     getRole() {
       return this.$store.state.role;
-    }
+    },
+    getLang() {
+      return this.$store.state.lang;
+    },
   },
   computed: {
     links() {
       if (this.getRole() === 'admin') {
         return [
-          { label: 'Utilisateurs', route:  '/admin/user' },
-          { label: 'Intervenants', route: '/Admin/Intervenants' },
-          { label: 'Stands', route: '/Admin/Stands' },
-          { label: 'Calendrier', route: '/map' }
+          { label: this.getLang().sidebar_admin_users, route:  '/admin/user' },
+          { label: this.getLang().sidebar_admin_providers, route: '/Admin/Intervenants' },
+          { label: this.getLang().sidebar_admin_stands, route: '/Admin/Stands' },
+          { label: this.getLang().sidebar_admin_calandar, route: '/map' }
         ];
       }
       if (this.getRole() === 'provider') {
         return [
-          { label: 'Stands', route: '/intervenant/stands' },
-          { label: 'Produits', route: '/intervenant/produits' },
-          { label: 'Commandes', route: '/intervenant/events'},
+          { label: this.getLang().sidebar_provider_stands, route: '/intervenant/stands' },
+          { label: this.getLang().sidebar_provider_products, route: '/intervenant/produits' },
+          { label: this.getLang().sidebar_provider_comands, route: '/intervenant/events'},
         ];
       }
       else {
         return [
-          { label: 'Commandes', route: '/users/orders' },
+          { label: this.getLang().sidebar_user_commands, route: '/users/orders' },
         ]
       }
     }
