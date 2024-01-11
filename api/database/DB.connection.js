@@ -13,9 +13,31 @@ const sequelize = new Sequelize('ezcon', DB_USER, DB_PWD, {
 
 const DB_models = require("./models/init-models").initModels(sequelize)
 
+const initTickets = async () => {
+    try{
+        const alphanum = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_'
+        for(let i = 0; i < 300; i++) {
+            const id_type_ticket = Math.floor(Math.random() * 3 + 1)
+            const mail = 'user' + i + '@mail.to'
+            let hash = ''
+            for (let j = 0; j < 256; j++) {
+                hash += alphanum.charAt(Math.floor(Math.random() * alphanum.length));
+            }
+            await DB_models.tickets.create({
+                hash: hash,
+                email: mail,
+                id_ticket_type: id_type_ticket
+            })
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 const initDb = async () => {
     sql_script = fs.readFileSync(__dirname + '/bdd.sql').toString()
     await sequelize.query(sql_script)
+    await initTickets()
 }
 
 sequelize.authenticate().then(async () => {
