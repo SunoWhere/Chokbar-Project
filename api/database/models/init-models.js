@@ -2,10 +2,6 @@ var DataTypes = require("sequelize").DataTypes;
 var _cart_lines = require("./cart_lines");
 var _entries = require("./entries");
 var _entries_rating = require("./entries_rating");
-var _equipment_renting = require("./equipment_renting");
-var _equipment_types = require("./equipment_types");
-var _equipments = require("./equipments");
-var _equipments_images = require("./equipments_images");
 var _events = require("./events");
 var _events_images = require("./events_images");
 var _events_rating = require("./events_rating");
@@ -20,7 +16,6 @@ var _products = require("./products");
 var _products_images = require("./products_images");
 var _providers = require("./providers");
 var _providers_images = require("./providers_images");
-var _register_for = require("./register_for");
 var _roles = require("./roles");
 var _stand_types = require("./stand_types");
 var _stands = require("./stands");
@@ -33,10 +28,6 @@ function initModels(sequelize) {
   var cart_lines = _cart_lines(sequelize, DataTypes);
   var entries = _entries(sequelize, DataTypes);
   var entries_rating = _entries_rating(sequelize, DataTypes);
-  var equipment_renting = _equipment_renting(sequelize, DataTypes);
-  var equipment_types = _equipment_types(sequelize, DataTypes);
-  var equipments = _equipments(sequelize, DataTypes);
-  var equipments_images = _equipments_images(sequelize, DataTypes);
   var events = _events(sequelize, DataTypes);
   var events_images = _events_images(sequelize, DataTypes);
   var events_rating = _events_rating(sequelize, DataTypes);
@@ -51,7 +42,6 @@ function initModels(sequelize) {
   var products_images = _products_images(sequelize, DataTypes);
   var providers = _providers(sequelize, DataTypes);
   var providers_images = _providers_images(sequelize, DataTypes);
-  var register_for = _register_for(sequelize, DataTypes);
   var roles = _roles(sequelize, DataTypes);
   var stand_types = _stand_types(sequelize, DataTypes);
   var stands = _stands(sequelize, DataTypes);
@@ -60,13 +50,9 @@ function initModels(sequelize) {
   var tickets = _tickets(sequelize, DataTypes);
   var users = _users(sequelize, DataTypes);
 
-  entries.belongsToMany(events, { as: 'id_event_events_register_fors', through: register_for, foreignKey: "id_entry", otherKey: "id_event" });
   entries.belongsToMany(users, { as: 'uuid_user_users_entries_ratings', through: entries_rating, foreignKey: "id_entry", otherKey: "uuid_user" });
-  equipments.belongsToMany(images, { as: 'id_image_images', through: equipments_images, foreignKey: "id_equipment", otherKey: "id_image" });
-  events.belongsToMany(entries, { as: 'id_entry_entries_register_fors', through: register_for, foreignKey: "id_event", otherKey: "id_entry" });
-  events.belongsToMany(images, { as: 'id_image_images_events_images', through: events_images, foreignKey: "id_event", otherKey: "id_image" });
+  events.belongsToMany(images, { as: 'id_image_images', through: events_images, foreignKey: "id_event", otherKey: "id_image" });
   events.belongsToMany(users, { as: 'uuid_user_users_events_ratings', through: events_rating, foreignKey: "id_event", otherKey: "uuid_user" });
-  images.belongsToMany(equipments, { as: 'id_equipment_equipments', through: equipments_images, foreignKey: "id_image", otherKey: "id_equipment" });
   images.belongsToMany(events, { as: 'id_event_events', through: events_images, foreignKey: "id_image", otherKey: "id_event" });
   images.belongsToMany(products, { as: 'id_product_products_products_images', through: products_images, foreignKey: "id_image", otherKey: "id_product" });
   images.belongsToMany(providers, { as: 'id_provider_providers', through: providers_images, foreignKey: "id_image", otherKey: "id_provider" });
@@ -82,22 +68,12 @@ function initModels(sequelize) {
   users.belongsToMany(products, { as: 'id_product_products', through: cart_lines, foreignKey: "uuid_user", otherKey: "id_product" });
   entries_rating.belongsTo(entries, { as: "id_entry_entry", foreignKey: "id_entry"});
   entries.hasMany(entries_rating, { as: "entries_ratings", foreignKey: "id_entry"});
-  register_for.belongsTo(entries, { as: "id_entry_entry", foreignKey: "id_entry"});
-  entries.hasMany(register_for, { as: "register_fors", foreignKey: "id_entry"});
-  equipments.belongsTo(equipment_types, { as: "id_equipment_type_equipment_type", foreignKey: "id_equipment_type"});
-  equipment_types.hasMany(equipments, { as: "equipments", foreignKey: "id_equipment_type"});
-  equipment_renting.belongsTo(equipments, { as: "id_equipment_equipment", foreignKey: "id_equipment"});
-  equipments.hasMany(equipment_renting, { as: "equipment_rentings", foreignKey: "id_equipment"});
-  equipments_images.belongsTo(equipments, { as: "id_equipment_equipment", foreignKey: "id_equipment"});
-  equipments.hasMany(equipments_images, { as: "equipments_images", foreignKey: "id_equipment"});
+  entries.belongsTo(events, { as: "id_event_event", foreignKey: "id_event"});
+  events.hasMany(entries, { as: "entries", foreignKey: "id_event"});
   events_images.belongsTo(events, { as: "id_event_event", foreignKey: "id_event"});
   events.hasMany(events_images, { as: "events_images", foreignKey: "id_event"});
   events_rating.belongsTo(events, { as: "id_event_event", foreignKey: "id_event"});
   events.hasMany(events_rating, { as: "events_ratings", foreignKey: "id_event"});
-  register_for.belongsTo(events, { as: "id_event_event", foreignKey: "id_event"});
-  events.hasMany(register_for, { as: "register_fors", foreignKey: "id_event"});
-  equipments_images.belongsTo(images, { as: "id_image_image", foreignKey: "id_image"});
-  images.hasMany(equipments_images, { as: "equipments_images", foreignKey: "id_image"});
   events_images.belongsTo(images, { as: "id_image_image", foreignKey: "id_image"});
   images.hasMany(events_images, { as: "events_images", foreignKey: "id_image"});
   products_images.belongsTo(images, { as: "id_image_image", foreignKey: "id_image"});
@@ -132,8 +108,6 @@ function initModels(sequelize) {
   roles.hasMany(users, { as: "users", foreignKey: "id_role"});
   stands.belongsTo(stand_types, { as: "id_stand_type_stand_type", foreignKey: "id_stand_type"});
   stand_types.hasMany(stands, { as: "stands", foreignKey: "id_stand_type"});
-  equipment_renting.belongsTo(stands, { as: "id_stand_stand", foreignKey: "id_stand"});
-  stands.hasMany(equipment_renting, { as: "equipment_rentings", foreignKey: "id_stand"});
   orders.belongsTo(stands, { as: "id_stand_stand", foreignKey: "id_stand"});
   stands.hasMany(orders, { as: "orders", foreignKey: "id_stand"});
   products.belongsTo(stands, { as: "id_stand_stand", foreignKey: "id_stand"});
@@ -161,10 +135,6 @@ function initModels(sequelize) {
     cart_lines,
     entries,
     entries_rating,
-    equipment_renting,
-    equipment_types,
-    equipments,
-    equipments_images,
     events,
     events_images,
     events_rating,
@@ -179,7 +149,6 @@ function initModels(sequelize) {
     products_images,
     providers,
     providers_images,
-    register_for,
     roles,
     stand_types,
     stands,

@@ -14,6 +14,14 @@ module.exports = function(sequelize, DataTypes) {
         model: 'users',
         key: 'uuid_user'
       }
+    },
+    id_event: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'events',
+        key: 'id_event'
+      }
     }
   }, {
     sequelize,

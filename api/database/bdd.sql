@@ -2,24 +2,19 @@ DROP TABLE IF EXISTS events_images,
     providers_images,
     stands_images,
     products_images,
-    equipments_images,
     events_rating,
     entries_rating,
-    register_for,
     cart_lines,
     order_lines,
     product_states,
     products,
     events,
-    equipment_renting,
-    equipments,
     order_states,
     orders,
     tickets,
     stands,
     locations,
     images,
-    equipment_types,
     entries,
     ticket_types,
     stand_types,
@@ -84,23 +79,6 @@ CREATE TABLE ticket_types
     price          DECIMAL(4, 2),
     duration       INT NOT NULL,
     PRIMARY KEY (id_ticket_type)
-);
-
-CREATE TABLE entries
-(
-    id_entry  SERIAL,
-    uuid_user uuid NOT NULL,
-    id_event INT NOT NULL,
-    PRIMARY KEY (id_entry),
-    FOREIGN KEY (uuid_user) REFERENCES users (uuid_user),
-    FOREIGN KEY (id_event) REFERENCES events (id_event)
-);
-
-CREATE TABLE equipment_types
-(
-    id_equipment_type SERIAL,
-    name              VARCHAR(50),
-    PRIMARY KEY (id_equipment_type)
 );
 
 CREATE TABLE images
@@ -168,30 +146,6 @@ CREATE TABLE orders
     FOREIGN KEY (id_order_state) REFERENCES order_states (id_order_state) ON DELETE SET NULL
 );
 
-CREATE TABLE equipments
-(
-    id_equipment      SERIAL,
-    total_quantity    INT,
-    name_en           VARCHAR(50) NOT NULL,
-    name_fr           VARCHAR(50) NOT NULL,
-    id_equipment_type INT         NOT NULL,
-    PRIMARY KEY (id_equipment),
-    FOREIGN KEY (id_equipment_type) REFERENCES equipment_types (id_equipment_type)
-);
-
-CREATE TABLE equipment_renting
-(
-    id_equipment_rent SERIAL,
-    quantity          INT,
-    rent_date         TIMESTAMP WITH TIME ZONE,
-    return_date       TIMESTAMP WITH TIME ZONE,
-    id_stand          INT NOT NULL,
-    id_equipment      INT NOT NULL,
-    PRIMARY KEY (id_equipment_rent),
-    FOREIGN KEY (id_stand) REFERENCES stands (id_stand) ON DELETE CASCADE,
-    FOREIGN KEY (id_equipment) REFERENCES equipments (id_equipment) ON DELETE CASCADE
-);
-
 CREATE TABLE events
 (
     id_event       SERIAL,
@@ -204,6 +158,16 @@ CREATE TABLE events
     id_location    INT  NOT NULL,
     PRIMARY KEY (id_event),
     FOREIGN KEY (id_location) REFERENCES locations (id_location) ON DELETE SET NULL
+);
+
+CREATE TABLE entries
+(
+    id_entry  SERIAL,
+    uuid_user uuid NOT NULL,
+    id_event  INT  NOT NULL,
+    PRIMARY KEY (id_entry),
+    FOREIGN KEY (uuid_user) REFERENCES users (uuid_user),
+    FOREIGN KEY (id_event) REFERENCES events (id_event)
 );
 
 CREATE TABLE product_states
@@ -306,15 +270,6 @@ CREATE TABLE products_images
     id_image   INT,
     PRIMARY KEY (id_product, id_image),
     FOREIGN KEY (id_product) REFERENCES products (id_product) ON DELETE CASCADE,
-    FOREIGN KEY (id_image) REFERENCES images (id_image) ON DELETE CASCADE
-);
-
-CREATE TABLE equipments_images
-(
-    id_equipment INT,
-    id_image     INT,
-    PRIMARY KEY (id_equipment, id_image),
-    FOREIGN KEY (id_equipment) REFERENCES equipments (id_equipment) ON DELETE CASCADE,
     FOREIGN KEY (id_image) REFERENCES images (id_image) ON DELETE CASCADE
 );
 
