@@ -44,7 +44,7 @@ export default {
   background-color: white;
   border-radius: 7px 25px 7px;
   margin: 50px 25px 20px;
-  transition: transform ease-in-out 0.5s;
+  transition: transform ease-in-out 0.5s, box-shadow ease-in-out 0.2s;
 }
 
 .global-card:hover {
