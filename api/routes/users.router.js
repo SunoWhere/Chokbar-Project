@@ -49,7 +49,7 @@ router.get("/role/:uuid", usersMiddleware.validateUuid, usersController.getUserR
 /**
  * @swagger
  * /api/login:
- *   get:
+ *   post:
  *     tags:
  *       - Users
  *     summary: User login
@@ -90,7 +90,7 @@ router.get("/role/:uuid", usersMiddleware.validateUuid, usersController.getUserR
  *       500:
  *         description: Internal Server Error.
  */
-router.get("/login", usersMiddleware.validateLoginInput, usersController.verifyLogin)
+router.post("/login", usersMiddleware.validateLoginInput, usersController.verifyLogin)
 
 /**
  * @swagger

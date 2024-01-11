@@ -33,7 +33,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     id_product_state: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'product_states',
         key: 'id_product_state'
