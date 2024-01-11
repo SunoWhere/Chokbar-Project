@@ -1,6 +1,6 @@
 const eventsServices = require("../services/events.services")
 
-exports.getEvents = async (req,res) => {
+exports.getEvents = async (req, res) => {
     try {
         return res.status(200).send(await eventsServices.getEvents())
     } catch (err) {
@@ -19,13 +19,21 @@ exports.getEventByID = async (req, res) => {
 
 exports.addEvent = async (req, res) => {
     try {
-        const {name, max_capacity, starting_time, finishing_time, description_en, description_fr, id_location} = req.body
+        const {
+            name,
+            max_capacity,
+            starting_time,
+            finishing_time,
+            description_en,
+            description_fr,
+            id_location
+        } = req.body
         return res.status(200).send(await eventsServices.addEvent({
-            name: name, 
-            max_capacity: max_capacity, 
+            name: name,
+            max_capacity: max_capacity,
             starting_time: starting_time,
-            finishing_time: finishing_time, 
-            description_en: description_en, 
+            finishing_time: finishing_time,
+            description_en: description_en,
             description_fr: description_fr,
             id_location: id_location
         }))
@@ -37,13 +45,21 @@ exports.addEvent = async (req, res) => {
 exports.updateEvent = async (req, res) => {
     try {
         const id = req.params.id
-        const {name, max_capacity, starting_time, finishing_time, description_en, description_fr, id_location} = req.body
+        const {
+            name,
+            max_capacity,
+            starting_time,
+            finishing_time,
+            description_en,
+            description_fr,
+            id_location
+        } = req.body
         return res.status(200).send(await eventsServices.updateEvent({
-            name: name, 
-            max_capacity: max_capacity, 
+            name: name,
+            max_capacity: max_capacity,
             starting_time: starting_time,
-            finishing_time: finishing_time, 
-            description_en: description_en, 
+            finishing_time: finishing_time,
+            description_en: description_en,
             description_fr: description_fr,
             id_location: id_location
         }, id))
@@ -54,7 +70,11 @@ exports.updateEvent = async (req, res) => {
 
 exports.deleteEvent = async (req, res) => {
     try {
-        return res.status(200).send(await eventsServices.deleteEvent(req.params.id))
+        const affectedRows = await eventsServices.deleteEvent(req.params.id)
+        if (affectedRows === 0)
+            return res.status(404).send("Event not found")
+        else
+            return res.status(200).send("Event deleted successfully")
     } catch (err) {
         return res.status(err.errorCode || 500).send(err.message)
     }

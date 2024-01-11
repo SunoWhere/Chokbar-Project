@@ -5,7 +5,7 @@ exports.getProductTypes = async () => {
     try {
         const data = await ProductTypesModel.findAll()
         if (!data)
-            throw new Error("No product types found")
+            throw new CustomError("No product types found", 404)
         return data
     } catch (err) {
         console.log(err)
@@ -20,7 +20,7 @@ exports.deleteProductById = async (id) => {
             }
         })
         if (res === 0)
-            throw new Error("Product not found")
+            throw new CustomError("Product not found", 404)
     } catch (err) {
         console.log(err)
         throw err
@@ -44,7 +44,7 @@ exports.updateProductById = async (id, price, quantity, id_stand, id_product_typ
         })
 
         if (res[0] === 0)
-            throw new Error("Product not found")
+            throw new CustomError("Product not found", 404)
     } catch (err) {
         console.log(err)
         throw err
@@ -67,21 +67,6 @@ exports.saveProduct = async (price, quantity, id_stand, id_product_type, descrip
         throw err
     }
 };
-exports.getProductsByStandId = async (id) => {
-    try {
-        const res = await ProductsModel.findAll({
-            where: {
-                id_stand: id
-            },
-        })
-        if (res.length === 0)
-            throw new Error("No product found")
-        return res
-    } catch (err) {
-        console.log(err)
-        throw err
-    }
-}
 exports.getProductById = async (id) => {
     try {
         const res = await ProductsModel.findOne({
@@ -90,7 +75,7 @@ exports.getProductById = async (id) => {
             }
         })
         if (res.length === 0)
-            throw new Error("No product found")
+            throw new CustomError("No product found", 404)
         return res
     } catch (err) {
         console.log(err)

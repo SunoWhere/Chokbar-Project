@@ -4,12 +4,11 @@ const StandsModel = require("../database/DB.connection").DB_models.stands
 
 exports.getLocations = async () => {
     try {
-       const result = await LocationsModel.findAll({
-        include: {
-            model: StandsModel, as: "stand"
-        }
-       })
-       return result;
+        return await LocationsModel.findAll({
+            include: {
+                model: StandsModel, as: "stand"
+            }
+        });
     } catch (err) {
         console.log(err)
         throw err
@@ -18,16 +17,15 @@ exports.getLocations = async () => {
 
 exports.getLocationById = async (id) => {
     try {
-       const result = await LocationsModel.findOne({
-        include: [
-            {model: StandsModel, as: "stand"},
-            {model: EventsModel, as: "events"}
-        ],
-        where: {
-            id_location: id
-        }
-       })
-       return result;
+        return await LocationsModel.findOne({
+            include: [
+                {model: StandsModel, as: "stand"},
+                {model: EventsModel, as: "events"}
+            ],
+            where: {
+                id_location: id
+            }
+        });
     } catch (err) {
         console.log(err)
         throw err
@@ -36,15 +34,14 @@ exports.getLocationById = async (id) => {
 
 exports.getLocationEvents = async (id) => {
     try {
-       const result = await LocationsModel.findOne({
-        include: {
-            model: EventsModel, as: "events"
-        },
-        where: {
-            id_location: id
-        }
-       })
-       return result
+        return await LocationsModel.findOne({
+            include: {
+                model: EventsModel, as: "events"
+            },
+            where: {
+                id_location: id
+            }
+        })
     } catch (err) {
         console.log(err)
         throw err

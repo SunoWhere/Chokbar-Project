@@ -5,8 +5,7 @@ const imagesFolderPath = __dirname.split('/services')[0] + '/database/assets/ima
 
 exports.getImages = async () => {
     try {
-        const result = await ImagesModel.findAll({})
-        return result
+        return await ImagesModel.findAll({})
     } catch (err) {
         console.log(err)
         throw err
@@ -20,7 +19,7 @@ exports.getImageByName = async (filename) => {
                 image: filename
             }
         })
-        if(!result) {
+        if (!result) {
             throw new CustomError('Image not found', 404)
         }
         return imagesFolderPath + result[0].image
@@ -37,7 +36,7 @@ exports.getImageById = async (id) => {
                 id_image: id
             }
         })
-        if(!result) {
+        if (!result) {
             throw new CustomError('Image not found', 404)
         }
         return result
@@ -55,10 +54,9 @@ exports.addImage = async (data) => {
         for (let i = 0; i < 32; i++) {
             name += alphanum.charAt(Math.floor(Math.random() * alphanum.length));
         }
-        name = name + '.' + image.name.split('.').pop() 
+        name = name + '.' + image.name.split('.').pop()
         image.mv(imagesFolderPath + name)
-        const result = await ImagesModel.create({image: name})
-        return result
+        return await ImagesModel.create({image: name})
     } catch (err) {
         console.log(err)
         throw err
