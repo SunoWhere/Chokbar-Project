@@ -101,7 +101,7 @@
 
      <div v-if="errMessage" class="err-msg">{{ errMessage }}</div>
 
-     <form class="add-form" action="/api/events" method="post" @submit.prevent="submitForm">
+     <form class="edit-form" action="#" method="post" @submit.prevent="submitForm">
 
        <div class="item-group">
          <div class="group">
@@ -203,7 +203,7 @@
   border-radius: 13px;
 }
 
-.add-form {
+.edit-form {
   display: flex;
   width: fit-content;
   height: fit-content;

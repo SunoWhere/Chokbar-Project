@@ -2,12 +2,14 @@
 import MapTooltip from "@/components/Global/Map/MapTooltip.vue";
 import PlanningInfo from "@/components/Global/Map/PlanningInfo.vue";
 import AddEventPopup from "@/components/Global/Map/AddEventPopup.vue";
+import EditEventPopup from "@/components/Global/Map/EditEventPopup.vue";
 
 import { eventsService } from "@/services";
 import moment from "moment-timezone";
 
 export default {
   components: {
+    EditEventPopup,
     AddEventPopup,
     PlanningInfo,
     MapTooltip
@@ -66,6 +68,14 @@ export default {
 
       return filteredEvents;
     },
+    updateEvents() {
+      return this.$store.getters.getEventList;
+    }
+  },
+  watch: {
+    updateEvents() {
+      this.getAllEvents();
+    }
   },
   methods: {
     openTooltip(e) {
@@ -132,6 +142,7 @@ export default {
     <PlanningInfo v-if="this.$store.getters.getShowPlanningInfo" :selected-event="selectedEvent"/>
     <AddEventPopup v-if="this.$store.getters.getShowAddEvent"/>
     <MapTooltip v-if="this.$store.getters.getShowMapTooltip" :booth-id="selectedBoothId"/>
+    <EditEventPopup v-if="this.$store.getters.getShowEditEvent" :selected-event="selectedEvent"/>
     <div class="planning-container">
       <ul class="timetable">
         <li class="table-head">

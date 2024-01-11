@@ -1,4 +1,6 @@
 <script>
+  // import EditEventPopup from "@/components/Global/Map/EditEventPopup.vue";
+
   import moment from "moment-timezone";
 
   export default {
@@ -9,9 +11,15 @@
     props: {
       selectedEvent: Object
     },
+    components: {
+      // EditEventPopup
+    },
     methods: {
       closeInfo() {
         this.$store.commit("setShowPlanningInfo", false);
+      },
+      openEditPopup() {
+        this.$store.commit("setShowEditEvent", true);
       },
       moment(date) {
         return moment(date).tz("Atlantic/Azores").format("HH:mm");
@@ -46,7 +54,7 @@
           <li id="description-fr" class="event-info-item">Description: {{ selectedEvent.description_fr }}</li>
         </ul>
         <div class="event-controls" v-if="this.$store.state.isConnected">
-          <button class="event-controls-button">Modifier</button>
+          <button class="event-controls-button" @click="openEditPopup">Modifier</button>
           <button class="event-controls-button">Supprimer</button>
         </div>
       </div>

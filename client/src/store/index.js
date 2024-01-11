@@ -9,6 +9,7 @@ export default new Vuex.Store({
     showMapTooltip: false,
     showPlanningInfo: false,
     showAddEvent: false,
+    showEditEvent: false,
 
     isConnected: usersService.getUuid() != null,
     role: usersService.getRole(),
@@ -45,6 +46,7 @@ export default new Vuex.Store({
     getShowMapTooltip: state => state.showMapTooltip,
     getShowPlanningInfo: state => state.showPlanningInfo,
     getShowAddEvent: state => state.showAddEvent,
+    getShowEditEvent: state => state.showEditEvent,
   },
   mutations: {
     // Connection
@@ -84,6 +86,9 @@ export default new Vuex.Store({
     },
     setShowAddEvent(state, value) {
       state.showAddEvent = value;
+    },
+    setShowEditEvent(state, value) {
+      state.showEditEvent = value;
     },
     setShowMapTooltip(state, value) {
       state.showMapTooltip = value;

@@ -29,8 +29,24 @@ let addEvent = async (eventToAdd) => {
             description_fr: eventToAdd.description_fr,
             id_location: eventToAdd.id_location
         });
-    } catch (error) {
-        throw new Error(error.response.data);
+    } catch (err) {
+        throw new Error(err.response.data);
+    }
+}
+
+let editEvent = async (eventToEdit, id) => {
+    try {
+        return await Axios.put(`/api/events/${id}`, {
+            name: eventToEdit.name,
+            max_capacity: eventToEdit.max_capacity,
+            starting_time: eventToEdit.starting_time,
+            finishing_time: eventToEdit.finishing_time,
+            description_en: eventToEdit.description_en,
+            description_fr: eventToEdit.description_fr,
+            id_location: eventToEdit.id_location
+        });
+    } catch(err) {
+        throw new Error(err.response.data);
     }
 }
 
@@ -40,4 +56,5 @@ export const eventsService = {
     getEvents,
     getEventById,
     addEvent,
+    editEvent,
 }
