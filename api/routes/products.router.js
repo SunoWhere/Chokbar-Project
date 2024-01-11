@@ -101,6 +101,8 @@ router.get("/:id_product", productsMiddleware.validateProductId, productsControl
  *     responses:
  *       200:
  *         description: New product saved successfully.
+ *       400:
+ *         description: Invalid input format.
  *       500:
  *         description: Internal Server Error.
  */
@@ -165,7 +167,7 @@ router.post("/", productsMiddleware.validateProductInputs, productsController.sa
  *       200:
  *         description: Product updated successfully.
  *       400:
- *         description: Invalid format for ID product.
+ *         description: Invalid ID or input format.
  *       404:
  *         description: Product not found.
  *       500:

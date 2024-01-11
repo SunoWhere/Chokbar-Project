@@ -35,6 +35,8 @@ router.get("/", standsController.getStands)
  *     responses:
  *       200:
  *         description: Stand details retrieved successfully.
+ *       400:
+ *         description: Invalid format for id
  *       404:
  *         description: No stands found.
  *       500:
@@ -435,7 +437,7 @@ router.delete("/:id/products/:id_product", standsMiddleware.validateId, standsCo
  *       200:
  *         description: Successfully added new image to stand.
  *       400:
- *         description: Invalid format for ID.
+ *         description: Invalid ID or input format.
  *       500:
  *         description: Internal Server Error.
  */

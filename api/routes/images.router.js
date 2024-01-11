@@ -38,6 +38,8 @@ router.get("/", imagesController.getImages)
  *     responses:
  *       200:
  *         description: Image retrieved successfully.
+ *       400:
+ *         description: Invalid filename.
  *       404:
  *         description: Image not found.
  *       500:
@@ -69,6 +71,8 @@ router.get("/:filename", imagesMiddleware.validateFilename, imagesController.get
  *     responses:
  *       200:
  *         description: Image added successfully.
+ *       400:
+ *         description: Invalid format for image.
  *       500:
  *         description: Internal Server Error.
  */
@@ -91,6 +95,8 @@ router.post("/", imagesMiddleware.validateImage, imagesController.addImage)
  *     responses:
  *       200:
  *         description: Image deleted successfully.
+ *       400:
+ *         description: Invalid ID format.
  *       500:
  *         description: Internal Server Error.
  */

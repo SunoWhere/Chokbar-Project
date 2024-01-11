@@ -3,8 +3,6 @@ const providersController = require("../controllers/providers.controller")
 const providersMiddleware = require("../middlewares/providers.middleware")
 var router = express.Router()
 
-// TODO : ajouter l'attribution du stands à la création et modification du provider
-
 /**
  * @swagger
  * /api/providers/:

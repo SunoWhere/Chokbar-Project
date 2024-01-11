@@ -99,6 +99,8 @@ router.get("/:id", eventsMiddleware.validateEventId, eventsController.getEventBy
  *     responses:
  *       200:
  *         description: New event created successfully.
+ *       400:
+ *         description: Invalid input format.
  *       500:
  *         description: Internal Server Error.
  */
@@ -133,7 +135,7 @@ router.post("/", eventsMiddleware.validateEventInput, eventsController.addEvent)
  *       200:
  *         description: Successfully added new image to event.
  *       400:
- *         description: Invalid format for event ID.
+ *         description: Invalid ID or image format.
  *       500:
  *         description: Internal Server Error.
  */
@@ -195,7 +197,7 @@ router.post("/:id/images", eventsMiddleware.validateEventId, imagesMiddleware.va
  *       200:
  *         description: Event updated successfully.
  *       400:
- *         description: Invalid format for event ID.
+ *         description: Invalid ID or input format.
  *       500:
  *         description: Internal Server Error.
  */

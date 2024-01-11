@@ -38,6 +38,8 @@ router.get("/", locationsController.getLocations)
  *     responses:
  *       200:
  *         description: A location object with the list of events.
+ *       400:
+ *         description: Invalid format for location id
  *       404:
  *         description: Location not found.
  *       500:
@@ -62,6 +64,8 @@ router.get("/:id/events", locationsMiddleware.validateLocationId, locationsContr
  *     responses:
  *       200:
  *         description: Location details retrieved successfully.
+ *       400:
+ *         description: Invalid format for location id
  *       404:
  *         description: Location not found.
  *       500:
