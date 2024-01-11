@@ -149,7 +149,7 @@ exports.clearCart = async (req, res) => {
 
 exports.getOrders = async (req, res) => {
     try {
-        orders = await usersServices.getOrders(
+        const orders = await usersServices.getOrders(
             req.params.uuid
         )
         return res.status(200).send(orders)
