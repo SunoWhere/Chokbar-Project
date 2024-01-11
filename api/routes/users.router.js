@@ -44,7 +44,7 @@ var router = express.Router()
 router.get("/", usersController.getUsers)
 
 // FIXME
-router.get("/:uuid/role", usersMiddleware.validateUuid, usersController.getUserRole)
+router.get("/role/:uuid", usersMiddleware.validateUuid, usersController.getUserRole)
 
 /**
  * @swagger
