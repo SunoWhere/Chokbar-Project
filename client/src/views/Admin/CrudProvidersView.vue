@@ -56,7 +56,7 @@ export default {
   },
   metaInfo() {
     return {
-      title: 'CrudUsers'
+      title: 'CrudProviders'
     }
   },
   methods: {

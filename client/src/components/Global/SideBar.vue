@@ -23,6 +23,7 @@ export default {
         return [
           { label: 'Utilisateurs', route:  '/admin/user' },
           { label: 'Intervenants', route: '/Admin/Intervenants' },
+          { label: 'Stands', route: '/Admin/Stands' },
           { label: 'Calendrier', route: '/map' }
         ];
       }

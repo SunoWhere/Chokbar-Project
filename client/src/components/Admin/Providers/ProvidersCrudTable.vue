@@ -26,7 +26,6 @@ export default {
   },
   computed: {
     processedProviders() {
-      console.log(this.providers)
       return this.providers.map(provider =>({
         visibleColumns: {
           id: provider[0],
@@ -115,7 +114,7 @@ tr:nth-child(even){
 td{
   text-align: center;
   padding: 5px;
-  max-width: 300px;
+  max-width: 250px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

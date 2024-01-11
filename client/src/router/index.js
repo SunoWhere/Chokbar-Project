@@ -15,6 +15,7 @@ import CreditCardView from "@/views/Global/CreditCardView.vue";
 import CrudStandView from "@/views/Provider/CrudStandView.vue";
 import CartView from "@/views/Global/CartView.vue"
 import ShopView from "@/views/Global/ShopView.vue"
+import ShopStandView from "@/views/Global/ShopStandView.vue"
 
 Vue.use(VueRouter)
 
@@ -68,6 +69,11 @@ const routes = [
     path: '/Boutique',
     name: 'Boutique',
     component: ShopView
+  },
+  {
+    path: '/Boutique/:id',
+    name: 'BoutiqueStand',
+    component: ShopStandView
   },
   {
     path: '/Map',

@@ -127,7 +127,7 @@ export default new Vuex.Store({
     },
     setShowEditStandPopup(state, value) {
       state.showEditStandPopup = value;
-    }
+    },
   },
   actions: {
     async updateUserList({ commit }) {

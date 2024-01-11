@@ -97,6 +97,7 @@ tr:nth-child(even){
 td{
   text-align: center;
   padding: 5px;
+  max-width: 250px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -116,8 +117,8 @@ thead{
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 50%;
-  height: 50%;
+  width: 60vw;
+  height: 50vh;
   transform: translate(-35%, -50%);
   background-color:white;
   border-radius: 10px;

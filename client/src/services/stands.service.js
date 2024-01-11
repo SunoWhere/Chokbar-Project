@@ -16,10 +16,18 @@ let getProvider = async () => {
     }
 }
 
+let getAllStands = async () => {
+    try {
+        const stands = await Axios.get("/api/stands/");
+        return stands.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 let getStandById = async (id) => {
     try {
         const res = await Axios.get('/api/stands/' + id);
-        console.log(res.data);
         return res.data;
     } catch (error) {
         console.error(error);
@@ -50,10 +58,22 @@ let removeStand = async (id) => {
     }
 }
 
+let getStandProduct = async (id) => {
+    try {
+        const route = '/api/stands/' + id + '/products/';
+        const res = await Axios.get(route);
+        return res.data;
+    } catch(error) {
+        console.error(error);
+    }
+}
+
 export const standsService = {
     getProvider,
     editProviderStand,
     getStandById,
     removeStand,
     getUuid,
+    getAllStands,
+    getStandProduct,
 }
