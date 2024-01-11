@@ -106,7 +106,7 @@ exports.deleteProviderById = async (id) => {
         throw new CustomError(err.message, 500)
     }
 }
-exports.updateProviderById = async (id, name, uuid_user, description_en, description_fr) => {
+exports.updateProviderById = async (id, name, uuid_user, description_fr, description_en) => {
     try {
         const provider = await ProvidersModel.findOne({where: {id_provider: id}})
         if (!provider) {
@@ -151,10 +151,10 @@ exports.saveProvider = async (name, uuid_user, description_fr, description_en) =
         }
 
         const provider = await ProvidersModel.create({
-            name,
-            uuid_user,
-            description_fr,
-            description_en
+            name: name,
+            uuid_user: uuid_user,
+            description_fr: description_fr,
+            description_en: description_en
         });
 
         const role = await RolesModel.findOne({attributes: ["id_role"], where: {name: "provider"}});
@@ -247,7 +247,7 @@ exports.validateOrder = async (id_provider, id_order) => {
                 id_order: id_order
             }
         })
-        if(!order) {
+        if (!order) {
             throw new CustomError("No order found", 404)
         }
         const stand_id = order.dataValues.id_stand
@@ -258,19 +258,19 @@ exports.validateOrder = async (id_provider, id_order) => {
         })
         const provider_id = stand.dataValues.id_provider
         console.log(provider_id, id_provider)
-        if(provider_id != id_provider) {
+        if (provider_id != id_provider) {
             throw new CustomError('Unauthorized validation, wrong provider', 403)
         }
         const states = await OrderStatesModel.findAll()
         let state = states.find((s) => s.dataValues.id_order_state == order.dataValues.id_order_state)
-        if(!state) {
+        if (!state) {
             throw new CustomError('State for order update not found', 404)
         }
-        if(state.dataValues.state !== 'Waiting') {
+        if (state.dataValues.state !== 'Waiting') {
             throw new CustomError('Order has already been validated', 400)
         }
         state = states.find((s) => s.dataValues.state === 'Validated')
-        if(!state) {
+        if (!state) {
             throw new CustomError('State for order update not found', 404)
         }
         new_state_id = state.dataValues.id_order_state
@@ -292,7 +292,7 @@ exports.completeOrder = async (id_provider, hash) => {
                 hash: hash
             }
         })
-        if(!order) {
+        if (!order) {
             throw new CustomError("No order found", 404)
         }
         const stand_id = order.dataValues.id_stand
@@ -302,21 +302,21 @@ exports.completeOrder = async (id_provider, hash) => {
             }
         })
         const provider_id = stand.dataValues.id_provider
-        if(provider_id != id_provider) {
+        if (provider_id != id_provider) {
             throw new CustomError('Unauthorized validation, wrong provider', 403)
         }
         const states = await OrderStatesModel.findAll()
         let state = states.find((s) => s.dataValues.id_order_state == order.dataValues.id_order_state)
-        if(!state) {
+        if (!state) {
             throw new CustomError('State for order update not found', 404)
         }
-        if(state.dataValues.state == 'Completed') {
+        if (state.dataValues.state == 'Completed') {
             throw new CustomError('Order has already been completed', 400)
         } else if (state.dataValues.state == 'Waiting') {
             throw new CustomError('Order has not been validated yet', 400)
         }
         state = states.find((s) => s.dataValues.state === 'Retrieved')
-        if(!state) {
+        if (!state) {
             throw new CustomError('State for order update not found', 404)
         }
         console.log(state)
