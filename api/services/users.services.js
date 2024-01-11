@@ -1,4 +1,3 @@
-const {v4: uuid4} = require("uuid")
 const CustomError = require("../utils/CustomError");
 const UserModel = require("../database/DB.connection").DB_models.users
 const CartLinesModel = require("../database/DB.connection").DB_models.cart_lines
@@ -9,7 +8,6 @@ const OrderStatesModel = require("../database/DB.connection").DB_models.order_st
 const OrderLinesModel = require("../database/DB.connection").DB_models.order_lines
 const TicketsModel = require("../database/DB.connection").DB_models.tickets
 const {sequelize} = require('../database/DB.connection');
-const {Sequelize} = require("sequelize");
 
 exports.getTicketsByUserId = async (uuid) => {
     try {

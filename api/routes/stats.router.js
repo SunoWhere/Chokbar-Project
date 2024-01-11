@@ -2,10 +2,14 @@ const express = require("express")
 const statsController = require("../controllers/stats.controller")
 var router = express.Router()
 
-router.get("/tickets-sales")
+router.get("/total-users", statsController.getTotalUsers)
 
-router.get("/products-sales")
+router.get("/total-providers", statsController.getTotalProviders)
 
-router.get("/events-participations")
+router.get("/total-products", statsController.getTotalProducts)
+
+router.get("/tickets-sales", statsController.getTicketsSales)
+
+router.get("/products-sales", statsController.getProductsSales)
 
 module.exports = router
