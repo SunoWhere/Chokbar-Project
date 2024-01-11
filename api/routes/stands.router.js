@@ -1,6 +1,7 @@
 const express = require("express")
 const standsController = require("../controllers/stands.controller")
 const standsMiddleware = require("../middlewares/stands.middleware")
+const imagesMiddleware = require("../middlewares/images.middleware")
 var router = express.Router()
 
 // ---- General ----
@@ -438,7 +439,7 @@ router.delete("/:id/products/:id_product", standsMiddleware.validateId, standsCo
  *       500:
  *         description: Internal Server Error.
  */
-router.post("/:id/images", standsMiddleware.validateId, standsController.addStandImage)
+router.post("/:id/images", standsMiddleware.validateId, imagesMiddleware.validateImage, standsController.addStandImage)
 
 // TODO ---- Orders ----
 router.get("/:id/orders")

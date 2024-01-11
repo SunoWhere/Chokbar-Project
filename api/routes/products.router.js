@@ -7,9 +7,9 @@ router.get("/product_types/", productsController.getProductTypes)
 
 router.get("/:id_product", productsMiddleware.validateProductId, productsController.getProductById)
 
-router.post("/", productsController.saveProduct)
+router.post("/", productsMiddleware.validateProductInputs, productsController.saveProduct)
 
-router.put("/:id_product", productsMiddleware.validateProductId, productsController.updateProductById)
+router.put("/:id_product", productsMiddleware.validateProductInputs, productsMiddleware.validateProductId, productsController.updateProductById)
 
 router.delete("/:id_product", productsMiddleware.validateProductId, productsController.deleteProductById)
 

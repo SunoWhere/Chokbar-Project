@@ -54,7 +54,7 @@ exports.updateEvent = async (req, res) => {
 
 exports.deleteEvent = async (req, res) => {
     try {
-        return res.status(200).send(await eventsServices.deleteEvent(id))
+        return res.status(200).send(await eventsServices.deleteEvent(req.params.id))
     } catch (err) {
         return res.status(err.errorCode || 500).send(err.message)
     }
