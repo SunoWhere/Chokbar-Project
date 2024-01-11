@@ -273,10 +273,16 @@ exports.getOrders = async (uuid) => {
         const orders = await OrdersModel.findAll({
             where: {
                 uuid_user: uuid
-            }
+            },
+            include: {
+                model: OrderStatesModel, as: 'id_order_state_order_state',
+                attributes: {
+                    exclude: ['id_order_state']
+                }
+            },
         })
         if (orders.length === 0) {
-
+            throw new CustomError('No order found', 404)
         }
         return orders
     } catch (err) {
