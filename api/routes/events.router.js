@@ -56,7 +56,7 @@ router.get("/:id", eventsMiddleware.validateEventId, eventsController.getEventBy
  *       - Events
  *     summary: Create a new event
  *     description: Endpoint for creating a new event.
- *     parameters
+ *     parameters:
  *       - in: body
  *         name: event
  *         description: The event to create.
