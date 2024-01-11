@@ -46,7 +46,7 @@ router.get("/", usersController.getUsers)
 /**
  * @swagger
  * /api/login:
- *   get:
+ *   post:
  *     tags:
  *       - Users
  *     summary: User login
@@ -87,7 +87,7 @@ router.get("/", usersController.getUsers)
  *       500:
  *         description: Internal Server Error.
  */
-router.get("/login", usersMiddleware.validateLoginInput, usersController.verifyLogin)
+router.post("/login", usersMiddleware.validateLoginInput, usersController.verifyLogin)
 
 /**
  * @swagger
