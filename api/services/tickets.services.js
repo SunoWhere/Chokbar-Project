@@ -80,7 +80,18 @@ exports.saveTicket = async (id_ticket_type, email) => {
 };
 exports.getTicketById = async (id) => {
     try {
-        return await TicketsModel.findOne({where: {id_ticket: id}})
+        const ticket = await TicketsModel.findOne({
+            where: {id_ticket: id},
+            include:
+                {
+                    model: TicketTypesModel,
+                    as: 'id_ticket_type_ticket_type',
+                    attributes: ['name', 'duration']
+                }
+        })
+        ticket.dataValues.ticket_type = ticket.dataValues.id_ticket_type_ticket_type
+        delete ticket.dataValues.id_ticket_type_ticket_type
+        return ticket
     } catch (err) {
         console.log(err)
         throw err
@@ -96,7 +107,19 @@ exports.getTicketTypes = async () => {
 };
 exports.getTickets = async () => {
     try {
-        return await TicketsModel.findAll()
+        const tickets = await TicketsModel.findAll({
+            include:
+                {
+                    model: TicketTypesModel,
+                    as: 'id_ticket_type_ticket_type',
+                    attributes: ['name', 'duration']
+                }
+        })
+        tickets.forEach(ticket => {
+            ticket.dataValues.ticket_type = ticket.dataValues.id_ticket_type_ticket_type
+            delete ticket.dataValues.id_ticket_type_ticket_type
+        })
+        return tickets
     } catch (err) {
         console.log(err)
         throw err
