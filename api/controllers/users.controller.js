@@ -110,6 +110,7 @@ exports.getCart = async (req, res) => {
     }
 }
 
+// FIXME
 exports.getUserRole = async (req, res) => {
     try {
         const role = await usersServices.getRoleByID(

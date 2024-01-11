@@ -117,6 +117,7 @@ exports.getUserByID = async (uuid) => {
     }
 }
 
+// FIXME
 exports.getRoleByID = async (uuid) => {
     try {
         const user = await UserModel.findOne({

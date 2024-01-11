@@ -42,8 +42,9 @@ var router = express.Router()
  *         description: Internal Server Error.
  */
 router.get("/", usersController.getUsers)
-router.post("/login", usersMiddleware.validateLoginInput, usersController.verifyLogin)
-router.get("/role/:uuid", usersMiddleware.validateUuid, usersController.getUserRole)
+
+// FIXME
+router.get("/:uuid/role", usersMiddleware.validateUuid, usersController.getUserRole)
 
 /**
  * @swagger
