@@ -90,8 +90,10 @@ CREATE TABLE entries
 (
     id_entry  SERIAL,
     uuid_user uuid NOT NULL,
+    id_event INT NOT NULL,
     PRIMARY KEY (id_entry),
-    FOREIGN KEY (uuid_user) REFERENCES users (uuid_user)
+    FOREIGN KEY (uuid_user) REFERENCES users (uuid_user),
+    FOREIGN KEY (id_event) REFERENCES events (id_event)
 );
 
 CREATE TABLE equipment_types
@@ -248,15 +250,6 @@ CREATE TABLE order_lines
     PRIMARY KEY (id_order, id_product),
     FOREIGN KEY (id_order) REFERENCES orders (id_order),
     FOREIGN KEY (id_product) REFERENCES products (id_product)
-);
-
-CREATE TABLE register_for
-(
-    id_event INT,
-    id_entry INT,
-    PRIMARY KEY (id_event, id_entry),
-    FOREIGN KEY (id_event) REFERENCES events (id_event),
-    FOREIGN KEY (id_entry) REFERENCES entries (id_entry)
 );
 
 CREATE TABLE entries_rating
