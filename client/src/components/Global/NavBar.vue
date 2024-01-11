@@ -92,7 +92,7 @@ export default {
         </button>
       </li>
       <li id="dropdown">
-        <button class="nav-item dropdown">{{ getLang().navbar_apropos }}<font-awesome-icon icon="fa-solid fa-chevron-down" /></button>
+        <button class="nav-item dropdown">{{ getLang().navbar_apropos }} <font-awesome-icon icon="fa-solid fa-chevron-down" /></button>
         <ul class="dropdown-list">
           <li>
             <button class="dropdown-item underline-animation" @click="$router.push('/Infos/Ezcon')">

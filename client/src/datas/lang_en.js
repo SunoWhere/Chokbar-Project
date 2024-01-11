@@ -70,4 +70,13 @@ export const lang_en = {
     about_third_p: "To ensure a hassle-free experience, check out our interactive map and schedule to plan your day at EZCon. Discover event timings, locations of food stands, and make sure not to miss any highlights of the event.",
 
     about_go_map: "Go on map",
+
+    // Stand Shop View
+    stands_articles_shop_nom: "Name",
+    stands_articles_shop_prix: "Price",
+    stands_articles_shop_quantite: "Quantity",
+    stands_articles_shop_type: "Article type",
+    stands_articles_shop_unite: "Unit(s)",
+    stands_articles_shop_info: "Details",
+    stands_articles_shop_cart: "Add to cart",
 }
