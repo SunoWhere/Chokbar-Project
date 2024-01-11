@@ -372,7 +372,7 @@ VALUES ('Goods selling'),
 INSERT INTO stands (id_location, id_provider, id_stand_type, name, description_en, description_fr)
 VALUES (1, 1, 1, 'MSI Shop', 'Buy some MSI stuff', 'Acheter des produits MSI'),
        (2, 1, 3, 'MSI Demo Center', 'Test some MSI stuff', 'Essayer des produits MSI'),
-       (3, 1, 4, 'MSI & Amouranth', 'Meet Amouranth', 'Rencontrer Amouranth'),
+       (3, 1, 4, 'MSI & Squeezie', 'Meet Squeezie', 'Rencontrer Squeezie'),
        (4, 2, 1, 'Asus Shop', 'Buy some Asus stuff', 'Acheter des produits Asus'),
        (5, 2, 3, 'Asus Shop', 'Test some Asus stuff', 'Essayer des produits Asus'),
        (6, 3, 2, 'KFC Fast Food', E'It\'s finger lickin\' good', E'C\'est bon à s\'en lêcher les doigts'),
