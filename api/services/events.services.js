@@ -14,7 +14,7 @@ exports.getEvents = async () => {
                 {model: LocationsModel, as: "id_location_location"}
             ]
         })
-        if(result.length == 0) {
+        if (result.length == 0) {
             throw new CustomError("No Events Found", 404)
         }
         for (let e of result) {
@@ -22,7 +22,7 @@ exports.getEvents = async () => {
             e.dataValues.images = e.dataValues.id_image_images_events_images
             delete e.dataValues.id_image_images_events_images
             delete e.dataValues.id_location_location
-            for(let i of e.dataValues.images) {
+            for (let i of e.dataValues.images) {
                 delete i.dataValues.events_images
             }
         }
@@ -45,16 +45,16 @@ exports.getEventByID = async (id) => {
                 id_event: id
             }
         })
-        if(!result) {
+        if (!result) {
             throw new CustomError("No Event Found", 404)
         }
-            result.dataValues.location = result.dataValues.id_location_location
-            result.dataValues.images = result.dataValues.id_image_images_events_images
-            delete result.dataValues.id_image_images_events_images
-            delete result.dataValues.id_location_location
-            for(let i of result.dataValues.images) {
-                delete i.dataValues.events_images
-            }
+        result.dataValues.location = result.dataValues.id_location_location
+        result.dataValues.images = result.dataValues.id_image_images_events_images
+        delete result.dataValues.id_image_images_events_images
+        delete result.dataValues.id_location_location
+        for (let i of result.dataValues.images) {
+            delete i.dataValues.events_images
+        }
         return result
     } catch (err) {
         console.log(err)
@@ -64,8 +64,7 @@ exports.getEventByID = async (id) => {
 
 exports.addEvent = async (data) => {
     try {
-        const result = await EventsModel.create(data)
-        return result
+        return await EventsModel.create(data)
     } catch (err) {
         console.log(err)
         throw err
@@ -74,12 +73,11 @@ exports.addEvent = async (data) => {
 
 exports.updateEvent = async (data, id) => {
     try {
-        const result = await EventsModel.update(data, {
+        return await EventsModel.update(data, {
             where: {
                 id_event: id
             }
         })
-        return result
     } catch (err) {
         console.log(err)
         throw err
@@ -88,7 +86,7 @@ exports.updateEvent = async (data, id) => {
 
 exports.deleteEvent = async (id) => {
     try {
-        const result = await EventsModel.destroy({
+        return await EventsModel.destroy({
             where: {
                 id_event: id
             }
