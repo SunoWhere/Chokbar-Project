@@ -13,6 +13,7 @@ const locationsRoutes = require("./routes/locations.router")
 const imagesRoutes = require("./routes/images.router")
 const productsRoutes = require("./routes/products.router")
 const ticketsRoutes = require("./routes/tickets.router")
+const statsRoutes = require("./routes/stats.router")
 dotenv.config()
 
 const port = process.env.PORT
@@ -47,6 +48,7 @@ app.use("/api/locations", locationsRoutes)
 app.use("/api/images", imagesRoutes)
 app.use("/api/products", productsRoutes)
 app.use("/api/tickets", ticketsRoutes)
+app.use("/api/stats", statsRoutes)
 
 // npm start
 app.listen(port, () => {

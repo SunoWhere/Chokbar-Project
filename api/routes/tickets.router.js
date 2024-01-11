@@ -18,7 +18,6 @@ var router = express.Router()
  *       500:
  *         description: Internal server error.
  */
-
 router.get("/", ticketsController.getTickets)
 
 /**
@@ -37,7 +36,6 @@ router.get("/", ticketsController.getTickets)
  *       500:
  *         description: Internal server error.
  */
-
 router.get("/ticket_types", ticketsController.getTicketTypes)
 
 /**
