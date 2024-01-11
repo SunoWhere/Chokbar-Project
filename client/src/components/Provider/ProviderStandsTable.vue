@@ -15,7 +15,7 @@
           <tr v-for="stand in stands" :key="stand.id">
             <td>{{ stand.name }}</td>
             <td>
-              <button class="edit-button" @click="viewArticles(stand)">View Articles</button>
+              <button class="edit-button" @click="$router.push('/intervenant/stands/article')">View Articles</button>
             </td>
             <td>
               <form>
@@ -54,13 +54,10 @@ export default {
     },
   },
   methods: {
-    viewArticles(stand) {
-      this.$emit('view-articles', stand);
-    },
     openEditPopup(selectedStand) {
       this.$store.commit("setStandToEdit", selectedStand);
       this.$store.commit("setShowEditStandPopup", true);
-    }
+    },
   }
 }
 </script>
