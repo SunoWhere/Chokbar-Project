@@ -2,24 +2,24 @@
   <div class="modal" v-if="showPopup">
     <div class="modal-content">
       <div class="modal-header">
-        <h1>Remove</h1>
+        <h1>{{getLang().btn_delete}}</h1>
       </div>
       <div class="content-sub-title">
-        <h2>{{typeTitle}}</h2>
+        <h2>{{getLang().popup_users_title}}</h2>
         <div v-if="message" id="error-message">
           <p class="error-message">{{ message }}</p>
         </div>
-        <p>Vous êtes sur le points de supprimer un {{typeTitle}}.</p>
-        <p>Êtes vous sûr de votre action ?</p>
+        <p>{{ getLang().remove_popup_1 }}</p>
+        <p>{{ getLang().remove_popup_2 }}</p>
       </div>
       <div class="content">
         <form action="/users/" method="POST" @submit.prevent="submitForm">
           <div class="buttons">
             <div class="close-btn">
-              <button id="close-button" @click="closePopup">Non</button>
+              <button id="close-button" @click="closePopup">{{getLang().btn_not}}</button>
             </div>
             <div class="submit-btn">
-              <button id="submit-button" type="submit">Ok</button>
+              <button id="submit-button" type="submit">{{getLang().btn_yes}}</button>
             </div>
           </div>
         </form>
@@ -49,6 +49,9 @@ export default {
     }
   },
   methods: {
+    getLang() {
+      return this.$store.state.lang;
+    },
     closePopup() {
       this.$store.commit("setShowRemoveUserPopup", false);
     },

@@ -3,6 +3,20 @@ export const lang_fr = {
 
     // All
     btn_subscribe: "S'inscrire",
+    btn_add: "Ajouter",
+    btn_delete: "Supprimer",
+    btn_edit: "Éditer",
+    btn_yes: "Oui",
+    btn_not: "Non",
+
+    // Form
+    form_firstname: "Prénom",
+    form_lastname: "Nom",
+    form_email: "Email",
+    form_password: "Mot de passe",
+    form_confirm_password: "Mot de passe de confirmation",
+    form_show_password: "Afficher le mot de passe",
+
 
     // Navbar
     navbar_accueil: "Accueil",
@@ -116,8 +130,6 @@ export const lang_fr = {
 
     // Login
     login_title: "Se connecter",
-    form_password: "Mot de passe",
-    form_show_password: "Afficher le mot de passe",
     login_no_account: "Vous n'avez pas de compte ? S'inscrire maintenant !",
 
     // Register
@@ -137,5 +149,43 @@ export const lang_fr = {
     sidebar_provider_comands: "Commandes",
 
     sidebar_user_commands: "Commandes",
+
+    // Dashboard Admin
+    dashboard_admin_total_users: "Nombre d'utilisateur total",
+    dashboard_admin_total_providers: "Nombre d'intervenant total",
+    dashboard_admin_total_products: "Nombre de produit total",
+
+    // Crud Users
+    crud_users_lastname: "Nom",
+    crud_users_firstname: "Prénom",
+    crud_users_email: "Email",
+    crud_users_role: "Rôle",
+
+    // Crud Providers
+    crud_providers_lastname: "Nom",
+
+    //Popup Providers
+    popup_providers_title: "Intervenants",
+
+    // Add Popup Providers
+    add_popup_providers_message: "Voulez vous créer un nouvel utilisateur ou déclarer un utilisateur déjà existant en tant qu'intervenant ?",
+    add_new_provider_btn: "Nouveau intervenant",
+    link_client_to_provider_btn: "Lier un clien",
+
+    // Edit Popup Providers
+    edit_popup_providers_name: "Nom intervenant",
+    edit_popup_providers_description_fr: "Description française",
+    edit_popup_providers_description_en: "Description anglaise",
+
+    // Remove Popup Providers
+    remove_popup_3: "Vous êtes sur le points de supprimer un intervenant.",
+
+    //Popup Users
+    popup_users_title: "Utilisateurs",
+
+    // Remove Popup Users
+    remove_popup_1: "Vous êtes sur le points de supprimer un utilisateur.",
+    remove_popup_2: "Êtes vous sûr de votre action ?",
+    remove_popup_users_2: "Êtes vous sûr de votre action ?",
 
 }

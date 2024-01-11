@@ -6,13 +6,6 @@ export default {
 
   },
   props: {
-    columnNames: {
-      type: Array,
-      required: true,
-      validator: function (value) {
-        return value.every(item => typeof item === 'string');
-      }
-    },
     items: {
       type: Array,
       required: true,
@@ -31,6 +24,9 @@ export default {
     },
   },
   methods: {
+    getLang() {
+      return this.$store.state.lang;
+    },
     openAddPopup() {
       this.$store.commit("setShowAddUserPopup", true);
     },
@@ -53,7 +49,10 @@ export default {
         <table>
           <thead>
           <tr>
-            <th v-for="columnName in columnNames" :key="columnName">{{ columnName }}</th>
+            <th>{{getLang().crud_users_lastname}}</th>
+            <th>{{getLang().crud_users_firstname}}</th>
+            <th>{{getLang().crud_users_email}}</th>
+            <th>{{getLang().crud_users_role}}</th>
             <th>Actions</th>
           </tr>
           </thead>
@@ -63,8 +62,8 @@ export default {
             <td v-for="(value, columnIndex) in filteredItem.visibleColumns" :key="columnIndex">{{ value }}</td>
             <td>
               <form>
-                <button class="edit-button" @click.prevent="openEditPopup(filteredItem)">Editer<i class=""></i></button>
-                <button class="delete-button" @click.prevent="openRemovePopup(filteredItem.uuid_user)">Supprimer<i class=""></i></button>
+                <button class="edit-button" @click.prevent="openEditPopup(filteredItem)">{{getLang().btn_edit}}<i class=""></i></button>
+                <button class="delete-button" @click.prevent="openRemovePopup(filteredItem.uuid_user)">{{getLang().btn_delete}}<i class=""></i></button>
               </form>
             </td>
           </tr>
@@ -73,7 +72,7 @@ export default {
       </div>
     </div>
     <div id="add-btn">
-      <button class="add-button" @click="openAddPopup">Ajouter<i class=""></i></button>
+      <button class="add-button" @click="openAddPopup">{{getLang().btn_add}}<i class=""></i></button>
     </div>
   </div>
 </template>

@@ -1,9 +1,24 @@
 
 
 export const lang_en = {
-    
+
+    // All
     btn_subscribe: "Subscribe",
-    
+    btn_add: "Add",
+    btn_delete: "Delete",
+    btn_edit: "Edit",
+    btn_yes: "yes",
+    btn_not: "No",
+
+    // Form
+    form_firstname: "Firstname",
+    form_lastname: "Lastname",
+    form_email: "Email",
+    form_password: "Password",
+    form_confirm_password: "Confirm password",
+    form_show_password: "Show password",
+
+    // Navbar
     navbar_accueil: "Home",
     navbar_map: "Map",
     navbar_billetterie: "Ticketing",
@@ -86,8 +101,6 @@ export const lang_en = {
 
     // Login
     login_title: "Login",
-    form_password: "Password",
-    form_show_password: "Show password",
     login_no_account: "Do not have an account? Sign up now!",
 
     // Register
@@ -107,4 +120,41 @@ export const lang_en = {
     sidebar_provider_comands: "Orders",
 
     sidebar_user_commands: "Orders",
+
+    // Dashboard Admin
+    dashboard_admin_total_users: "Total users",
+    dashboard_admin_total_providers: "Total providers",
+    dashboard_admin_total_products: "Total products",
+
+    // CRUD Users
+    crud_users_lastname: "Last Name",
+    crud_users_firstname: "First Name",
+    crud_users_email: "Email",
+    crud_users_role: "Role",
+
+    // Crud Providers
+    crud_providers_lastname: "Name",
+
+    //Popup Providers
+    popup_providers_title: "Providers",
+
+    // Add Popup Providers
+    add_popup_providers_message: "Do you want to create a new user or declare an existing user as a provider?",
+    add_new_provider_btn: "Add New Provider",
+    link_client_to_provider_btn: "Link Client",
+
+    // Edit Popup Providers
+    edit_popup_providers_name: "Provider Name",
+    edit_popup_providers_description_fr: "French Description",
+    edit_popup_providers_description_en: "English Description",
+
+    // Remove Popup Providers
+    remove_popup_3: "You are about to delete a provider.",
+
+    // Add Popup Users
+    popup_users_title: "Users",
+
+    // Remove Popup Users
+    remove_popup_users_p1: "You are about to delete a user.",
+    remove_popup_2: "Are you sure about your action?",
 }

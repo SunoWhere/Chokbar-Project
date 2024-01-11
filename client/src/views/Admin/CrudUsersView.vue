@@ -10,7 +10,6 @@ export default {
   name: 'CrudProvidersView',
   data () {
     return {
-      tableColumns: ["Nom", "Prenom", "Email", "Rôle"],
       users: []
     }
   },
@@ -37,6 +36,9 @@ export default {
     }
   },
   methods: {
+    getLang() {
+      return this.$store.state.lang;
+    },
     async allUsers() {
       try {
         const res = await usersService.getAllUser();
@@ -88,7 +90,7 @@ export default {
   <div class="dashboard-container">
     <SideBar/>
     <div id="dc" v-if="isConnected && getRole === 'admin'">
-      <CrudTable :column-names="tableColumns" :items="usersClientList"/>
+      <CrudTable :items="usersClientList"/>
     </div>
     <AddUserPopup :typeTitle="'Users'" />
     <RemoveUserPopup :typeTitle="'Users'" @confirmed-deletion="removeUser" />

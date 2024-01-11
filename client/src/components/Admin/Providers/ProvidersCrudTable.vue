@@ -8,13 +8,6 @@ export default {
 
   },
   props: {
-    columnNames: {
-      type: Array,
-      required: true,
-      validator: function (value) {
-        return value.every(item => typeof item === 'string');
-      }
-    },
     usersProviders: {
       type: Array,
       required: true,
@@ -58,7 +51,10 @@ export default {
       } catch (error) {
         console.error("Une erreur s'est produite :", error);
       }
-    }
+    },
+    getLang() {
+      return this.$store.state.lang;
+    },
   },
 };
 </script>
@@ -70,7 +66,9 @@ export default {
         <table>
           <thead>
           <tr>
-            <th v-for="columnName in columnNames" :key="columnName">{{ columnName }}</th>
+            <th>Id</th>
+            <th>{{getLang().crud_providers_lastname}}</th>
+            <th>Email</th>
             <th>Actions</th>
           </tr>
           </thead>
@@ -80,8 +78,8 @@ export default {
             <td v-for="(value, columnIndex) in item.visibleColumns" :key="columnIndex">{{ value }}</td>
             <td>
               <form>
-                <button class="edit-button" @click.prevent="openEditPopup(item)">Editer</button>
-                <button class="delete-button" @click.prevent="openRemovePopup(item.visibleColumns.id)">Supprimer</button>
+                <button class="edit-button" @click.prevent="openEditPopup(item)">{{ getLang().btn_edit }}</button>
+                <button class="delete-button" @click.prevent="openRemovePopup(item.visibleColumns.id)">{{ getLang().btn_delete }}</button>
               </form>
             </td>
           </tr>
@@ -90,7 +88,7 @@ export default {
       </div>
     </div>
     <div id="add-btn">
-      <button class="add-button" @click="openNewClientOrNotPopup">Ajouter<i class=""></i></button>
+      <button class="add-button" @click="openNewClientOrNotPopup">{{ getLang().btn_add }}<i class=""></i></button>
     </div>
   </div>
 </template>

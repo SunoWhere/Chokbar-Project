@@ -2,15 +2,15 @@
   <div class="modal" v-if="showPopup">
     <div class="modal-content">
       <div class="modal-header">
-        <h1>Remove</h1>
+        <h1>{{ getLang().btn_delete }}</h1>
       </div>
       <div class="content-sub-title">
-        <h2>{{typeTitle}}</h2>
+        <h2>{{ getLang().popup_providers_title }}</h2>
         <div v-if="message" id="error-message">
           <p class="error-message">{{ message }}</p>
         </div>
-        <p>Vous êtes sur le points de supprimer un {{typeTitle}}.</p>
-        <p>Êtes vous sûr de votre action ?</p>
+        <p>{{ getLang().remove_popup_3 }}</p>
+        <p>{{ getLang().remove_popup_2 }}</p>
       </div>
       <div class="content">
         <form @submit.prevent="submitForm">
@@ -49,6 +49,9 @@ export default {
     }
   },
   methods: {
+    getLang() {
+      return this.$store.state.lang;
+    },
     closePopup() {
       this.$store.commit("setShowRemoveProviderPopup", false);
     },

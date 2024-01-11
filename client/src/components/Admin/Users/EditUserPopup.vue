@@ -2,14 +2,14 @@
   <div class="modal" v-if="showPopup">
     <div class="modal-content">
       <div class="modal-header">
-        <h1>Edit</h1>
+        <h1>{{getLang().btn_edit}}</h1>
         <div class="close-container" @click="closePopup">
           <div class="leftright"></div>
           <div class="rightleft"></div>
         </div>
       </div>
       <div class="content-sub-title">
-        <h2>{{typeTitle}}</h2>
+        <h2>{{getLang().popup_users_title}}</h2>
         <div v-if="message" id="error-message">
           <p class="error-message">{{ message }}</p>
         </div>
@@ -17,30 +17,30 @@
       <div class="content">
         <form action="/users/" method="POST" @submit.prevent="submitForm">
           <div class="form-main-content">
-            <label for="firstname">Firstname</label>
+            <label for="firstname">{{ getLang().form_firstname }}</label>
             <input type="text" id="firstname" name="firstname" placeholder="Firstname" v-model="$store.state.userToEdit.visibleColumns[0]" required>
 
-            <label for="lastname">Lastname</label>
+            <label for="lastname">{{ getLang().form_lastname }}</label>
             <input type="text" id="lastname" name="lastname" placeholder="Lastname" v-model="$store.state.userToEdit.visibleColumns[1]" required>
 
-            <label for="email">Email</label>
+            <label for="email">{{ getLang().form_email }}</label>
             <input type="email" id="email" name="email" placeholder="Email" v-model="$store.state.userToEdit.visibleColumns[2]" required>
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Password" v-model="editUser.password">
+            <label for="password">{{ getLang().form_password }}</label>
+            <input type="password" id="password" name="password" :placeholder="getLang().form_password" v-model="editUser.password">
 
-            <label for="confirm-password">Confirm Password</label>
-            <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" v-model="editUser.confirmPassword">
+            <label for="confirm-password">{{ getLang().form_confirm_password }}</label>
+            <input type="password" id="confirm-password" name="confirm-password" :placeholder="getLang().form_confirm_password" v-model="editUser.confirmPassword">
 
             <p class="show-password">
               <input type="checkbox" id="show-password" @click="toggleShowPassword">
-              <label for="show-password">Show Password</label>
+              <label for="show-password">{{ getLang().form_show_password }}</label>
             </p>
           </div>
 
           <div class="buttons">
             <div class="submit-btn">
-              <button type="submit">Edit</button>
+              <button type="submit">{{ getLang().btn_edit }}</button>
             </div>
           </div>
         </form>
@@ -84,6 +84,9 @@ export default {
     }
   },
   methods: {
+    getLang() {
+      return this.$store.state.lang;
+    },
     closePopup() {
       this.$store.commit("setShowEditUserPopup", false);
     },

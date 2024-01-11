@@ -1,9 +1,9 @@
 <template>
   <div id="dashboard-content-container">
     <div id="cards">
-      <InfosCard :number="2500" :text="'Total Users'" data-type="user"/>
-      <InfosCard :number="60" :text="'Total Intervenants'" data-type="user"/>
-      <InfosCard :number="1645" :text="'Total Products'" data-type="product"/>
+      <InfosCard :number="2500" :text="getLang().dashboard_admin_total_users" data-type="user"/>
+      <InfosCard :number="60" :text="getLang().dashboard_admin_total_providers" data-type="user"/>
+      <InfosCard :number="1645" :text="getLang().dashboard_admin_total_products" data-type="product"/>
     </div>
     <div id="charts">
       <div id="first-chart">
@@ -48,9 +48,14 @@ export default {
       },
       options: {
         responsive: true
-      }
+      },
     }
   },
+  methods: {
+    getLang() {
+      return this.$store.state.lang;
+    },
+  }
 };
 
 

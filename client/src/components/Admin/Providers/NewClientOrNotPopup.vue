@@ -2,27 +2,27 @@
   <div class="modal" v-if="showPopup">
     <div class="modal-content">
       <div class="modal-header">
-        <h1>New Provider Or Not ?</h1>
+        <h1>{{getLang().btn_add}}</h1>
         <div class="close-container" @click="closePopup">
           <div class="leftright"></div>
           <div class="rightleft"></div>
         </div>
       </div>
       <div class="content-sub-title">
-        <h2>{{typeTitle}}</h2>
+        <h2>{{getLang().popup_providers_title}}</h2>
         <div v-if="message" id="error-message">
           <p class="error-message">{{ message }}</p>
         </div>
-        <p>Voulez vous créer un nouvel utilisateur ou déclarer un utilisateur déjà existant en tant qu'intervenant ?</p>
+        <p>{{getLang().add_popup_providers_message}}</p>
       </div>
       <div class="content">
         <form>
           <div class="buttons">
             <div class="submit-btn">
-              <button @click="newProvider">Nouveau intervenant</button>
+              <button @click="newProvider">{{getLang().add_new_provider_btn}}</button>
             </div>
             <div class="close-btn">
-              <button @click="syncClientProvider">Lier un client</button>
+              <button @click="syncClientProvider">{{getLang().link_client_to_provider_btn}}</button>
             </div>
           </div>
         </form>
@@ -52,6 +52,9 @@ export default {
     }
   },
   methods: {
+    getLang() {
+      return this.$store.state.lang;
+    },
     closePopup() {
       this.$store.commit("setShowNewClientOrNotPopup", false);
     },

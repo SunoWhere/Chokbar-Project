@@ -13,7 +13,6 @@ export default {
   name: 'CrudProvidersView',
   data() {
     return {
-      tableColumns: ["Id", "Nom", "Mail"],
       users: [],
       providers: [],
       providerStands: [],
@@ -173,7 +172,7 @@ export default {
   <div class="dashboard-container">
     <SideBar/>
     <div id="dc" v-if="isConnected && getRole === 'admin'">
-      <ProvidersCrudTable :column-names="tableColumns" :providers="providersList" :usersProviders="usersProviderList"/>
+      <ProvidersCrudTable :providers="providersList" :usersProviders="usersProviderList"/>
     </div>
     <NewClientOrNotPopup :typeTitle="'Intervenants'" @new-client="openAddPopup" @sync-client-provider="openSyncPopup"/>
     <AddProviderPopup :typeTitle="'Intervenants'"/>
