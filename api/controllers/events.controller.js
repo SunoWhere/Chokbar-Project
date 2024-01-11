@@ -54,7 +54,7 @@ exports.updateEvent = async (req, res) => {
             description_fr,
             id_location
         } = req.body
-        return res.status(200).send(await eventsServices.updateEvent({
+        await eventsServices.updateEvent({
             name: name,
             max_capacity: max_capacity,
             starting_time: starting_time,
@@ -62,7 +62,8 @@ exports.updateEvent = async (req, res) => {
             description_en: description_en,
             description_fr: description_fr,
             id_location: id_location
-        }, id))
+        }, id)
+        return res.status(200).send("Event updated successfully.")
     } catch (err) {
         return res.status(err.errorCode || 500).send(err.message)
     }
