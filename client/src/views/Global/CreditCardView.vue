@@ -126,7 +126,7 @@
         <div class="card-input">
           <label for="cardName" class="card-input__label">{{ getLang().credit_card_name }}</label>
           <input type="text" id="cardName" class="card-input__input" v-model="cardName" v-on:focus="focusInput"
-                 v-on:blur="blurInput" data-ref="cardName" autocomplete="off"required>
+                 v-on:blur="blurInput" data-ref="cardName" autocomplete="off" required>
         </div>
         <div class="card-form__row">
           <div class="card-form__col">
