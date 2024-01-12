@@ -1,18 +1,23 @@
 <script>
-  // import EditEventPopup from "@/components/Global/Map/EditEventPopup.vue";
-
   import moment from "moment-timezone";
+  import {lang_fr} from "@/datas/lang_fr";
+  import {lang_en} from "@/datas/lang_en";
 
   export default {
+    computed: {
+      lang_en() {
+        return lang_en
+      },
+      lang_fr() {
+        return lang_fr
+      }
+    },
     data() {
       return {
       }
     },
     props: {
       selectedEvent: Object
-    },
-    components: {
-      // EditEventPopup
     },
     methods: {
       closeInfo() {
@@ -24,11 +29,22 @@
       moment(date) {
         return moment(date).tz("Atlantic/Azores").format("HH:mm");
       },
-      locationName(locationCode) {
+      getLang() {
+        return this.$store.state.lang;
+      },
+      locationNameFR(locationCode) {
         switch (locationCode) {
           case "S01": return "Restauration";
           case "S02": return "Scène";
           case "S03": return "Espace VIP";
+          default: return locationCode;
+        }
+      },
+      locationNameEN(locationCode) {
+        switch (locationCode) {
+          case "S01": return "Catering";
+          case "S02": return "Scene";
+          case "S03": return "VIP Area";
           default: return locationCode;
         }
       }
@@ -47,15 +63,40 @@
       <div class="content">
         <div class="event-info-header"><p>{{ selectedEvent.name }}</p></div>
 
-        <ul class="event-info">
-          <li id="time" class="event-info-item">Horaire: {{ moment(selectedEvent.starting_time) }} - {{ moment(selectedEvent.finishing_time) }}</li>
-          <li id="location" class="event-info-item">Emplacement: {{ locationName(selectedEvent.location.code) }}</li>
-          <li id="max-capacity" class="event-info-item">Capacité: {{ selectedEvent.max_capacity }}</li>
-          <li id="description-fr" class="event-info-item">Description: {{ selectedEvent.description_fr }}</li>
-        </ul>
+        <div class="event-info">
+          <div class="line">
+            <div class="line-item">
+              <label for="location">{{ getLang().planning_info_location }}</label>
+              <input v-if="getLang() === lang_en" id="location" type="text" :value="locationNameEN(selectedEvent.location.code)" readonly>
+              <input v-if="getLang() === lang_fr" id="location" type="text" :value="locationNameFR(selectedEvent.location.code)" readonly>
+            </div>
+            <div class="line-item">
+              <label for="capacity">{{ getLang().planning_info_capacity }}</label>
+              <input id="capacity" type="text" :value="selectedEvent.max_capacity" readonly>
+            </div>
+          </div>
+          <div class="line">
+            <div class="line-item">
+              <label for="starting-time">{{ getLang().planning_info_starting_time }}</label>
+              <input id="starting-time" type="time" :value="moment(selectedEvent.starting_time)" readonly>
+            </div>
+            <div class="line-item">
+              <label for="finishing-time">{{ getLang().planning_info_finishing_time }}</label>
+              <input id="finishing-time" type="time" :value="moment(selectedEvent.finishing_time)" readonly>
+            </div>
+          </div>
+            <div class="line">
+              <div class="line-item">
+                <label for="description">Description</label>
+                <textarea v-if="getLang() === lang_en" id="description" :value="selectedEvent.description_en" readonly></textarea>
+                <textarea v-if="getLang() === lang_fr" id="description" :value="selectedEvent.description_fr" readonly></textarea>
+              </div>
+            </div>
+        </div>
+
         <div class="event-controls" v-if="this.$store.state.isConnected">
-          <button class="event-controls-button" @click="openEditPopup">Modifier</button>
-          <button class="event-controls-button">Supprimer</button>
+          <button class="event-controls-button" @click="openEditPopup">{{ getLang().planning_info_controls_edit }}</button>
+          <button class="event-controls-button">{{ getLang().planning_info_controls_delete }}</button>
         </div>
       </div>
 
@@ -77,7 +118,7 @@
 .info {
   position: absolute;
   align-self: center;
-  height: 50%;
+  height: fit-content;
   width: 30%;
   border: 2px solid var(--scnd3);
   background-color: var(--background);
@@ -103,12 +144,40 @@
 }
 
 .event-info {
-  list-style: none;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
 }
 
-.event-info-item {
+.line {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.line-item {
+  width: 100%;
+  margin: 0 10px;
+}
+
+label {
   color: white;
-  font-size: 1.1em;
+  align-self: start;
+}
+input,
+textarea {
+  align-self: start;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  resize: none;
+}
+
+textarea {
+  height: 100px
 }
 
 .event-controls {

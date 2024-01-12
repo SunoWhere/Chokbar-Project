@@ -10,9 +10,6 @@
       </div>
       <div class="content-sub-title">
         <h2>{{getLang().popup_providers_title}}</h2>
-        <div v-if="message" id="error-message">
-          <p class="error-message"></p>
-        </div>
       </div>
       <div class="content">
         <form @submit.prevent="submitForm">

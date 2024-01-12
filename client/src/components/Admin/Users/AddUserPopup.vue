@@ -10,9 +10,6 @@
       </div>
       <div class="content-sub-title">
         <h2>{{ getLang().popup_users_title }}</h2>
-        <div v-if="message" id="error-message">
-          <p class="error-message"></p>
-        </div>
       </div>
       <div class="content">
         <form action="/users/" method="POST" @submit.prevent="submitForm">
@@ -98,11 +95,20 @@ export default {
         cpasswordInput.type = "password";
       }
     },
+    clearAddUser() {
+      this.addUser.first_name = '';
+      this.addUser.last_name = '';
+      this.addUser.email = '';
+      this.addUser.password = '';
+      this.addUser.confirmPassword = '';
+    },
     submitForm() {
       if (this.addUser.password === this.addUser.confirmPassword) {
         usersService.addUser(this.addUser)
             .then(async res => {
               this.message = res.data;
+
+              this.clearAddUser()
               this.closePopup();
 
               const updatedUserList = await usersService.getAllUser();

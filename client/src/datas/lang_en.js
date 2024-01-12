@@ -149,7 +149,7 @@ export const lang_en = {
     edit_popup_providers_description_en: "English Description",
 
     // Remove Popup Providers
-    remove_popup_3: "You are about to delete a provider.",
+    remove_popup_provider1: "You are about to delete a provider.",
 
     // Add Popup Users
     popup_users_title: "Users",
@@ -157,4 +157,48 @@ export const lang_en = {
     // Remove Popup Users
     remove_popup_users_p1: "You are about to delete a user.",
     remove_popup_2: "Are you sure about your action?",
+
+    // Interactive Map
+    map_add_event: "Add",
+
+    // Add Event Popup
+    event_add_title: "Add an Event",
+    event_add_form_name: "Name",
+    event_add_form_capacity: "Capacity",
+    event_add_form_day: "Day",
+    event_add_form_location: "Location",
+    event_add_form_starting_time: "Starting Time",
+    event_add_form_finishing_time: "Finishing Time",
+    event_add_form_submit: "Add",
+
+    // Edit Event Popup
+    event_edit_title: "Edit",
+    event_edit_form_name: "Name",
+    event_edit_form_capacity: "Capacity",
+    event_edit_form_day: "Day",
+    event_edit_form_location: "Location",
+    event_edit_form_starting_time: "Starting Time",
+    event_edit_form_finishing_time: "Finishing Time",
+    event_edit_form_submit: "Edit",
+
+    // Planning Info Popup
+    planning_info_location: "Location",
+    planning_info_capacity: "Capacity",
+    planning_info_starting_time: "Starting Time",
+    planning_info_finishing_time: "Finishing Time",
+    planning_info_controls_edit: "Edit",
+    planning_info_controls_delete: "Delete",
+
+    // Stand Info Popup
+    stand_info_provider: "Provider",
+    stand_info_booth_type: "Booth Type",
+    stand_info_special_booth: "This is a spacial location.",
+    stand_info_no_booth: "There is no booth for this location.",
+    stand_info_table_title: "Events",
+    stand_info_table_head_name: "Name",
+    stand_info_table_head_capacity: "Capacity",
+    stand_info_table_head_time: "Time",
+    stand_info_booth_shop: "Booth Shop",
+
+
 }

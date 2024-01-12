@@ -1,46 +1,3 @@
-<template>
-  <div class="modal" v-if="showPopup">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1>Add</h1>
-        <div class="close-container" @click="closePopup">
-          <div class="leftright"></div>
-          <div class="rightleft"></div>
-        </div>
-      </div>
-      <div class="content-sub-title">
-        <h2>{{typeTitle}}</h2>
-        <div v-if="message" id="error-message">
-          <p class="error-message"></p>
-        </div>
-      </div>
-      <div class="content">
-        <form @submit.prevent="submitForm">
-          <div class="form-main-content">
-            <label for="name">Nom Intervenant</label>
-            <input type="text" id="name" name="name" placeholder="Startup name" v-model="addProvider.name" required>
-
-            <label for="desc-fr">Description française</label>
-            <textarea id="story" v-model="addProvider.description_fr" name="desc-fr" rows="5" cols="33" required>Decription française</textarea>
-
-            <label for="story">Description anglaise</label>
-            <textarea id="desc-en" v-model="addProvider.description_en" name="desc-en" rows="5" cols="33" required>Decription anglaise</textarea>
-
-            <label for="userId">Sélectionner un utilisateur</label>
-            <select v-model="addProvider.id" id="userId" name="userId" required>
-              <option v-for="user in users" :key="user[0]" :value="user[0]">{{ user[2] }} {{ user[3] }}</option>
-            </select>
-          </div>
-
-          <div class="submit-btn">
-            <button type="submit">Add</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script>
 import {providersService} from "@/services";
 
@@ -84,11 +41,19 @@ export default {
     closePopup() {
       this.$store.commit("setShowLinkClientProviderPopup", false);
     },
+    clearAddProvider() {
+      this.addProvider.name = '';
+      this.addProvider.id = '';
+      this.addProvider.description_fr = '';
+      this.addProvider.description_en = '';
+    },
     submitForm() {
       if (this.addProvider.name != null || this.addProvider.name !== "") {
         providersService.addProvider(this.addProvider)
             .then(async res => {
               this.message = res.data;
+
+              this.clearAddProvider();
               this.closePopup();
 
               await this.$store.dispatch('updateProviderList');
@@ -106,6 +71,46 @@ export default {
 };
 
 </script>
+
+<template>
+  <div class="modal" v-if="showPopup">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1>Add</h1>
+        <div class="close-container" @click="closePopup">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </div>
+      </div>
+      <div class="content-sub-title">
+        <h2>{{typeTitle}}</h2>
+      </div>
+      <div class="content">
+        <form @submit.prevent="submitForm">
+          <div class="form-main-content">
+            <label for="name">Nom Intervenant</label>
+            <input type="text" id="name" name="name" placeholder="Startup name" v-model="addProvider.name" required>
+
+            <label for="desc-fr">Description française</label>
+            <textarea id="story" v-model="addProvider.description_fr" name="desc-fr" rows="5" cols="33" required>Decription française</textarea>
+
+            <label for="story">Description anglaise</label>
+            <textarea id="desc-en" v-model="addProvider.description_en" name="desc-en" rows="5" cols="33" required>Decription anglaise</textarea>
+
+            <label for="userId">Sélectionner un utilisateur</label>
+            <select v-model="addProvider.id" id="userId" name="userId" required>
+              <option v-for="user in users" :key="user[0]" :value="user[0]">{{ user[2] }} {{ user[3] }}</option>
+            </select>
+          </div>
+
+          <div class="submit-btn">
+            <button type="submit">Add</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 .modal {

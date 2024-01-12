@@ -4,7 +4,7 @@ import PlanningInfo from "@/components/Global/Map/PlanningInfo.vue";
 import AddEventPopup from "@/components/Global/Map/AddEventPopup.vue";
 import EditEventPopup from "@/components/Global/Map/EditEventPopup.vue";
 
-import { eventsService } from "@/services";
+import {eventsService, lang_en, lang_fr} from "@/services";
 import { locationsService } from "@/services/";
 import moment from "moment-timezone";
 
@@ -24,7 +24,7 @@ export default {
 
       selectedBoothCode: null,
       selectedLocation: null,
-      days: [
+      days_fr: [
         {
           name: "Lundi",
           timestamp: "2024-05-20"
@@ -50,13 +50,45 @@ export default {
           timestamp: "2024-05-25"
         }
       ],
+      days_en: [
+        {
+          name: "Monday",
+          timestamp: "2024-05-20"
+        },
+        {
+          name: "Tuesday",
+          timestamp: "2024-05-21"
+        },
+        {
+          name: "Wednesday",
+          timestamp: "2024-05-22"
+        },
+        {
+          name: "Thursday",
+          timestamp: "2024-05-23"
+        },
+        {
+          name: "Friday",
+          timestamp: "2024-05-24"
+        },
+        {
+          name: "Saturday",
+          timestamp: "2024-05-25"
+        }
+      ],
       selectedDayId: 0,
       selectedEvent: null,
     }
   },
   computed: {
+    lang_fr() {
+      return lang_fr
+    },
+    lang_en() {
+      return lang_en
+    },
     filterEventsByDayAndTime() {
-      const selectedDayTimestamp = moment(this.days[this.selectedDayId].timestamp).format('YYYY-MM-DD');
+      const selectedDayTimestamp = moment(this.days_fr[this.selectedDayId].timestamp).format('YYYY-MM-DD');
 
       let filteredEvents = [];
       filteredEvents = this.events.filter(event => {
@@ -103,7 +135,7 @@ export default {
       this.$store.commit("setShowAddEvent", true);
     },
     nextDay() {
-      if(this.selectedDayId === this.days.length-1) return;
+      if(this.selectedDayId === this.days_fr.length-1) return;
       this.selectedDayId++;
     },
     previousDay() {
@@ -112,6 +144,9 @@ export default {
     },
     moment(date) {
       return moment(date).tz("Atlantic/Azores").format("HH:mm");
+    },
+    getLang() {
+      return this.$store.state.lang;
     },
 
     async getAllEvents() {
@@ -176,7 +211,8 @@ export default {
       <ul class="timetable">
         <li class="table-head">
           <button class="day-selector" id="previous-day" @click="previousDay"><font-awesome-icon icon="fa-solid fa-chevron-left" /></button>
-          <span id="day-string">{{ this.days[selectedDayId].name }}</span>
+          <span id="day-string" v-if="getLang() === lang_fr">{{ this.days_fr[selectedDayId].name }}</span>
+          <span id="day-string" v-if="getLang() === lang_en">{{ this.days_en[selectedDayId].name }}</span>
           <button class="day-selector" id="next-day" @click="nextDay"><font-awesome-icon icon="fa-solid fa-chevron-right" /></button>
         </li>
 
@@ -187,12 +223,10 @@ export default {
       </ul>
 
       <div class="table-event-add" v-if="isConnected && getRole === 'admin'">
-        <button id="add" class="event-button" @click="openAddEvent">Ajouter</button>
+        <button id="add" class="event-button" @click="openAddEvent">{{ getLang().map_add_event }}</button>
       </div>
     </div>
 
-
-    <!-- TODO: récupérer les codes pour acceder aux stands via un getLocations() -->
     <div class="map-container">
       <svg class="map" width="100%" height="100%" viewBox="0 0 2236 1578" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:square;stroke-miterlimit:1.5;">
         <g id="map-bg" transform="matrix(1,0,0,1,-783.554,-346.752)">
