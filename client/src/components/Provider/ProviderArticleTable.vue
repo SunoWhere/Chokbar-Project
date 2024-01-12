@@ -5,10 +5,10 @@
         <table>
           <thead>
           <tr>
-            <th>Nom de l'article</th>
-            <th>Prix</th>
-            <th>Quantité</th>
-            <th>Actions</th>
+            <th>{{getLang().crud_article_stand_provider_nom}}</th>
+            <th>{{getLang().crud_article_stand_provider_prix}}</th>
+            <th>{{getLang().crud_article_stand_provider_quantite}}</th>
+            <th>{{getLang().crud_article_stand_provider_action}}</th>
           </tr>
           </thead>
           <tfoot></tfoot>
@@ -19,9 +19,8 @@
             <td>{{ product.quantity }}</td>
             <td>
               <form>
-                <button class="edit-button" @click.prevent="openEditPopup(filteredItems)">Editer<i class=""></i>
-                </button>
-                <button class="delete-button" @click.prevent="openRemovePopup(filteredItems)">Supprimer<i class=""></i>
+                <button class="edit-button" @click.prevent="openEditPopup">{{getLang().crud_article_stand_provider_edit}}<i class=""></i></button>
+                <button class="delete-button" @click.prevent="openRemovePopup(product.id)">{{getLang().crud_article_stand_provider_delete}}<i class=""></i>
                 </button>
               </form>
             </td>
@@ -31,7 +30,7 @@
       </div>
     </div>
     <div id="add-btn">
-      <button class="add-button" @click="openAddPopup">Ajouter<i class=""></i></button>
+      <button class="add-button" @click="openAddPopup">{{getLang().crud_article_stand_provider_add}}<i class=""></i></button>
     </div>
   </div>
 </template>
@@ -254,9 +253,7 @@ export default {
           id_product_type: 4,
           id_product_state: 1,
           description_en: 'Description in English 18',
-          description_fr: 'Description en français 18',    showAddPopup() {
-      return this.$store.state.showAddUserPopup;
-    },
+          description_fr: 'Description en français 18',
           name_en: 'Product 18',
           name_fr: 'Produit 18'
         },
@@ -538,16 +535,18 @@ export default {
     }
   },
   methods: {
-     openAddPopup() {
+    openAddPopup() {
       this.$store.commit("setShowAddArticlePopup", true);
     },
     openRemovePopup(id) {
       this.$store.commit("setArticleToRemove", id);
       this.$store.commit("setShowRemoveArticlePopup", true);
     },
-    openEditPopup(user) {
-      this.$store.commit("setArticleToEdit", user);
+    openEditPopup() {
       this.$store.commit("setShowEditArticlePopup", true);
+    },
+    getLang() {
+      return this.$store.state.lang;
     },
   },
 }

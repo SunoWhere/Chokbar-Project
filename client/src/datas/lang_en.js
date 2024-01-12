@@ -230,4 +230,13 @@ export const lang_en = {
     crud_stand_provider_Action: "Action",
     crud_stand_provider_article: "View Articles",
     crud_stand_provider_edit: "Edit",
+
+    //CrudArticleStandProvider
+    crud_article_stand_provider_nom: "Item name",
+    crud_article_stand_provider_prix: "Price",
+    crud_article_stand_provider_quantite: "Quantity",
+    crud_article_stand_provider_action: "Action",
+    crud_article_stand_provider_add: "Add",
+    crud_article_stand_provider_edit: "Edit",
+    crud_article_stand_provider_delete: "Delete",
 }

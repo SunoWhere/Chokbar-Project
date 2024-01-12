@@ -240,7 +240,7 @@ export const lang_fr = {
     credit_card_user: "Titulaire de la carte",
     credit_card_name: "Nom du titulaire",
     credit_card_number: "Numéro de carte",
-     credit_card_expiration: "Expire ",
+    credit_card_expiration: "Expire ",
     credit_card_expiration_date: "Date d'expiration",
     credit_card_cvv: "CVV",
     credit_card_submit: "Payer",
@@ -259,7 +259,15 @@ export const lang_fr = {
     crud_stand_provider_stand: "Stands",
     crud_stand_provider_boutique: "Articles",
     crud_stand_provider_Action: "Action",
-    crud_stand_provider_article:"Voir articles",
-    crud_stand_provider_edit:"Modifier",
+    crud_stand_provider_article: "Voir articles",
+    crud_stand_provider_edit: "Modifier",
 
+    //CrudArticleStandProvider
+    crud_article_stand_provider_nom: "Nom de l'article",
+    crud_article_stand_provider_prix: "Prix",
+    crud_article_stand_provider_quantite: "Quantité",
+    crud_article_stand_provider_action: "Action",
+    crud_article_stand_provider_add: "Ajouter",
+    crud_article_stand_provider_edit: "Modifier",
+    crud_article_stand_provider_delete: "Supprimer",
 }

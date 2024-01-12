@@ -18,7 +18,7 @@
         <form @submit.prevent="submitForm">
           <div class="form-main-content">
             <label for="name">Nom du stand</label>
-            <input type="text" id="name" name="name" v-model="$store.state.articleToEdit.name" required>
+            <input type="text" id="name" name="name" v-model="$store.state.standToEdit.name" required>
 
             <label for="story">Description française</label>
             <textarea id="story" name="story" rows="5" cols="33" v-model="$store.state.articleToEdit.description_fr" >Decription française</textarea>
@@ -40,13 +40,15 @@
 
 <script>
 
+//import {standsService} from "@/services";
+
 import {standsService} from "@/services";
 
 export default {
   name: 'EditArticlePopup',
   data() {
     return {
-      editStand:{
+      editArticle:{
         id:'',
         name:'',
         description_fr:'',
@@ -73,12 +75,15 @@ export default {
     async submitForm() {
 try {
         const stand = await standsService.editProviderStand(this.$store.state.standToEdit);
-        this.$store.commit("setShowEditArticlePopup", false);
-        this.$emit("articleEdited", stand);
+        this.$store.commit("setShowEditStandPopup", false);
+        this.$emit("standEdited", stand);
       } catch (error) {
         console.error(error);
         this.message = error.message;
       }
+    },
+    getLang() {
+      return this.$store.state.lang;
     },
   }
 }
