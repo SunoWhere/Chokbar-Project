@@ -19,6 +19,7 @@ import ShopStandView from "@/views/Global/ShopStandView.vue"
 import CrudArticleStandView from "@/views/Provider/CrudArticleStandView.vue"
 import CartCheckoutView from "@/views/Global/CartCheckoutView.vue";
 import UserOrdersView from "@/views/Global/UserOrdersView.vue";
+import ContactView from "@/views/Global/ContactFormView.vue";
 
 Vue.use(VueRouter)
 
@@ -119,6 +120,11 @@ const routes = [
     name: 'Orders',
     component: UserOrdersView
   },
+    {
+        path: '/Contact',
+        name: 'Contact',
+        component: ContactView
+    }
 ]
 
 const router = new VueRouter({
