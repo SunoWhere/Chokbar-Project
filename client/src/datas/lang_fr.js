@@ -255,4 +255,11 @@ export const lang_fr = {
     contact_message: "Message",
     contact_envoyer: "Envoyer",
 
+    //Crud Stand Provider
+    crud_stand_provider_stand: "Stands",
+    crud_stand_provider_boutique: "Articles",
+    crud_stand_provider_Action: "Action",
+    crud_stand_provider_article:"Voir articles",
+    crud_stand_provider_edit:"Modifier",
+
 }

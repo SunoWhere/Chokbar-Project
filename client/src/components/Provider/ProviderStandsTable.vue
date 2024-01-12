@@ -5,9 +5,9 @@
         <table>
           <thead>
           <tr>
-            <th>Stand</th>
-            <th>Boutique</th>
-            <th>Actions</th>
+            <th>{{getLang().crud_stand_provider_stand}}</th>
+            <th>{{getLang().crud_stand_provider_boutique}}</th>
+            <th>{{getLang().crud_stand_provider_Action}}</th>
           </tr>
           </thead>
           <tfoot></tfoot>
@@ -15,11 +15,11 @@
           <tr v-for="stand in stands" :key="stand.id">
             <td>{{ stand.name }}</td>
             <td>
-              <button class="edit-button" @click="$router.push('/intervenant/stands/article')">View Articles</button>
+              <button class="edit-button" @click="$router.push('/intervenant/stands/article')">{{getLang().crud_stand_provider_article}}</button>
             </td>
             <td>
               <form>
-                <button class="edit-button" @click.prevent="openEditPopup(filteredItems)">Editer<i class=""></i>
+                <button class="edit-button" @click.prevent="openEditPopup(filteredItems)">{{getLang().crud_stand_provider_edit}}<i class=""></i>
                 </button>
               </form>
             </td>
@@ -57,6 +57,9 @@ export default {
     openEditPopup(selectedStand) {
       this.$store.commit("setStandToEdit", selectedStand);
       this.$store.commit("setShowEditStandPopup", true);
+    },
+    getLang() {
+      return this.$store.state.lang;
     },
   }
 }

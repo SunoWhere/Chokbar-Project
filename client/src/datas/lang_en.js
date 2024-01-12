@@ -223,4 +223,11 @@ export const lang_en = {
     contact_sujet: "Subject",
     contact_message: "Message",
     contact_envoyer: "Send",
+
+    //Crud Stand Provider
+    crud_stand_provider_stand: "Stands",
+    crud_stand_provider_boutique: "Articles",
+    crud_stand_provider_Action: "Action",
+    crud_stand_provider_article: "View Articles",
+    crud_stand_provider_edit: "Edit",
 }
