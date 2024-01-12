@@ -56,6 +56,9 @@
         this.addEvent.starting_time = `${this.selectedDay.timestamp}T${this.startingTime}:00.000Z`;
         this.addEvent.finishing_time = `${this.selectedDay.timestamp}T${this.finishingTime}:00.000Z`;
       },
+      getLang() {
+        return this.$store.state.lang;
+      },
 
       async getLocations() {
         try {
@@ -97,7 +100,7 @@
        <div class="leftright"></div>
        <div class="rightleft"></div>
      </div>
-     <div class="add-event-header"><p>Ajouter un Événement</p></div>
+     <div class="add-event-header"><p>{{ getLang().event_add_title }}</p></div>
 
      <div v-if="errMessage" class="err-msg">{{ errMessage }}</div>
 
@@ -105,12 +108,12 @@
 
        <div class="item-group">
          <div class="group">
-           <label for="name">Nom</label>
+           <label for="name">{{ getLang().event_add_form_name }}</label>
            <input id="name" type="text" v-model="addEvent.name" required>
          </div>
 
          <div class="group">
-           <label for="max-capacity">Capacité</label>
+           <label for="max-capacity">{{ getLang().event_add_form_capacity }}</label>
            <input id="max-capacity" type="number" v-model="addEvent.max_capacity" required>
          </div>
        </div>
@@ -129,14 +132,14 @@
 
        <div class="item-group">
          <div class="group">
-           <label for="jour">Jour</label>
+           <label for="jour">{{ getLang().event_add_form_day }}</label>
            <select id="jour" v-model="selectedDay" @change="concatTimestamp" required>
              <option v-for="(day, id_day) in days" :key="id_day" :value="day">{{ day.name }}</option>
            </select>
          </div>
 
          <div class="group">
-           <label for="location">Emplacement</label>
+           <label for="location">{{ getLang().event_add_form_location }}</label>
            <select id="location" v-model="addEvent.id_location" required>
              <option v-for="(location, id_location) in locations" :key="id_location" :value="id_location+1">{{ location.code }}</option>
            </select>
@@ -145,17 +148,17 @@
 
        <div class="item-group">
          <div class="group">
-           <label for="starting-time">Heure de Début</label>
+           <label for="starting-time">{{ getLang().event_add_form_starting_time }}</label>
            <input id="starting-time" type="time" v-model="startingTime" @change="concatTimestamp" required>
          </div>
 
          <div class="group">
-           <label for="finishing-time">Heure de Fin</label>
+           <label for="finishing-time">{{ getLang().event_add_form_finishing_time }}</label>
            <input id="finishing-time" type="time" v-model="finishingTime" @change="concatTimestamp" required>
          </div>
        </div>
 
-       <input id="sumbit-add" type="submit" value="Ajouter">
+       <input id="sumbit-add" type="submit" :value="getLang().event_add_form_submit">
      </form>
    </div>
  </div>

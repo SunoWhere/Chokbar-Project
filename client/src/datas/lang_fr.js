@@ -188,4 +188,46 @@ export const lang_fr = {
     remove_popup_2: "Êtes vous sûr de votre action ?",
     remove_popup_users_2: "Êtes vous sûr de votre action ?",
 
+    // Interactive Map
+    map_add_event: "Ajouter",
+
+    // Add Event Popup
+    event_add_title: "Ajouter un Événement",
+    event_add_form_name: "Nom",
+    event_add_form_capacity: "Capacité",
+    event_add_form_day: "Jour",
+    event_add_form_location: "Emplacement",
+    event_add_form_starting_time: "Heure de Début",
+    event_add_form_finishing_time: "Heure de Fin",
+    event_add_form_submit: "Ajouter",
+
+    // Edit Event Popup
+    event_edit_title: "Modifier",
+    event_edit_form_name: "Nom",
+    event_edit_form_capacity: "Capacité",
+    event_edit_form_day: "Jour",
+    event_edit_form_location: "Emplacement",
+    event_edit_form_starting_time: "Heure de Début",
+    event_edit_form_finishing_time: "Heure de Fin",
+    event_edit_form_submit: "Modifier",
+
+    // Planning Info Popup
+    planning_info_location: "Emplacement",
+    planning_info_capacity: "Capacité",
+    planning_info_starting_time: "Heure de Début",
+    planning_info_finishing_time: "Heure de Fin",
+    planning_info_controls_edit: "Modifier",
+    planning_info_controls_delete: "Supprimer",
+
+    // Stand Info Popup
+    stand_info_provider: "Prestataire",
+    stand_info_booth_type: "Type de Stand",
+    stand_info_special_booth: "Ceci est un emplacement spécial.",
+    stand_info_no_booth: "Il n'y a pas de stand associé à cet emplacement.",
+    stand_info_table_title: "Événements",
+    stand_info_table_head_name: "Nom",
+    stand_info_table_head_capacity: "Capacité",
+    stand_info_table_head_time: "Horaire",
+    stand_info_booth_shop: "Boutique du Stand",
+
 }

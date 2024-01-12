@@ -1,7 +1,15 @@
 <script>
-import { providersService } from "@/services";
+import {lang_en, lang_fr, providersService} from "@/services";
 import moment from "moment-timezone";
 export default {
+  computed: {
+    lang_en() {
+      return lang_en
+    },
+    lang_fr() {
+      return lang_fr
+    }
+  },
   props: {
     boothId: {
       type: String,
@@ -18,7 +26,7 @@ export default {
     closeTooltip() {
       this.$store.commit("setShowStandInfo", false);
     },
-    locationName(locationCode) {
+    locationNameFR(locationCode) {
       switch (locationCode) {
         case "S01": return "Restauration";
         case "S02": return "Scène";
@@ -26,16 +34,35 @@ export default {
         default: return locationCode;
       }
     },
-    standType(standTypeId) {
+    locationNameEN(locationCode) {
+      switch (locationCode) {
+        case "S01": return "Catering";
+        case "S02": return "Scene";
+        case "S03": return "VIP Area";
+        default: return locationCode;
+      }
+    },
+    standTypeFR(standTypeId) {
       switch (standTypeId) {
-        case 1: return "Vente de biens";
+        case 1: return "Vente de Biens";
         case 2: return "Nourriture";
         case 3: return "Démonstration";
         case 4: return "Autographes";
       }
     },
+    standTypeEN(standTypeId) {
+      switch (standTypeId) {
+        case 1: return "Goods Selling";
+        case 2: return "Food";
+        case 3: return "Demonstration";
+        case 4: return "Autographs";
+      }
+    },
     moment(date) {
       return moment(date).tz("Atlantic/Azores").format("HH:mm");
+    },
+    getLang() {
+      return this.$store.state.lang;
     },
 
     async getProviderById(id_provider) {
@@ -64,38 +91,39 @@ export default {
       </div>
 
       <div class="tooltip-content">
-        <!-- TODO: rendre la chose plus sympa visuellement pcq c'est horrible -->
-
-        <p v-if="selectedLocation.stand" id="tooltip-name">[{{ locationName(selectedLocation.code) }}] - {{ selectedLocation.stand.name }}</p>
-        <p v-else id="tooltip-name">[{{ locationName(selectedLocation.code) }}]</p>
+        <p v-if="selectedLocation.stand && getLang() === lang_fr" id="tooltip-name">[{{ locationNameFR(selectedLocation.code) }}] - {{ selectedLocation.stand.name }}</p>
+        <p v-else-if="!selectedLocation.stand && getLang() === lang_fr" id="tooltip-name">[{{ locationNameFR(selectedLocation.code) }}]</p>
+        <p v-if="selectedLocation.stand && getLang() === lang_en" id="tooltip-name">[{{ locationNameEN(selectedLocation.code) }}] - {{ selectedLocation.stand.name }}</p>
+        <p v-else-if="!selectedLocation.stand && getLang() === lang_en" id="tooltip-name">[{{ locationNameEN(selectedLocation.code) }}]</p>
 
         <div class="stand-info" v-if="selectedLocation.stand">
           <div class="line">
             <div class="line-item">
-              <label for="provider">Prestataire</label>
-              <input type="text" v-model="provider.name" readonly>
+              <label for="provider">{{ getLang().stand_info_provider }}</label>
+              <input id="provider" type="text" v-model="provider.name" readonly>
             </div>
             <div class="line-item">
-              <label for="provider">Type de stand</label>
-              <input type="text" :value="standType(selectedLocation.stand.id_stand_type)" readonly>
+              <label for="booth-type">{{ getLang().stand_info_booth_type }}</label>
+              <input id="booth-type" v-if="getLang() === lang_fr" type="text" :value="standTypeFR(selectedLocation.stand.id_stand_type)" readonly>
+              <input id="booth-type" v-if="getLang() === lang_en" type="text" :value="standTypeEN(selectedLocation.stand.id_stand_type)" readonly>
             </div>
           </div>
         </div>
         <div class="no-stand" v-else-if="selectedLocation.code.includes('S')">
-          <p>Ceci est un emplacement spécial.</p>
+          <p>{{ getLang().stand_info_special_booth }}</p>
         </div>
         <div v-else class="no-stand">
-          <p>Il n'y a pas de stand associé à cet emplacement.</p>
+          <p>{{ getLang().stand_info_no_booth }}</p>
         </div>
 
         <div class="events-info" v-if="selectedLocation.events.length > 0">
-          <p class="events-info-title">Evénements</p>
+          <p class="events-info-title">{{ getLang().stand_info_table_title }}</p>
           <table class="event-table">
             <thead>
             <tr class="event-table-head">
-              <th class="event-table-head-item">Nom</th>
-              <th class="event-table-head-item">Capacité</th>
-              <th class="event-table-head-item">Horaire</th>
+              <th class="event-table-head-item">{{ getLang().stand_info_table_head_name }}</th>
+              <th class="event-table-head-item">{{ getLang().stand_info_table_head_capacity }}</th>
+              <th class="event-table-head-item">{{ getLang().stand_info_table_head_time }}</th>
             </tr>
             </thead>
             <tbody>
@@ -109,7 +137,7 @@ export default {
         </div>
 
         <router-link id="stand-info-button" v-if="selectedLocation.stand" :to="{ name:'BoutiqueStand', params: { id:selectedLocation.stand.id_stand } }">
-          <button class="stand-info-button" @click="closeTooltip">Boutique du stand</button>
+          <button class="stand-info-button" @click="closeTooltip">{{ getLang().stand_info_booth_shop }}</button>
         </router-link>
       </div>
     </div>
