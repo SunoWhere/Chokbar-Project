@@ -62,16 +62,25 @@ export default {
         <div class="leftright"></div>
         <div class="rightleft"></div>
       </div>
+
       <div class="tooltip-content">
         <!-- TODO: rendre la chose plus sympa visuellement pcq c'est horrible -->
 
-        <p v-if="selectedLocation.stand" id="booth-id">[{{ locationName(selectedLocation.code) }}] - {{ selectedLocation.stand.name }}</p>
-        <p v-else id="booth-id">[{{ locationName(selectedLocation.code) }}]</p>
+        <p v-if="selectedLocation.stand" id="tooltip-name">[{{ locationName(selectedLocation.code) }}] - {{ selectedLocation.stand.name }}</p>
+        <p v-else id="tooltip-name">[{{ locationName(selectedLocation.code) }}]</p>
 
-        <ul v-if="selectedLocation.stand" class="stand-info">
-          <li class="stand-info-item">Prestataire: {{ provider.name }}</li>
-          <li class="stand-info-item">Type: {{ standType(selectedLocation.stand.id_stand_type) }}</li>
-        </ul>
+        <div class="stand-info" v-if="selectedLocation.stand">
+          <div class="line">
+            <div class="line-item">
+              <label for="provider">Prestataire</label>
+              <input type="text" v-model="provider.name" readonly>
+            </div>
+            <div class="line-item">
+              <label for="provider">Type de stand</label>
+              <input type="text" :value="standType(selectedLocation.stand.id_stand_type)" readonly>
+            </div>
+          </div>
+        </div>
         <div class="no-stand" v-else-if="selectedLocation.code.includes('S')">
           <p>Ceci est un emplacement spécial.</p>
         </div>
@@ -79,18 +88,28 @@ export default {
           <p>Il n'y a pas de stand associé à cet emplacement.</p>
         </div>
 
-        <div class="events" v-if="selectedLocation.events.length > 0">
-          <p>Événements:</p>
-          <ul class="stand-events">
-            <li class="stand-events-item" v-for="(event, id_event) in selectedLocation.events" :key="id_event">
-                <p>{{ event.name }}</p>
-                <p>{{ moment(event.starting_time) }} - {{ moment(event.finishing_time) }}</p>
-            </li>
-          </ul>
+        <div class="events-info" v-if="selectedLocation.events.length > 0">
+          <p class="events-info-title">Evénements</p>
+          <table class="event-table">
+            <thead>
+            <tr class="event-table-head">
+              <th class="event-table-head-item">Nom</th>
+              <th class="event-table-head-item">Capacité</th>
+              <th class="event-table-head-item">Horaire</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="event-table-body" v-for="(event, id_event) in selectedLocation.events" :key="id_event">
+              <td class="event-table-body-item">{{ event.name }}</td>
+              <td class="event-table-body-item">{{ event.max_capacity }}</td>
+              <td class="event-table-body-item">{{ moment(event.starting_time) }} - {{ moment(event.finishing_time) }}</td>
+            </tr>
+            </tbody>
+          </table>
         </div>
 
-        <router-link v-if="selectedLocation.stand" :to="{ name:'BoutiqueStand', params: { id:selectedLocation.stand.id_stand } }">
-          <button class="stand-info-button" @click="closeTooltip">En savoir plus</button>
+        <router-link id="stand-info-button" v-if="selectedLocation.stand" :to="{ name:'BoutiqueStand', params: { id:selectedLocation.stand.id_stand } }">
+          <button class="stand-info-button" @click="closeTooltip">Boutique du stand</button>
         </router-link>
       </div>
     </div>
@@ -111,7 +130,7 @@ export default {
 .tooltip {
   position: absolute;
   align-self: center;
-  height: 50%;
+  height: fit-content;
   width: 30%;
   border: 2px solid var(--scnd3);
   background-color: var(--background);
@@ -122,9 +141,12 @@ export default {
 .tooltip-content {
   margin: 8px;
   color: white;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-#booth-id {
+#tooltip-name {
   text-align: center;
   color: var(--white);
   font-size: 1.5em;
@@ -132,11 +154,35 @@ export default {
 }
 
 .stand-info {
-  list-style: none;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
 }
 
-.stand-info-item {
-  font-size: 1.2em;
+.line {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.line-item {
+  width: 100%;
+  margin: 0 10px;
+}
+
+label {
+  color: white;
+  align-self: start;
+}
+input {
+  align-self: start;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  resize: none;
 }
 
 .no-stand {
@@ -154,16 +200,40 @@ export default {
   margin-bottom: 5px;
 }
 
-.stand-events {
-  list-style: none;
+.events-info {
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  align-items: center;
 }
 
-.stand-events-item {
-  display: flex;
-  justify-content: space-between;
-  font-size: 1.2em;
+.events-info-title {
+  align-self: start;
+  margin-left: 10px;
   margin-bottom: 5px;
+}
 
+.event-table {
+  width: calc(100% - 20px);
+  text-align: center;
+  border: solid 1px white;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: white;
+  color: black;
+}
+
+.event-table-body-item {
+  border: solid 1px white;
+  height: 20px;
+}
+
+
+#stand-info-button {
+  margin-top: auto;
+  width: fit-content;
 }
 
 .stand-info-button {
