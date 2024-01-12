@@ -64,7 +64,7 @@
               </label>
               <div class="card-item__content">
                 <label for="cardName" class="card-item__info" ref="cardName">
-                  <div class="card-item__holder">Card Holder</div>
+                  <div class="card-item__holder">{{getLang().credit_card_user}}</div>
                   <transition name="slide-fade-up">
                     <div class="card-item__name" v-if="cardName.length" key="1">
                       <transition-group name="slide-fade-right">
@@ -73,22 +73,22 @@
                           }}</span>
                       </transition-group>
                     </div>
-                    <div class="card-item__name" v-else key="2">Full Name</div>
+                    <div class="card-item__name" v-else key="2">{{getLang().credit_card_name}}</div>
                   </transition>
                 </label>
                 <div class="card-item__date" ref="cardDate">
-                  <label for="cardMonth" class="card-item__dateTitle">Expires</label>
+                  <label for="cardMonth" class="card-item__dateTitle">{{getLang().credit_card_expiration}}</label>
                   <label for="cardMonth" class="card-item__dateItem">
                     <transition name="slide-fade-up">
                       <span v-if="cardMonth" v-bind:key="cardMonth">{{ cardMonth }}</span>
-                      <span v-else key="2">MM</span>
+                      <span v-else key="2">{{getLang().credit_card_month}}</span>
                     </transition>
                   </label>
                   /
                   <label for="cardYear" class="card-item__dateItem">
                     <transition name="slide-fade-up">
                       <span v-if="cardYear" v-bind:key="cardYear">{{ String(cardYear).slice(2, 4) }}</span>
-                      <span v-else key="2">YY</span>
+                      <span v-else key="2">{{getLang().credit_card_year}}</span>
                     </transition>
                   </label>
                 </div>
@@ -118,23 +118,23 @@
       </div>
       <div class="card-form__inner">
         <div class="card-input">
-          <label for="cardNumber" class="card-input__label">Card Number</label>
+          <label for="cardNumber" class="card-input__label">{{getLang().credit_card_number}}</label>
           <input type="text" id="cardNumber" class="card-input__input" maxlength="19"
                  v-model="cardNumber" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardNumber"
                  autocomplete="off" required>
         </div>
         <div class="card-input">
-          <label for="cardName" class="card-input__label">Card Holders</label>
+          <label for="cardName" class="card-input__label">{{getLang().credit_card_name}}</label>
           <input type="text" id="cardName" class="card-input__input" v-model="cardName" v-on:focus="focusInput"
                  v-on:blur="blurInput" data-ref="cardName" autocomplete="off" required>
         </div>
         <div class="card-form__row">
           <div class="card-form__col">
             <div class="card-form__group">
-              <label for="cardMonth" class="card-input__label">Expiration Date</label>
+              <label for="cardMonth" class="card-input__label">{{getLang().credit_card_expiration_date}}</label>
               <select class="card-input__input -select" id="cardMonth" v-model="cardMonth" v-on:focus="focusInput"
                       v-on:blur="blurInput" data-ref="cardDate" required>
-                <option value="" disabled selected>Month</option>
+                <option value="" disabled selected>{{getLang().credit_card_month}}</option>
                 <option v-bind:value="n < 10 ? '0' + n : n" v-for="n in 12" v-bind:disabled="n < minCardMonth"
                         v-bind:key="n">
                   {{ n < 10 ? '0' + n : n }}
@@ -142,7 +142,7 @@
               </select>
               <select class="card-input__input -select" id="cardYear" v-model="cardYear" v-on:focus="focusInput"
                       v-on:blur="blurInput" data-ref="cardDate" required>
-                <option value="" disabled selected>Year</option>
+                <option value="" disabled selected>{{getLang().credit_card_year}}</option>
                 <option v-bind:value="$index + minCardYear" v-for="(n, $index) in 12" v-bind:key="n">
                   {{ $index + minCardYear }}
                 </option>
@@ -159,7 +159,7 @@
         </div>
 
         <button class="card-form__button" @click="createTicket()">
-          Submit
+          {{getLang().credit_card_submit}}
         </button>
       </div>
     </div>
@@ -251,6 +251,11 @@ export default {
     flipCard(status) {
       this.isCardFlipped = status;
     },
+
+    getLang() {
+      return this.$store.state.lang;
+    },
+
     focusInput(e) {
       this.isInputFocused = true;
       let targetRef = e.target.dataset.ref;

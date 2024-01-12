@@ -1,5 +1,3 @@
-
-
 export const lang_en = {
 
     // All
@@ -59,6 +57,7 @@ export const lang_en = {
     footer_politique: "Privacy Policy",
     footer_contact: "CONTACT US",
     footer_foot: "EZCon @ 2023 | May 20-25, 2023 | ANDELNANS EXHIBITION HALL",
+    footer_contact_button: "Contact Us",
 
     // Billetterie
     ticketing_name_card_1: "Visitor",
@@ -200,5 +199,28 @@ export const lang_en = {
     stand_info_table_head_time: "Time",
     stand_info_booth_shop: "Booth Shop",
 
+    //Checkout
+    checkout_title: "Checkout",
+    checkout_subtitle: "Select a payment method",
+    checkout_paypal: "Paypal",
+    checkout_credit_card: "Credit Card",
 
+    //Credit Card
+    credit_card_user: "Card holder",
+    credit_card_name: "Cardholder name",
+    credit_card_number: "Card number",
+    credit_card_expiration: "Expires ",
+    credit_card_expiration_date: "Expiration date",
+    credit_card_cvv: "CVV",
+    credit_card_submit: "Pay",
+    credit_card_month: "MM",
+    credit_card_year: "AA",
+
+    //Contact
+    contact_title: "A question ? A recommendation ? Contact us ",
+    contact_mail: "Email",
+    contact_destinataire: "Recipient",
+    contact_sujet: "Subject",
+    contact_message: "Message",
+    contact_envoyer: "Send",
 }

@@ -1,4 +1,3 @@
-
 export const lang_fr = {
 
     // All
@@ -70,6 +69,7 @@ export const lang_fr = {
     footer_politique: "Politique de confidentalité",
     footer_contact: "NOUS CONTACTER",
     footer_foot: "EZCon @ 2023 | Du 20 au 25 MAI 2023 | ANDELNANS SALLE D'EXPOSITION",
+    footer_contact_button: "Nous contacter",
 
     // Billetterie
     ticketing_name_card_1: "Visiteur",
@@ -229,5 +229,30 @@ export const lang_fr = {
     stand_info_table_head_capacity: "Capacité",
     stand_info_table_head_time: "Horaire",
     stand_info_booth_shop: "Boutique du Stand",
+
+    //Checkout
+    checkout_title: "Paiement",
+    checkout_subtitle: "Choisissez une méthode de paiement",
+    checkout_paypal: "Paypal",
+    checkout_credit_card: "Carte de crédit",
+
+    //Credit Card
+    credit_card_user: "Titulaire de la carte",
+    credit_card_name: "Nom du titulaire",
+    credit_card_number: "Numéro de carte",
+     credit_card_expiration: "Expire ",
+    credit_card_expiration_date: "Date d'expiration",
+    credit_card_cvv: "CVV",
+    credit_card_submit: "Payer",
+    credit_card_month: "MM",
+    credit_card_year: "AA",
+
+    //Contact
+    contact_title: "Une question ? Une recommandation ? Contactez-nous",
+    contact_mail: "Email",
+    contact_destinataire: "Destinataire",
+    contact_sujet: "Sujet",
+    contact_message: "Message",
+    contact_envoyer: "Envoyer",
 
 }
