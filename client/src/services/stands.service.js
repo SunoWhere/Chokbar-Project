@@ -9,7 +9,6 @@ let getUuid = () => {
 let getProvider = async () => {
     try {
         const response = await Axios.get('/api/providers/')
-        console.log(response.data)
         return response.data;
     } catch (error) {
         console.error(error);
@@ -49,6 +48,23 @@ let editProviderStand = async (stand) => {
     }
 }
 
+let addStand = async (stand) => {
+    try {
+        const route = '/api/stands';
+        const response = await Axios.post(route, {
+            id_location: stand.id_location,
+            id_provider: stand.id_provider,
+            id_stand_type: stand.id_stand_type,
+            name: stand.name,
+            description_en: stand.description_en,
+            description_fr: stand.description_fr
+        });
+        return response.data;
+    } catch(error) {
+        console.error(error);
+    }
+}
+
 let removeStand = async (id) => {
     try {
         const route = '/api/stands/' + id;
@@ -68,6 +84,16 @@ let getStandProduct = async (id) => {
     }
 }
 
+let getAllLocations = async () => {
+    try {
+        const route = '/api/locations';
+        const res = await Axios.get(route);
+        return res.data;
+    } catch(error) {
+        console.error(error);
+    }
+}
+
 export const standsService = {
     getProvider,
     editProviderStand,
@@ -76,4 +102,6 @@ export const standsService = {
     getUuid,
     getAllStands,
     getStandProduct,
+    addStand,
+    getAllLocations
 }

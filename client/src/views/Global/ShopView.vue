@@ -6,7 +6,6 @@ export default {
   name: 'ShopView',
   components: {
     StandCard
-
   },
   metaInfo() {
     return {

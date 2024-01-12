@@ -12,7 +12,8 @@ import AproposView from "@/views/Global/AproposView.vue";
 import DatesView from "@/views/Global/DatesView.vue";
 import CrudUsersView from "@/views/Admin/CrudUsersView.vue";
 import CreditCardView from "@/views/Global/CreditCardView.vue";
-import CrudStandView from "@/views/Provider/CrudStandView.vue";
+import CrudStandViewProvider from "@/views/Provider/CrudStandView.vue";
+import CrudStandViewAdmin from "@/views/Admin/CrudStandsView.vue";
 import CartView from "@/views/Global/CartView.vue"
 import ShopView from "@/views/Global/ShopView.vue"
 import ShopStandView from "@/views/Global/ShopStandView.vue"
@@ -53,6 +54,11 @@ const routes = [
     path: '/Admin/User',
     name: 'CrudUsers',
     component: CrudUsersView
+  },
+  {
+    path: '/Admin/Stands',
+    name: 'CrudStands',
+    component: CrudStandViewAdmin
   },
   {
     path: '/Login',
@@ -107,7 +113,7 @@ const routes = [
   {
     path: '/intervenant/stands',
     name: 'CrudStand',
-    component: CrudStandView
+    component: CrudStandViewProvider
   },
     {
     path: '/intervenant/stands/article',

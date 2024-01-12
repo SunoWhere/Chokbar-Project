@@ -230,4 +230,14 @@ export const lang_fr = {
     stand_info_table_head_time: "Horaire",
     stand_info_booth_shop: "Boutique du Stand",
 
+    // Crud Stands
+    crud_stands_name: "Nom",
+    crud_stands_provider: "Intervenant",
+    crud_stands_location: "Position",
+    crud_stands_nb_product: "Produits",
+    popup_stands_title: 'Stands',
+
+    // Remove Popup Stand
+    remove_popup_stand_1: "Vous êtes sur le points de supprimer un stand.",
+
 }

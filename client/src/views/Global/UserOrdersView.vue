@@ -28,7 +28,7 @@ export default {
       try {
         const uuid_user = usersService.getUuid();
         if(uuid_user !== undefined) {
-          await usersService.getOrders(uuid_user).then((res) => {
+          await usersService.getOrders(uuid_user).then(async (res) => {
             this.orders = res;
             console.log(this.orders);
           });
@@ -83,7 +83,7 @@ export default {
         </div>
         <div class="line" v-for="item in orders" :key="item.id_order">
           <div class="td"><p>{{ item.id_order }}</p></div>
-          <div class="td"><p>{{ getStandName(item.id_stand) }}</p></div>
+          <div class="td"><p>{{item.id_stand}}</p></div>
           <div class="td"><p>{{item.id_order_state_order_state.state}}</p></div>
           <div class="td"><p><img :src="generateQRCode(item.hash)" alt="QR Code" /></p></div>
         </div>

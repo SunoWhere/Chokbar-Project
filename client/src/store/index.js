@@ -20,12 +20,14 @@ export default new Vuex.Store({
         users: [],
         providers: [],
         stands: [],
+        realStandList: [],
         events: [],
         articles: [],
 
         id_ticket_type: null,
 
         userIdToRemove: null,
+        standIdToRemove: null,
         providerIdToRemove: null,
         userToEdit: null,
         providerToEdit: null,
@@ -53,6 +55,8 @@ export default new Vuex.Store({
     },
     getters: {
         getUserList: state => state.users,
+        getStandList: state => state.stands,
+        getRealStandList: state => state.realStandList,
         getProviderList: state => state.providers,
         getEventList: state => state.events,
 
@@ -146,6 +150,12 @@ export default new Vuex.Store({
       setShowEditStandPopup(state, value) {
           state.showEditStandPopup = value;
       },
+      setStandIdToRemove(state, value) {
+          state.standIdToRemove = value;
+      },
+      setRealStandlist(state, value) {
+          state.realStandList = value;
+      },
 
       // Lang
       setLang(state, value) {
@@ -216,6 +226,14 @@ export default new Vuex.Store({
             try {
                 const standList = await standsService.getProvider();
                 commit('setStandList', standList.data);
+            } catch (err) {
+                console.log(err);
+            }
+        },
+        async updateRealStandList({commit}) {
+            try {
+                const realstandList = await standsService.getProvider();
+                commit('setRealStandlist', realstandList.data);
             } catch (err) {
                 console.log(err);
             }
