@@ -40,7 +40,7 @@ export default {
       <button class="payment-method">
         PayPal
       </button>
-      <button @click="createTicket()" class="payment-method">
+      <button @click="$router.push('/Billetterie/checkout/creditcard')" class="payment-method">
         Carte Bancaire
       </button>
     </div>
