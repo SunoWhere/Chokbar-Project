@@ -70,6 +70,7 @@ export const lang_fr = {
     footer_politique: "Politique de confidentalité",
     footer_contact: "NOUS CONTACTER",
     footer_foot: "EZCon @ 2023 | Du 20 au 25 MAI 2023 | ANDELNANS SALLE D'EXPOSITION",
+    footer_contact_button: "Nous contacter",
 
     // Billetterie
     ticketing_name_card_1: "Visiteur",
