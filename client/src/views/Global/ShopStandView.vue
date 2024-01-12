@@ -34,7 +34,7 @@ export default {
         });
 
         this.products = products;
-      } catch(error) {
+      } catch (error) {
         console.error(error);
       }
     },
@@ -64,7 +64,7 @@ export default {
         await cartsService.addCart(uuid_user, id, 1).then(async () => {
           await this.getStandProducts();
         });
-      } catch(error) {
+      } catch (error) {
         console.log(error)
       }
     },
@@ -81,7 +81,7 @@ export default {
     },
     getStoredLang() {
       const storedLang = localStorage.getItem('lang');
-      if(storedLang) {
+      if (storedLang) {
         return storedLang;
       }
       return 'FR';
@@ -104,10 +104,13 @@ export default {
   <div class="main-content">
     <div class="top-content">
       <div class="left-side">
-        <h1>{{stand.name}}</h1>
+        <h1>{{ stand.name }}</h1>
         <div class="description">
-          <p v-if="'FR' === $store.state.lang_name">{{stand.description_fr}}</p>
-          <p v-else>{{stand.description_en}}</p>
+          <p v-if="'FR' === $store.state.lang_name">{{ stand.description_fr }}</p>
+          <p v-else>{{ stand.description_en }}</p>
+        </div>
+        <div class="contact">
+          <button class="contact-button" @click="$router.push('/Contact')">{{getLang().footer_contact_button}}</button>
         </div>
       </div>
       <div class="right-side">
@@ -117,30 +120,32 @@ export default {
     <div class="items">
       <table>
         <thead>
-          <tr class="head">
-            <th>{{ getLang().stands_articles_shop_nom }}</th>
-            <th>{{ getLang().stands_articles_shop_prix }}</th>
-            <th>{{ getLang().stands_articles_shop_quantite }}</th>
-            <th>{{ getLang().stands_articles_shop_type }}</th>
-            <th>Action</th>
-          </tr>
+        <tr class="head">
+          <th>{{ getLang().stands_articles_shop_nom }}</th>
+          <th>{{ getLang().stands_articles_shop_prix }}</th>
+          <th>{{ getLang().stands_articles_shop_quantite }}</th>
+          <th>{{ getLang().stands_articles_shop_type }}</th>
+          <th>Action</th>
+        </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in availableProducts" :key="index">
-            <td v-if="'EN' === $store.state.lang_name">{{ item.name_en }}</td>
-            <td v-else>{{ item.name_fr }}</td>
-            <td>{{ item.price}} €</td>
-            <td>{{ item.quantity }} {{ getLang().stands_articles_shop_unite }}</td>
-            <td>{{ getProductType(item.id_product_type) }}</td>
-            <td>
-              <div class="info-btn">
-                <button class="info-button" @click.prevent="">{{ getLang().stands_articles_shop_info }}</button>
-              </div>
-              <div class="add-btn" v-if="isConnected">
-                <button v-if="item.quantity !== 0 && getRole().toLowerCase() !== 'admin'" class="add-button" @click.prevent="addToCart(item)">{{ getLang().stands_articles_shop_cart }}</button>
-              </div>
-            </td>
-          </tr>
+        <tr v-for="(item, index) in availableProducts" :key="index">
+          <td v-if="'EN' === $store.state.lang_name">{{ item.name_en }}</td>
+          <td v-else>{{ item.name_fr }}</td>
+          <td>{{ item.price }} €</td>
+          <td>{{ item.quantity }} {{ getLang().stands_articles_shop_unite }}</td>
+          <td>{{ getProductType(item.id_product_type) }}</td>
+          <td>
+            <div class="info-btn">
+              <button class="info-button" @click.prevent="">{{ getLang().stands_articles_shop_info }}</button>
+            </div>
+            <div class="add-btn" v-if="isConnected">
+              <button v-if="item.quantity !== 0 && getRole().toLowerCase() !== 'admin'" class="add-button"
+                      @click.prevent="addToCart(item)">{{ getLang().stands_articles_shop_cart }}
+              </button>
+            </div>
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>
@@ -175,13 +180,35 @@ p {
   font-size: 1.1em;
 }
 
+.contact{
+  margin:15px
+}
+
+.contact-button {
+  border: none;
+  border-radius: 10px;
+  background-color: var(--scnd2);
+  box-shadow: 0 0 15px var(--scnd2);
+  color: var(--white);
+  font-size: 15px;
+  cursor: pointer;
+  margin-right: 10px;
+  padding: 13px 20px;
+  transition: all 0.15s ease
+}
+
+.contact-button:hover {
+  background-color: var(--scnd3);
+  box-shadow: 0 0 15px var(--scnd3);
+}
+
 .description {
   width: 20vw;
 }
 
 .image {
   margin-right: 100px;
-  width:44vw;
+  width: 44vw;
   height: 36vh;
   border-radius: 17px;
   background-image: url("@/assets/placeholder.png");
@@ -207,9 +234,10 @@ tr {
   padding: 5px 5px;
 }
 
-tr:nth-child(even){
+tr:nth-child(even) {
   background-color: var(--component-background);
 }
+
 .head {
   display: flex;
   justify-content: space-evenly;

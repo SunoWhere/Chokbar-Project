@@ -230,6 +230,46 @@ export const lang_fr = {
     stand_info_table_head_time: "Horaire",
     stand_info_booth_shop: "Boutique du Stand",
 
+    //Checkout
+    checkout_title: "Paiement",
+    checkout_subtitle: "Choisissez une méthode de paiement",
+    checkout_paypal: "Paypal",
+    checkout_credit_card: "Carte de crédit",
+
+    //Credit Card
+    credit_card_user: "Titulaire de la carte",
+    credit_card_name: "Nom du titulaire",
+    credit_card_number: "Numéro de carte",
+    credit_card_expiration: "Expire ",
+    credit_card_expiration_date: "Date d'expiration",
+    credit_card_cvv: "CVV",
+    credit_card_submit: "Payer",
+    credit_card_month: "MM",
+    credit_card_year: "AA",
+
+    //Contact
+    contact_title: "Une question ? Une recommandation ? Contactez-nous",
+    contact_mail: "Email",
+    contact_destinataire: "Destinataire",
+    contact_sujet: "Sujet",
+    contact_message: "Message",
+    contact_envoyer: "Envoyer",
+
+    //Crud Stand Provider
+    crud_stand_provider_stand: "Stands",
+    crud_stand_provider_boutique: "Articles",
+    crud_stand_provider_Action: "Action",
+    crud_stand_provider_article: "Voir articles",
+    crud_stand_provider_edit: "Modifier",
+
+    //CrudArticleStandProvider
+    crud_article_stand_provider_nom: "Nom de l'article",
+    crud_article_stand_provider_prix: "Prix",
+    crud_article_stand_provider_quantite: "Quantité",
+    crud_article_stand_provider_action: "Action",
+    crud_article_stand_provider_add: "Ajouter",
+    crud_article_stand_provider_edit: "Modifier",
+    crud_article_stand_provider_delete: "Supprimer",
     // Crud Stands
     crud_stands_name: "Nom",
     crud_stands_provider: "Intervenant",

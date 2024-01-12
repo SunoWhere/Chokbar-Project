@@ -1,65 +1,294 @@
-<!--
 <template>
   <div class="wrapper" id="app">
-    <CardForm
-        :form-data="formData"
-        @input-card-number="updateCardNumber"
-        @input-card-name="updateCardName"
-        @input-card-month="updateCardMonth"
-        @input-card-year="updateCardYear"
-        @input-card-cvv="updateCardCvv"
-    />
-    &lt;!&ndash; backgroundImage="https://images.unsplash.com/photo-1572336183013-960c3e1a0b54?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80" &ndash;&gt;
+    <div class="card-form">
+      <div class="card-list">
+        <div class="card-item" v-bind:class="{ '-active' : isCardFlipped }">
+          <div class="card-item__side -front">
+            <div class="card-item__focus" v-bind:class="{'-active' : focusElementStyle }"
+                 v-bind:style="focusElementStyle" ref="focusElement"></div>
+            <div class="card-item__cover">
+            </div>
+            <div class="card-item__wrapper">
+              <div class="card-item__top">
+                <div class="card-item__chip"></div>
+                <div class="card-item__type">
+                  <transition name="slide-fade-up">
+                    <div class="card-item__typeImg">VISA</div>
+                  </transition>
+                </div>
+              </div>
+              <label for="cardNumber" class="card-item__number" ref="cardNumber">
+                <template v-if="getCardType === 'amex'">
+                 <span v-for="(n, $index) in amexCardMask" :key="$index">
+                  <transition name="slide-fade-up">
+                    <div
+                        class="card-item__numberItem"
+                        v-if="$index > 4 && $index < 14 && cardNumber.length > $index && n.trim() !== ''"
+                    >*</div>
+                    <div class="card-item__numberItem"
+                         :class="{ '-active' : n.trim() === '' }"
+                         :key="$index" v-else-if="cardNumber.length > $index">
+                      {{ cardNumber[$index] }}
+                    </div>
+                    <div
+                        class="card-item__numberItem"
+                        :class="{ '-active' : n.trim() === '' }"
+                        v-else
+                        :key="$index + 1"
+                    >{{ n }}</div>
+                  </transition>
+                </span>
+                </template>
+
+                <template v-else>
+                  <span v-for="(n, $index) in otherCardMask" :key="$index">
+                    <transition name="slide-fade-up">
+                      <div
+                          class="card-item__numberItem"
+                          v-if="$index > 4 && $index < 15 && cardNumber.length > $index && n.trim() !== ''"
+                      >*</div>
+                      <div class="card-item__numberItem"
+                           :class="{ '-active' : n.trim() === '' }"
+                           :key="$index" v-else-if="cardNumber.length > $index">
+                        {{ cardNumber[$index] }}
+                      </div>
+                      <div
+                          class="card-item__numberItem"
+                          :class="{ '-active' : n.trim() === '' }"
+                          v-else
+                          :key="$index + 1"
+                      >{{ n }}</div>
+                    </transition>
+                  </span>
+                </template>
+              </label>
+              <div class="card-item__content">
+                <label for="cardName" class="card-item__info" ref="cardName">
+                  <div class="card-item__holder">{{ getLang().credit_card_user }}</div>
+                  <transition name="slide-fade-up">
+                    <div class="card-item__name" v-if="cardName.length" key="1">
+                      <transition-group name="slide-fade-right">
+                        <span class="card-item__nameItem" v-for="(n, $index) in filteredCardName" :key="$index + 1">{{
+                            n
+                          }}</span>
+                      </transition-group>
+                    </div>
+                    <div class="card-item__name" v-else key="2">{{ getLang().credit_card_name }}</div>
+                  </transition>
+                </label>
+                <div class="card-item__date" ref="cardDate">
+                  <label for="cardMonth" class="card-item__dateTitle">{{ getLang().credit_card_expiration }}</label>
+                  <label for="cardMonth" class="card-item__dateItem">
+                    <transition name="slide-fade-up">
+                      <span v-if="cardMonth" v-bind:key="cardMonth">{{ cardMonth }}</span>
+                      <span v-else key="2">{{ getLang().credit_card_month }}</span>
+                    </transition>
+                  </label>
+                  /
+                  <label for="cardYear" class="card-item__dateItem">
+                    <transition name="slide-fade-up">
+                      <span v-if="cardYear" v-bind:key="cardYear">{{ String(cardYear).slice(2, 4) }}</span>
+                      <span v-else key="2">{{ getLang().credit_card_year }}</span>
+                    </transition>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-item__side -back">
+            <div class="card-item__cover">
+              <div
+                  class="card-item__bg"></div>
+            </div>
+            <div class="card-item__band"></div>
+            <div class="card-item__cvv">
+              <div class="card-item__cvvTitle">CVV</div>
+              <div class="card-item__cvvBand">
+                  <span v-for="(n, $index) in cardCvv" :key="$index">
+                    *
+                  </span>
+
+              </div>
+              <div class="card-item__type">
+                <div class="card-item__typeImg">VISA</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-form__inner">
+        <div class="card-input">
+          <label for="cardNumber" class="card-input__label">{{ getLang().credit_card_number }}</label>
+          <input type="text" id="cardNumber" class="card-input__input" maxlength="16"
+                 v-model="cardNumber" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardNumber"
+                 v-mask="'######## ########'" autocomplete="off" required>
+        </div>
+        <div class="card-input">
+          <label for="cardName" class="card-input__label">{{ getLang().credit_card_name }}</label>
+          <input type="text" id="cardName" class="card-input__input" v-model="cardName" v-on:focus="focusInput"
+                 v-on:blur="blurInput" data-ref="cardName" autocomplete="off" required>
+        </div>
+        <div class="card-form__row">
+          <div class="card-form__col">
+            <div class="card-form__group">
+              <label for="cardMonth" class="card-input__label">{{ getLang().credit_card_expiration_date }}</label>
+              <select class="card-input__input -select" id="cardMonth" v-model="cardMonth" v-on:focus="focusInput"
+                      v-on:blur="blurInput" data-ref="cardDate" required>
+                <option value="" disabled selected>{{ getLang().credit_card_month }}</option>
+                <option v-bind:value="n < 10 ? '0' + n : n" v-for="n in 12" v-bind:disabled="n < minCardMonth"
+                        v-bind:key="n">
+                  {{ n < 10 ? '0' + n : n }}
+                </option>
+              </select>
+              <select class="card-input__input -select" id="cardYear" v-model="cardYear" v-on:focus="focusInput"
+                      v-on:blur="blurInput" data-ref="cardDate" required>
+                <option value="" disabled selected>{{ getLang().credit_card_year }}</option>
+                <option v-bind:value="$index + minCardYear" v-for="(n, $index) in 12" v-bind:key="n">
+                  {{ $index + minCardYear }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="card-form__col -cvv">
+            <div class="card-input">
+              <label for="cardCvv" class="card-input__label">CVV</label>
+              <input type="text" class="card-input__input" id="cardCvv" v-mask="'###'" maxlength="3" v-model="cardCvv"
+                     v-on:focus="flipCard(true)" v-on:blur="flipCard(false)" autocomplete="off" required>
+            </div>
+          </div>
+        </div>
+
+        <button class="card-form__button" @click="createTicket()">
+          {{ getLang().credit_card_submit }}
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import CardForm from '@/components/Global/CardForm.vue'
+import VueMask from 'v-mask'
+import Vue from "vue";
+import {ticketsService, usersService} from "@/services";
 
+Vue.use(VueMask);
 export default {
   name: 'CreditCardView',
-  components: {
-    CardForm
-  },
   data() {
     return {
-      formData: {
-        cardName: '',
-        cardNumber: '',
-        cardMonth: '',
-        cardYear: '',
-        cardCvv: ''
+      currentCardBackground: Math.floor(Math.random() * 25 + 1),
+      cardName: "",
+      cardNumber: "",
+      cardMonth: "",
+      cardYear: "",
+      cardCvv: "",
+      minCardYear: new Date().getFullYear() + 1,
+      amexCardMask: "#### ###### #####",
+      otherCardMask: "#### #### #### ####",
+      cardNumberTemp: "",
+      isCardFlipped: false,
+      focusElementStyle: null,
+      isInputFocused: false
+    };
+  },
+  mounted() {
+    this.cardNumberTemp = this.otherCardMask;
+    document.getElementById("cardNumber").focus();
+  },
+  computed: {
+    getCardType() {
+      let number = this.cardNumber;
+      let re = new RegExp("^4");
+      if (number.match(re) != null) return "visa";
+
+      re = new RegExp("^(34|37)");
+      if (number.match(re) != null) return "amex";
+
+      re = new RegExp("^5[1-5]");
+      if (number.match(re) != null) return "mastercard";
+
+      re = new RegExp("^6011");
+      if (number.match(re) != null) return "discover";
+
+      re = new RegExp('^9792');
+      if (number.match(re) != null) return 'troy';
+
+      re = new RegExp('^3(?:0([0-5]|9)|[689]\\d?)\\d{0,11}');
+      if (number.match(re) != null) return 'diners';
+
+      re = new RegExp('^35(2[89]|[3-8])');
+      if (number.match(re) != null) return 'jcb';
+
+      return 'unknown';
+    },
+    minCardMonth() {
+      if (this.cardYear === this.minCardYear) return new Date().getMonth() + 1;
+      return 1;
+    },
+    filteredCardName() {
+      return this.cardName.replace(/\s\s+/g, ' ').split('');
+    }
+  },
+  watch: {
+    cardYear() {
+      if (this.cardMonth < this.minCardMonth) {
+        this.cardMonth = "";
       }
     }
   },
   methods: {
-    updateCardNumber(val) {
-      this.$emit('input-card-number', val);
+    async createTicket() {
+      if (this.cardNumber && this.cardName && this.cardMonth && this.cardYear && this.cardCvv) {
+        try {
+          await usersService.getUserById(usersService.getUuid()).then(async (res) => {
+            await ticketsService.createTickets(this.$store.state.id_ticket_type, res.email).then(() => {
+              this.$router.push('/dashboard');
+            })
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        alert("Veuillez remplir tous les champs");
+      }
     },
-    updateCardName(val) {
-      this.$emit('input-card-name', val);
-    },
-    updateCardMonth(val) {
-      this.$emit('input-card-month', val);
-    },
-    updateCardYear(val) {
-      this.$emit('input-card-year', val);
-    },
-    updateCardCvv(val) {
-      this.$emit('input-card-cvv', val);
+    flipCard(status) {
+      this.isCardFlipped = status;
+    }
+    ,
+
+    getLang() {
+      return this.$store.state.lang;
+    }
+    ,
+
+    focusInput(e) {
+      this.isInputFocused = true;
+      let targetRef = e.target.dataset.ref;
+      let target = this.$refs[targetRef];
+      this.focusElementStyle = {
+        width: `${target.offsetWidth}px`,
+        height: `${target.offsetHeight}px`,
+        transform: `translateX(${target.offsetLeft}px) translateY(${target.offsetTop}px)`
+      }
+    }
+    ,
+    blurInput() {
+      let vm = this;
+      setTimeout(() => {
+        if (!vm.isInputFocused) {
+          vm.focusElementStyle = null;
+        }
+      }, 300);
+      vm.isInputFocused = false;
     }
   },
-  mounted() {
-    this.$i18n.locale = navigator.language
-  }
-}
+};
 </script>
-
 <style scoped>
-@import url("https://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600,700|Source+Sans+Pro:400,600,700&display=swap");
 
 body {
-  background: #ddeefc;
+  background: var(--component-background);
   font-family: "Source Sans Pro", sans-serif;
   font-size: 16px;
 }
@@ -70,6 +299,13 @@ body {
 
 *:focus {
   outline: none;
+}
+
+.card-item__chip {
+  background-color: palegoldenrod;
+  border-radius: 10px;
+  height: 50px;
+  width: 100px;
 }
 
 .wrapper {
@@ -98,7 +334,8 @@ body {
 }
 
 .card-form__inner {
-  background: #fff;
+  background: var(--component-background);
+  border: var(--scnd1) 2px solid;
   box-shadow: 0 30px 60px 0 rgba(90, 116, 148, 0.4);
   border-radius: 10px;
   padding: 35px;
@@ -180,16 +417,21 @@ body {
 .card-form__button {
   width: 100%;
   height: 55px;
-  background: #2364d2;
+  background: var(--scnd2);
   border: none;
   border-radius: 5px;
   font-size: 22px;
   font-weight: 500;
   font-family: "Source Sans Pro", sans-serif;
-  box-shadow: 3px 10px 20px 0px rgba(35, 100, 210, 0.3);
+  box-shadow: 3px 10px 20px 0px var(--background);
   color: #fff;
   margin-top: 20px;
   cursor: pointer;
+}
+
+.card-form__button:hover {
+  background: var(--scnd3);
+  transition: all 0.3s ease-in-out;
 }
 
 @media screen and (max-width: 480px) {
@@ -289,6 +531,7 @@ body {
 }
 
 .card-item__bg {
+  background-color: var(--scnd1);
   max-width: 100%;
   display: block;
   max-height: 100%;
@@ -299,10 +542,8 @@ body {
 
 .card-item__cover {
   height: 100%;
-  background-color: #1c1d27;
+  background-color: var(--scnd1);
   position: absolute;
-  height: 100%;
-  background-color: #1c1d27;
   left: 0;
   top: 0;
   width: 100%;
@@ -317,7 +558,7 @@ body {
   top: 0;
   width: 100%;
   height: 100%;
-  background: rgba(6, 2, 29, 0.45);
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.75));
 }
 
 .card-item__top {
@@ -380,6 +621,9 @@ body {
 }
 
 .card-item__typeImg {
+  border-radius: 10px;
+  font-size: 30px;
+  color: white;
   max-width: 100%;
   object-fit: contain;
   max-height: 100%;
@@ -646,6 +890,7 @@ body {
 }
 
 .card-input__label {
+
   font-size: 14px;
   margin-bottom: 5px;
   font-weight: 500;
@@ -660,7 +905,7 @@ body {
   height: 50px;
   border-radius: 5px;
   box-shadow: none;
-  border: 1px solid #ced6e0;
+  border: 1px solid black;
   transition: all 0.3s ease-in-out;
   font-size: 18px;
   padding: 5px 15px;
@@ -769,5 +1014,4 @@ body {
     box-shadow: 0px 17px 20px -6px rgba(36, 52, 70, 0.36);
   }
 }
-
-</style>-->
+</style>

@@ -60,6 +60,9 @@ export default {
               <a href="mailto:ezcon.exposition.com">ezcon@exposition.com</a>
             </div>
           </div>
+          <div class="contact">
+          <button id="contact" class="contact-button" @click="$router.push('/Contact')">{{getLang(). footer_contact_button}}</button>
+        </div>
         </div>
       </div>
 
@@ -163,6 +166,20 @@ export default {
   border: none;
   cursor: pointer;
   transition: color 0.1s ease-in-out;
+}
+
+#contact {
+  padding: 10px 20px;
+  background-color: var(--scnd1);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#contact:hover {
+  background-color: var(--scnd2);
 }
 
 .button:hover {

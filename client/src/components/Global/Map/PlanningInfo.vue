@@ -2,6 +2,7 @@
   import moment from "moment-timezone";
   import {lang_fr} from "@/datas/lang_fr";
   import {lang_en} from "@/datas/lang_en";
+  import {eventsService} from "@/services";
 
   export default {
     computed: {
@@ -47,8 +48,20 @@
           case "S03": return "VIP Area";
           default: return locationCode;
         }
+      },
+      deleteEvent() {
+        eventsService.deleteEvent(this.selectedEvent.id_event)
+          .then(async () => {
+            this.closeInfo();
+
+            const updatedEventList = await eventsService.getEvents();
+            await this.$store.dispatch('updateEventList', updatedEventList);
+          })
+          .catch(err => {
+              console.error(err);
+          });
       }
-    },
+    }
   }
 </script>
 
@@ -96,7 +109,7 @@
 
         <div class="event-controls" v-if="this.$store.state.isConnected">
           <button class="event-controls-button" @click="openEditPopup">{{ getLang().planning_info_controls_edit }}</button>
-          <button class="event-controls-button">{{ getLang().planning_info_controls_delete }}</button>
+          <button class="event-controls-button" @click="deleteEvent">{{ getLang().planning_info_controls_delete }}</button>
         </div>
       </div>
 

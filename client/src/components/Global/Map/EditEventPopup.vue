@@ -1,8 +1,17 @@
 <script>
-import { eventsService } from "@/services";
+import {eventsService, lang_en, lang_fr} from "@/services";
 import { locationsService } from "@/services/locations.service";
+import moment from "moment-timezone";
 
 export default {
+  computed: {
+    lang_en() {
+      return lang_en
+    },
+    lang_fr() {
+      return lang_fr
+    }
+  },
   props: {
     selectedEvent: Object
   },
@@ -10,7 +19,7 @@ export default {
     return {
       locations: [],
       errMessage: null,
-      days: [
+      days_fr: [
         {
           name: "Lundi",
           timestamp: "2024-05-20"
@@ -36,9 +45,36 @@ export default {
           timestamp: "2024-05-25"
         }
       ],
+      days_en: [
+        {
+          name: "Monday",
+          timestamp: "2024-05-20"
+        },
+        {
+          name: "Tuesday",
+          timestamp: "2024-05-21"
+        },
+        {
+          name: "Wednesday",
+          timestamp: "2024-05-22"
+        },
+        {
+          name: "Thursday",
+          timestamp: "2024-05-23"
+        },
+        {
+          name: "Friday",
+          timestamp: "2024-05-24"
+        },
+        {
+          name: "Saturday",
+          timestamp: "2024-05-25"
+        }
+      ],
       selectedDay: null,
       startingTime: null,
       finishingTime: null,
+      selectedLocation: null,
       editEvent: {
         name: this.selectedEvent.name,
         max_capacity: this.selectedEvent.max_capacity,
@@ -59,16 +95,21 @@ export default {
       this.editEvent.finishing_time = `${this.selectedDay.timestamp}T${this.finishingTime}:00.000Z`;
     },
     splitTimestamp() {
-      let day = this.editEvent.starting_time.split("T")[0];
-      let startingTime = `${this.editEvent.starting_time.split("T")[1].split(":")[0]}:${this.editEvent.starting_time.split("T")[1].split(":")[1]}`;
-      let finishingTime = `${this.editEvent.finishing_time.split("T")[1].split(":")[0]}:${this.editEvent.finishing_time.split("T")[1].split(":")[1]}`;
+      let day = this.getDay(this.selectedEvent.starting_time);
+      if(this.getLang() === lang_en) this.selectedDay = this.days_en.find(dayObj => dayObj.name === day);
+      if(this.getLang() === lang_fr) this.selectedDay = this.days_fr.find(dayObj => dayObj.name === day);
 
-      this.selectedDay.timestamp = day;
-      this.startingTime = startingTime;
-      this.finishingTime = finishingTime;
+      this.startingTime = this.getTime(this.selectedEvent.starting_time);
+      this.finishingTime = this.getTime(this.selectedEvent.finishing_time);
     },
     getLang() {
       return this.$store.state.lang;
+    },
+    getTime(date) {
+      return moment(date).tz("Atlantic/Azores").format("HH:mm");
+    },
+    getDay(date) {
+      return moment(date).format("dddd");
     },
 
     async getLocations() {
@@ -78,6 +119,14 @@ export default {
       } catch(err) {
         console.log(err);
       }
+    },
+    async getLocationById(id_location) {
+        try {
+            const res = await locationsService.getLocationById(id_location);
+            return res.data;
+        } catch(err) {
+            console.log(err);
+        }
     },
     submitForm() {
       if(this.selectedDay && this.startingTime && this.finishingTime) {
@@ -144,19 +193,24 @@ export default {
         </div>
 
 
-        <!-- FIXME: utiliser moment pour day, starting_time, finishing_time -->
+        <!-- FIXME: utiliser moment pour day et fixer location -->
         <div class="item-group">
           <div class="group">
-            <label for="jour">{{ getLang().event_edit_form_day }}</label>
-            <select id="jour" v-model="selectedDay" @change="concatTimestamp" required>
-              <option v-for="(day, id_day) in days" :key="id_day" :value="day">{{ day.name }}</option>
+            <label for="day">{{ getLang().event_edit_form_day }}</label>
+            <select v-if="getLang() === lang_fr" id="day" v-model="selectedDay" @change="concatTimestamp" required>
+              <option :value="selectedDay">Garder le même jour</option>
+              <option v-for="(day, id_day) in days_fr" :key="id_day" :value="day">{{ day.name }}</option>
+            </select>
+            <select v-if="getLang() === lang_en" id="day" v-model="selectedDay" @change="concatTimestamp" required>
+              <option :value="selectedDay">Keep the same day</option>
+              <option v-for="(day, id_day) in days_en" :key="id_day" :value="day">{{ day.name }}</option>
             </select>
           </div>
 
           <div class="group">
             <label for="location">{{ getLang().event_edit_form_location }}</label>
             <select id="location" v-model="editEvent.id_location" required>
-              <option :value="editEvent.id_location"></option>
+              <option :value="selectedEvent.location.id_location" selected>Actuel: {{ selectedEvent.location.code }}</option>
               <option v-for="(location, id_location) in locations" :key="id_location" :value="id_location+1">{{ location.code }}</option>
             </select>
           </div>

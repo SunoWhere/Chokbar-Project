@@ -13,28 +13,50 @@ export default {
         email: '',
         message: '',
       },
+      dropdownOptions: [
+        {label: "Admin", value: "admin"},
+        {label: "Provider1", value: "provider1"},
+        {label: "Provider2", value: "provider2"},
+        {label: "Provider3", value: "provider3"},
+        {label: "Provider4", value: "provider4"},
+        {label: "Provider5", value: "provider5"},
+        {label: "Provider6", value: "provider6"},
+        {label: "Provider7", value: "provider7"},
+        {label: "Provider8", value: "provider8"},
+
+      ],
+      selectedOption: null,
     }
   },
-  methods: {}
+  methods: {
+    getLang() {
+      return this.$store.state.lang;
+    },
+  }
 }
 </script>
 <template>
   <div class="container">
-    <h1 id="main-title">Une question ? Une recommandation ? Contactez-nous</h1>
+    <h1 id="main-title">{{getLang().contact_title}}</h1>
     <div class="register">
       <div class="register-form">
         <h2>Contact</h2>
         <form>
-          <label for="email">Email</label>
+          <label for="email">{{getLang().contact_mail}}</label>
           <input type="email" id="email" name="email" required>
 
-          <label for="first_name">Sujet</label>
+          <label for="selectOptions">{{getLang().contact_destinataire}} </label>
+          <select id="selectOptions" v-model="selectedOption" class="dropdown-select">
+            <option v-for="(option, index) in dropdownOptions" :key="index" class="dropdown-option">{{ option.label }}</option>
+          </select>
+
+          <label for="first_name">{{getLang().contact_sujet}}</label>
           <input type="text" id="first_name" name="first_name" required>
 
-          <label for="last_name">Message</label>
+          <label for="last_name">{{getLang().contact_sujet}}</label>
           <textarea id="last_name" name="last_name" required></textarea>
 
-          <button type="submit">Envoyer</button>
+          <button type="submit" @click="$router.push('/')">{{getLang().contact_envoyer}}</button>
         </form>
       </div>
     </div>
@@ -47,6 +69,20 @@ export default {
   position: absolute;
   color: var(--scnd2);
   margin: 70px
+}
+
+
+.dropdown-select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.dropdown-option {
+  font-size: 16px;
 }
 
 .register {
@@ -64,6 +100,12 @@ export default {
   background-color: var(--white);
   border-radius: 5px;
   box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+}
+
+textarea {
+  height: 150px;
+  max-height: 150px;
+  resize: none;
 }
 
 h2 {
@@ -87,26 +129,16 @@ label {
 }
 
 input[type="email"],
-input[type="text"],
-input[type="password"] {
+input[type="text"] {
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-.show-password {
-  margin-top: -5px;
-  margin-bottom: 10px;
-}
-
-.show-password input {
-  margin-right: 3px;
-}
-
 button {
   padding: 10px 20px;
-  background-color: var(--btn-green);
+  background-color: var(--scnd1);
   color: white;
   border: none;
   border-radius: 4px;
@@ -115,22 +147,7 @@ button {
 }
 
 button:hover {
-  background-color: var(--btn-green-hover);
-}
-
-#yes-account {
-  cursor: pointer;
-  width: fit-content;
-  margin-top: 10px;
-  font-size: 14px;
-  text-decoration: none;
-  color: #333;
-  transition: transform 0.3s ease;
-}
-
-#yes-account:hover {
-  color: #222;
+  background-color: var(--scnd2);
 }
 </style>
 
-<!--TODO : zebi plus de batterie puis c'est l'heure de dormir (il reste le css a faire + trad)-->

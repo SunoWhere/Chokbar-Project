@@ -6,7 +6,7 @@
     </div>
     <AddStandArticlePopUp :typeTitle="'Article'" />
     <RemoveStandArticlePopUp :typeTitle="'Article'"/>
-    <EditStandPopup :typeTitle="'Article'" />
+    <EditStandPopup :typeTitle="'Article'"/>
   </div>
 </template>
 
