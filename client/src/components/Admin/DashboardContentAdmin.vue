@@ -29,6 +29,8 @@ import {
 } from 'chart.js'
 import { Bar } from 'vue-chartjs'
 
+//TODO: Implémenter les messages d'erreur pour les popup
+
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 import InfosCard from "@/components/Admin/InfosDashboardCard.vue";

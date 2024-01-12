@@ -7,7 +7,7 @@
       <div class="content-sub-title">
         <h2>{{getLang().popup_users_title}}</h2>
         <div v-if="message" id="error-message">
-          <p class="error-message">{{ message }}</p>
+          <p class="error-message"></p>
         </div>
         <p>{{ getLang().remove_popup_1 }}</p>
         <p>{{ getLang().remove_popup_2 }}</p>

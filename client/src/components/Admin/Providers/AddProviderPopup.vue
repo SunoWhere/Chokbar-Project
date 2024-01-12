@@ -11,7 +11,7 @@
       <div class="content-sub-title">
         <h2>{{typeTitle}}</h2>
         <div v-if="message" id="error-message">
-          <p class="error-message">{{ message }}</p>
+          <p class="error-message"></p>
         </div>
       </div>
       <div class="content">

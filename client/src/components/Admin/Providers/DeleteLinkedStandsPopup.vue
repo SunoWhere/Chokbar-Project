@@ -11,7 +11,7 @@
       <div class="content-sub-title">
         <h2>{{typeTitle}}</h2>
         <div v-if="message" id="error-message">
-          <p class="error-message">{{ message }}</p>
+          <p class="error-message"></p>
         </div>
         <p>Des stands sont liés à ce {{typeTitle}}.</p>
         <p>Vous devez les supprimer pour pouvoir supprimer ce {{typeTitle}}.</p>
