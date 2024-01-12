@@ -178,7 +178,7 @@ export const lang_fr = {
     edit_popup_providers_description_en: "Description anglaise",
 
     // Remove Popup Providers
-    remove_popup_3: "Vous êtes sur le points de supprimer un intervenant.",
+    remove_popup_provider1: "Vous êtes sur le points de supprimer un intervenant.",
 
     //Popup Users
     popup_users_title: "Utilisateurs",

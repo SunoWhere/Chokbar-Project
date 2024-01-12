@@ -149,7 +149,7 @@ export const lang_en = {
     edit_popup_providers_description_en: "English Description",
 
     // Remove Popup Providers
-    remove_popup_3: "You are about to delete a provider.",
+    remove_popup_provider1: "You are about to delete a provider.",
 
     // Add Popup Users
     popup_users_title: "Users",

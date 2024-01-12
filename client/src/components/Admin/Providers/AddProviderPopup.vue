@@ -10,9 +10,6 @@
       </div>
       <div class="content-sub-title">
         <h2>{{typeTitle}}</h2>
-        <div v-if="message" id="error-message">
-          <p class="error-message"></p>
-        </div>
       </div>
       <div class="content">
         <form @submit.prevent="submitForm">
@@ -123,6 +120,19 @@ export default {
         cpasswordInput.type = "password";
       }
     },
+    clearAddUser() {
+      this.addUser.first_name = '';
+      this.addUser.last_name = '';
+      this.addUser.email = '';
+      this.addUser.password = '';
+      this.addUser.confirmPassword = '';
+    },
+    clearAddProvider() {
+      this.addProvider.name = '';
+      this.addProvider.id = '';
+      this.addProvider.description_fr = '';
+      this.addProvider.description_en = '';
+    },
     submitForm() {
       if (this.addUser.password === this.addUser.confirmPassword) {
         usersService.addUser(this.addUser)
@@ -130,14 +140,17 @@ export default {
               this.addProvider.id = res.data;
               console.log(this.addProvider.id);
 
+              this.clearAddUser();
+
               const updatedUserList = await usersService.getAllUser();
               await this.$store.dispatch('updateUserList', updatedUserList);
 
               providersService.addProvider(this.addProvider)
                   .then(async res => {
                     this.message = res.data;
-                    this.closePopup();
 
+                    this.clearAddProvider()
+                    this.closePopup();
                     await this.$store.dispatch('updateProviderList');
                   })
                   .catch(err => {

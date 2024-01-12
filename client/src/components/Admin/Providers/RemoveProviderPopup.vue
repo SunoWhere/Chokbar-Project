@@ -6,10 +6,7 @@
       </div>
       <div class="content-sub-title">
         <h2>{{ getLang().popup_providers_title }}</h2>
-        <div v-if="message" id="error-message">
-          <p class="error-message"></p>
-        </div>
-        <p>{{ getLang().remove_popup_3 }}</p>
+        <p>{{ getLang().remove_popup_provider1 }}</p>
         <p>{{ getLang().remove_popup_2 }}</p>
       </div>
       <div class="content">
