@@ -50,6 +50,14 @@ let editEvent = async (eventToEdit, id) => {
     }
 }
 
+let deleteEvent = async (id) => {
+    try {
+        return await Axios.delete(`/api/events/${id}`);
+    } catch(err) {
+        throw new Error(err.response.data);
+    }
+}
+
 
 
 export const eventsService = {
@@ -57,4 +65,5 @@ export const eventsService = {
     getEventById,
     addEvent,
     editEvent,
+    deleteEvent,
 }

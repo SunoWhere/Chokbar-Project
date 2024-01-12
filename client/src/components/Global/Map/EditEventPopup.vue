@@ -143,6 +143,8 @@ export default {
           </div>
         </div>
 
+
+        <!-- FIXME: utiliser moment pour day, starting_time, finishing_time -->
         <div class="item-group">
           <div class="group">
             <label for="jour">{{ getLang().event_edit_form_day }}</label>
