@@ -64,7 +64,7 @@
               </label>
               <div class="card-item__content">
                 <label for="cardName" class="card-item__info" ref="cardName">
-                  <div class="card-item__holder">{{getLang().credit_card_user}}</div>
+                  <div class="card-item__holder">{{ getLang().credit_card_user }}</div>
                   <transition name="slide-fade-up">
                     <div class="card-item__name" v-if="cardName.length" key="1">
                       <transition-group name="slide-fade-right">
@@ -73,22 +73,22 @@
                           }}</span>
                       </transition-group>
                     </div>
-                    <div class="card-item__name" v-else key="2">{{getLang().credit_card_name}}</div>
+                    <div class="card-item__name" v-else key="2">{{ getLang().credit_card_name }}</div>
                   </transition>
                 </label>
                 <div class="card-item__date" ref="cardDate">
-                  <label for="cardMonth" class="card-item__dateTitle">{{getLang().credit_card_expiration}}</label>
+                  <label for="cardMonth" class="card-item__dateTitle">{{ getLang().credit_card_expiration }}</label>
                   <label for="cardMonth" class="card-item__dateItem">
                     <transition name="slide-fade-up">
                       <span v-if="cardMonth" v-bind:key="cardMonth">{{ cardMonth }}</span>
-                      <span v-else key="2">{{getLang().credit_card_month}}</span>
+                      <span v-else key="2">{{ getLang().credit_card_month }}</span>
                     </transition>
                   </label>
                   /
                   <label for="cardYear" class="card-item__dateItem">
                     <transition name="slide-fade-up">
                       <span v-if="cardYear" v-bind:key="cardYear">{{ String(cardYear).slice(2, 4) }}</span>
-                      <span v-else key="2">{{getLang().credit_card_year}}</span>
+                      <span v-else key="2">{{ getLang().credit_card_year }}</span>
                     </transition>
                   </label>
                 </div>
@@ -118,23 +118,23 @@
       </div>
       <div class="card-form__inner">
         <div class="card-input">
-          <label for="cardNumber" class="card-input__label">{{getLang().credit_card_number}}</label>
-          <input type="text" id="cardNumber" class="card-input__input" maxlength="19"
+          <label for="cardNumber" class="card-input__label">{{ getLang().credit_card_number }}</label>
+          <input type="text" id="cardNumber" class="card-input__input" maxlength="16"
                  v-model="cardNumber" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardNumber"
-                 autocomplete="off" required>
+                 v-mask="'######## ########'" autocomplete="off" required>
         </div>
         <div class="card-input">
-          <label for="cardName" class="card-input__label">{{getLang().credit_card_name}}</label>
+          <label for="cardName" class="card-input__label">{{ getLang().credit_card_name }}</label>
           <input type="text" id="cardName" class="card-input__input" v-model="cardName" v-on:focus="focusInput"
-                 v-on:blur="blurInput" data-ref="cardName" autocomplete="off" required>
+                 v-on:blur="blurInput" data-ref="cardName" autocomplete="off"required>
         </div>
         <div class="card-form__row">
           <div class="card-form__col">
             <div class="card-form__group">
-              <label for="cardMonth" class="card-input__label">{{getLang().credit_card_expiration_date}}</label>
+              <label for="cardMonth" class="card-input__label">{{ getLang().credit_card_expiration_date }}</label>
               <select class="card-input__input -select" id="cardMonth" v-model="cardMonth" v-on:focus="focusInput"
                       v-on:blur="blurInput" data-ref="cardDate" required>
-                <option value="" disabled selected>{{getLang().credit_card_month}}</option>
+                <option value="" disabled selected>{{ getLang().credit_card_month }}</option>
                 <option v-bind:value="n < 10 ? '0' + n : n" v-for="n in 12" v-bind:disabled="n < minCardMonth"
                         v-bind:key="n">
                   {{ n < 10 ? '0' + n : n }}
@@ -142,7 +142,7 @@
               </select>
               <select class="card-input__input -select" id="cardYear" v-model="cardYear" v-on:focus="focusInput"
                       v-on:blur="blurInput" data-ref="cardDate" required>
-                <option value="" disabled selected>{{getLang().credit_card_year}}</option>
+                <option value="" disabled selected>{{ getLang().credit_card_year }}</option>
                 <option v-bind:value="$index + minCardYear" v-for="(n, $index) in 12" v-bind:key="n">
                   {{ $index + minCardYear }}
                 </option>
@@ -153,13 +153,13 @@
             <div class="card-input">
               <label for="cardCvv" class="card-input__label">CVV</label>
               <input type="text" class="card-input__input" id="cardCvv" v-mask="'###'" maxlength="3" v-model="cardCvv"
-                     v-on:focus="flipCard(true)" v-on:blur="flipCard(false)" autocomplete="off" >
+                     v-on:focus="flipCard(true)" v-on:blur="flipCard(false)" autocomplete="off" required>
             </div>
           </div>
         </div>
 
         <button class="card-form__button" @click="createTicket()">
-          {{getLang().credit_card_submit}}
+          {{ getLang().credit_card_submit }}
         </button>
       </div>
     </div>
@@ -238,23 +238,29 @@ export default {
   },
   methods: {
     async createTicket() {
-      try {
-        await usersService.getUserById(usersService.getUuid()).then(async (res) => {
-          await ticketsService.createTickets(this.$store.state.id_ticket_type, res.email).then(() => {
-            this.$router.push('/dashboard');
-          })
-        });
-      } catch (error) {
-        console.error(error);
+      if (this.cardNumber && this.cardName && this.cardMonth && this.cardYear && this.cardCvv) {
+        try {
+          await usersService.getUserById(usersService.getUuid()).then(async (res) => {
+            await ticketsService.createTickets(this.$store.state.id_ticket_type, res.email).then(() => {
+              this.$router.push('/dashboard');
+            })
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        alert("Veuillez remplir tous les champs");
       }
     },
     flipCard(status) {
       this.isCardFlipped = status;
-    },
+    }
+    ,
 
     getLang() {
       return this.$store.state.lang;
-    },
+    }
+    ,
 
     focusInput(e) {
       this.isInputFocused = true;
@@ -265,7 +271,8 @@ export default {
         height: `${target.offsetHeight}px`,
         transform: `translateX(${target.offsetLeft}px) translateY(${target.offsetTop}px)`
       }
-    },
+    }
+    ,
     blurInput() {
       let vm = this;
       setTimeout(() => {
@@ -275,7 +282,7 @@ export default {
       }, 300);
       vm.isInputFocused = false;
     }
-  }
+  },
 };
 </script>
 <style scoped>
