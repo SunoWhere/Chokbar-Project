@@ -1,5 +1,4 @@
 <script>
-import {ticketsService, usersService} from "@/services";
 
 export default {
   name: 'CheckoutView',
