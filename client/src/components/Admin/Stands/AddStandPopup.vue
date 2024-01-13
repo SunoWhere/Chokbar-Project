@@ -66,9 +66,6 @@ export default {
     }
   },
   methods: {
-    getLang() {
-      return this.$store.state.lang;
-    },
     closePopup() {
       this.$store.commit("setShowAddUserPopup", false);
     },

@@ -36,9 +36,6 @@ export default {
     }
   },
   methods: {
-    getLang() {
-      return this.$store.state.lang;
-    },
     async allUsers() {
       try {
         const res = await usersService.getAllUser();

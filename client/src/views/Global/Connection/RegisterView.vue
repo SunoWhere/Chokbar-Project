@@ -16,9 +16,6 @@ export default {
         passwordInput.type = "password";
       }
     },
-    getLang() {
-      return this.$store.state.lang;
-    },
   }
 }
 </script>

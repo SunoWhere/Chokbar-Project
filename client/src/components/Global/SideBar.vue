@@ -16,9 +16,6 @@ export default {
     getRole() {
       return this.$store.state.role;
     },
-    getLang() {
-      return this.$store.state.lang;
-    },
   },
   computed: {
     links() {

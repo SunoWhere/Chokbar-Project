@@ -30,9 +30,6 @@
       moment(date) {
         return moment(date).tz("Atlantic/Azores").format("HH:mm");
       },
-      getLang() {
-        return this.$store.state.lang;
-      },
       locationNameFR(locationCode) {
         switch (locationCode) {
           case "S01": return "Restauration";

@@ -23,7 +23,8 @@ import {
     faArrowRight,
     faArrowLeft
 } from '@fortawesome/free-solid-svg-icons'; // Solid Icons
-import {faFacebook, faInstagram, faSquareXTwitter, faTiktok} from "@fortawesome/free-brands-svg-icons"; // Brand Icons
+import {faFacebook, faInstagram, faSquareXTwitter, faTiktok} from "@fortawesome/free-brands-svg-icons";
+import langMixin from "@/store/mixin"; // Brand Icons
 // import { regular } from '@fortawesome/free-regular-svg-icons' // Regular Icons
 
 library.add(faUser, faCartShopping, faEnvelope, faCheck, faXmark, faChevronDown, faChevronLeft, faChevronRight, faUser, faP, faX, faArrowRight, faArrowLeft); // Solid Icons
@@ -33,6 +34,8 @@ library.add(faFacebook, faSquareXTwitter, faTiktok, faInstagram); // Brands Icon
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false
+
+Vue.mixin(langMixin);
 
 new Vue({
   router,

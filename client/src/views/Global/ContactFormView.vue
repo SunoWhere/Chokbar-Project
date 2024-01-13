@@ -13,9 +13,6 @@ export default {
     ContactForm,
   },
   methods: {
-    getLang() {
-      return this.$store.state.lang;
-    },
   },
   metaInfo() {
     return {

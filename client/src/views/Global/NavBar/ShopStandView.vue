@@ -68,9 +68,6 @@ export default {
         console.log(error)
       }
     },
-    getLang() {
-      return this.$store.state.lang;
-    },
     getRole() {
       return this.$store.state.role;
     },
@@ -78,13 +75,6 @@ export default {
   computed: {
     availableProducts() {
       return this.products.filter(product => product.id_product_state === 1);
-    },
-    getStoredLang() {
-      const storedLang = localStorage.getItem('lang');
-      if (storedLang) {
-        return storedLang;
-      }
-      return 'FR';
     },
     isConnected() {
       return this.$store.state.isConnected;

@@ -35,9 +35,6 @@ export default {
     }
   },
   methods: {
-    getLang() {
-      return this.$store.state.lang;
-    },
     async getStands() {
       try {
         this.stands = await standsService.getAllStands();

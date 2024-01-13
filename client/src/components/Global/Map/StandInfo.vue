@@ -61,10 +61,6 @@ export default {
     moment(date) {
       return moment(date).tz("Atlantic/Azores").format("HH:mm");
     },
-    getLang() {
-      return this.$store.state.lang;
-    },
-
     async getProviderById(id_provider) {
       try {
         const res = await providersService.getProviderById(id_provider);

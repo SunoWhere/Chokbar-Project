@@ -56,10 +56,6 @@
         this.addEvent.starting_time = `${this.selectedDay.timestamp}T${this.startingTime}:00.000Z`;
         this.addEvent.finishing_time = `${this.selectedDay.timestamp}T${this.finishingTime}:00.000Z`;
       },
-      getLang() {
-        return this.$store.state.lang;
-      },
-
       async getLocations() {
         try {
           const res = await locationsService.getLocations();

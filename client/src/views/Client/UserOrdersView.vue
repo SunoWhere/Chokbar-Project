@@ -57,9 +57,6 @@ export default {
 
       return 'Nom inconnu';
     },
-    getLang() {
-      return this.$store.state.lang;
-    },
   },
   computed: {
     isConnected() {

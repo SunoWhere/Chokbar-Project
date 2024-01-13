@@ -19,9 +19,6 @@ export default {
     this.getTicketTypes();
   },
   methods: {
-    getLang() {
-      return this.$store.state.lang;
-    },
     goToCheckout(ticket_type_name) {
       console.log(this.ticketTypes)
       const ticket = this.ticketTypes.find(ticket => ticket.name === ticket_type_name);

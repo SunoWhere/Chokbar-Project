@@ -102,9 +102,6 @@ export default {
       this.startingTime = this.getTime(this.selectedEvent.starting_time);
       this.finishingTime = this.getTime(this.selectedEvent.finishing_time);
     },
-    getLang() {
-      return this.$store.state.lang;
-    },
     getTime(date) {
       return moment(date).tz("Atlantic/Azores").format("HH:mm");
     },

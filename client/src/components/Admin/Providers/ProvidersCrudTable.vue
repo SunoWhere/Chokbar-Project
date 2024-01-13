@@ -52,9 +52,6 @@ export default {
         console.error("Une erreur s'est produite :", error);
       }
     },
-    getLang() {
-      return this.$store.state.lang;
-    },
   },
 };
 </script>

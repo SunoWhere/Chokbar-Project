@@ -5,9 +5,6 @@ export default {
   components: {
   },
   methods: {
-    getLang() {
-      return this.$store.state.lang;
-    },
   },
   computed: {
 

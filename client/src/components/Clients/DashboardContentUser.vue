@@ -27,9 +27,6 @@ export default {
         console.error(error);
       }
     },
-    getLang() {
-      return this.$store.state.lang;
-    },
   },
   computed: {
 

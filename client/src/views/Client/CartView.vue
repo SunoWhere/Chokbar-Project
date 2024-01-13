@@ -111,9 +111,6 @@ export default {
         throw new Error("can't remove cart, uuid undefined");
       }
     },
-    getLang() {
-      return this.$store.state.lang;
-    },
   },
   computed: {
 

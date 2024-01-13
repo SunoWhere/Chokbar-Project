@@ -2,9 +2,6 @@
 export default {
   name: "AproposView",
   methods: {
-    getLang() {
-      return this.$store.state.lang;
-    },
   },
 }
 </script>

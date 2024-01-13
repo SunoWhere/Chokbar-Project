@@ -10,9 +10,6 @@ export default {
     }
   },
   methods: {
-    getLang() {
-      return this.$store.state.lang;
-    },
   },
 }
 </script>

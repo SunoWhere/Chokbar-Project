@@ -41,9 +41,6 @@ export default {
       }
       return this.lang_name;
     },
-    getLang() {
-      return this.$store.state.lang;
-    },
   },
   computed: {
     dashboard() {

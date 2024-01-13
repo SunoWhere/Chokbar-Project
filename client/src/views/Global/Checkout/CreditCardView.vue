@@ -254,14 +254,7 @@ export default {
     },
     flipCard(status) {
       this.isCardFlipped = status;
-    }
-    ,
-
-    getLang() {
-      return this.$store.state.lang;
-    }
-    ,
-
+    },
     focusInput(e) {
       this.isInputFocused = true;
       let targetRef = e.target.dataset.ref;
