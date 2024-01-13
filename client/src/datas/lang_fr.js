@@ -281,4 +281,12 @@ export const lang_fr = {
     // Remove Popup Stand
     remove_popup_stand_1: "Vous êtes sur le points de supprimer un stand.",
 
+    // Cart View
+    cart_remove_from_cart: "Retirer du panier",
+    cart_no_article: "Il n'y a aucun d'article pour le moment.",
+    cart_name: "Nom",
+    cart_price: "Prix",
+    cart_quantity: "Quantité",
+    cart_empty: "Vider le panier",
+    cart_payer: "Continuer vers le paiement",
 }

@@ -140,7 +140,7 @@ export default {
               <button class="info-button" @click.prevent="">{{ getLang().stands_articles_shop_info }}</button>
             </div>
             <div class="add-btn" v-if="isConnected">
-              <button v-if="item.quantity !== 0 && getRole().toLowerCase() !== 'admin'" class="add-button"
+              <button v-if="item.quantity !== 0 && getRole().toLowerCase() === 'user'" class="add-button"
                       @click.prevent="addToCart(item)">{{ getLang().stands_articles_shop_cart }}
               </button>
             </div>

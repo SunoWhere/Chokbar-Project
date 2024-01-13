@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '@/views/Global/HomeView.vue'
 import BilletterieView from '@/views/Global/NavBar/BilletterieView.vue';
-import DashboardView from "@/views/Admin/DashboardView.vue";
+import DashboardView from "@/views/DashboardView.vue";
 import LoginView from '@/views/Global/Connection/LoginView.vue';
 import RegisterView from '@/views/Global/Connection/RegisterView.vue';
 import CheckoutView from '@/views/Global/Checkout/CheckoutView.vue';

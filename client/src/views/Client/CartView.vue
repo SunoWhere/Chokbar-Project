@@ -111,6 +111,9 @@ export default {
         throw new Error("can't remove cart, uuid undefined");
       }
     },
+    getLang() {
+      return this.$store.state.lang;
+    },
   },
   computed: {
 
@@ -134,19 +137,22 @@ export default {
           <div class="table-body">
             <div class="tr" v-for="(item, index) in cart" :key="index">
               <div class="head">
-                <h4 class="table-head-title">Nom</h4>
-                <h4 class="table-head-title">Prix</h4>
-                <h4 class="table-head-title">Quantité</h4>
+                <h4 class="table-head-title">{{getLang().cart_name}}</h4>
+                <h4 class="table-head-title">{{getLang().cart_price}}</h4>
+                <h4 class="table-head-title">{{getLang().cart_quantity}}</h4>
                 <h4 class="table-head-title">Action</h4>
               </div>
               <h2>{{ getStandName(item) }}</h2>
               <div class="line" v-for="(product, index) in item" :key="index">
-                <div class="td"><p>{{ product.product.name_fr }}</p></div>
+                <div class="td">
+                  <p v-if="'EN' === $store.state.lang_name">{{ product.product.name_en }}</p>
+                  <p v-else>{{ product.product.name_fr }}</p>
+                </div>
                 <div class="td"><p>{{ product.product.price }} €</p></div>
                 <div class="td"><p>{{ product.quantity }}</p></div>
                 <div class="td">
                   <div class="add-btn">
-                    <button class="add-button" @click.prevent="removeItem(product.product.id_product)">Retirer du panier</button>
+                    <button class="add-button" @click.prevent="removeItem(product.product.id_product)">{{getLang().cart_remove_from_cart}}</button>
                   </div>
                 </div>
               </div>
@@ -154,8 +160,8 @@ export default {
           </div>
         </div>
         <div>
-          <p class="no-article" v-if="cart.length === 0">Il n'y a aucun article pour le moment.</p>
-          <button class="delete-cart-btn" v-if="cart.length !== 0" @click="clearCart()">Vider le panier</button>
+          <p class="no-article" v-if="cart.length === 0">{{getLang().cart_no_article}}</p>
+          <button class="delete-cart-btn" v-if="cart.length !== 0" @click="clearCart()">{{getLang().cart_empty}}</button>
         </div>
 
       </div>
@@ -164,7 +170,7 @@ export default {
           <p>Total:</p>
           <p>{{totalPrice}} €</p>
         </div>
-        <button class="checkout-btn" v-if="totalPrice !== 0" @click="$router.push('/cart/checkout')">Continue to checkout</button>
+        <button class="checkout-btn" v-if="totalPrice > 0" @click="$router.push('/cart/checkout')">{{getLang().cart_payer}}</button>
       </div>
     </div>
   </div>
@@ -217,11 +223,12 @@ export default {
 
 .checkout-btn {
   background-color: var(--white);
+  width: fit-content;
   margin-top: 10px;
   margin-right: 10px;
   border: none;
   color: black;
-  padding: 5px 5px;
+  padding: 5px 10px;
   text-align: center;
   text-decoration: none;
   display: inline-block;

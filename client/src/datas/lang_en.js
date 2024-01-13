@@ -250,4 +250,13 @@ export const lang_en = {
 
     // Remove Popup Stands
     remove_popup_stand_1: "You are about to delete a stand.",
+
+    // Cart View
+    cart_remove_from_cart: "Remove from cart",
+    cart_no_article: "There are currently no items in the cart.",
+    cart_name: "Name",
+    cart_price: "Price",
+    cart_quantity: "Quantity",
+    cart_empty: "Empty the cart",
+    cart_payer: "Continue to checkout",
 }
