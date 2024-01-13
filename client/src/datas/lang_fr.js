@@ -289,4 +289,13 @@ export const lang_fr = {
     cart_quantity: "Quantité",
     cart_empty: "Vider le panier",
     cart_payer: "Continuer vers le paiement",
+
+    // Dashboard User
+    dashboard_user_welcome: "Bonjour",
+
+    // Commands user
+    command_no_commands: "Vous n'avez pas de commande en cours.",
+    command_num: "Numéro de commande",
+    command_stand: "Stand",
+    command_state: "État",
 }

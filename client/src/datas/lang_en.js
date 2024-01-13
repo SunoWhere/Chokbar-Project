@@ -259,4 +259,13 @@ export const lang_en = {
     cart_quantity: "Quantity",
     cart_empty: "Empty the cart",
     cart_payer: "Continue to checkout",
+
+    // Dashboard User
+    dashboard_user_welcome: "Welcome",
+
+    // Commands user
+    command_no_commands: "You have no ongoing orders.",
+    command_num: "Order Number",
+    command_stand: "Stand",
+    command_state: "Status",
 }

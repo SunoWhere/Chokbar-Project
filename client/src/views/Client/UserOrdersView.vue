@@ -57,6 +57,9 @@ export default {
 
       return 'Nom inconnu';
     },
+    getLang() {
+      return this.$store.state.lang;
+    },
   },
   computed: {
     isConnected() {
@@ -76,9 +79,9 @@ export default {
 
       <div class="table-body">
         <div class="head">
-          <h4 class="table-head-title">Numéro de commande</h4>
-          <h4 class="table-head-title">Stand</h4>
-          <h4 class="table-head-title">État</h4>
+          <h4 class="table-head-title">{{getLang().command_num}}</h4>
+          <h4 class="table-head-title">{{getLang().command_stand}}</h4>
+          <h4 class="table-head-title">{{getLang().command_state}}</h4>
           <h4 class="table-head-title">QRCode</h4>
         </div>
         <div class="line" v-for="item in orders" :key="item.id_order">
@@ -90,7 +93,7 @@ export default {
       </div>
     </div>
     <div v-else>
-      <p>Vous n'avez pas de commande.</p>
+      <p>{{getLang().command_no_commands}}</p>
     </div>
   </div>
 </template>

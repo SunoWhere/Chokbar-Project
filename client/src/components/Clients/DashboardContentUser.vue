@@ -27,6 +27,9 @@ export default {
         console.error(error);
       }
     },
+    getLang() {
+      return this.$store.state.lang;
+    },
   },
   computed: {
 
@@ -37,7 +40,7 @@ export default {
 
 <template>
   <div id="dashboard-content-container">
-    <h1>Bonjour, {{user.first_name}} {{user.last_name}}</h1>
+    <h1>{{getLang().dashboard_user_welcome}}, {{user.first_name}} {{user.last_name}}</h1>
   </div>
 </template>
 
