@@ -1,4 +1,6 @@
 <script>
+import {usersService} from "@/services";
+
 export default {
   name: 'RegisterView',
   metaInfo() {
@@ -6,14 +8,61 @@ export default {
       title: 'Register'
     }
   },
+  data() {
+    return {
+      addUser: {
+        first_name: '',
+        last_name: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+      },
+      passwordMatch: false,
+    }
+  },
   methods: {
     toggleShowPassword() {
       const passwordInput = document.getElementById("password");
+      const cpasswordInput = document.getElementById("confirm-password");
 
       if(passwordInput.type === "password") {
         passwordInput.type = "text";
       } else {
         passwordInput.type = "password";
+      }
+      if(cpasswordInput.type === "password") {
+        cpasswordInput.type = "text";
+      } else {
+        cpasswordInput.type = "password";
+      }
+    },
+    clearAddUser() {
+      this.addUser.first_name = '';
+      this.addUser.last_name = '';
+      this.addUser.email = '';
+      this.addUser.password = '';
+      this.addUser.confirmPassword = '';
+    },
+    register() {
+      if (this.addUser.password === this.addUser.confirmPassword) {
+        usersService.addUser(this.addUser)
+            .then(async res => {
+              this.message = res.data;
+
+              this.clearAddUser()
+
+              const updatedUserList = await usersService.getAllUser();
+              await this.$store.dispatch('updateUserList', updatedUserList);
+
+              await this.$router.push('/login');
+            })
+            .catch(err => {
+              console.error(err);
+              this.message = err ? err : "Erreur lors de l'ajout.";
+            });
+      }
+      else {
+        this.message = "Passwords dosn't matchs.";
       }
     },
   }
@@ -24,19 +73,22 @@ export default {
   <div class="register">
     <div class="register-form">
       <h2>{{ getLang().register_title }}</h2>
-      <form id="register-form" action="/users/" method="POST">
+      <form id="register-form" action="/api/users/" method="POST" @submit.prevent="register">
 
         <label for="email">Email</label>
-        <input type="email" id="email" name="email" placeholder="example@ezcon.fr" required>
+        <input type="email" id="email" name="email" placeholder="example@ezcon.fr" v-model="addUser.email" required>
 
         <label for="first_name">{{ getLang().register_prenom }}</label>
-        <input type="text" id="first_name" name="first_name" required>
+        <input type="text" id="first_name" name="first_name" :placeholder="getLang().form_firstname" v-model="addUser.first_name" required>
 
         <label for="last_name">{{ getLang().register_nom }}</label>
-        <input type="text" id="last_name" name="last_name" required>
+        <input type="text" id="last_name" name="last_name" :placeholder="getLang().form_lastname" v-model="addUser.last_name" required>
 
         <label for="password">{{ getLang().form_password }}</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" id="password" name="password" :placeholder="getLang().form_password" v-model="addUser.password" required>
+
+        <label for="confirm-password">{{ getLang().form_confirm_password }}</label>
+        <input type="password" id="confirm-password" name="confirm-password" :placeholder="getLang().form_confirm_password" v-model="addUser.confirmPassword" required>
 
         <p class="show-password">
           <input type="checkbox" id="show-password" @click="toggleShowPassword">
