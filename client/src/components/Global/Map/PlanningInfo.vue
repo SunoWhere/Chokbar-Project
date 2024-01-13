@@ -30,6 +30,12 @@
       moment(date) {
         return moment(date).tz("Atlantic/Azores").format("HH:mm");
       },
+      isConnected() {
+        return this.$store.state.isConnected;
+      },
+      getRole() {
+        return this.$store.state.role;
+      },
       locationNameFR(locationCode) {
         switch (locationCode) {
           case "S01": return "Restauration";
@@ -104,7 +110,7 @@
             </div>
         </div>
 
-        <div class="event-controls" v-if="this.$store.state.isConnected">
+        <div class="event-controls" v-if="isConnected && getRole === 'admin'">
           <button class="event-controls-button" @click="openEditPopup">{{ getLang().planning_info_controls_edit }}</button>
           <button class="event-controls-button" @click="deleteEvent">{{ getLang().planning_info_controls_delete }}</button>
         </div>
