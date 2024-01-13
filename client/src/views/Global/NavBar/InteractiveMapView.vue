@@ -5,7 +5,7 @@ import AddEventPopup from "@/components/Global/Map/AddEventPopup.vue";
 import EditEventPopup from "@/components/Global/Map/EditEventPopup.vue";
 
 import {eventsService, lang_en, lang_fr} from "@/services";
-import { locationsService } from "@/services/";
+import { locationsService } from "@/services";
 import moment from "moment-timezone";
 
 
