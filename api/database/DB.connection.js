@@ -3,9 +3,9 @@ const dotenv = require("dotenv")
 dotenv.config()
 const fs = require('fs')
 
-const {DB_USER, DB_PWD, DB_PORT} = process.env
+const {DB_USER, DB_PWD, DB_PORT, DB_NAME} = process.env
 
-const sequelize = new Sequelize('ezcon', DB_USER, DB_PWD, {
+const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PWD, {
     dialect: 'postgres',
     host: 'localhost',
     port: DB_PORT
