@@ -1,49 +1,3 @@
-<template>
-  <div class="modal" v-if="showPopup">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1>{{getLang().btn_add}}</h1>
-        <div class="close-container" @click="closePopup">
-          <div class="leftright"></div>
-          <div class="rightleft"></div>
-        </div>
-      </div>
-      <div class="content-sub-title">
-        <h2>{{ getLang().popup_users_title }}</h2>
-      </div>
-      <div class="content">
-        <form action="/users/" method="POST" @submit.prevent="submitForm">
-          <div class="form-main-content">
-            <label for="firstname">{{ getLang().form_firstname }}</label>
-            <input type="text" id="firstname" name="firstname" :placeholder="getLang().form_firstname" v-model="addUser.first_name" required>
-
-            <label for="lastname">{{ getLang().form_lastname }}</label>
-            <input type="text" id="lastname" name="lastname" :placeholder="getLang().form_lastname" v-model="addUser.last_name" required>
-
-            <label for="email">{{ getLang().form_email }}</label>
-            <input type="email" id="email" name="email" :placeholder="getLang().form_email" v-model="addUser.email" required>
-
-            <label for="password">{{ getLang().form_password }}</label>
-            <input type="password" id="password" name="password" :placeholder="getLang().form_password" v-model="addUser.password" required>
-
-            <label for="confirm-password">{{ getLang().form_confirm_password }}</label>
-            <input type="password" id="confirm-password" name="confirm-password" :placeholder="getLang().form_confirm_password" v-model="addUser.confirmPassword" required>
-
-            <p class="show-password">
-              <input type="checkbox" id="show-password" @click="toggleShowPassword">
-              <label for="show-password">{{ getLang().form_show_password }}</label>
-            </p>
-          </div>
-
-          <div class="submit-btn">
-            <button type="submit">{{getLang().btn_add}}</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script>
 import {usersService} from "@/services";
 
@@ -122,8 +76,53 @@ export default {
     },
   },
 };
-
 </script>
+
+<template>
+  <div class="modal" v-if="showPopup">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1>{{getLang().btn_add}}</h1>
+        <div class="close-container" @click="closePopup">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </div>
+      </div>
+      <div class="content-sub-title">
+        <h2>{{ getLang().popup_users_title }}</h2>
+      </div>
+      <div class="content">
+        <form action="/users/" method="POST" @submit.prevent="submitForm">
+          <div class="form-main-content">
+            <label for="firstname">{{ getLang().form_firstname }}</label>
+            <input type="text" id="firstname" name="firstname" :placeholder="getLang().form_firstname" v-model="addUser.first_name" required>
+
+            <label for="lastname">{{ getLang().form_lastname }}</label>
+            <input type="text" id="lastname" name="lastname" :placeholder="getLang().form_lastname" v-model="addUser.last_name" required>
+
+            <label for="email">{{ getLang().form_email }}</label>
+            <input type="email" id="email" name="email" :placeholder="getLang().form_email" v-model="addUser.email" required>
+
+            <label for="password">{{ getLang().form_password }}</label>
+            <input type="password" id="password" name="password" :placeholder="getLang().form_password" v-model="addUser.password" required>
+
+            <label for="confirm-password">{{ getLang().form_confirm_password }}</label>
+            <input type="password" id="confirm-password" name="confirm-password" :placeholder="getLang().form_confirm_password" v-model="addUser.confirmPassword" required>
+
+            <p class="show-password">
+              <input type="checkbox" id="show-password" @click="toggleShowPassword">
+              <label for="show-password">{{ getLang().form_show_password }}</label>
+            </p>
+          </div>
+
+          <div class="submit-btn">
+            <button type="submit">{{getLang().btn_add}}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 .modal {
