@@ -183,7 +183,7 @@ export default {
   </div>
 </template>
 
-<style>
+<style scoped>
 
 .dashboard-container {
   height: 100vh;
