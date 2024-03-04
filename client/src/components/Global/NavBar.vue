@@ -69,8 +69,8 @@ export default {
     <img src="../../assets/logo.png" alt="Logo EZCon">
     <ul class="nav-list">
       <li>
-        <button class="nav-item underline-animation">
-          <router-link class="router-link" to="/">{{ getLang().navbar_accueil }}</router-link>
+        <button class="nav-item underline-animation" @click="$router.push('/')">
+          {{ getLang().navbar_accueil }}
         </button>
       </li>
       <li>
