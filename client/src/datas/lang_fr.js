@@ -125,7 +125,7 @@ export const lang_fr = {
     stands_articles_shop_prix: "Prix",
     stands_articles_shop_quantite: "Quantité",
     stands_articles_shop_type: "Type d'article",
-    stands_articles_shop_unite: "Unité(s)",
+    stands_articles_shop_unite: "Unité",
     stands_articles_shop_info: "Infos",
     stands_articles_shop_cart: "Ajouter au panier",
 

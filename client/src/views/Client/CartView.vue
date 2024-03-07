@@ -11,7 +11,8 @@ export default {
     return {
       cart: [],
       totalPrice: 0,
-      uniqueStandsNames: []
+      uniqueStandsNames: [],
+      showNotification: false,
     }
   },
   metaInfo() {
@@ -20,6 +21,13 @@ export default {
     }
   },
   methods: {
+    showClearCartNotification() {
+      this.showNotification = true;
+
+      setTimeout(() => {
+        this.showNotification = false;
+      }, 1500);
+    },
     async getCart() {
       try {
         const cartsLines = await cartsService.getCartByUserId(usersService.getUuid());
@@ -100,10 +108,11 @@ export default {
     async clearCart() {
       const uuid = usersService.getUuid();
       if(uuid !== undefined) {
-        await cartsService.clearCart(uuid).then(() => {
+        cartsService.clearCart(uuid).then(() => {
           this.getCart().then(() => {
             this.getCart().then(() => {
               this.totalCartPrice();
+              this.showClearCartNotification();
             });
           });
         });
@@ -127,6 +136,11 @@ export default {
 
 <template>
   <div class="main-content">
+    <transition name="fade">
+      <div v-if="showNotification" class="notification">
+        Tous les articles ont été supprimés du panier !
+      </div>
+    </transition>
     <div class="content">
       <div class="left-side">
         <h1>Articles</h1>
@@ -322,6 +336,26 @@ button:hover {
 
 button:active {
   background-color: #2c1a7e; /* Couleur pour l'état actif (clic) */
+}
+
+.notification {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(85px);
+  background-color: red;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 
 </style>

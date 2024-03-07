@@ -9,9 +9,29 @@ export default {
       products: [],
       productsTypes: [],
       productsStates: [],
+      productQuantities: {},
+      itemBuy: {},
+      showNotification: false,
+      notificationTimer: null,
     }
   },
   methods: {
+    showAddToCartNotification() {
+      if (this.notificationTimer) {
+        clearTimeout(this.notificationTimer);
+      }
+
+      this.showNotification = true;
+
+      this.notificationTimer = setTimeout(() => {
+        this.showNotification = false;
+      }, 1500);
+    },
+    initializeProductQuantities() {
+      this.products.forEach(product => {
+        this.$set(this.productQuantities, product.id_product, 1);
+      });
+    },
     async getStandById() {
       try {
         const standId = this.$route.params.id;
@@ -60,10 +80,18 @@ export default {
       try {
         const uuid_user = usersService.getUuid();
         const id = item.id_product;
+        let quantity = this.productQuantities[id] || 1;
+        if(quantity > item.quantity) quantity = item.quantity;
+        this.itemBuy = {
+          name_fr: item.name_fr,
+          quantity: quantity
+        }
 
-        await cartsService.addCart(uuid_user, id, 1).then(async () => {
+        cartsService.addCart(uuid_user, id, quantity).then(async () => {
           await this.getStandProducts();
-        });
+          this.showAddToCartNotification();
+          this.initializeProductQuantities();
+        })
       } catch (error) {
         console.log(error)
       }
@@ -84,6 +112,7 @@ export default {
     this.getStandById().then(() => {
       this.getStandProducts().then(() => {
         this.getAllProductTypes();
+        this.initializeProductQuantities();
       })
     });
   }
@@ -92,6 +121,11 @@ export default {
 
 <template>
   <div class="main-content">
+    <transition name="fade">
+      <div v-if="showNotification" class="notification">
+        {{ itemBuy.name_fr }} ajouté au panier X{{ itemBuy.quantity }} !
+      </div>
+    </transition>
     <div class="top-content">
       <div class="left-side">
         <h1>{{ stand.name }}</h1>
@@ -123,16 +157,20 @@ export default {
           <td v-if="'EN' === $store.state.lang_name">{{ item.name_en }}</td>
           <td v-else>{{ item.name_fr }}</td>
           <td>{{ item.price }} €</td>
-          <td>{{ item.quantity }} {{ getLang().stands_articles_shop_unite }}</td>
+          <td v-if="item.quantity > 1">{{ item.quantity }} {{ getLang().stands_articles_shop_unite }}s</td>
+          <td v-else>{{ item.quantity }} {{ getLang().stands_articles_shop_unite }}</td>
           <td>{{ getProductType(item.id_product_type) }}</td>
-          <td>
+          <td id="action">
             <div class="info-btn">
               <button class="info-button" @click.prevent="">{{ getLang().stands_articles_shop_info }}</button>
             </div>
-            <div class="add-btn" v-if="isConnected">
-              <button v-if="item.quantity !== 0 && getRole().toLowerCase() === 'user'" class="add-button"
+            <div class="add-btn" v-if="isConnected && item.quantity !== 0 && getRole().toLowerCase() === 'user'">
+              <button class="add-button"
                       @click.prevent="addToCart(item)">{{ getLang().stands_articles_shop_cart }}
               </button>
+            </div>
+            <div v-if="isConnected && item.quantity !== 0 && getRole().toLowerCase() === 'user'">
+              <input id="number" v-model="productQuantities[item.id_product]" type="number" step="1" min="1" :max="item.quantity"/>
             </div>
           </td>
         </tr>
@@ -312,6 +350,37 @@ td:nth-child(1) {
 table {
   overflow: hidden;
   border-radius: 15px;
+}
+
+#action {
+  width: 300px;
+}
+
+#number {
+  width: 50px;
+  height: 28px;
+  margin-left: 10px;
+  font-size: 1.005em;
+}
+
+.notification {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(85px);
+  background-color: green;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 
 </style>

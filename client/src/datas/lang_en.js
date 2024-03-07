@@ -96,7 +96,7 @@ export const lang_en = {
     stands_articles_shop_prix: "Price",
     stands_articles_shop_quantite: "Quantity",
     stands_articles_shop_type: "Article type",
-    stands_articles_shop_unite: "Unit(s)",
+    stands_articles_shop_unite: "Unit",
     stands_articles_shop_info: "Details",
     stands_articles_shop_cart: "Add to cart",
 
