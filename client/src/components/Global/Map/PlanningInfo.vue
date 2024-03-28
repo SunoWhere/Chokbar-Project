@@ -110,7 +110,7 @@
             </div>
         </div>
 
-        <div class="event-controls" v-if="isConnected && getRole === 'admin'">
+        <div class="event-controls" v-if="isConnected && getRole() === 'admin'">
           <button class="event-controls-button" @click="openEditPopup">{{ getLang().planning_info_controls_edit }}</button>
           <button class="event-controls-button" @click="deleteEvent">{{ getLang().planning_info_controls_delete }}</button>
         </div>

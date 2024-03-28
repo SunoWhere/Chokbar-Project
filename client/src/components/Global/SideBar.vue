@@ -1,6 +1,6 @@
 <template>
   <div id="links-contener">
-    <router-link v-for="link in links" :key="link.route" :to="link.route">
+    <router-link style="text-decoration: none; color: inherit;" v-for="link in links" :key="link.route" :to="link.route">
       <div class="link">
         {{ link.label }}
       </div>
