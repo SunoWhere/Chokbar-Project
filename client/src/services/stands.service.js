@@ -93,6 +93,42 @@ let getAllLocations = async () => {
         console.error(error);
     }
 }
+let getStandsTypes = async () => {
+    try {
+        const route = '/api/stands/types';
+        const res = await Axios.get(route);
+        return res.data;
+    } catch(error) {
+        console.error(error);
+    }
+}
+
+let getStandsProducts = async (standId) => {
+    try {
+        const route = `/api/stands/${standId}/products`;
+        const res =  await Axios.get(route);
+        return res.data;
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+let updateStandById = async (stand) => {
+    try {
+        const route = `/api/stands/${stand.id_stand}`;
+        const res =  await Axios.put(route, {
+            id_location: stand.id_location,
+            id_provider: stand.id_provider,
+            id_stand_type: stand.id_stand_type,
+            name: stand.name,
+            description_en: stand.description_en,
+            description_fr: stand.description_fr
+        });
+        return res.data;
+    } catch (err) {
+        console.error(err);
+    }
+}
 
 export const standsService = {
     getProvider,
@@ -103,5 +139,8 @@ export const standsService = {
     getAllStands,
     getStandProduct,
     addStand,
-    getAllLocations
+    getAllLocations,
+    getStandsTypes,
+    getStandsProducts,
+    updateStandById
 }

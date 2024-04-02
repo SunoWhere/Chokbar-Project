@@ -1,42 +1,69 @@
 <script>
 
+import {mapActions, mapMutations, mapState} from "vuex";
+import {standsService} from "@/services";
+
 export default {
   name: 'StandsCrudTable',
   components: {
 
   },
-  props: {
-    items: {
-      type: Array,
-      required: true,
+  data() {
+    return {
+    }
+  },
+  watch: {
+    'stands': {
+      immediate: true,
+      handler(newVal, oldVal) {
+        if (newVal !== oldVal) {
+          this.loadStandProducts();
+        }
+      }
     }
   },
   computed: {
-    showAddPopup() {
-      return this.$store.state.showAddUserPopup;
-    },
+    ...mapState(['stands', 'standProducts']),
+    ...mapMutations(['addStandsProduct']),
   },
   methods: {
+    ...mapActions(['getProductOfStand', 'updateStandList']),
     openAddPopup() {
-      this.$store.commit("setShowAddUserPopup", true);
+      this.$store.commit("setShowAddStandPopup", true);
     },
     openRemovePopup(id) {
       this.$store.commit("setStandIdToRemove", id);
-      this.$store.commit("setShowRemoveUserPopup", true);
+      this.$store.commit("setShowRemoveStandPopup", true);
     },
-    openEditPopup(user) {
-      this.$store.commit("setUserToEdit", user);
-      this.$store.commit("setShowEditUserPopup", true);
+    openEditPopup(stand) {
+      console.log('stand : ' + stand)
+      this.$store.commit("setStandToEdit", stand);
+      this.$store.commit("setShowEditStandPopup", true);
+    },
+    async loadStandProducts() {
+      for (const item of this.stands) {
+        try {
+          const products = await standsService.getStandsProducts(item.id_stand);
+          this.$store.commit('addStandsProduct', { id_stand: item.id_stand, length: products.length });
+        } catch (err) {
+          console.error(err);
+          this.$store.commit('addStandsProduct', { id_stand: item.id_stand, length: '0' });
+        }
+      }
     },
   },
   mounted() {
-
+    this.updateStandList();
+    this.loadStandProducts();
   }
 };
 </script>
 
 <template>
   <div class="pre-container">
+    <div id="add-btn">
+      <button class="add-button" @click="openAddPopup">{{getLang().btn_add}}<i class=""></i></button>
+    </div>
     <div class="container">
       <div class="container-table">
         <table>
@@ -52,15 +79,15 @@ export default {
           </thead>
           <tfoot></tfoot>
           <tbody>
-          <tr v-for="(item, index) in items" :key="index">
+          <tr v-for="(item, index) in stands" :key="index">
             <td>{{item.id_stand}}</td>
             <td>{{item.name}}</td>
             <td>{{item.id_provider}}</td>
             <td>{{ item.id_location_location.code }}</td>
-            <td>quantité produit</td>
+            <td>{{ standProducts[item.id_stand] }}</td>
             <td>
               <form>
-                <button class="edit-button" @click.prevent="openEditPopup(filteredItem)">{{getLang().btn_edit}}<i class=""></i></button>
+                <button class="edit-button" @click.prevent="openEditPopup(item)">{{getLang().btn_edit}}<i class=""></i></button>
                 <button class="delete-button" @click.prevent="openRemovePopup(item.id_stand)">{{getLang().btn_delete}}<i class=""></i></button>
               </form>
             </td>
@@ -68,9 +95,6 @@ export default {
           </tbody>
         </table>
       </div>
-    </div>
-    <div id="add-btn">
-      <button class="add-button" @click="openAddPopup">{{getLang().btn_add}}<i class=""></i></button>
     </div>
   </div>
 </template>

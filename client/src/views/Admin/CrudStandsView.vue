@@ -5,22 +5,12 @@ import {standsService} from "@/services";
 import AddStandPopup from "@/components/Admin/Stands/AddStandPopup.vue";
 import RemoveStandPopup from "@/components/Admin/Stands/RemoveStandPopup.vue";
 import EditStandPopup from "@/components/Admin/Stands/EditStandPopup.vue";
+import {mapActions, mapState} from "vuex";
 
 export default {
   name: 'CrudStandsView',
-  data () {
-    return {
-      stands: []
-    }
-  },
   created() {
-    this.getStands();
-    this.$store.watch(
-        () => this.$store.getters.getRealStandList,
-        standList => {
-          this.stands = standList;
-        }
-    );
+    this.updateStandList();
   },
   components: {
     AddStandPopup,
@@ -35,35 +25,25 @@ export default {
     }
   },
   methods: {
-    async getStands() {
-      try {
-        this.stands = await standsService.getAllStands();
-      } catch(error) {
-        console.error(error);
-      }
-    },
+    ...mapActions(['updateStandList']),
     async removeStand() {
       const standId = this.$store.state.standIdToRemove;
       try {
+        this.$store.commit('removeStandsProduct', {id_stand: standId });
         await standsService.removeStand(standId);
-        await this.$store.dispatch('updateStandList', await standsService.getAllStands());
+        await this.updateStandList();
       } catch (error) {
         console.error(error);
       }
     },
   },
   computed: {
+    ...mapState(['stands']),
     isConnected() {
       return this.$store.state.isConnected;
     },
     getRole() {
       return this.$store.state.role;
-    },
-    usersClientList() {
-      const usersCopy = [...this.users];
-
-      const sortedUsers = usersCopy.sort((a, b) => (a[2].localeCompare(b[2])));
-      return sortedUsers.filter(user => user[5] !== 'Admin' && user[5] !== 'Provider');
     },
   },
 }
@@ -73,7 +53,7 @@ export default {
   <div class="dashboard-container">
     <SideBar/>
     <div id="dc" v-if="isConnected && getRole === 'admin'">
-      <CrudTable :items="stands"/>
+      <CrudTable/>
     </div>
     <AddStandPopup :typeTitle="'Stands'" />
     <RemoveStandPopup :typeTitle="'Stands'" @confirmed-deletion="removeStand" />

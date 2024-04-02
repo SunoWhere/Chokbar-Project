@@ -42,12 +42,12 @@ export default {
   },
   computed: {
     showPopup() {
-      return this.$store.state.showRemoveUserPopup;
+      return this.$store.state.showRemoveStandPopup;
     }
   },
   methods: {
     closePopup() {
-      this.$store.commit("setShowRemoveUserPopup", false);
+      this.$store.commit("setShowRemoveStandPopup", false);
     },
     submitForm() {
       this.$emit('confirmed-deletion');

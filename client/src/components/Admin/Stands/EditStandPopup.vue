@@ -9,36 +9,48 @@
         </div>
       </div>
       <div class="content-sub-title">
-        <h2>{{getLang().popup_users_title}}</h2>
+        <h2>{{ getLang().popup_stands_title }}</h2>
       </div>
       <div class="content">
-        <form action="/users/" method="POST" @submit.prevent="submitForm">
+        <form @submit.prevent="submitForm">
           <div class="form-main-content">
-            <label for="firstname">{{ getLang().form_firstname }}</label>
-            <input type="text" id="firstname" name="firstname" placeholder="Firstname" v-model="$store.state.userToEdit.visibleColumns[0]" required>
 
-            <label for="lastname">{{ getLang().form_lastname }}</label>
-            <input type="text" id="lastname" name="lastname" placeholder="Lastname" v-model="$store.state.userToEdit.visibleColumns[1]" required>
+            <div>
+              <label for="name">Nom du stand</label>
+              <div v-if="editStand">
+                <input type="text" id="name" name="name" placeholder="Startup name" v-model="editStand.name" required>
+              </div>
+            </div>
 
-            <label for="email">{{ getLang().form_email }}</label>
-            <input type="email" id="email" name="email" placeholder="Email" v-model="$store.state.userToEdit.visibleColumns[2]" required>
+            <label id="location" name="location">{{getLang().crud_stands_location}}</label>
+            <select required v-model="editStand.id_location">
+              <option id="location" name="location" v-for="loc in locations" :key="loc.id_location" :value="loc.id_location">{{ loc.code }}</option>
+            </select>
 
-            <label for="password">{{ getLang().form_password }}</label>
-            <input type="password" id="password" name="password" :placeholder="getLang().form_password" v-model="editUser.password">
+            <label id="location" name="location">{{getLang().crud_stands_provider}}</label>
+            <select required v-model="editStand.id_provider">
+              <option id="location" name="location" v-for="pr in providers" :key="pr.id_provider" :value="pr.id_provider">{{ pr.name }}</option>
+            </select>
 
-            <label for="confirm-password">{{ getLang().form_confirm_password }}</label>
-            <input type="password" id="confirm-password" name="confirm-password" :placeholder="getLang().form_confirm_password" v-model="editUser.confirmPassword">
+            <label id="location" name="location">Stand type</label>
+            <select required v-model="editStand.id_stand_type">
+              <option id="location" name="location" v-for="type in standTypes" :key="type.id_stand_type" :value="type.id_stand_type">{{ type.name }}</option>
+            </select>
 
-            <p class="show-password">
-              <input type="checkbox" id="show-password" @click="toggleShowPassword">
-              <label for="show-password">{{ getLang().form_show_password }}</label>
-            </p>
+            <div class="descriptions">
+              <div>
+                <label for="story">Description française</label>
+                <textarea id="story" v-model="editStand.description_fr" name="story" rows="5" cols="33" required>Decription française</textarea>
+              </div>
+              <div>
+                <label for="story">Description anglaise</label>
+                <textarea id="story" v-model="editStand.description_en" name="story" rows="5" cols="33" required>Decription anglaise</textarea>
+              </div>
+            </div>
           </div>
 
-          <div class="buttons">
-            <div class="submit-btn">
-              <button type="submit">{{ getLang().btn_edit }}</button>
-            </div>
+          <div class="submit-btn">
+            <button type="submit">{{getLang().btn_add}}</button>
           </div>
         </form>
       </div>
@@ -47,27 +59,36 @@
 </template>
 
 <script>
-
-import {usersService} from "@/services";
-
+import {providersService, standsService} from "@/services";
+import {mapActions, mapState} from "vuex";
 export default {
-  name: 'RemoveStandPopup',
+  name: 'EditStandPopup',
   data() {
     return {
-      editUser: {
-        id: '',
-        first_name: '',
-        last_name: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
+      editStand: {
+        id_location: '',
+        id_provider: '',
+        id_stand_type: '',
+        name: '',
+        description_en: '',
+        description_fr: ''
       },
-      passwordMatch: false,
-      message: null,
+      locations: [],
+      providers: [],
+      message: null
     }
   },
-  created() {
-
+  watch: {
+    standToEdit: {
+      immediate: true,
+      handler(newValue) {
+        if (newValue) {
+          this.editStand = JSON.parse(JSON.stringify(newValue));
+          this.getLocations();
+          this.getProviders();
+        }
+      }
+    }
   },
   props: {
     typeTitle: {
@@ -76,62 +97,71 @@ export default {
     }
   },
   computed: {
+    ...mapState(['standTypes', 'standToEdit']),
     showPopup() {
-      return this.$store.state.showEditUserPopup;
+      return this.$store.state.showEditStandPopup;
     }
   },
   methods: {
+    ...mapActions(['fetchStandTypes', 'updateStandList']),
     closePopup() {
-      this.$store.commit("setShowEditUserPopup", false);
+      this.$store.commit("setShowEditStandPopup", false);
     },
-    toggleShowPassword() {
-      const passwordInput = document.getElementById("password");
-      const cpasswordInput = document.getElementById("confirm-password");
+    clearAddStand() {
+      this.editStand.id_location = '',
+      this.editStand.id_provider = '',
+      this.editStand.id_stand_type = '',
+      this.editStand.name = '',
+      this.editStand.description_en = '',
+      this.editStand.description_fr = ''
+    },
+    async submitForm() {
+      this.editStand.id_location = this.editStand.id_location.toString();
+      this.editStand.id_provider = this.editStand.id_provider.toString();
+      this.editStand.id_stand_type = this.editStand.id_stand_type.toString();
+      this.editStand.name = this.editStand.name.toString();
 
-      if(passwordInput.type === "password") {
-        passwordInput.type = "text";
-      } else {
-        passwordInput.type = "password";
-      }
-      if(cpasswordInput.type === "password") {
-        cpasswordInput.type = "text";
-      } else {
-        cpasswordInput.type = "password";
+      const res = await standsService.updateStandById(this.editStand);
+
+      if(res) {
+        this.clearAddStand()
+        this.closePopup();
+
+        await this.updateStandList();
       }
     },
-    submitForm() {
-      this.editUser.id = this.$store.state.userToEdit.uuid_user;
-      this.editUser.first_name = this.$store.state.userToEdit.visibleColumns[0];
-      this.editUser.last_name = this.$store.state.userToEdit.visibleColumns[1];
-      this.editUser.email = this.$store.state.userToEdit.visibleColumns[2];
-
-      if (this.editUser.password === this.editUser.confirmPassword) {
-        if(this.editUser.password == null || this.editUser.password === '') {
-          this.editUser.password = this.$store.state.userToEdit.password;
+    async getLocations() {
+      try {
+        const res = await standsService.getAllLocations();
+        if (Array.isArray(res)) {
+          let locationNoStand = [];
+          for (const item of res) {
+            if (item.stand?.id_stand === this.standToEdit?.id_stand) {
+              locationNoStand.push(item);
+            } else if (item.stand === null && item.code[0] !== 'S') {
+              locationNoStand.push(item);
+            }
+          }
+          this.locations = JSON.parse(JSON.stringify(locationNoStand));
         }
-        else {
-          this.editUser.password = usersService.hashPassword(this.editUser.password);
-        }
-        usersService.editUser(this.editUser)
-            .then(async res => {
-              this.message = res.data;
-              this.closePopup();
-
-              const updatedUserList = await usersService.getAllUser();
-              await this.$store.dispatch('updateUserList', updatedUserList);
-            })
-            .catch(err => {
-              console.error(err);
-              this.message = err ? err : "Erreur lors de l'edit.";
-            });
+      } catch (error) {
+        console.error('Error fetching locations:', error);
       }
-      else {
-        this.message = "Passwords dosn't matchs.";
+    },
+    async getProviders() {
+      try {
+        const res = await providersService.getAllProvider();
+        this.providers = res.data;
+      } catch(error) {
+        console.error(error);
       }
-      this.editUser.password = '';
-      this.editUser.confirmPassword = '';
     },
   },
+  mounted() {
+    this.getLocations();
+    this.getProviders();
+    this.fetchStandTypes();
+  }
 };
 
 </script>
@@ -143,7 +173,7 @@ export default {
   border: 1px solid var(--background);
   background-color: var(--white);
   z-index: 999;
-  height: 550px;
+  height: 600px;
   width: 400px;
   top: 50%;
   left: 50%;
@@ -158,7 +188,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 3px 10px;
-  background-color: var(--crud-bleu);
+  background-color: var(--crud-vert);
   border-radius: 17px 17px 0 0;
   height: 10%;
   color: var(--white);
@@ -185,6 +215,41 @@ export default {
   width: 100%;
   text-align: center;
   padding-top: 10px;
+}
+
+.close-container {
+  display: flex;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+.leftright {
+  height: 4px;
+  width: 35px;
+  position: absolute;
+  background-color: var(--scnd2);
+  border-radius: 2px;
+  transform: rotate(45deg);
+  transition: all .3s ease-in;
+}
+
+.rightleft {
+  height: 4px;
+  width: 35px;
+  position: absolute;
+  background-color: var(--scnd3);
+  border-radius: 2px;
+  transform: rotate(-45deg);
+  transition: all .3s ease-in;
+}
+
+.close-container:hover .leftright {
+  transform: rotate(-45deg);
+}
+.close-container:hover .rightleft {
+  transform: rotate(45deg);
 }
 
 .form-main-content {
@@ -230,7 +295,7 @@ input[type="password"] {
 
 button {
   padding: 10px 20px;
-  background-color: var(--crud-bleu);
+  background-color: var(--btn-green);
   color: var(--white);
   border: none;
   border-radius: 4px;
@@ -239,7 +304,7 @@ button {
 }
 
 button:hover {
-  background-color: rgb(0, 82, 159);
+  background-color: var(--btn-green-hover);
 }
 
 .submit-btn {
@@ -265,40 +330,12 @@ button:hover {
   margin: 0 10px 20px 10px;
 }
 
-
-.close-container {
-  display: flex;
-  align-items: center;
-  width: 35px;
-  height: 35px;
-  cursor: pointer;
+#name {
+  width: 100%;
 }
 
-.leftright {
-  height: 4px;
-  width: 35px;
-  position: absolute;
-  background-color: var(--scnd2);
-  border-radius: 2px;
-  transform: rotate(45deg);
-  transition: all .3s ease-in;
-}
-
-.rightleft {
-  height: 4px;
-  width: 35px;
-  position: absolute;
-  background-color: var(--scnd3);
-  border-radius: 2px;
-  transform: rotate(-45deg);
-  transition: all .3s ease-in;
-}
-
-.close-container:hover .leftright {
-  transform: rotate(-45deg);
-}
-.close-container:hover .rightleft {
-  transform: rotate(45deg);
+#story {
+  width: 100%;
 }
 
 </style>

@@ -14,15 +14,37 @@
       <div class="content">
         <form @submit.prevent="submitForm">
           <div class="form-main-content">
+
+            <div>
+              <label for="name">Nom du stand</label>
+              <input type="text" id="name" name="name" placeholder="Startup name" v-model="addStand.name" required>
+            </div>
+
             <label id="location" name="location">{{getLang().crud_stands_location}}</label>
-            <select required>
-              <option id="location" name="location" v-for="loc in locations" :key="loc.id" :value="loc.code">{{ loc.code }}</option>
+            <select required v-model="addStand.id_location">
+              <option id="location" name="location" v-for="loc in locations" :key="loc.id_location" :value="loc.id_location">{{ loc.code }}</option>
             </select>
 
             <label id="location" name="location">{{getLang().crud_stands_provider}}</label>
-            <select required>
-              <option id="location" name="location" v-for="pr in providers" :key="pr.id_provider" :value="pr.id_provider">{{ pr.first_name }}{{ pr.last_name }}</option>
+            <select required v-model="addStand.id_provider">
+              <option id="location" name="location" v-for="pr in providers" :key="pr.id_provider" :value="pr.id_provider">{{ pr.name }}</option>
             </select>
+
+            <label id="location" name="location">Stand type</label>
+            <select required v-model="addStand.id_stand_type">
+              <option id="location" name="location" v-for="type in standTypes" :key="type.id_stand_type" :value="type.id_stand_type">{{ type.name }}</option>
+            </select>
+
+            <div class="descriptions">
+              <div>
+                <label for="story">Description française</label>
+                <textarea id="story" v-model="addStand.description_fr" name="story" rows="5" cols="33" required>Decription française</textarea>
+              </div>
+              <div>
+                <label for="story">Description anglaise</label>
+                <textarea id="story" v-model="addStand.description_en" name="story" rows="5" cols="33" required>Decription anglaise</textarea>
+              </div>
+            </div>
           </div>
 
           <div class="submit-btn">
@@ -36,6 +58,7 @@
 
 <script>
 import {providersService, standsService} from "@/services";
+import {mapActions, mapState} from "vuex";
 
 export default {
   name: 'AddStandPopup',
@@ -61,13 +84,15 @@ export default {
     }
   },
   computed: {
+    ...mapState(['standTypes', 'showAddStandPopup']),
     showPopup() {
-      return this.$store.state.showAddUserPopup;
+      return this.showAddStandPopup;
     }
   },
   methods: {
+    ...mapActions(['fetchStandTypes', 'updateStandList']),
     closePopup() {
-      this.$store.commit("setShowAddUserPopup", false);
+      this.$store.commit("setShowAddStandPopup", false);
     },
     clearAddStand() {
       this.addStand.id_location = '',
@@ -77,21 +102,20 @@ export default {
       this.addStand.description_en = '',
       this.addStand.description_fr = ''
     },
-    submitForm() {
-      standsService.addStand(this.addStand)
-          .then(async res => {
-            this.message = res.data;
+    async submitForm() {
+      this.addStand.id_location = this.addStand.id_location.toString();
+      this.addStand.id_provider = this.addStand.id_provider.toString();
+      this.addStand.id_stand_type = this.addStand.id_stand_type.toString();
 
-            this.clearAddStand()
-            this.closePopup();
+      const res = await standsService.addStand(this.addStand);
+      console.log(res);
 
-            const updatedStandList = await standsService.getAllStands();
-            await this.$store.dispatch('updateStandList', updatedStandList);
-          })
-          .catch(err => {
-            console.error(err);
-            this.message = err ? err : "Erreur lors de l'ajout.";
-          });
+      if(res) {
+        this.clearAddStand()
+        this.closePopup();
+
+        await this.updateStandList();
+      }
     },
     async getLocations() {
       try {
@@ -99,7 +123,9 @@ export default {
           let locationNoStand = [];
           for(const item in res) {
             if(res[item].stand === null) {
-              locationNoStand.push(res[item]);
+              if(res[item].code[0] !== 'S') {
+                locationNoStand.push(res[item]);
+              }
             }
           }
           this.locations = locationNoStand;
@@ -110,15 +136,8 @@ export default {
     },
     async getProviders() {
       try {
-        await providersService.getAllProvider().then((res) => {
-          let providerStands = [];
-          for(const item in res) {
-            if(res[item].stand_ids === null) {
-              providerStands.push(res[item]);
-            }
-          }
-          this.providers = providerStands;
-        });
+        const res = await providersService.getAllProvider();
+        this.providers = res.data;
       } catch(error) {
         console.error(error);
       }
@@ -126,6 +145,8 @@ export default {
   },
   mounted() {
     this.getLocations();
+    this.getProviders();
+    this.fetchStandTypes();
   }
 };
 
@@ -138,7 +159,7 @@ export default {
   border: 1px solid var(--background);
   background-color: var(--white);
   z-index: 999;
-  height: 550px;
+  height: 600px;
   width: 400px;
   top: 50%;
   left: 50%;
@@ -293,6 +314,14 @@ button:hover {
   justify-content: center;
   align-items: center;
   margin: 0 10px 20px 10px;
+}
+
+#name {
+  width: 100%;
+}
+
+#story {
+  width: 100%;
 }
 
 </style>

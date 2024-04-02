@@ -43,8 +43,12 @@ export default new Vuex.Store({
         showEditProviderPopup: false,
         showLinkedStandsPopup: false,
 
+        standTypes: null,
         standToEdit: null,
+        showAddStandPopup: false,
+        showRemoveStandPopup: false,
         showEditStandPopup: false,
+        standProducts: {},
 
         articleToEdit: null,
         articleToRemove: null,
@@ -141,6 +145,15 @@ export default new Vuex.Store({
       },
 
       // Stands
+      addStandsProduct(state, {id_stand, length}) {
+          Vue.set(state.standProducts, id_stand, length);
+      },
+      removeStandsProduct(state, {id_stand}) {
+          Vue.delete(state.standProducts, id_stand);
+      },
+      setShowAddStandPopup(state, value) {
+          state.showAddStandPopup = value;
+      },
       setStandList(state, standList) {
           state.stands = standList;
       },
@@ -150,11 +163,17 @@ export default new Vuex.Store({
       setShowEditStandPopup(state, value) {
           state.showEditStandPopup = value;
       },
+      setShowRemoveStandPopup(state, value) {
+          state.showRemoveStandPopup = value;
+      },
       setStandIdToRemove(state, value) {
           state.standIdToRemove = value;
       },
       setRealStandlist(state, value) {
           state.realStandList = value;
+      },
+      setStandTypes(state, value) {
+          state.standTypes = value;
       },
 
       // Lang
@@ -224,8 +243,8 @@ export default new Vuex.Store({
         },
         async updateStandList({commit}) {
             try {
-                const standList = await standsService.getProvider();
-                commit('setStandList', standList.data);
+                const standList = await standsService.getAllStands();
+                commit('setStandList', standList);
             } catch (err) {
                 console.log(err);
             }
@@ -236,6 +255,21 @@ export default new Vuex.Store({
                 commit('setRealStandlist', realstandList.data);
             } catch (err) {
                 console.log(err);
+            }
+        },
+        async fetchStandTypes({commit}) {
+            try {
+                const standTypes = await standsService.getStandsTypes();
+                commit('setStandTypes', standTypes);
+            } catch(err) {
+                console.error(err);
+            }
+        },
+        async getProductOfStand(context, stand) {
+            try {
+                return await standsService.getStandsProducts(stand.stand_id);
+            } catch(err) {
+                console.error(err);
             }
         }
     },
