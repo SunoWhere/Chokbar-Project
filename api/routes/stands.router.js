@@ -26,6 +26,25 @@ router.get("/", standsController.getStands)
 
 /**
  * @swagger
+ * /api/stands/types:
+ *   get:
+ *     tags:
+ *       - Stands
+ *     summary: Get all stand types
+ *     description: Endpoint for retrieving all stand types.
+ *     responses:
+ *       200:
+ *         description: A list of stand types.
+ *       404:
+ *         description: No stands types found.
+ *       500:
+ *         description: Internal Server Error.
+ */
+
+router.get("/types/", standsController.getStandTypes)
+
+/**
+ * @swagger
  * /api/stands/{id}:
  *   get:
  *     tags:

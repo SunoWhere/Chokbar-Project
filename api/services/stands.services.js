@@ -208,12 +208,22 @@ exports.getStands = async () => {
         throw err
     }
 }
-
 exports.addStandImage = async (file, id) => {
     try {
         const image = await imagesServices.addImage(file)
         let id_image = image.dataValues.id_image
         await StandsImagesModel.create({id_event: id, id_image: id_image})
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+}
+exports.getStandTypes = async () => {
+    try {
+        const data = await StandType.findAll()
+        if (data.length === 0)
+            throw new CustomError("No stand types found", 404)
+        return data
     } catch (err) {
         console.log(err)
         throw err

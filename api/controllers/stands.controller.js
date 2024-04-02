@@ -121,7 +121,13 @@ exports.getStands = async (req, res) => {
         return res.status(err.errorCode || 500).send(err.message)
     }
 }
-
+exports.getStandTypes = async (req, res) => {
+    try {
+        return res.status(200).send(await standsServices.getStandTypes())
+    } catch (err) {
+        return res.status(err.errorCode || 500).send(err.message)
+    }
+}
 exports.addStandImage = async (req, res) => {
     try {
         await standsServices.addStandImage(req.files, req.params.id)
