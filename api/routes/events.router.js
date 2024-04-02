@@ -143,6 +143,45 @@ router.post("/:id/images", eventsMiddleware.validateEventId, imagesMiddleware.va
 
 /**
  * @swagger
+ * /api/events/{id}/register:
+ *   post:
+ *     tags:
+ *       - Events
+ *     summary: Register a user to an event
+ *     description: Endpoint for registering a user to a specified event by providing a user UUID in the request body.
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: The ID of the event to register the user to.
+ *         type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - uuid_user
+ *             properties:
+ *               uuid_user:
+ *                 type: string
+ *                 format: uuid
+ *                 description: The UUID of the user to register for the event.
+ *     responses:
+ *       200:
+ *         description: User successfully registered to the event.
+ *       400:
+ *         description: Invalid event ID or user UUID.
+ *       404:
+ *         description: Event not found.
+ *       500:
+ *         description: Internal Server Error.
+ */
+router.post("/:id/register", eventsMiddleware.validateEventId, eventsController.registerToEventById)
+
+/**
+ * @swagger
  * /api/events/{id}:
  *   put:
  *     tags:
@@ -227,5 +266,44 @@ router.put("/:id", eventsMiddleware.validateEventId, eventsMiddleware.validateEv
  *         description: Internal Server Error.
  */
 router.delete("/:id", eventsMiddleware.validateEventId, eventsController.deleteEvent)
+
+/**
+ * @swagger
+ * /api/events/{id}/unregister:
+ *   post:
+ *     tags:
+ *       - Events
+ *     summary: Unregister a user from an event
+ *     description: Endpoint for unregistering a user from a specified event by providing a user UUID in the request body.
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: The ID of the event to unregister the user from.
+ *         type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - uuid_user
+ *             properties:
+ *               uuid_user:
+ *                 type: string
+ *                 format: uuid
+ *                 description: The UUID of the user to unregister from the event.
+ *     responses:
+ *       200:
+ *         description: User successfully unregistered from the event.
+ *       400:
+ *         description: Invalid event ID or user UUID.
+ *       404:
+ *         description: Event not found.
+ *       500:
+ *         description: Internal Server Error.
+ */
+router.delete("/:id/unregister", eventsMiddleware.validateEventId, eventsController.unregisterToEventById)
 
 module.exports = router

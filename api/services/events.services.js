@@ -2,8 +2,68 @@ const EventsModel = require("../database/DB.connection").DB_models.events
 const LocationsModel = require("../database/DB.connection").DB_models.locations
 const ImagesModel = require("../database/DB.connection").DB_models.images
 const EventsImagesModel = require("../database/DB.connection").DB_models.events_images
+const UserModel = require("../database/DB.connection").DB_models.users
+const Entries = require("../database/DB.connection").DB_models.entries
 const imagesServices = require("../services/images.services")
 const CustomError = require("../utils/CustomError")
+
+exports.unregisterToEventById = async (id_event, uuid_user) => {
+    try {
+        //     TODO : delete in entries : une désinscription pour un events
+        return await Entries.destroy({
+            id_event: id_event,
+            uuid_user: uuid_user
+        })
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+};
+exports.registerToEventById = async (id_event, uuid_user) => {
+    try {
+        //     TODO : save in entries : une inscription pour un events
+        const event = await EventsModel.findOne({
+            attributes: {exclude: ['id_location']},
+            include: [
+                {model: LocationsModel, as: "id_location_location"},
+                {model: ImagesModel, as: "id_image_images"},
+            ],
+            where: {
+                id_event: id_event
+            }
+        })
+        if (!event) {
+            throw new CustomError("Event Not Found", 404)
+        }
+
+        const user = await UserModel.findOne({
+            attributes: ["uuid_user", "first_name", "last_name", "email", "password", "id_role"],
+            where: {
+                uuid_user: uuid_user
+            }
+        })
+        if (!user) {
+            throw new CustomError("User Not Found", 404)
+        }
+
+        const nbOfEntries = Entries.count({
+            where: {
+                id_event: id_event
+            }
+        })
+
+        if (nbOfEntries < event.max_capacity)
+            return await Entries.create({
+                id_event,
+                uuid_user
+            })
+        else
+            throw new CustomError("Max Capacity reached", 204)
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+};
 
 exports.getEvents = async () => {
     try {
