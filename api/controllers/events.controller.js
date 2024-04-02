@@ -1,5 +1,23 @@
 const eventsServices = require("../services/events.services")
 
+exports.unregisterToEventById = async (req, res) => {
+    try {
+        const id_event = req.params.id
+        const uuid_user = req.body.uuid_user
+        return res.status(200).send(await eventsServices.unregisterToEventById(id_event, uuid_user))
+    } catch (err) {
+        return res.status(err.errorCode || 500).send(err.message)
+    }
+};
+exports.registerToEventById = async (req, res) => {
+    try {
+        const id_event = req.params.id
+        const uuid_user = req.body.uuid_user
+        return res.status(200).send(await eventsServices.registerToEventById(id_event, uuid_user))
+    } catch (err) {
+        return res.status(err.errorCode || 500).send(err.message)
+    }
+}
 exports.getEvents = async (req, res) => {
     try {
         return res.status(200).send(await eventsServices.getEvents())
