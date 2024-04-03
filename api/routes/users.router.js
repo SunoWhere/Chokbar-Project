@@ -179,6 +179,30 @@ router.get("/:uuid/tickets", usersController.getTicketsByUserId)
 
 /**
  * @swagger
+ * /api/users/{uuid}/events:
+ *   get:
+ *     tags:
+ *       - Users
+ *     summary: Get events in which user is registered
+ *     description: Endpoint for retrieving all events in which user is registered.
+ *     parameters:
+ *       - name: uuid
+ *         in: path
+ *         required: true
+ *         description: The UUID of the user whose tickets are to be retrieved.
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: A list of events in which user is registered.
+ *       404:
+ *         description: User not found or No tickets found.
+ *       500:
+ *         description: Internal Server Error.
+ */
+router.get("/:uuid/events", usersController.getEventsByUserId)
+
+/**
+ * @swagger
  * /api/users/{uuid}/orders:
  *   get:
  *     tags:

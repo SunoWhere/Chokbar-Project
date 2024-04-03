@@ -3,14 +3,14 @@ const LocationsModel = require("../database/DB.connection").DB_models.locations
 const ImagesModel = require("../database/DB.connection").DB_models.images
 const EventsImagesModel = require("../database/DB.connection").DB_models.events_images
 const UserModel = require("../database/DB.connection").DB_models.users
-const Entries = require("../database/DB.connection").DB_models.entries
+const EntriesModel = require("../database/DB.connection").DB_models.entries
 const imagesServices = require("../services/images.services")
 const CustomError = require("../utils/CustomError")
 
 exports.unregisterToEventById = async (id_event, uuid_user) => {
     try {
         //     TODO : delete in entries : une désinscription pour un events
-        return await Entries.destroy({
+        return await EntriesModel.destroy({
             where: {
                 id_event: id_event,
                 uuid_user: uuid_user
@@ -48,16 +48,26 @@ exports.registerToEventById = async (id_event, uuid_user) => {
             throw new CustomError("User Not Found", 404)
         }
 
-        const nbOfEntries = await Entries.count({
+        const previousEntry = await EntriesModel.findOne({
+            where: {
+                id_event: id_event,
+                uuid_user: uuid_user
+            }
+        })
+
+        if (previousEntry)
+            throw new CustomError("User is already register for this event", 204)
+
+        const nbOfEntries = await EntriesModel.count({
             where: {
                 id_event: id_event
             }
         })
 
         if (nbOfEntries < event.max_capacity)
-            return await Entries.create({
-                id_event,
-                uuid_user
+            return await EntriesModel.create({
+                id_event: id_event,
+                uuid_user: uuid_user
             })
         else
             throw new CustomError("Max Capacity reached", 204)

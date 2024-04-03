@@ -8,8 +8,25 @@ const OrdersModel = require("../database/DB.connection").DB_models.orders
 const OrderStatesModel = require("../database/DB.connection").DB_models.order_states
 const OrderLinesModel = require("../database/DB.connection").DB_models.order_lines
 const TicketsModel = require("../database/DB.connection").DB_models.tickets
+const EntriesModel = require("../database/DB.connection").DB_models.entries
 const {sequelize} = require('../database/DB.connection');
 
+exports.getEventsByUserId = async (uuid) => {
+    try {
+        const entries = await EntriesModel.findAll({
+            where: {
+                uuid_user: uuid
+            }
+        })
+        if (!entries)
+            throw new CustomError("No Entries Found", 404)
+        else
+            return entries.map(entry => entry.id_event)
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+};
 exports.getTicketsByUserId = async (uuid) => {
     try {
         const user = await UserModel.findOne({
