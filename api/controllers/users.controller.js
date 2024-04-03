@@ -5,6 +5,17 @@ function generateAccessToken(uuid) {
     return jwt.sign({uuid}, process.env.TOKEN_SECRET, { expiresIn: '900s' });
 }
 
+exports.getEventsByUserId = async (req, res) => {
+    try {
+        const events = await usersServices.getEventsByUserId(req.params.uuid)
+        if (events.length === 0)
+            return res.status(404).send("No events found.")
+        else
+            return res.status(200).send(events)
+    } catch (err) {
+        return res.status(err.errorCode || 500).send(err.message)
+    }
+};
 exports.getTicketsByUserId = async (req, res) => {
     try {
         const tickets = await usersServices.getTicketsByUserId(req.params.uuid)
