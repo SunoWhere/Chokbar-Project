@@ -271,7 +271,7 @@ const store = new Vuex.Store({
             } catch(err) {
                 console.error(err);
             }
-        }
+        },
     },
     modules: {
 

@@ -1,9 +1,9 @@
 <template>
   <div id="dashboard-content-container">
     <div id="cards">
-      <InfosCard :number="2500" :text="getLang().dashboard_admin_total_users" data-type="user"/>
-      <InfosCard :number="60" :text="getLang().dashboard_admin_total_providers" data-type="user"/>
-      <InfosCard :number="1645" :text="getLang().dashboard_admin_total_products" data-type="product"/>
+      <InfosCard :number="totalUsers" :text="getLang().dashboard_admin_total_users" data-type="user"/>
+      <InfosCard :number="totalProviders" :text="getLang().dashboard_admin_total_providers" data-type="user"/>
+      <InfosCard :number="totalProducts" :text="getLang().dashboard_admin_total_products" data-type="product"/>
     </div>
     <div id="charts">
       <div id="first-chart">
@@ -34,6 +34,7 @@ import { Bar } from 'vue-chartjs'
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 import InfosCard from "@/components/Admin/InfosDashboardCard.vue";
+import {statsService} from "@/services";
 
 export default {
   name: 'DashboardContent',
@@ -51,10 +52,50 @@ export default {
       options: {
         responsive: true
       },
+      totalUsers: '',
+      totalProviders: '',
+      totalProducts: '',
     }
   },
   methods: {
-  }
+    async fetchTotalUsers() {
+      try {
+        const usersCount = await statsService.getTotalUsers();
+        this.totalUsers = usersCount.users_total;
+      } catch (error) {
+        console.error("Erreur lors de la récupération du nombre total d'utilisateurs: ", error);
+        this.totalUsers = 'Erreur';
+      }
+    },
+    async fetchTotalProviders() {
+      try {
+        const providersCount = await statsService.getTotalProviders();
+        this.totalProviders = providersCount.providers_total;
+      } catch (error) {
+        console.error("Erreur lors de la récupération du nombre total d'utilisateurs: ", error);
+        this.totalProviders = 'Erreur';
+      }
+    },async fetchTotalProductsSales() {
+      try {
+        const productsCount = await statsService.getTotalProductsSales();
+        if(productsCount.length === 0) {
+          this.totalProducts = '0';
+        }
+        else {
+          this.totalProducts = productsCount.products_total;
+        }
+        console.log(this.totalProducts)
+      } catch (error) {
+        console.error("Erreur lors de la récupération du nombre total d'utilisateurs: ", error);
+        this.totalProducts = 'Erreur';
+      }
+    },
+  },
+  mounted() {
+    this.fetchTotalUsers();
+    this.fetchTotalProviders();
+    this.fetchTotalProductsSales();
+  },
 };
 
 

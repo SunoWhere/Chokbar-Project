@@ -6,33 +6,60 @@
 
 <script>
 import Chart from 'chart.js/auto';
+import {statsService} from "@/services";
 
 export default {
-  mounted() {
-    this.renderPieChart();
+  data() {
+    return {
+      chartData: null,
+      chart: null,
+    }
   },
   methods: {
-    renderPieChart() {
-      const ctx = this.$refs.pieChart.getContext('2d');
-      new Chart(ctx, {
-        type: 'pie',
-        data: {
-          labels: ['Label 1', 'Label 2', 'Label 3'],
+    async fetchTicketSales() {
+      try {
+        const response = await statsService.getTicketSales();
+        const labels = response.map(item => item.name);
+        const data = response.map(item => parseInt(item.tickets_total));
+
+        this.chartData = {
+          labels: labels,
           datasets: [{
-            data: [30, 50, 20],
+            data: data,
             backgroundColor: ['red', 'green', 'blue'],
           }],
-        },
+        };
+        this.updateChart();
+      } catch (error) {
+        console.error("Erreur lors de la récupération des ventes de tickets: ", error);
+      }
+    },
+    renderPieChart() {
+      const ctx = this.$refs.pieChart.getContext('2d');
+      this.chart = new Chart(ctx, {
+        type: 'pie',
+        data: this.chartData,
         options: {
           responsive: true,
           maintainAspectRatio: false,
         },
       });
     },
+    updateChart() {
+      if (this.chart) {
+        this.chart.data = this.chartData;
+        this.chart.update();
+      } else {
+        this.renderPieChart();
+      }
+    }
+  },
+  async mounted() {
+    await this.fetchTicketSales();
   },
 };
 </script>
 
 <style>
-/* Ajoutez vos styles ici si nécessaire */
+
 </style>

@@ -1,7 +1,7 @@
 <script>
 
 import {mapActions, mapMutations, mapState} from "vuex";
-import {standsService} from "@/services";
+import {providersService, standsService} from "@/services";
 
 export default {
   name: 'StandsCrudTable',
@@ -10,6 +10,7 @@ export default {
   },
   data() {
     return {
+      providers: {},
     }
   },
   watch: {
@@ -36,7 +37,6 @@ export default {
       this.$store.commit("setShowRemoveStandPopup", true);
     },
     openEditPopup(stand) {
-      console.log('stand : ' + stand)
       this.$store.commit("setStandToEdit", stand);
       this.$store.commit("setShowEditStandPopup", true);
     },
@@ -51,10 +51,23 @@ export default {
         }
       }
     },
+    async loadProviders() {
+      try {
+        const response = await providersService.getAllProvider();
+        const providersData = response.data;
+        this.providers = providersData.reduce((acc, provider) => {
+          acc[provider.id_provider] = provider.name;
+          return acc;
+        }, {});
+      } catch (error) {
+        console.error("Erreur lors de la récupération des fournisseurs: ", error);
+      }
+    },
   },
   mounted() {
     this.updateStandList();
     this.loadStandProducts();
+    this.loadProviders();
   }
 };
 </script>
@@ -82,7 +95,7 @@ export default {
           <tr v-for="(item, index) in stands" :key="index">
             <td>{{item.id_stand}}</td>
             <td>{{item.name}}</td>
-            <td>{{item.id_provider}}</td>
+            <td>{{ providers[item.id_provider] || 'Inconnu' }}</td>
             <td>{{ item.id_location_location.code }}</td>
             <td>{{ standProducts[item.id_stand] }}</td>
             <td>
