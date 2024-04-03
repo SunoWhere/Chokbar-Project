@@ -114,7 +114,7 @@ router.get("/:id", standsMiddleware.validateId, standsController.getStandById)
  *       500:
  *         description: Internal Server Error.
  */
-router.post("/", standsMiddleware.validateStandInput, standsController.saveStand)
+router.post("/", standsController.saveStand)
 
 /**
  * @swagger
@@ -172,7 +172,7 @@ router.post("/", standsMiddleware.validateStandInput, standsController.saveStand
  *       500:
  *         description: Internal Server Error.
  */
-router.put("/:id", standsMiddleware.validateId, standsMiddleware.validateStandInput, standsController.updateStandById)
+router.put("/:id", standsMiddleware.validateId, standsController.updateStandById)
 
 /**
  * @swagger
