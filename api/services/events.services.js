@@ -11,8 +11,10 @@ exports.unregisterToEventById = async (id_event, uuid_user) => {
     try {
         //     TODO : delete in entries : une désinscription pour un events
         return await Entries.destroy({
-            id_event: id_event,
-            uuid_user: uuid_user
+            where: {
+                id_event: id_event,
+                uuid_user: uuid_user
+            }
         })
     } catch (err) {
         console.log(err)
