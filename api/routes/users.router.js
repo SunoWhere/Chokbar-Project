@@ -193,7 +193,7 @@ router.get("/:uuid/tickets", usersController.getTicketsByUserId)
  *         type: string
  *     responses:
  *       200:
- *         description: A list of events in which user is registered.   
+ *         description: A list of events in which user is registered.
  *       404:
  *         description: User not found or No tickets found.
  *       500:

@@ -48,6 +48,16 @@ exports.registerToEventById = async (id_event, uuid_user) => {
             throw new CustomError("User Not Found", 404)
         }
 
+        const previousEntry = await EntriesModel.findOne({
+            where: {
+                id_event: id_event,
+                uuid_user: uuid_user
+            }
+        })
+
+        if (previousEntry)
+            throw new CustomError("User is already register for this event", 204)
+
         const nbOfEntries = await EntriesModel.count({
             where: {
                 id_event: id_event
@@ -56,8 +66,8 @@ exports.registerToEventById = async (id_event, uuid_user) => {
 
         if (nbOfEntries < event.max_capacity)
             return await EntriesModel.create({
-                id_event,
-                uuid_user
+                id_event: id_event,
+                uuid_user: uuid_user
             })
         else
             throw new CustomError("Max Capacity reached", 204)
