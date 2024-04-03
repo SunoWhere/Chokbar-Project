@@ -22,6 +22,9 @@ import CartCheckoutView from "@/views/Global/Checkout/CartCheckoutView.vue";
 import UserOrdersView from "@/views/Client/UserOrdersView.vue";
 import ContactView from "@/views/Global/ContactFormView.vue";
 
+import store from '@/store';
+import {authService} from "@/services";
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -29,36 +32,6 @@ const routes = [
     path: '/',
     name: 'Home',
     component: HomeView
-  },
-  {
-    path: '/Billetterie',
-    name: 'Billetterie',
-    component: BilletterieView
-  },
-  {
-    path: '/Dashboard',
-    name: 'Dashboard',
-    component: DashboardView
-  },
-  {
-    path: '/Cart',
-    name: 'Cart',
-    component: CartView
-  },
-  {
-    path: '/Admin/Intervenants',
-    name: 'CrudProviders',
-    component: CrudProvidersView
-  },
-  {
-    path: '/Admin/User',
-    name: 'CrudUsers',
-    component: CrudUsersView
-  },
-  {
-    path: '/Admin/Stands',
-    name: 'CrudStands',
-    component: CrudStandViewAdmin
   },
   {
     path: '/Login',
@@ -71,16 +44,6 @@ const routes = [
     component: RegisterView
   },
   {
-  path: '/Billetterie/checkout',
-  name: 'Checkout',
-  component: CheckoutView
-  },
-  {
-    path: '/cart/checkout',
-    name: 'CheckoutPanier',
-    component: CartCheckoutView
-  },
-  {
     path: '/Boutique',
     name: 'Boutique',
     component: ShopView
@@ -89,11 +52,6 @@ const routes = [
     path: '/Boutique/:id',
     name: 'BoutiqueStand',
     component: ShopStandView
-  },
-  {
-    path: '/Map',
-    name: 'Map',
-    component: InteractiveMapView
   },
   {
     path: '/Infos/Ezcon',
@@ -106,31 +64,88 @@ const routes = [
     component: DatesView
   },
   {
+    path: '/Contact',
+    name: 'Contact',
+    component: ContactView
+  },
+  {
+    path: '/Map',
+    name: 'Map',
+    component: InteractiveMapView,
+  },
+  {
+    path: '/Billetterie',
+    name: 'Billetterie',
+    component: BilletterieView,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/Dashboard',
+    name: 'Dashboard',
+    component: DashboardView,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/Cart',
+    name: 'Cart',
+    component: CartView,
+    meta: { requiresAuth: true }
+  },
+  {
+  path: '/Billetterie/checkout',
+  name: 'Checkout',
+  component: CheckoutView,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/cart/checkout',
+    name: 'CheckoutPanier',
+    component: CartCheckoutView,
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/Billetterie/checkout/creditcard',
     name: 'CreditCard',
-    component: CreditCardView
+    component: CreditCardView,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/Admin/Intervenants',
+    name: 'CrudProviders',
+    component: CrudProvidersView,
+    meta: { requiresAuth: true, roles: ['admin'] }
+  },
+  {
+    path: '/Admin/User',
+    name: 'CrudUsers',
+    component: CrudUsersView,
+    meta: { requiresAuth: true, roles: ['admin'] }
+  },
+  {
+    path: '/Admin/Stands',
+    name: 'CrudStands',
+    component: CrudStandViewAdmin,
+    meta: { requiresAuth: true, roles: ['admin'] }
   },
   {
     path: '/intervenant/stands',
     name: 'CrudStand',
-    component: CrudStandViewProvider
+    component: CrudStandViewProvider,
+    meta: { requiresAuth: true, roles: ['provider'] }
   },
     {
     path: '/intervenant/stands/article',
     name: 'CrudArticle',
     component: CrudArticleStandView,
-    props: true
+    props: true,
+    meta: { requiresAuth: true, roles: ['provider'] }
   },
   {
     path: '/users/orders',
     name: 'Orders',
-    component: UserOrdersView
-  },
-    {
-        path: '/Contact',
-        name: 'Contact',
-        component: ContactView
-    }
+    component: UserOrdersView,
+    meta: { requiresAuth: true, roles: ['user'] }
+  }
 ]
 
 const router = new VueRouter({
@@ -138,5 +153,19 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach(async (to, from, next) => {
+  const isAuthenticated = store.state.isConnected;
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  const hasRequiredRole = to.meta.roles ? to.meta.roles.includes(await authService.getRole()) : true;
+
+  if (!requiresAuth || (isAuthenticated && hasRequiredRole)) {
+    next();
+  } else if (requiresAuth && !isAuthenticated) {
+    next({ name: 'Login' });
+  } else {
+    next({ name: 'Home' });
+  }
+});
 
 export default router

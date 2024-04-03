@@ -1,5 +1,5 @@
 <script>
-import {cartsService, productsService, standsService, usersService} from "@/services";
+import {authService, cartsService, productsService, standsService} from "@/services";
 
 export default {
   name: 'ShopStandView',
@@ -78,7 +78,7 @@ export default {
     },
     async addToCart(item) {
       try {
-        const uuid_user = usersService.getUuid();
+        const uuid_user = authService.getUuid();
         const id = item.id_product;
         let quantity = this.productQuantities[id] || 1;
         if(quantity > item.quantity) quantity = item.quantity;
@@ -96,9 +96,6 @@ export default {
         console.log(error)
       }
     },
-    getRole() {
-      return this.$store.state.role;
-    },
   },
   computed: {
     availableProducts() {
@@ -106,6 +103,9 @@ export default {
     },
     isConnected() {
       return this.$store.state.isConnected;
+    },
+    getRole() {
+      return this.$store.state.role;
     },
   },
   mounted() {
@@ -164,12 +164,12 @@ export default {
             <div class="info-btn">
               <button class="info-button" @click.prevent="">{{ getLang().stands_articles_shop_info }}</button>
             </div>
-            <div class="add-btn" v-if="isConnected && item.quantity !== 0 && getRole().toLowerCase() === 'user'">
+            <div class="add-btn" v-if="isConnected && item.quantity !== 0 && getRole === 'user'">
               <button class="add-button"
                       @click.prevent="addToCart(item)">{{ getLang().stands_articles_shop_cart }}
               </button>
             </div>
-            <div v-if="isConnected && item.quantity !== 0 && getRole().toLowerCase() === 'user'">
+            <div v-if="isConnected && item.quantity !== 0 && getRole === 'user'">
               <input id="number" v-model="productQuantities[item.id_product]" type="number" step="1" min="1" :max="item.quantity"/>
             </div>
           </td>

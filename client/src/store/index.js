@@ -1,18 +1,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {providersService, usersService, eventsService, standsService, lang_fr, lang_en} from "@/services";
+import {providersService, usersService, eventsService, standsService, lang_fr, lang_en, authService} from "@/services";
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
     state: {
         showStandInfo: false,
         showPlanningInfo: false,
         showAddEvent: false,
         showEditEvent: false,
 
-        isConnected: usersService.getUuid() != null,
-        role: usersService.getRole(),
+        isConnected: authService.getUuid() != null,
+        role: await authService.getRole(),
 
         lang_name: "",
         lang: lang_fr,
@@ -277,3 +277,5 @@ export default new Vuex.Store({
 
     }
 });
+
+export default store;

@@ -1,5 +1,5 @@
 <script>
-import {usersService} from '@/services';
+import {authService} from '@/services';
 
 export default {
   name: 'NavBar',
@@ -13,8 +13,7 @@ export default {
       if (this.isConnected()) {
         this.$store.commit('setConnected', false);
 
-        usersService.removeUuid();
-        usersService.removeRole();
+        authService.logout();
 
         if (this.$route.path !== '/') {
           this.$router.push('/');
@@ -25,7 +24,7 @@ export default {
       return this.$store.state.isConnected;
     },
     role() {
-      return usersService.getRole() !== null;
+      return authService.getRole() !== null;
     },
     getRole() {
       return this.$store.state.role;

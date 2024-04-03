@@ -1,5 +1,5 @@
 <script>
-import {usersService} from "@/services";
+import {authService, usersService} from "@/services";
 
 export default {
   name: 'CartCheckoutView',
@@ -13,7 +13,7 @@ export default {
   methods: {
     async createOrder() {
       try {
-        await usersService.createOrder(usersService.getUuid()).then(() => {
+        await usersService.createOrder(authService.getUuid()).then(() => {
           this.$router.push('/users/orders');
         });
       } catch (error) {
