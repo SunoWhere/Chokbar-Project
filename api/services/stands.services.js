@@ -148,7 +148,7 @@ exports.deleteStandById = async (id) => {
 }
 exports.saveStand = async (id_location, id_provider, id_stand_type, name, description_en, description_fr) => {
     try {
-        await StandsModel.create({
+        return await StandsModel.create({
             id_location: id_location,
             id_provider: id_provider,
             id_stand_type: id_stand_type,
