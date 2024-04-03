@@ -1,7 +1,7 @@
 <script>
 import SideBar from "@/components/Global/SideBar.vue";
 import QRCode from "qrcode-generator"
-import {standsService, usersService} from "@/services";
+import {authService, standsService, usersService} from "@/services";
 
 export default {
   name: 'UserOrdersView',
@@ -26,7 +26,7 @@ export default {
   methods: {
     async getOrders() {
       try {
-        const uuid_user = usersService.getUuid();
+        const uuid_user = authService.getUuid();
         if(uuid_user !== undefined) {
           await usersService.getOrders(uuid_user).then(async (res) => {
             this.orders = res;

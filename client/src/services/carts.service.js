@@ -1,6 +1,4 @@
-import Axios from "axios";
-
-Axios.defaults.baseURL = "http://localhost:8081";
+import Axios from '@/config';
 
 let addCart = async (uuid_user, id_product, quantity) => {
     try {

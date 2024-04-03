@@ -1,11 +1,8 @@
-import Axios from 'axios';
-Axios.defaults.baseURL = 'http://localhost:8081';
-
 import {lang_fr} from "@/datas/lang_fr";
 import {lang_en} from "@/datas/lang_en";
 
-export default Axios;
 export * from './users.service';
+export * from './auth.service';
 export * from './events.service';
 export * from './locations.service';
 export * from './providers.service';

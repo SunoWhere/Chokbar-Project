@@ -1,6 +1,6 @@
 <script>
 
-import {cartsService, standsService, usersService} from "@/services";
+import {authService, cartsService, standsService} from "@/services";
 
 export default {
   name: 'CartView',
@@ -30,7 +30,7 @@ export default {
     },
     async getCart() {
       try {
-        const cartsLines = await cartsService.getCartByUserId(usersService.getUuid());
+        const cartsLines = await cartsService.getCartByUserId(authService.getUuid());
         const groupedProducts = [];
 
         cartsLines.forEach(product => {
@@ -91,7 +91,7 @@ export default {
     },
     async removeItem(id_product) {
       try {
-        const uuid = usersService.getUuid();
+        const uuid = authService.getUuid();
         if(uuid !== undefined) {
           await cartsService.removeCartLine(uuid, id_product).then(() => {
             this.getCart().then(() => {
@@ -106,7 +106,7 @@ export default {
       }
     },
     async clearCart() {
-      const uuid = usersService.getUuid();
+      const uuid = authService.getUuid();
       if(uuid !== undefined) {
         cartsService.clearCart(uuid).then(() => {
           this.getCart().then(() => {

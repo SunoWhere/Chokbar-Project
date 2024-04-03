@@ -1,5 +1,5 @@
 <script>
-import {usersService} from "@/services";
+import {authService, usersService} from "@/services";
 
 export default {
   name: 'DashboardContent',
@@ -17,7 +17,7 @@ export default {
   methods: {
     async getUser() {
       try {
-        const uuid_user = usersService.getUuid();
+        const uuid_user = authService.getUuid();
         if(uuid_user !== undefined) {
           await usersService.getUserById(uuid_user).then((res) => {
             this.user = res;

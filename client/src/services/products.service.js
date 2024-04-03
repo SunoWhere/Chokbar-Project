@@ -1,7 +1,4 @@
-import Axios from 'axios';
-
-Axios.defaults.baseURL = 'http://localhost:8081';
-
+import Axios from '@/config';
 let getAllProductTypes = async () => {
     try {
         const res = await Axios.get('/api/products/product_types/');

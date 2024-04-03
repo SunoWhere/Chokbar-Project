@@ -1,5 +1,5 @@
 <script>
-  import { usersService } from '@/services';
+import {authService} from '@/services';
 
   export default {
     name: 'LoginView',
@@ -14,34 +14,30 @@
           email: '',
           password: ''
         },
-        loginError: null
+        loginError: null,
       }
     },
     methods: {
-      login() {
-        const hashedUser = {
-          email: this.user.email,
-          password: usersService.hashPassword(this.user.password)
-        }
-        usersService.login(hashedUser)
-          .then(res => {
-            usersService.saveUuid(res.data);
+      async login() {
+        try {
+          const hashedUser = {
+            email: this.user.email,
+            password: authService.hashPassword(this.user.password),
+          };
 
-            usersService.reciveRole()
-              .then(res => {
-                usersService.saveRole(res.data);
-                this.$store.commit('setRole', res.data);
-              })
-              .catch(error => {
-                console.log(error);
-              })
-              this.$store.commit('setConnected', true);
-              this.$router.push('/Dashboard');
-            })
-          .catch(error => {
-            console.log(error);
-            this.loginError = "Identifiants incorrects";
-          });
+          const loginResponse = await authService.login(hashedUser);
+          authService.saveUuid(loginResponse);
+
+          const role = await authService.getRole();
+
+          this.$store.commit('setRole', role);
+          this.$store.commit('setConnected', true);
+
+          await this.$router.push('/Dashboard');
+        } catch (error) {
+          console.error(error);
+          this.loginError = "Identifiants incorrects";
+        }
       },
       toggleShowPassword() {
         const passwordInput = document.getElementById("password");

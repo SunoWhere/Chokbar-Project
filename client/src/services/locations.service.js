@@ -1,6 +1,4 @@
-import Axios from 'axios';
-
-Axios.defaults.baseURL = 'http://localhost:8081';
+import Axios from '@/config';
 
 let getLocations = async () => {
     try {
