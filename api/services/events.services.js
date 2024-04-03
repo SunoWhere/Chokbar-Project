@@ -10,12 +10,16 @@ const CustomError = require("../utils/CustomError")
 exports.unregisterToEventById = async (id_event, uuid_user) => {
     try {
         //     TODO : delete in entries : une désinscription pour un events
-        return await EntriesModel.destroy({
+        const result = await EntriesModel.destroy({
             where: {
                 id_event: id_event,
                 uuid_user: uuid_user
             }
         })
+        if (result > 0)
+            return "Registration deleted successfully"
+        else
+            throw new CustomError("No registration found.", 204)
     } catch (err) {
         console.log(err)
         throw err
