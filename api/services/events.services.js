@@ -46,7 +46,7 @@ exports.registerToEventById = async (id_event, uuid_user) => {
             throw new CustomError("User Not Found", 404)
         }
 
-        const nbOfEntries = Entries.count({
+        const nbOfEntries = await Entries.count({
             where: {
                 id_event: id_event
             }
