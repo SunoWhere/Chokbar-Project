@@ -56,7 +56,8 @@ exports.verifyLogin = async (req, res) => {
             return res.status(401).send("Invalid email or login")
         else
             return res.status(200).json(
-                generateAccessToken(user.uuid_user)
+                user.uuid_user
+                // generateAccessToken(user.uuid_user)
             )
     } catch (err) {
         return res.status(500).send(err.message)
