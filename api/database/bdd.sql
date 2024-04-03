@@ -324,7 +324,10 @@ WHERE email = 'KFC@ezcon.fr';
 
 INSERT INTO images (image)
 VALUES ('MSI_LOGO.png'),
-       ('MSI_LOGO.png');
+       ('MSI_LOGO.png'),
+       ('ASUS_stand.jpg'),
+       ('KFC_stand.jpg'),
+       ('MSI_stand.webp');
 
 INSERT INTO providers_images (id_provider, id_image)
 SELECT p.id_provider, i.id_image
@@ -501,3 +504,21 @@ VALUES (19.99, 500, 1, 3, 1, 'English description 1', 'Description française 1'
         'Nom du produit 39 (FR)'),
        (44.99, 500, 3, 4, 2, 'English description 40', 'Description française 40', 'Product Name 40 (EN)',
         'Nom du produit 40 (FR)');
+
+-- For MSI stands (Provider ID 1)
+INSERT INTO stands_images (id_stand, id_image) VALUES
+(1, 1), -- MSI Shop
+(2, 1), -- MSI Demo Center
+(3, 1); -- MSI & Squeezie
+
+-- For Asus stands (Provider ID 2)
+INSERT INTO stands_images (id_stand, id_image) VALUES
+(4, 3), -- Asus Shop
+(5, 3); -- Asus Shop (Demo)
+
+-- For KFC stands (Provider ID 3)
+INSERT INTO stands_images (id_stand, id_image) VALUES
+(6, 4), -- KFC Fast Food
+(7, 4), -- KFC Goodies Shop
+(6, 5), -- Assuming 'MSI_stand.webp' is actually for KFC
+(7, 5); -- Assuming 'MSI_stand.webp' is actually for KFC
