@@ -38,7 +38,9 @@ const swaggerDocs = swaggerJsdoc(swaggerOption);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 
-app.use(cors());
+app.use(cors({
+    origine: true
+}));
 app.use(express.json())
 app.use("/api/users", usersRoutes)
 app.use("/api/providers", providersRoutes)

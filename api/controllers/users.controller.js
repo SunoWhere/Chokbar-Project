@@ -1,4 +1,9 @@
 const usersServices = require("../services/users.services")
+const jwt = require("jsonwebtoken");
+
+function generateAccessToken(uuid) {
+    return jwt.sign({uuid}, process.env.TOKEN_SECRET, { expiresIn: '900s' });
+}
 
 exports.getTicketsByUserId = async (req, res) => {
     try {
@@ -50,7 +55,9 @@ exports.verifyLogin = async (req, res) => {
         if (!user)
             return res.status(401).send("Invalid email or login")
         else
-            return res.status(200).send(user.uuid_user)
+            return res.status(200).json(
+                generateAccessToken(user.uuid_user)
+            )
     } catch (err) {
         return res.status(500).send(err.message)
     }

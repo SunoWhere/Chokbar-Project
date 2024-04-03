@@ -48,7 +48,7 @@ router.get("/role/:uuid", usersMiddleware.validateUuid, usersController.getUserR
 
 /**
  * @swagger
- * /api/login:
+ * /api/users/login:
  *   post:
  *     tags:
  *       - Users

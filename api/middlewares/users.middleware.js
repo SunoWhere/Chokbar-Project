@@ -1,4 +1,5 @@
 const validator = require("validator")
+const jwt = require("jsonwebtoken");
 
 exports.validateUserInput = (req, res, next) => {
     const {first_name, last_name, email, password} = req.body
@@ -44,7 +45,20 @@ exports.validateOrderId = (req, res, next) => {
     }
     next()
 }
+exports.authenticateToken = (req, res, next) =>  {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split('.')[1]; // Bearer TOKEN
 
+    if (token == null) return res.sendStatus(401);
+
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+        console.log(err)
+        console.log(user)
+        if (err) return res.sendStatus(403);
+        req.user = user;
+        next();
+    });
+}
 const validateEmail = (email) => {
     const email_format = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
     if (!email) return false
