@@ -34,12 +34,12 @@ export const lang_fr = {
     navbar_compte: "Mon compte",
 
     // HomePage
-    home_sub_date: "20 > 25 Mai 2023",
+    home_sub_date: "20 > 25 Mai 2024",
     home_subtitle: "LA conférence terrifortaine du jeu vidéo !",
 
     home_first_p_title: "EZCon 2024",
     home_first_p_subtitle: "La convergence ludique à Belfort !",
-    home_first_p: "Des compétitions de gaming acharnées aux expériences en réalité virtuelle captivantes, en passant par les démonstrations des derniers jeux des développeurs locaux, notre événement vous plonge entièrement dans un univers dynamique et passionnant. Parcourez les bornes d'arcade rétro, plongez dans des mondes virtuels grâce à nos expériences de réalité virtuelle époustouflantes et découvrez les créations les plus innovantes des talents locaux. EZCon 2023 est bien plus qu'un événement, c'est une aventure immersive qui célèbre toutes les facettes du jeu vidéo, du rétro au futuriste.",
+    home_first_p: "Des compétitions de gaming acharnées aux expériences en réalité virtuelle captivantes, en passant par les démonstrations des derniers jeux des développeurs locaux, notre événement vous plonge entièrement dans un univers dynamique et passionnant. Parcourez les bornes d'arcade rétro, plongez dans des mondes virtuels grâce à nos expériences de réalité virtuelle époustouflantes et découvrez les créations les plus innovantes des talents locaux. EZCon 2024 est bien plus qu'un événement, c'est une aventure immersive qui célèbre toutes les facettes du jeu vidéo, du rétro au futuriste.",
 
     home_second_p_title: "Tournois, créateurs et plus",
     home_second_p: "Découvrez les dernières nouveautés, participez à des tournois passionnants, rencontrez des créateurs de jeux et plongez-vous dans une communauté vibrante de joueurs.",
@@ -69,7 +69,7 @@ export const lang_fr = {
     footer_mentions: "Mentions légales & GCU",
     footer_politique: "Politique de confidentalité",
     footer_contact: "NOUS CONTACTER",
-    footer_foot: "EZCon @ 2023 | Du 20 au 25 MAI 2023 | ANDELNANS SALLE D'EXPOSITION",
+    footer_foot: "EZCon @ 2024 | Du 20 au 25 MAI 2024 | ANDELNANS SALLE D'EXPOSITION",
     footer_contact_button: "Nous contacter",
 
     // Billetterie
@@ -98,7 +98,7 @@ export const lang_fr = {
         "            entièrement dans un univers dynamique et passionnant. Parcourez les\n" +
         "            bornes d'arcade rétro, plongez dans des mondes virtuels grâce à nos\n" +
         "            expériences de réalité virtuelle époustouflantes et découvrez les créations\n" +
-        "            les plus innovantes des talents locaux. EZCon 2023 est bien plus qu'un événement,\n" +
+        "            les plus innovantes des talents locaux. EZCon 2024 est bien plus qu'un événement,\n" +
         "            c'est une aventure immersive qui célèbre toutes les facettes du jeu vidéo, du rétro au futuriste.",
 
     about_second_p_title: "Des goodies de toutes les couleurs",

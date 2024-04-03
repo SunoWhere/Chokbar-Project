@@ -34,12 +34,12 @@ export const lang_en = {
     navbar_compte: "Account",
 
     // HomePage
-    home_sub_date: "20 > 25 May 2023",
+    home_sub_date: "20 > 25 May 2024",
     home_subtitle: "THE video game conference of the Territoire de Belfort !",
 
     home_first_p_title: "EZCon 2024",
     home_first_p_subtitle: "Fun convergence in Belfort!",
-    home_first_p: "From fierce gaming competitions to captivating virtual reality experiences, including demonstrations of the latest games from local developers, our event fully immerses you in a dynamic and exciting world. Browse retro arcade machines, immerse yourself in virtual worlds with our breathtaking virtual reality experiences, and discover the most innovative creations from local talents. EZCon 2023 is much more than an event, it's an immersive adventure that celebrates all facets of video gaming, from retro to futuristic.",
+    home_first_p: "From fierce gaming competitions to captivating virtual reality experiences, including demonstrations of the latest games from local developers, our event fully immerses you in a dynamic and exciting world. Browse retro arcade machines, immerse yourself in virtual worlds with our breathtaking virtual reality experiences, and discover the most innovative creations from local talents. EZCon 2024 is much more than an event, it's an immersive adventure that celebrates all facets of video gaming, from retro to futuristic.",
 
     home_second_p_title: "Tournaments, Creators, and More",
     home_second_p: "Explore the latest releases, join exciting tournaments, meet game creators, and immerse yourself in a vibrant community of gamers.",
@@ -58,7 +58,7 @@ export const lang_en = {
     footer_mentions: "Legal Notice & Terms of Use",
     footer_politique: "Privacy Policy",
     footer_contact: "CONTACT US",
-    footer_foot: "EZCon @ 2023 | May 20-25, 2023 | ANDELNANS EXHIBITION HALL",
+    footer_foot: "EZCon @ 2024 | May 20-25, 2024 | ANDELNANS EXHIBITION HALL",
     footer_contact_button: "Contact Us",
 
     // Billetterie
@@ -81,7 +81,7 @@ export const lang_en = {
     about_main_title: "About",
     about_first_p_title1: "Explore a Local Culinary Palette",
     about_first_p_title2: "",
-    about_first_p: "From intense gaming competitions to captivating virtual reality experiences, and demonstrations of the latest games from local developers, our event immerses you entirely in a dynamic and exciting universe. Explore retro arcade cabinets, dive into virtual worlds with our stunning virtual reality experiences, and discover the most innovative creations from local talents. EZCon 2023 is more than just an event; it's an immersive adventure that celebrates all facets of video gaming, from retro to futuristic.",
+    about_first_p: "From intense gaming competitions to captivating virtual reality experiences, and demonstrations of the latest games from local developers, our event immerses you entirely in a dynamic and exciting universe. Explore retro arcade cabinets, dive into virtual worlds with our stunning virtual reality experiences, and discover the most innovative creations from local talents. EZCon 2024 is more than just an event; it's an immersive adventure that celebrates all facets of video gaming, from retro to futuristic.",
 
     about_second_p_title: "Goodies in Every Color",
     about_second_p: "During your experience at EZCon, dive into a paradise of goodies where an exceptional variety awaits you. From pop culture figurines to exclusive items, our shop offers a carefully curated selection to satisfy all enthusiasts. Whether you're looking for unique mementos, trendy clothing, or collector's treasures, you'll find everything you desire.",
