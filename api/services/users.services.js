@@ -1,5 +1,6 @@
 const CustomError = require("../utils/CustomError");
 const UserModel = require("../database/DB.connection").DB_models.users
+const RoleModel = require("../database/DB.connection").DB_models.roles
 const CartLinesModel = require("../database/DB.connection").DB_models.cart_lines
 const ProductsModel = require("../database/DB.connection").DB_models.products
 const ProductStatesModel = require("../database/DB.connection").DB_models.product_states
@@ -128,7 +129,15 @@ exports.getRoleByID = async (uuid) => {
         if (!user) {
             throw new Error("No user found");
         }
-        return user.id_role;
+        const role = await RoleModel.findOne({
+            where: {
+                id_role: user.id_role
+            }
+        })
+        if (!role)
+            throw new CustomError("Role not found", 404)
+        else
+            return role.name;
     } catch (err) {
         console.log(err);
         throw err;

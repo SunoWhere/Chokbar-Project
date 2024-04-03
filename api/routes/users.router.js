@@ -43,8 +43,6 @@ var router = express.Router()
  */
 router.get("/", usersController.getUsers)
 
-// FIXME
-router.get("/role/:uuid", usersMiddleware.validateUuid, usersController.getUserRole)
 
 /**
  * @swagger
@@ -136,6 +134,24 @@ router.post("/login", usersMiddleware.validateLoginInput, usersController.verify
  *         description: Internal Server Error.
  */
 router.get("/:uuid/cart", usersController.getCart)
+
+/**
+ * @swagger
+ * /api/users/{uuid}/role:
+ *   get:
+ *     tags:
+ *       - Users
+ *     summary: Get user role
+ *     description: Endpoint for retrieving the user's role
+ *     parameters:
+ *       - name: uuid
+ *         in: path
+ *         required: true
+ *         description: The UUID of the user
+ *         type: string
+ */
+router.get("/:uuid/role", usersMiddleware.validateUuid, usersController.getUserRole)
+
 
 /**
  * @swagger
