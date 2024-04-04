@@ -6,6 +6,10 @@ export default {
     stand: {
       type: Object,
       required: true
+    },
+    image: {
+      type: String,
+      required: true
     }
   },
   methods: {
@@ -23,7 +27,7 @@ export default {
 <template>
   <router-link :to="{ name:'BoutiqueStand', params: {id:stand.id_stand} }">
     <div class="global-card">
-      <div class="image-stand"></div>
+      <div class="image-stand" :style="{ backgroundImage: 'url(' + image + ')' }"></div>
       <div class="stand-title">
         <h1>{{stand.name}}</h1>
       </div>

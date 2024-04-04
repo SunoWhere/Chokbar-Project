@@ -43,11 +43,14 @@ export default {
     async loadStandProducts() {
       for (const item of this.stands) {
         try {
-          const products = await standsService.getStandsProducts(item.id_stand);
-          this.$store.commit('addStandsProduct', { id_stand: item.id_stand, length: products.length });
+          try {
+            const products = await standsService.getStandsProducts(item.id_stand);
+            this.$store.commit('addStandsProduct', { id_stand: item.id_stand, length: products.length });
+          } catch (err) {
+            this.$store.commit('addStandsProduct', { id_stand: item.id_stand, length: '0' });
+          }
         } catch (err) {
           console.error(err);
-          this.$store.commit('addStandsProduct', { id_stand: item.id_stand, length: '0' });
         }
       }
     },

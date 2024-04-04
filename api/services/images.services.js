@@ -55,7 +55,7 @@ exports.addImage = async (data) => {
             name += alphanum.charAt(Math.floor(Math.random() * alphanum.length));
         }
         name = name + '.' + image.name.split('.').pop()
-        image.mv(imagesFolderPath + name)
+        await image.mv(imagesFolderPath + name)
         return await ImagesModel.create({image: name})
     } catch (err) {
         console.log(err)

@@ -1,4 +1,5 @@
 import Axios from '@/config';
+import {usersService} from "@/services/users.service";
 const crypto = require('crypto');
 
 let login = async (credentials) => {
@@ -25,14 +26,15 @@ let logout = () => {
 
 let getRole = async () => {
     try {
-        if(getUuid()) {
+        const user = await usersService.getUserById(getUuid());
+        if(getUuid() && user) {
             const res = await Axios.get('/api/users/' + getUuid() + '/role');
             return res.data;
         } else {
             return undefined;
         }
     } catch (error) {
-        throw new Error(error.response.data);
+        removeUuid();
     }
 }
 

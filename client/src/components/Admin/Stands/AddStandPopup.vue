@@ -44,6 +44,10 @@
                 <label for="story">Description anglaise</label>
                 <textarea id="story" v-model="addStand.description_en" name="story" rows="5" cols="33" required>Decription anglaise</textarea>
               </div>
+              <div>
+                <label for="image">Image du stand</label>
+                <input type="file" id="image" name="image" @change="handleFileUpload" required>
+              </div>
             </div>
           </div>
 
@@ -74,7 +78,8 @@ export default {
       },
       locations: [],
       providers: [],
-      message: null
+      message: null,
+      selectedFile: null,
     }
   },
   props: {
@@ -84,7 +89,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['standTypes', 'showAddStandPopup']),
+    ...mapState(['standTypes', 'showAddStandPopup', 'standToEdit']),
     showPopup() {
       return this.showAddStandPopup;
     }
@@ -108,14 +113,24 @@ export default {
       this.addStand.id_stand_type = this.addStand.id_stand_type.toString();
 
       const res = await standsService.addStand(this.addStand);
-      console.log(res);
 
       if(res) {
         this.clearAddStand()
         this.closePopup();
 
+        if(this.selectedFile) {
+          const formData = new FormData();
+          formData.append('image', this.selectedFile);
+
+          const image = await standsService.addImageToStand(res.id_stand, formData);
+          console.log('objet image : ' + image)
+        }
+
         await this.updateStandList();
       }
+    },
+    handleFileUpload(event) {
+      this.selectedFile = event.target.files[0];
     },
     async getLocations() {
       try {

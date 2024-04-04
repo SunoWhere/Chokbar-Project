@@ -212,7 +212,7 @@ exports.addStandImage = async (file, id) => {
     try {
         const image = await imagesServices.addImage(file)
         let id_image = image.dataValues.id_image
-        await StandsImagesModel.create({id_event: id, id_image: id_image})
+        await StandsImagesModel.create({id_stand: id, id_image: id_image})
     } catch (err) {
         console.log(err)
         throw err

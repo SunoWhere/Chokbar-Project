@@ -128,6 +128,16 @@ let updateStandById = async (stand) => {
     }
 }
 
+let addImageToStand = async (standId, formaData) => {
+    try {
+        const route = `/api/stands/${standId}/images`;
+        const res =  await Axios.post(route, formaData);
+        return res.data;
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 export const standsService = {
     getProvider,
     editProviderStand,
@@ -140,5 +150,6 @@ export const standsService = {
     getAllLocations,
     getStandsTypes,
     getStandsProducts,
-    updateStandById
+    updateStandById,
+    addImageToStand
 }

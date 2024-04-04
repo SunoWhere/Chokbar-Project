@@ -21,7 +21,7 @@ exports.validateFilename = (req, res, next) => {
 
 const validateImage = (image) => {
     if(!image) return false
-    return !/^image/.test(image.mimetype)
+    return /^image/.test(image.mimetype)
 }
 
 const validateId = (id) => {
