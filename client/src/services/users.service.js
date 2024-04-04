@@ -88,6 +88,16 @@ let getAllOrderStates = async () => {
 
 }
 
+let getRegisteredEvents = async (uuid_user) => {
+    try {
+        const route = `/api/users/${uuid_user}/events`;
+
+        return await Axios.get(route);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 export const usersService = {
     reciveRole,
     getAllUser,
@@ -98,4 +108,5 @@ export const usersService = {
     editUser,
     getUserById,
     getAllOrderStates,
+    getRegisteredEvents
 }

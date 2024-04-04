@@ -56,6 +56,28 @@ let deleteEvent = async (id) => {
     }
 }
 
+let registerToEvent = async (id_event, uuid_user) => {
+    try {
+        return await Axios.post(`/api/events/${id_event}/register`, {
+            uuid_user: uuid_user
+        });
+    } catch(err) {
+        throw new Error(err.response.data);
+    }
+}
+
+let unregisterToEvent = async (id_event, uuid_user) => {
+    try {
+        console.log(uuid_user)
+        return await Axios.delete(`/api/events/${id_event}/unregister`, {
+            data: {
+                uuid_user: uuid_user
+            }
+        });
+    } catch(err) {
+        throw new Error(err.response.data);
+    }
+}
 
 
 export const eventsService = {
@@ -64,4 +86,6 @@ export const eventsService = {
     addEvent,
     editEvent,
     deleteEvent,
+    registerToEvent,
+    unregisterToEvent
 }

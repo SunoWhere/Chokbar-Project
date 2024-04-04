@@ -1,10 +1,10 @@
 <script>
-  import moment from "moment-timezone";
-  import {lang_fr} from "@/datas/lang_fr";
-  import {lang_en} from "@/datas/lang_en";
-  import {eventsService} from "@/services";
+import moment from "moment-timezone";
+import {lang_fr} from "@/datas/lang_fr";
+import {lang_en} from "@/datas/lang_en";
+import {authService, eventsService} from "@/services";
 
-  export default {
+export default {
     computed: {
       lang_en() {
         return lang_en
@@ -63,8 +63,29 @@
           .catch(err => {
               console.error(err);
           });
+      },
+      async registerToEvent() {
+        try {
+          console.log(authService.getUuid());
+          const res = await eventsService.registerToEvent(this.selectedEvent.id_event, authService.getUuid());
+          console.log(res);
+
+          this.$store.commit("setShowPlanningInfo", false);
+        } catch(err) {
+            console.error(err);
+        }
+      },
+      async unregisterToEvent() {
+        try {
+          const res = await eventsService.unregisterToEvent(this.selectedEvent.id_event, authService.getUuid());
+          console.log(res);
+
+          this.$store.commit("setShowPlanningInfo", false);
+        } catch(err) {
+          console.error(err);
+        }
       }
-    }
+    },
   }
 </script>
 
@@ -110,12 +131,15 @@
             </div>
         </div>
 
-        <div class="event-controls" v-if="isConnected && getRole() === 'admin'">
+        <div class="event-controls" v-if=" isConnected && getRole() === 'admin'">
           <button class="event-controls-button" @click="openEditPopup">{{ getLang().planning_info_controls_edit }}</button>
           <button class="event-controls-button" @click="deleteEvent">{{ getLang().planning_info_controls_delete }}</button>
         </div>
+        <div class="event-controls" v-else-if="isConnected && getRole() === 'user'">
+          <button class="event-controls-button" @click="registerToEvent">{{ getLang().planning_info_controls_registertoevent }}</button>
+          <button class="event-controls-button" @click="unregisterToEvent">{{ getLang().planning_info_controls_unregistertoevent }}</button>
+        </div>
       </div>
-
     </div>
   </div>
 </template>

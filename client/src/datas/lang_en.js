@@ -189,6 +189,8 @@ export const lang_en = {
     planning_info_finishing_time: "Finishing Time",
     planning_info_controls_edit: "Edit",
     planning_info_controls_delete: "Delete",
+    planning_info_controls_registertoevent: "Register",
+    planning_info_controls_unregistertoevent: "Unregister",
 
     // Stand Info Popup
     stand_info_provider: "Provider",
