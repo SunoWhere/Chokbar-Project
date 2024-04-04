@@ -12,11 +12,11 @@ exports.getImages = async () => {
     }
 }
 
-exports.getImageByName = async (filename) => {
+exports.getImageById = async (id) => {
     try {
         const result = await ImagesModel.findOne({
             where: {
-                image: filename
+                id_image: id
             }
         })
         if (!result) {

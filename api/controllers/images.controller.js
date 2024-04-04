@@ -12,9 +12,9 @@ exports.getImages = async (req, res) => {
     }
 }
 
-exports.getImageByName = async (req, res) => {
+exports.getImageById = async (req, res) => {
     try {
-        return res.status(200).sendFile(await imagesServices.getImageByName(req.params.filename))
+        return res.status(200).sendFile(await imagesServices.getImageById(req.params.id))
     } catch (err) {
         return res.status(err.errorCode || 500).send(err.message)
     }

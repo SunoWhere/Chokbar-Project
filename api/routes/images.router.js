@@ -45,7 +45,7 @@ router.get("/", imagesController.getImages)
  *       500:
  *         description: Internal Server Error.
  */
-router.get("/:filename", imagesMiddleware.validateFilename, imagesController.getImageByName)
+router.get("/:id", imagesMiddleware.validateFilename, imagesController.getImageById)
 
 /**
  * @swagger
