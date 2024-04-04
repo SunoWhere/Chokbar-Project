@@ -23,17 +23,17 @@ router.get("/", imagesController.getImages)
 
 /**
  * @swagger
- * /api/images/{filename}:
+ * /api/images/{id}:
  *   get:
  *     tags:
  *       - Images
- *     summary: Get an image by filename
- *     description: Endpoint for retrieving a specific image by its filename.
+ *     summary: Get an image by id
+ *     description: Endpoint for retrieving a specific image by its id.
  *     parameters:
- *       - name: filename
+ *       - name: id
  *         in: path
  *         required: true
- *         description: The filename of the image.
+ *         description: The id of the image.
  *         type: string
  *     responses:
  *       200:
