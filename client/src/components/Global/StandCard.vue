@@ -25,7 +25,7 @@ export default {
 </script>
 
 <template>
-  <router-link :to="{ name:'BoutiqueStand', params: {id:stand.id_stand} }">
+  <router-link style="text-decoration: none;" :to="{ name:'BoutiqueStand', params: {id:stand.id_stand} }">
     <div class="global-card">
       <div class="image-stand" :style="{ backgroundImage: 'url(' + image + ')' }"></div>
       <div class="stand-title">
