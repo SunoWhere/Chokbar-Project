@@ -1,5 +1,6 @@
 <script>
 import {authService, cartsService, productsService, standsService} from "@/services";
+import {imagesService} from "@/services/images.service";
 
 export default {
   name: 'ShopStandView',
@@ -13,6 +14,7 @@ export default {
       itemBuy: {},
       showNotification: false,
       notificationTimer: null,
+      imageUrl: '',
     }
   },
   methods: {
@@ -96,6 +98,13 @@ export default {
         console.log(error)
       }
     },
+    async getImageForStand(stand) {
+      imagesService.getImageById(stand.stands_images[0].id_image).then(imageUrl => {
+        this.imageUrl = imageUrl;
+      }).catch(error => {
+        console.error("Erreur lors de la récupération de l'image:", error);
+      });
+    },
   },
   computed: {
     availableProducts() {
@@ -110,6 +119,7 @@ export default {
   },
   mounted() {
     this.getStandById().then(() => {
+      this.getImageForStand(this.stand)
       this.getStandProducts().then(() => {
         this.getAllProductTypes();
         this.initializeProductQuantities();
@@ -138,7 +148,7 @@ export default {
         </div>
       </div>
       <div class="right-side">
-        <div class="image"></div>
+        <div class="image" :style="{ backgroundImage: 'url(' + imageUrl + ')' }"></div>
       </div>
     </div>
     <div class="items">
