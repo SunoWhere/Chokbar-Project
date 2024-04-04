@@ -257,6 +257,7 @@ export default {
   padding-right: 20%;
   display: flex;
   justify-content: center;
+
 }
 
 h3 {
