@@ -55,9 +55,9 @@ export default {
         <div id="pt-content">
           <h3 class="content-subtitle">{{ getLang().home_third_p_title }}</h3>
           <p class="content-p">{{ getLang().home_third_p }}</p>
-          <div id="vr-button-container">
+<!--          <div id="vr-button-container">
             <div id="vr-inscription-button">{{ getLang().btn_subscribe }}</div>
-          </div>
+          </div>-->
         </div>
         <div class="img" id="vr-img"></div>
       </div>
@@ -257,6 +257,7 @@ export default {
   padding-right: 20%;
   display: flex;
   justify-content: center;
+
 }
 
 h3 {
