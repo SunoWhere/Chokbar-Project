@@ -219,6 +219,8 @@ export const lang_fr = {
     planning_info_finishing_time: "Heure de Fin",
     planning_info_controls_edit: "Modifier",
     planning_info_controls_delete: "Supprimer",
+    planning_info_controls_registertoevent: "S'incrire",
+    planning_info_controls_unregistertoevent: "Se désinscrire",
 
     // Stand Info Popup
     stand_info_provider: "Prestataire",
