@@ -1,33 +1,42 @@
 <script>
 
+import {imagesService} from "@/services/images.service";
+
 export default {
   name: 'StandCard',
+  data() {
+    return {
+      imageUrl: '',
+    }
+  },
   props: {
     stand: {
       type: Object,
       required: true
     },
-    image: {
-      type: String,
-      required: true
-    }
   },
   methods: {
-
+    async getImageForStand(stand) {
+      imagesService.getImageById(stand.stands_images[0].id_image).then(imageUrl => {
+        this.imageUrl = imageUrl;
+      }).catch(error => {
+        console.error("Erreur lors de la récupération de l'image:", error);
+      });
+    },
   },
   computed: {
 
   },
   mounted() {
-
-  }
+    this.getImageForStand(this.stand);
+  },
 }
 </script>
 
 <template>
   <router-link style="text-decoration: none;" :to="{ name:'BoutiqueStand', params: {id:stand.id_stand} }">
     <div class="global-card">
-      <div class="image-stand" :style="{ backgroundImage: 'url(' + image + ')' }"></div>
+      <div class="image-stand" :style="{ backgroundImage: 'url(' + imageUrl + ')' }"></div>
       <div class="stand-title">
         <h1>{{stand.name}}</h1>
       </div>

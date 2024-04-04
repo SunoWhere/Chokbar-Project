@@ -5,7 +5,6 @@ import StandCard from "@/components/Global/StandCard.vue";
 import msiImage from '@/assets/msi.jpg';
 import asusImage from '@/assets/asus.png';
 import kfcImage from '@/assets/kfc.png';
-import placeholder from '@/assets/placeholder.png';
 
 export default {
   name: 'ShopView',
@@ -42,9 +41,6 @@ export default {
         console.error(error);
       }
     },
-    getImageForStand(stand) {
-      return this.images[stand.id_stand] || placeholder;
-    },
   },
   computed: {
     standsInRows() {
@@ -64,7 +60,7 @@ export default {
     <div class="card-table">
       <div v-for="(row, rowIndex) in standsInRows" :key="rowIndex" class="stand-card">
         <div v-for="(stand, columnIndex) in row" :key="columnIndex" class="stand-item">
-          <StandCard :stand="stand" :image="getImageForStand(stand)"/>
+          <StandCard :stand="stand"/>
         </div>
       </div>
     </div>

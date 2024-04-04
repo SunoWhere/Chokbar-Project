@@ -20,26 +20,13 @@ exports.getImageById = async (id) => {
             }
         })
         if (!result) {
-            throw new CustomError('Image not found', 404)
+            throw new CustomError('Image not found', 404);
         }
-        return imagesFolderPath + result.image
-    } catch (err) {
-        console.log(err)
-        throw err
-    }
-}
-
-exports.getImageById = async (id) => {
-    try {
-        const result = await ImagesModel.findOne({
-            where: {
-                id_image: id
-            }
-        })
-        if (!result) {
-            throw new CustomError('Image not found', 404)
+        const imagePath = imagesFolderPath + result.image;
+        if (typeof imagePath !== 'string') {
+            throw new Error('Image path is not a string');
         }
-        return result
+        return imagePath;
     } catch (err) {
         console.log(err)
         throw err

@@ -14,7 +14,8 @@ exports.getImages = async (req, res) => {
 
 exports.getImageById = async (req, res) => {
     try {
-        return res.status(200).sendFile(await imagesServices.getImageById(req.params.id))
+        const file = await imagesServices.getImageById(req.params.id);
+        return res.status(200).sendFile(file)
     } catch (err) {
         return res.status(err.errorCode || 500).send(err.message)
     }
