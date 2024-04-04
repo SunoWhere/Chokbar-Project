@@ -49,6 +49,7 @@ exports.getImageById = async (id) => {
 exports.addImage = async (data) => {
     try {
         const {image} = data
+        console.log(image)
         const alphanum = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_'
         let name = ''
         for (let i = 0; i < 32; i++) {

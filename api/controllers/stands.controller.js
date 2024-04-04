@@ -132,8 +132,6 @@ exports.getStandTypes = async (req, res) => {
 }
 exports.addStandImage = async (req, res) => {
     try {
-        console.log('file : ' + req.files)
-        console.log('params : ' + req.params.id)
         await standsServices.addStandImage(req.files, req.params.id)
         return res.status(200).send("Successfully added new image to stand with id : " + req.params.id)
     } catch (err) {
