@@ -39,8 +39,9 @@ export default {
 <style scoped>
 
 .checkout{
+  margin-top: 15%;
   color: var(--white);
-  height: calc(100vh - 80px);
+  height: calc(100vh - 300px);
 }
 
 .checkout-loading{
