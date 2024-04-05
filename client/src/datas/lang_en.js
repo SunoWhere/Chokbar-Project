@@ -1,5 +1,3 @@
-
-
 export const lang_en = {
 
     // All
@@ -270,4 +268,29 @@ export const lang_en = {
     command_num: "Order Number",
     command_stand: "Stand",
     command_state: "Status",
+
+    // Dates, Times, Access
+    date_info_title: "Dates, Hours, Access",
+    date_info_description: "Discover practical information regarding the dates,\n" +
+        "        access methods & hours at the EzCon exhibition.\n" +
+        "        Consult this page to prepare for your exhibition\n" +
+        "        and to live an unforgettable experience!",
+    date_info_date: "Dates",
+    date_info_date_description: "From May 20th to May 25th, 2024",
+    date_info_date_description2: "at Andelnans Exhibition Park",
+    date_info_horaires: "Hours",
+    date_info_horaires_description: "Every day",
+    date_info_horaires_description2: "from 8am to 9pm",
+    date_info_security: "Security Measures",
+    date_info_security_description: "In accordance with the Vigipirate plan, security measures at the exhibition have been strengthened:\n" +
+        "        systematic checks at entrances, prohibition of access to individuals carrying bulky luggage\n" +
+        "        (> 20 liters or exceeding dimensions of 40cm x 20cm x 25cm).",
+    date_info_access: "Access",
+    date_info_location: "Location",
+    date_info_location_description: "AtraXion - Exhibition Park - Andelnans",
+    date_info_adress: "Address",
+    date_info_adress_description1: "23 Rue des Prés,",
+    date_info_adress_description2: "AtraXion",
+    date_info_adress_description3: ", Andelnans",
+    date_info_access_description: "Access to EzCon"
 }

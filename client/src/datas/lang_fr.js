@@ -1,4 +1,3 @@
-
 export const lang_fr = {
 
     // All
@@ -283,7 +282,7 @@ export const lang_fr = {
     // Remove Popup Stand
     remove_popup_stand_1: "Vous êtes sur le points de supprimer un stand.",
 
-    // Cart View
+    // Cart Vie
     cart_remove_from_cart: "Retirer du panier",
     cart_no_article: "Il n'y a aucun d'article pour le moment.",
     cart_name: "Nom",
@@ -300,4 +299,29 @@ export const lang_fr = {
     command_num: "Numéro de commande",
     command_stand: "Stand",
     command_state: "État",
+
+    // Info Date
+    date_info_title: "Dates, Horaires, Accès",
+    date_info_description: "Découvrez les informations pratiques relatives aux dates,\n" +
+        "        moyens d'accès & horaires au salon EzCon.\n" +
+        "        Consultez cette page afin de préparer votre salon\n" +
+        "        et de vivre une expérience inoubliable !",
+    date_info_date: "Dates",
+    date_info_date_description: "Du 20 au 25 Mai 2024",
+    date_info_date_description2: "à Andelnans parc des Expositions",
+    date_info_horaires: "Horaires",
+    date_info_horaires_description: "Tous les jours",
+    date_info_horaires_description2: "de 8h à 21h",
+    date_info_security: "Mesures de sécurité",
+    date_info_security_description: "En application du plan Vigipirate, les mesures de sécurité du salon ont été renforcées :\n" +
+        "        contrôles systématiques aux entrées, interdiction d’accès aux personnes en possession de bagages volumineux\n" +
+        "        (> 20litres ou de dimensions excédant 40cm x 20cm x 25cm).",
+    date_info_access: "Accès",
+    date_info_location: "Lieu",
+    date_info_location_description: "AtraXion - Parc des Expositions - Andelnans",
+    date_info_adress: "Adresse",
+    date_info_adress_description1: "23 Rue des Prés,",
+    date_info_adress_description2: "AtraXion",
+    date_info_adress_description3: ", Andelnans",
+    date_info_access_description: "Accès à la EzCon"
 }
