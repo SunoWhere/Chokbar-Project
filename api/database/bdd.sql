@@ -1,4 +1,6 @@
 DROP TABLE IF EXISTS events_images,
+    convention_dates,
+    convention_name,
     providers_images,
     stands_images,
     products_images,
@@ -273,6 +275,21 @@ CREATE TABLE products_images
     FOREIGN KEY (id_image) REFERENCES images (id_image) ON DELETE CASCADE
 );
 
+CREATE TABLE convention_dates
+(
+    id_date SERIAL,
+    start_date   timestamp WITH TIME ZONE,
+    end_date timestamp WITH TIME ZONE,
+    PRIMARY KEY (id_date)
+);
+
+CREATE TABLE convention_name
+(
+    id_name SERIAL,
+    name VARCHAR(50),
+    PRIMARY KEY (id_name)
+);
+
 INSERT INTO roles(name)
 VALUES ('user'),
        ('provider'),
@@ -522,3 +539,9 @@ INSERT INTO stands_images (id_stand, id_image) VALUES
 (7, 4), -- KFC Goodies Shop
 (6, 5), -- Assuming 'MSI_stand.webp' is actually for KFC
 (7, 5); -- Assuming 'MSI_stand.webp' is actually for KFC
+
+INSERT INTO convention_dates (start_date, end_date) VALUES
+('2024-05-20 00:00:00', '2024-05-25 00:00:00');
+
+INSERT INTO convention_name (name) VALUES
+('EZCon 2024')
